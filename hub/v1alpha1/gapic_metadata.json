@@ -1,0 +1,33 @@
+{
+  "schema": "1.0",
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods.",
+  "language": "go",
+  "protoPackage": "animeshon.hub.v1alpha1",
+  "libraryPackage": "github.com/animeapis/api-go-client/hub/v1alpha1",
+  "services": {
+    "Git": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "GitClient",
+          "rpcs": {
+            "AdvertiseReferences": {
+              "methods": [
+                "AdvertiseReferences"
+              ]
+            },
+            "ReceivePack": {
+              "methods": [
+                "ReceivePack"
+              ]
+            },
+            "UploadPack": {
+              "methods": [
+                "UploadPack"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}
