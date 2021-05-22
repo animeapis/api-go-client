@@ -28,6 +28,25 @@
           }
         }
       }
+    },
+    "Hub": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "Client",
+          "rpcs": {
+            "CreateRepository": {
+              "methods": [
+                "CreateRepository"
+              ]
+            },
+            "DeleteRepository": {
+              "methods": [
+                "DeleteRepository"
+              ]
+            }
+          }
+        }
+      }
     }
   }
 }
