@@ -23,9 +23,9 @@ import (
 	hubpb "github.com/animeapis/go-genproto/hub/v1alpha1"
 )
 
-func ExampleNewClient() {
+func ExampleNewIsekaiClient() {
 	ctx := context.Background()
-	c, err := hub.NewClient(ctx)
+	c, err := hub.NewIsekaiClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -35,9 +35,9 @@ func ExampleNewClient() {
 	_ = c
 }
 
-func ExampleClient_CreateRepository() {
+func ExampleIsekaiClient_CreateRepository() {
 	ctx := context.Background()
-	c, err := hub.NewClient(ctx)
+	c, err := hub.NewIsekaiClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -54,9 +54,9 @@ func ExampleClient_CreateRepository() {
 	_ = resp
 }
 
-func ExampleClient_DeleteRepository() {
+func ExampleIsekaiClient_DeleteRepository() {
 	ctx := context.Background()
-	c, err := hub.NewClient(ctx)
+	c, err := hub.NewIsekaiClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
 	}

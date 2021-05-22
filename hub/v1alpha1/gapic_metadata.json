@@ -29,10 +29,10 @@
         }
       }
     },
-    "Hub": {
+    "Isekai": {
       "clients": {
         "grpc": {
-          "libraryClient": "Client",
+          "libraryClient": "IsekaiClient",
           "rpcs": {
             "CreateRepository": {
               "methods": [

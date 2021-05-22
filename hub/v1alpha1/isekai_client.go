@@ -31,15 +31,15 @@ import (
 	"google.golang.org/grpc/metadata"
 )
 
-var newClientHook clientHook
+var newIsekaiClientHook clientHook
 
-// CallOptions contains the retry settings for each method of Client.
-type CallOptions struct {
+// IsekaiCallOptions contains the retry settings for each method of IsekaiClient.
+type IsekaiCallOptions struct {
 	CreateRepository []gax.CallOption
 	DeleteRepository []gax.CallOption
 }
 
-func defaultGRPCClientOptions() []option.ClientOption {
+func defaultIsekaiGRPCClientOptions() []option.ClientOption {
 	return []option.ClientOption{
 		internaloption.WithDefaultEndpoint("hub.animeapis.com:443"),
 		internaloption.WithDefaultMTLSEndpoint("hub.animeapis.com:443"),
@@ -51,15 +51,15 @@ func defaultGRPCClientOptions() []option.ClientOption {
 	}
 }
 
-func defaultCallOptions() *CallOptions {
-	return &CallOptions{
+func defaultIsekaiCallOptions() *IsekaiCallOptions {
+	return &IsekaiCallOptions{
 		CreateRepository: []gax.CallOption{},
 		DeleteRepository: []gax.CallOption{},
 	}
 }
 
-// internalClient is an interface that defines the methods availaible from Hub API.
-type internalClient interface {
+// internalIsekaiClient is an interface that defines the methods availaible from Hub API.
+type internalIsekaiClient interface {
 	Close() error
 	setGoogleClientInfo(...string)
 	Connection() *grpc.ClientConn
@@ -67,72 +67,72 @@ type internalClient interface {
 	DeleteRepository(context.Context, *hubpb.DeleteRepositoryRequest, ...gax.CallOption) error
 }
 
-// Client is a client for interacting with Hub API.
+// IsekaiClient is a client for interacting with Hub API.
 // Methods, except Close, may be called concurrently. However, fields must not be modified concurrently with method calls.
-type Client struct {
+type IsekaiClient struct {
 	// The internal transport-dependent client.
-	internalClient internalClient
+	internalClient internalIsekaiClient
 
 	// The call options for this service.
-	CallOptions *CallOptions
+	CallOptions *IsekaiCallOptions
 }
 
 // Wrapper methods routed to the internal client.
 
 // Close closes the connection to the API service. The user should invoke this when
 // the client is no longer required.
-func (c *Client) Close() error {
+func (c *IsekaiClient) Close() error {
 	return c.internalClient.Close()
 }
 
 // setGoogleClientInfo sets the name and version of the application in
 // the `x-goog-api-client` header passed on each request. Intended for
 // use by Google-written clients.
-func (c *Client) setGoogleClientInfo(...string) {
+func (c *IsekaiClient) setGoogleClientInfo(...string) {
 	c.internalClient.setGoogleClientInfo()
 }
 
 // Connection returns a connection to the API service.
 //
 // Deprecated.
-func (c *Client) Connection() *grpc.ClientConn {
+func (c *IsekaiClient) Connection() *grpc.ClientConn {
 	return c.internalClient.Connection()
 }
 
-func (c *Client) CreateRepository(ctx context.Context, req *hubpb.CreateRepositoryRequest, opts ...gax.CallOption) (*hubpb.Repository, error) {
+func (c *IsekaiClient) CreateRepository(ctx context.Context, req *hubpb.CreateRepositoryRequest, opts ...gax.CallOption) (*hubpb.Repository, error) {
 	return c.internalClient.CreateRepository(ctx, req, opts...)
 }
 
-func (c *Client) DeleteRepository(ctx context.Context, req *hubpb.DeleteRepositoryRequest, opts ...gax.CallOption) error {
+func (c *IsekaiClient) DeleteRepository(ctx context.Context, req *hubpb.DeleteRepositoryRequest, opts ...gax.CallOption) error {
 	return c.internalClient.DeleteRepository(ctx, req, opts...)
 }
 
-// gRPCClient is a client for interacting with Hub API over gRPC transport.
+// isekaiGRPCClient is a client for interacting with Hub API over gRPC transport.
 //
 // Methods, except Close, may be called concurrently. However, fields must not be modified concurrently with method calls.
-type gRPCClient struct {
+type isekaiGRPCClient struct {
 	// Connection pool of gRPC connections to the service.
 	connPool gtransport.ConnPool
 
 	// flag to opt out of default deadlines via GOOGLE_API_GO_EXPERIMENTAL_DISABLE_DEFAULT_DEADLINE
 	disableDeadlines bool
 
-	// Points back to the CallOptions field of the containing Client
-	CallOptions **CallOptions
+	// Points back to the CallOptions field of the containing IsekaiClient
+	CallOptions **IsekaiCallOptions
 
 	// The gRPC API client.
-	client hubpb.HubClient
+	isekaiClient hubpb.IsekaiClient
 
 	// The x-goog-* metadata to be sent with each request.
 	xGoogMetadata metadata.MD
 }
 
-// NewClient creates a new hub client based on gRPC.
+// NewIsekaiClient creates a new isekai client based on gRPC.
 // The returned client must be Closed when it is done being used to clean up its underlying connections.
-func NewClient(ctx context.Context, opts ...option.ClientOption) (*Client, error) {
-	clientOpts := defaultGRPCClientOptions()
-	if newClientHook != nil {
-		hookOpts, err := newClientHook(ctx, clientHookParams{})
+func NewIsekaiClient(ctx context.Context, opts ...option.ClientOption) (*IsekaiClient, error) {
+	clientOpts := defaultIsekaiGRPCClientOptions()
+	if newIsekaiClientHook != nil {
+		hookOpts, err := newIsekaiClientHook(ctx, clientHookParams{})
 		if err != nil {
 			return nil, err
 		}
@@ -148,12 +148,12 @@ func NewClient(ctx context.Context, opts ...option.ClientOption) (*Client, error
 	if err != nil {
 		return nil, err
 	}
-	client := Client{CallOptions: defaultCallOptions()}
+	client := IsekaiClient{CallOptions: defaultIsekaiCallOptions()}
 
-	c := &gRPCClient{
+	c := &isekaiGRPCClient{
 		connPool:         connPool,
 		disableDeadlines: disableDeadlines,
-		client:           hubpb.NewHubClient(connPool),
+		isekaiClient:     hubpb.NewIsekaiClient(connPool),
 		CallOptions:      &client.CallOptions,
 	}
 	c.setGoogleClientInfo()
@@ -166,14 +166,14 @@ func NewClient(ctx context.Context, opts ...option.ClientOption) (*Client, error
 // Connection returns a connection to the API service.
 //
 // Deprecated.
-func (c *gRPCClient) Connection() *grpc.ClientConn {
+func (c *isekaiGRPCClient) Connection() *grpc.ClientConn {
 	return c.connPool.Conn()
 }
 
 // setGoogleClientInfo sets the name and version of the application in
 // the `x-goog-api-client` header passed on each request. Intended for
 // use by Google-written clients.
-func (c *gRPCClient) setGoogleClientInfo(keyval ...string) {
+func (c *isekaiGRPCClient) setGoogleClientInfo(keyval ...string) {
 	kv := append([]string{"gl-go", versionGo()}, keyval...)
 	kv = append(kv, "gapic", versionClient, "gax", gax.Version, "grpc", grpc.Version)
 	c.xGoogMetadata = metadata.Pairs("x-goog-api-client", gax.XGoogHeader(kv...))
@@ -181,18 +181,18 @@ func (c *gRPCClient) setGoogleClientInfo(keyval ...string) {
 
 // Close closes the connection to the API service. The user should invoke this when
 // the client is no longer required.
-func (c *gRPCClient) Close() error {
+func (c *isekaiGRPCClient) Close() error {
 	return c.connPool.Close()
 }
 
-func (c *gRPCClient) CreateRepository(ctx context.Context, req *hubpb.CreateRepositoryRequest, opts ...gax.CallOption) (*hubpb.Repository, error) {
+func (c *isekaiGRPCClient) CreateRepository(ctx context.Context, req *hubpb.CreateRepositoryRequest, opts ...gax.CallOption) (*hubpb.Repository, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).CreateRepository[0:len((*c.CallOptions).CreateRepository):len((*c.CallOptions).CreateRepository)], opts...)
 	var resp *hubpb.Repository
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
-		resp, err = c.client.CreateRepository(ctx, req, settings.GRPC...)
+		resp, err = c.isekaiClient.CreateRepository(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	if err != nil {
@@ -201,13 +201,13 @@ func (c *gRPCClient) CreateRepository(ctx context.Context, req *hubpb.CreateRepo
 	return resp, nil
 }
 
-func (c *gRPCClient) DeleteRepository(ctx context.Context, req *hubpb.DeleteRepositoryRequest, opts ...gax.CallOption) error {
+func (c *isekaiGRPCClient) DeleteRepository(ctx context.Context, req *hubpb.DeleteRepositoryRequest, opts ...gax.CallOption) error {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).DeleteRepository[0:len((*c.CallOptions).DeleteRepository):len((*c.CallOptions).DeleteRepository)], opts...)
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
-		_, err = c.client.DeleteRepository(ctx, req, settings.GRPC...)
+		_, err = c.isekaiClient.DeleteRepository(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	return err
