@@ -1,0 +1,63 @@
+{
+  "schema": "1.0",
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods.",
+  "language": "go",
+  "protoPackage": "animeshon.grbac.v1alpha1",
+  "libraryPackage": "github.com/animeapis/api-go-client/grbac/v1alpha1",
+  "services": {
+    "Authorizer": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "AuthorizerClient",
+          "rpcs": {
+            "Authorize": {
+              "methods": [
+                "Authorize"
+              ]
+            },
+            "CreateResource": {
+              "methods": [
+                "CreateResource"
+              ]
+            },
+            "CreateRole": {
+              "methods": [
+                "CreateRole"
+              ]
+            },
+            "DeleteResource": {
+              "methods": [
+                "DeleteResource"
+              ]
+            },
+            "DeleteRole": {
+              "methods": [
+                "DeleteRole"
+              ]
+            },
+            "GetResource": {
+              "methods": [
+                "GetResource"
+              ]
+            },
+            "GetRole": {
+              "methods": [
+                "GetRole"
+              ]
+            },
+            "UpdateResource": {
+              "methods": [
+                "UpdateResource"
+              ]
+            },
+            "UpdateRole": {
+              "methods": [
+                "UpdateRole"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}
