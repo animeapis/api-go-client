@@ -15,6 +15,11 @@
                 "Authorize"
               ]
             },
+            "CreateGroup": {
+              "methods": [
+                "CreateGroup"
+              ]
+            },
             "CreateResource": {
               "methods": [
                 "CreateResource"
@@ -23,6 +28,16 @@
             "CreateRole": {
               "methods": [
                 "CreateRole"
+              ]
+            },
+            "CreateSubject": {
+              "methods": [
+                "CreateSubject"
+              ]
+            },
+            "DeleteGroup": {
+              "methods": [
+                "DeleteGroup"
               ]
             },
             "DeleteResource": {
@@ -35,6 +50,11 @@
                 "DeleteRole"
               ]
             },
+            "GetGroup": {
+              "methods": [
+                "GetGroup"
+              ]
+            },
             "GetResource": {
               "methods": [
                 "GetResource"
@@ -43,6 +63,11 @@
             "GetRole": {
               "methods": [
                 "GetRole"
+              ]
+            },
+            "UpdateGroup": {
+              "methods": [
+                "UpdateGroup"
               ]
             },
             "UpdateResource": {

@@ -40,6 +40,11 @@ type AuthorizerCallOptions struct {
 	CreateResource []gax.CallOption
 	UpdateResource []gax.CallOption
 	DeleteResource []gax.CallOption
+	CreateSubject  []gax.CallOption
+	GetGroup       []gax.CallOption
+	CreateGroup    []gax.CallOption
+	UpdateGroup    []gax.CallOption
+	DeleteGroup    []gax.CallOption
 	GetRole        []gax.CallOption
 	CreateRole     []gax.CallOption
 	UpdateRole     []gax.CallOption
@@ -65,6 +70,11 @@ func defaultAuthorizerCallOptions() *AuthorizerCallOptions {
 		CreateResource: []gax.CallOption{},
 		UpdateResource: []gax.CallOption{},
 		DeleteResource: []gax.CallOption{},
+		CreateSubject:  []gax.CallOption{},
+		GetGroup:       []gax.CallOption{},
+		CreateGroup:    []gax.CallOption{},
+		UpdateGroup:    []gax.CallOption{},
+		DeleteGroup:    []gax.CallOption{},
 		GetRole:        []gax.CallOption{},
 		CreateRole:     []gax.CallOption{},
 		UpdateRole:     []gax.CallOption{},
@@ -82,6 +92,11 @@ type internalAuthorizerClient interface {
 	CreateResource(context.Context, *grbacpb.CreateResourceRequest, ...gax.CallOption) (*grbacpb.Resource, error)
 	UpdateResource(context.Context, *grbacpb.UpdateResourceRequest, ...gax.CallOption) (*grbacpb.Resource, error)
 	DeleteResource(context.Context, *grbacpb.DeleteResourceRequest, ...gax.CallOption) error
+	CreateSubject(context.Context, *grbacpb.CreateSubjectRequest, ...gax.CallOption) (*grbacpb.Subject, error)
+	GetGroup(context.Context, *grbacpb.GetGroupRequest, ...gax.CallOption) (*grbacpb.Group, error)
+	CreateGroup(context.Context, *grbacpb.CreateGroupRequest, ...gax.CallOption) (*grbacpb.Group, error)
+	UpdateGroup(context.Context, *grbacpb.UpdateGroupRequest, ...gax.CallOption) (*grbacpb.Group, error)
+	DeleteGroup(context.Context, *grbacpb.DeleteGroupRequest, ...gax.CallOption) error
 	GetRole(context.Context, *grbacpb.GetRoleRequest, ...gax.CallOption) (*grbacpb.Role, error)
 	CreateRole(context.Context, *grbacpb.CreateRoleRequest, ...gax.CallOption) (*grbacpb.Role, error)
 	UpdateRole(context.Context, *grbacpb.UpdateRoleRequest, ...gax.CallOption) (*grbacpb.Role, error)
@@ -147,6 +162,31 @@ func (c *AuthorizerClient) UpdateResource(ctx context.Context, req *grbacpb.Upda
 // DeleteResource deleteResource deletes a resource.
 func (c *AuthorizerClient) DeleteResource(ctx context.Context, req *grbacpb.DeleteResourceRequest, opts ...gax.CallOption) error {
 	return c.internalClient.DeleteResource(ctx, req, opts...)
+}
+
+// CreateSubject createSubject creates a new subject.
+func (c *AuthorizerClient) CreateSubject(ctx context.Context, req *grbacpb.CreateSubjectRequest, opts ...gax.CallOption) (*grbacpb.Subject, error) {
+	return c.internalClient.CreateSubject(ctx, req, opts...)
+}
+
+// GetGroup getGroup returns a group.
+func (c *AuthorizerClient) GetGroup(ctx context.Context, req *grbacpb.GetGroupRequest, opts ...gax.CallOption) (*grbacpb.Group, error) {
+	return c.internalClient.GetGroup(ctx, req, opts...)
+}
+
+// CreateGroup createGroup creates a new group.
+func (c *AuthorizerClient) CreateGroup(ctx context.Context, req *grbacpb.CreateGroupRequest, opts ...gax.CallOption) (*grbacpb.Group, error) {
+	return c.internalClient.CreateGroup(ctx, req, opts...)
+}
+
+// UpdateGroup updateGroup updates a group with a field mask.
+func (c *AuthorizerClient) UpdateGroup(ctx context.Context, req *grbacpb.UpdateGroupRequest, opts ...gax.CallOption) (*grbacpb.Group, error) {
+	return c.internalClient.UpdateGroup(ctx, req, opts...)
+}
+
+// DeleteGroup deleteGroup deletes a group.
+func (c *AuthorizerClient) DeleteGroup(ctx context.Context, req *grbacpb.DeleteGroupRequest, opts ...gax.CallOption) error {
+	return c.internalClient.DeleteGroup(ctx, req, opts...)
 }
 
 // GetRole getRole returns a role.
@@ -314,6 +354,80 @@ func (c *authorizerGRPCClient) DeleteResource(ctx context.Context, req *grbacpb.
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
 		_, err = c.authorizerClient.DeleteResource(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	return err
+}
+
+func (c *authorizerGRPCClient) CreateSubject(ctx context.Context, req *grbacpb.CreateSubjectRequest, opts ...gax.CallOption) (*grbacpb.Subject, error) {
+	ctx = insertMetadata(ctx, c.xGoogMetadata)
+	opts = append((*c.CallOptions).CreateSubject[0:len((*c.CallOptions).CreateSubject):len((*c.CallOptions).CreateSubject)], opts...)
+	var resp *grbacpb.Subject
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.authorizerClient.CreateSubject(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *authorizerGRPCClient) GetGroup(ctx context.Context, req *grbacpb.GetGroupRequest, opts ...gax.CallOption) (*grbacpb.Group, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).GetGroup[0:len((*c.CallOptions).GetGroup):len((*c.CallOptions).GetGroup)], opts...)
+	var resp *grbacpb.Group
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.authorizerClient.GetGroup(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *authorizerGRPCClient) CreateGroup(ctx context.Context, req *grbacpb.CreateGroupRequest, opts ...gax.CallOption) (*grbacpb.Group, error) {
+	ctx = insertMetadata(ctx, c.xGoogMetadata)
+	opts = append((*c.CallOptions).CreateGroup[0:len((*c.CallOptions).CreateGroup):len((*c.CallOptions).CreateGroup)], opts...)
+	var resp *grbacpb.Group
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.authorizerClient.CreateGroup(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *authorizerGRPCClient) UpdateGroup(ctx context.Context, req *grbacpb.UpdateGroupRequest, opts ...gax.CallOption) (*grbacpb.Group, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "group.name", url.QueryEscape(req.GetGroup().GetName())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).UpdateGroup[0:len((*c.CallOptions).UpdateGroup):len((*c.CallOptions).UpdateGroup)], opts...)
+	var resp *grbacpb.Group
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.authorizerClient.UpdateGroup(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *authorizerGRPCClient) DeleteGroup(ctx context.Context, req *grbacpb.DeleteGroupRequest, opts ...gax.CallOption) error {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).DeleteGroup[0:len((*c.CallOptions).DeleteGroup):len((*c.CallOptions).DeleteGroup)], opts...)
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		_, err = c.authorizerClient.DeleteGroup(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	return err

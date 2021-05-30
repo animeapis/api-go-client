@@ -126,6 +126,99 @@ func ExampleAuthorizerClient_DeleteResource() {
 	}
 }
 
+func ExampleAuthorizerClient_CreateSubject() {
+	ctx := context.Background()
+	c, err := grbac.NewAuthorizerClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &grbacpb.CreateSubjectRequest{
+		// TODO: Fill request struct fields.
+	}
+	resp, err := c.CreateSubject(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
+func ExampleAuthorizerClient_GetGroup() {
+	ctx := context.Background()
+	c, err := grbac.NewAuthorizerClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &grbacpb.GetGroupRequest{
+		// TODO: Fill request struct fields.
+	}
+	resp, err := c.GetGroup(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
+func ExampleAuthorizerClient_CreateGroup() {
+	ctx := context.Background()
+	c, err := grbac.NewAuthorizerClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &grbacpb.CreateGroupRequest{
+		// TODO: Fill request struct fields.
+	}
+	resp, err := c.CreateGroup(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
+func ExampleAuthorizerClient_UpdateGroup() {
+	ctx := context.Background()
+	c, err := grbac.NewAuthorizerClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &grbacpb.UpdateGroupRequest{
+		// TODO: Fill request struct fields.
+	}
+	resp, err := c.UpdateGroup(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
+func ExampleAuthorizerClient_DeleteGroup() {
+	ctx := context.Background()
+	c, err := grbac.NewAuthorizerClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &grbacpb.DeleteGroupRequest{
+		// TODO: Fill request struct fields.
+	}
+	err = c.DeleteGroup(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+}
+
 func ExampleAuthorizerClient_GetRole() {
 	ctx := context.Background()
 	c, err := grbac.NewAuthorizerClient(ctx)
