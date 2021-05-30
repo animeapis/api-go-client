@@ -23,9 +23,9 @@ import (
 	grbacpb "github.com/animeapis/go-genproto/grbac/v1alpha1"
 )
 
-func ExampleNewAuthorizerClient() {
+func ExampleNewAccessControlClient() {
 	ctx := context.Background()
-	c, err := grbac.NewAuthorizerClient(ctx)
+	c, err := grbac.NewAccessControlClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -35,9 +35,9 @@ func ExampleNewAuthorizerClient() {
 	_ = c
 }
 
-func ExampleAuthorizerClient_Authorize() {
+func ExampleAccessControlClient_Authorize() {
 	ctx := context.Background()
-	c, err := grbac.NewAuthorizerClient(ctx)
+	c, err := grbac.NewAccessControlClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -52,9 +52,9 @@ func ExampleAuthorizerClient_Authorize() {
 	}
 }
 
-func ExampleAuthorizerClient_GetResource() {
+func ExampleAccessControlClient_GetResource() {
 	ctx := context.Background()
-	c, err := grbac.NewAuthorizerClient(ctx)
+	c, err := grbac.NewAccessControlClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -71,9 +71,9 @@ func ExampleAuthorizerClient_GetResource() {
 	_ = resp
 }
 
-func ExampleAuthorizerClient_CreateResource() {
+func ExampleAccessControlClient_CreateResource() {
 	ctx := context.Background()
-	c, err := grbac.NewAuthorizerClient(ctx)
+	c, err := grbac.NewAccessControlClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -90,9 +90,9 @@ func ExampleAuthorizerClient_CreateResource() {
 	_ = resp
 }
 
-func ExampleAuthorizerClient_UpdateResource() {
+func ExampleAccessControlClient_UpdateResource() {
 	ctx := context.Background()
-	c, err := grbac.NewAuthorizerClient(ctx)
+	c, err := grbac.NewAccessControlClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -109,9 +109,9 @@ func ExampleAuthorizerClient_UpdateResource() {
 	_ = resp
 }
 
-func ExampleAuthorizerClient_DeleteResource() {
+func ExampleAccessControlClient_DeleteResource() {
 	ctx := context.Background()
-	c, err := grbac.NewAuthorizerClient(ctx)
+	c, err := grbac.NewAccessControlClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -126,9 +126,9 @@ func ExampleAuthorizerClient_DeleteResource() {
 	}
 }
 
-func ExampleAuthorizerClient_CreateSubject() {
+func ExampleAccessControlClient_CreateSubject() {
 	ctx := context.Background()
-	c, err := grbac.NewAuthorizerClient(ctx)
+	c, err := grbac.NewAccessControlClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -145,9 +145,26 @@ func ExampleAuthorizerClient_CreateSubject() {
 	_ = resp
 }
 
-func ExampleAuthorizerClient_GetGroup() {
+func ExampleAccessControlClient_DeleteSubject() {
 	ctx := context.Background()
-	c, err := grbac.NewAuthorizerClient(ctx)
+	c, err := grbac.NewAccessControlClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &grbacpb.DeleteSubjectRequest{
+		// TODO: Fill request struct fields.
+	}
+	err = c.DeleteSubject(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+}
+
+func ExampleAccessControlClient_GetGroup() {
+	ctx := context.Background()
+	c, err := grbac.NewAccessControlClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -164,9 +181,9 @@ func ExampleAuthorizerClient_GetGroup() {
 	_ = resp
 }
 
-func ExampleAuthorizerClient_CreateGroup() {
+func ExampleAccessControlClient_CreateGroup() {
 	ctx := context.Background()
-	c, err := grbac.NewAuthorizerClient(ctx)
+	c, err := grbac.NewAccessControlClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -183,9 +200,9 @@ func ExampleAuthorizerClient_CreateGroup() {
 	_ = resp
 }
 
-func ExampleAuthorizerClient_UpdateGroup() {
+func ExampleAccessControlClient_UpdateGroup() {
 	ctx := context.Background()
-	c, err := grbac.NewAuthorizerClient(ctx)
+	c, err := grbac.NewAccessControlClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -202,9 +219,9 @@ func ExampleAuthorizerClient_UpdateGroup() {
 	_ = resp
 }
 
-func ExampleAuthorizerClient_DeleteGroup() {
+func ExampleAccessControlClient_DeleteGroup() {
 	ctx := context.Background()
-	c, err := grbac.NewAuthorizerClient(ctx)
+	c, err := grbac.NewAccessControlClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -219,9 +236,9 @@ func ExampleAuthorizerClient_DeleteGroup() {
 	}
 }
 
-func ExampleAuthorizerClient_GetRole() {
+func ExampleAccessControlClient_GetRole() {
 	ctx := context.Background()
-	c, err := grbac.NewAuthorizerClient(ctx)
+	c, err := grbac.NewAccessControlClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -238,9 +255,9 @@ func ExampleAuthorizerClient_GetRole() {
 	_ = resp
 }
 
-func ExampleAuthorizerClient_CreateRole() {
+func ExampleAccessControlClient_CreateRole() {
 	ctx := context.Background()
-	c, err := grbac.NewAuthorizerClient(ctx)
+	c, err := grbac.NewAccessControlClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -257,9 +274,9 @@ func ExampleAuthorizerClient_CreateRole() {
 	_ = resp
 }
 
-func ExampleAuthorizerClient_UpdateRole() {
+func ExampleAccessControlClient_UpdateRole() {
 	ctx := context.Background()
-	c, err := grbac.NewAuthorizerClient(ctx)
+	c, err := grbac.NewAccessControlClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -276,9 +293,9 @@ func ExampleAuthorizerClient_UpdateRole() {
 	_ = resp
 }
 
-func ExampleAuthorizerClient_DeleteRole() {
+func ExampleAccessControlClient_DeleteRole() {
 	ctx := context.Background()
-	c, err := grbac.NewAuthorizerClient(ctx)
+	c, err := grbac.NewAccessControlClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
 	}

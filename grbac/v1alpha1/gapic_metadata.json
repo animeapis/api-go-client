@@ -5,10 +5,10 @@
   "protoPackage": "animeshon.grbac.v1alpha1",
   "libraryPackage": "github.com/animeapis/api-go-client/grbac/v1alpha1",
   "services": {
-    "Authorizer": {
+    "AccessControl": {
       "clients": {
         "grpc": {
-          "libraryClient": "AuthorizerClient",
+          "libraryClient": "AccessControlClient",
           "rpcs": {
             "Authorize": {
               "methods": [
@@ -48,6 +48,11 @@
             "DeleteRole": {
               "methods": [
                 "DeleteRole"
+              ]
+            },
+            "DeleteSubject": {
+              "methods": [
+                "DeleteSubject"
               ]
             },
             "GetGroup": {
