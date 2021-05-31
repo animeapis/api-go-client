@@ -5,10 +5,10 @@
   "protoPackage": "animeshon.crossrefs.v1alpha1",
   "libraryPackage": "github.com/animeapis/api-go-client/crossrefs/v1alpha1",
   "services": {
-    "CrossRefs": {
+    "Referrer": {
       "clients": {
         "grpc": {
-          "libraryClient": "Client",
+          "libraryClient": "ReferrerClient",
           "rpcs": {
             "AnalyzeParodies": {
               "methods": [

@@ -34,15 +34,15 @@ import (
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
-var newClientHook clientHook
+var newReferrerClientHook clientHook
 
-// CallOptions contains the retry settings for each method of Client.
-type CallOptions struct {
+// ReferrerCallOptions contains the retry settings for each method of ReferrerClient.
+type ReferrerCallOptions struct {
 	AnalyzeParodies []gax.CallOption
 	ExportParodies  []gax.CallOption
 }
 
-func defaultGRPCClientOptions() []option.ClientOption {
+func defaultReferrerGRPCClientOptions() []option.ClientOption {
 	return []option.ClientOption{
 		internaloption.WithDefaultEndpoint("crossrefs.animeapis.com:443"),
 		internaloption.WithDefaultMTLSEndpoint("crossrefs.animeapis.com:443"),
@@ -54,15 +54,15 @@ func defaultGRPCClientOptions() []option.ClientOption {
 	}
 }
 
-func defaultCallOptions() *CallOptions {
-	return &CallOptions{
+func defaultReferrerCallOptions() *ReferrerCallOptions {
+	return &ReferrerCallOptions{
 		AnalyzeParodies: []gax.CallOption{},
 		ExportParodies:  []gax.CallOption{},
 	}
 }
 
-// internalClient is an interface that defines the methods availaible from CrossRefs API.
-type internalClient interface {
+// internalReferrerClient is an interface that defines the methods availaible from CrossRefs API.
+type internalReferrerClient interface {
 	Close() error
 	setGoogleClientInfo(...string)
 	Connection() *grpc.ClientConn
@@ -72,14 +72,14 @@ type internalClient interface {
 	ExportParodiesOperation(name string) *ExportParodiesOperation
 }
 
-// Client is a client for interacting with CrossRefs API.
+// ReferrerClient is a client for interacting with CrossRefs API.
 // Methods, except Close, may be called concurrently. However, fields must not be modified concurrently with method calls.
-type Client struct {
+type ReferrerClient struct {
 	// The internal transport-dependent client.
-	internalClient internalClient
+	internalClient internalReferrerClient
 
 	// The call options for this service.
-	CallOptions *CallOptions
+	CallOptions *ReferrerCallOptions
 
 	// LROClient is used internally to handle long-running operations.
 	// It is exposed so that its CallOptions can be modified if required.
@@ -91,59 +91,59 @@ type Client struct {
 
 // Close closes the connection to the API service. The user should invoke this when
 // the client is no longer required.
-func (c *Client) Close() error {
+func (c *ReferrerClient) Close() error {
 	return c.internalClient.Close()
 }
 
 // setGoogleClientInfo sets the name and version of the application in
 // the `x-goog-api-client` header passed on each request. Intended for
 // use by Google-written clients.
-func (c *Client) setGoogleClientInfo(...string) {
+func (c *ReferrerClient) setGoogleClientInfo(...string) {
 	c.internalClient.setGoogleClientInfo()
 }
 
 // Connection returns a connection to the API service.
 //
 // Deprecated.
-func (c *Client) Connection() *grpc.ClientConn {
+func (c *ReferrerClient) Connection() *grpc.ClientConn {
 	return c.internalClient.Connection()
 }
 
-func (c *Client) AnalyzeParodies(ctx context.Context, req *emptypb.Empty, opts ...gax.CallOption) (*AnalyzeParodiesOperation, error) {
+func (c *ReferrerClient) AnalyzeParodies(ctx context.Context, req *emptypb.Empty, opts ...gax.CallOption) (*AnalyzeParodiesOperation, error) {
 	return c.internalClient.AnalyzeParodies(ctx, req, opts...)
 }
 
 // AnalyzeParodiesOperation returns a new AnalyzeParodiesOperation from a given name.
 // The name must be that of a previously created AnalyzeParodiesOperation, possibly from a different process.
-func (c *Client) AnalyzeParodiesOperation(name string) *AnalyzeParodiesOperation {
+func (c *ReferrerClient) AnalyzeParodiesOperation(name string) *AnalyzeParodiesOperation {
 	return c.internalClient.AnalyzeParodiesOperation(name)
 }
 
-func (c *Client) ExportParodies(ctx context.Context, req *emptypb.Empty, opts ...gax.CallOption) (*ExportParodiesOperation, error) {
+func (c *ReferrerClient) ExportParodies(ctx context.Context, req *emptypb.Empty, opts ...gax.CallOption) (*ExportParodiesOperation, error) {
 	return c.internalClient.ExportParodies(ctx, req, opts...)
 }
 
 // ExportParodiesOperation returns a new ExportParodiesOperation from a given name.
 // The name must be that of a previously created ExportParodiesOperation, possibly from a different process.
-func (c *Client) ExportParodiesOperation(name string) *ExportParodiesOperation {
+func (c *ReferrerClient) ExportParodiesOperation(name string) *ExportParodiesOperation {
 	return c.internalClient.ExportParodiesOperation(name)
 }
 
-// gRPCClient is a client for interacting with CrossRefs API over gRPC transport.
+// referrerGRPCClient is a client for interacting with CrossRefs API over gRPC transport.
 //
 // Methods, except Close, may be called concurrently. However, fields must not be modified concurrently with method calls.
-type gRPCClient struct {
+type referrerGRPCClient struct {
 	// Connection pool of gRPC connections to the service.
 	connPool gtransport.ConnPool
 
 	// flag to opt out of default deadlines via GOOGLE_API_GO_EXPERIMENTAL_DISABLE_DEFAULT_DEADLINE
 	disableDeadlines bool
 
-	// Points back to the CallOptions field of the containing Client
-	CallOptions **CallOptions
+	// Points back to the CallOptions field of the containing ReferrerClient
+	CallOptions **ReferrerCallOptions
 
 	// The gRPC API client.
-	client crossrefspb.CrossRefsClient
+	referrerClient crossrefspb.ReferrerClient
 
 	// LROClient is used internally to handle long-running operations.
 	// It is exposed so that its CallOptions can be modified if required.
@@ -154,12 +154,12 @@ type gRPCClient struct {
 	xGoogMetadata metadata.MD
 }
 
-// NewClient creates a new cross refs client based on gRPC.
+// NewReferrerClient creates a new referrer client based on gRPC.
 // The returned client must be Closed when it is done being used to clean up its underlying connections.
-func NewClient(ctx context.Context, opts ...option.ClientOption) (*Client, error) {
-	clientOpts := defaultGRPCClientOptions()
-	if newClientHook != nil {
-		hookOpts, err := newClientHook(ctx, clientHookParams{})
+func NewReferrerClient(ctx context.Context, opts ...option.ClientOption) (*ReferrerClient, error) {
+	clientOpts := defaultReferrerGRPCClientOptions()
+	if newReferrerClientHook != nil {
+		hookOpts, err := newReferrerClientHook(ctx, clientHookParams{})
 		if err != nil {
 			return nil, err
 		}
@@ -175,12 +175,12 @@ func NewClient(ctx context.Context, opts ...option.ClientOption) (*Client, error
 	if err != nil {
 		return nil, err
 	}
-	client := Client{CallOptions: defaultCallOptions()}
+	client := ReferrerClient{CallOptions: defaultReferrerCallOptions()}
 
-	c := &gRPCClient{
+	c := &referrerGRPCClient{
 		connPool:         connPool,
 		disableDeadlines: disableDeadlines,
-		client:           crossrefspb.NewCrossRefsClient(connPool),
+		referrerClient:   crossrefspb.NewReferrerClient(connPool),
 		CallOptions:      &client.CallOptions,
 	}
 	c.setGoogleClientInfo()
@@ -204,14 +204,14 @@ func NewClient(ctx context.Context, opts ...option.ClientOption) (*Client, error
 // Connection returns a connection to the API service.
 //
 // Deprecated.
-func (c *gRPCClient) Connection() *grpc.ClientConn {
+func (c *referrerGRPCClient) Connection() *grpc.ClientConn {
 	return c.connPool.Conn()
 }
 
 // setGoogleClientInfo sets the name and version of the application in
 // the `x-goog-api-client` header passed on each request. Intended for
 // use by Google-written clients.
-func (c *gRPCClient) setGoogleClientInfo(keyval ...string) {
+func (c *referrerGRPCClient) setGoogleClientInfo(keyval ...string) {
 	kv := append([]string{"gl-go", versionGo()}, keyval...)
 	kv = append(kv, "gapic", versionClient, "gax", gax.Version, "grpc", grpc.Version)
 	c.xGoogMetadata = metadata.Pairs("x-goog-api-client", gax.XGoogHeader(kv...))
@@ -219,17 +219,17 @@ func (c *gRPCClient) setGoogleClientInfo(keyval ...string) {
 
 // Close closes the connection to the API service. The user should invoke this when
 // the client is no longer required.
-func (c *gRPCClient) Close() error {
+func (c *referrerGRPCClient) Close() error {
 	return c.connPool.Close()
 }
 
-func (c *gRPCClient) AnalyzeParodies(ctx context.Context, req *emptypb.Empty, opts ...gax.CallOption) (*AnalyzeParodiesOperation, error) {
+func (c *referrerGRPCClient) AnalyzeParodies(ctx context.Context, req *emptypb.Empty, opts ...gax.CallOption) (*AnalyzeParodiesOperation, error) {
 	ctx = insertMetadata(ctx, c.xGoogMetadata)
 	opts = append((*c.CallOptions).AnalyzeParodies[0:len((*c.CallOptions).AnalyzeParodies):len((*c.CallOptions).AnalyzeParodies)], opts...)
 	var resp *longrunningpb.Operation
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
-		resp, err = c.client.AnalyzeParodies(ctx, req, settings.GRPC...)
+		resp, err = c.referrerClient.AnalyzeParodies(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	if err != nil {
@@ -240,13 +240,13 @@ func (c *gRPCClient) AnalyzeParodies(ctx context.Context, req *emptypb.Empty, op
 	}, nil
 }
 
-func (c *gRPCClient) ExportParodies(ctx context.Context, req *emptypb.Empty, opts ...gax.CallOption) (*ExportParodiesOperation, error) {
+func (c *referrerGRPCClient) ExportParodies(ctx context.Context, req *emptypb.Empty, opts ...gax.CallOption) (*ExportParodiesOperation, error) {
 	ctx = insertMetadata(ctx, c.xGoogMetadata)
 	opts = append((*c.CallOptions).ExportParodies[0:len((*c.CallOptions).ExportParodies):len((*c.CallOptions).ExportParodies)], opts...)
 	var resp *longrunningpb.Operation
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
-		resp, err = c.client.ExportParodies(ctx, req, settings.GRPC...)
+		resp, err = c.referrerClient.ExportParodies(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	if err != nil {
@@ -264,7 +264,7 @@ type AnalyzeParodiesOperation struct {
 
 // AnalyzeParodiesOperation returns a new AnalyzeParodiesOperation from a given name.
 // The name must be that of a previously created AnalyzeParodiesOperation, possibly from a different process.
-func (c *gRPCClient) AnalyzeParodiesOperation(name string) *AnalyzeParodiesOperation {
+func (c *referrerGRPCClient) AnalyzeParodiesOperation(name string) *AnalyzeParodiesOperation {
 	return &AnalyzeParodiesOperation{
 		lro: longrunning.InternalNewOperation(*c.LROClient, &longrunningpb.Operation{Name: name}),
 	}
@@ -322,7 +322,7 @@ type ExportParodiesOperation struct {
 
 // ExportParodiesOperation returns a new ExportParodiesOperation from a given name.
 // The name must be that of a previously created ExportParodiesOperation, possibly from a different process.
-func (c *gRPCClient) ExportParodiesOperation(name string) *ExportParodiesOperation {
+func (c *referrerGRPCClient) ExportParodiesOperation(name string) *ExportParodiesOperation {
 	return &ExportParodiesOperation{
 		lro: longrunning.InternalNewOperation(*c.LROClient, &longrunningpb.Operation{Name: name}),
 	}

@@ -23,9 +23,9 @@ import (
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
-func ExampleNewClient() {
+func ExampleNewReferrerClient() {
 	ctx := context.Background()
-	c, err := crossrefs.NewClient(ctx)
+	c, err := crossrefs.NewReferrerClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -35,9 +35,9 @@ func ExampleNewClient() {
 	_ = c
 }
 
-func ExampleClient_AnalyzeParodies() {
+func ExampleReferrerClient_AnalyzeParodies() {
 	ctx := context.Background()
-	c, err := crossrefs.NewClient(ctx)
+	c, err := crossrefs.NewReferrerClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -57,9 +57,9 @@ func ExampleClient_AnalyzeParodies() {
 	}
 }
 
-func ExampleClient_ExportParodies() {
+func ExampleReferrerClient_ExportParodies() {
 	ctx := context.Background()
-	c, err := crossrefs.NewClient(ctx)
+	c, err := crossrefs.NewReferrerClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
 	}
