@@ -10,14 +10,59 @@
         "grpc": {
           "libraryClient": "ReferrerClient",
           "rpcs": {
+            "AnalyzeCrossRefs": {
+              "methods": [
+                "AnalyzeCrossRefs"
+              ]
+            },
             "AnalyzeParodies": {
               "methods": [
                 "AnalyzeParodies"
               ]
             },
+            "ExpandUniverse": {
+              "methods": [
+                "ExpandUniverse"
+              ]
+            },
+            "ExportCrossRefs": {
+              "methods": [
+                "ExportCrossRefs"
+              ]
+            },
             "ExportParodies": {
               "methods": [
                 "ExportParodies"
+              ]
+            },
+            "GetCrossRef": {
+              "methods": [
+                "GetCrossRef"
+              ]
+            },
+            "GetUniverse": {
+              "methods": [
+                "GetUniverse"
+              ]
+            },
+            "ImportCrossRefs": {
+              "methods": [
+                "ImportCrossRefs"
+              ]
+            },
+            "ListCrossRefs": {
+              "methods": [
+                "ListCrossRefs"
+              ]
+            },
+            "UpdateCrossRef": {
+              "methods": [
+                "UpdateCrossRef"
+              ]
+            },
+            "UpdateUniverse": {
+              "methods": [
+                "UpdateUniverse"
               ]
             }
           }

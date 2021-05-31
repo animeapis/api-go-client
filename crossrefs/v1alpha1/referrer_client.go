@@ -18,13 +18,17 @@ package crossrefs
 
 import (
 	"context"
+	"fmt"
 	"math"
+	"net/url"
 	"time"
 
 	"cloud.google.com/go/longrunning"
 	lroauto "cloud.google.com/go/longrunning/autogen"
 	crossrefspb "github.com/animeapis/go-genproto/crossrefs/v1alpha1"
+	"github.com/golang/protobuf/proto"
 	gax "github.com/googleapis/gax-go/v2"
+	"google.golang.org/api/iterator"
 	"google.golang.org/api/option"
 	"google.golang.org/api/option/internaloption"
 	gtransport "google.golang.org/api/transport/grpc"
@@ -38,8 +42,17 @@ var newReferrerClientHook clientHook
 
 // ReferrerCallOptions contains the retry settings for each method of ReferrerClient.
 type ReferrerCallOptions struct {
-	AnalyzeParodies []gax.CallOption
-	ExportParodies  []gax.CallOption
+	GetCrossRef      []gax.CallOption
+	UpdateCrossRef   []gax.CallOption
+	ListCrossRefs    []gax.CallOption
+	AnalyzeCrossRefs []gax.CallOption
+	ImportCrossRefs  []gax.CallOption
+	ExportCrossRefs  []gax.CallOption
+	AnalyzeParodies  []gax.CallOption
+	ExportParodies   []gax.CallOption
+	GetUniverse      []gax.CallOption
+	UpdateUniverse   []gax.CallOption
+	ExpandUniverse   []gax.CallOption
 }
 
 func defaultReferrerGRPCClientOptions() []option.ClientOption {
@@ -56,8 +69,17 @@ func defaultReferrerGRPCClientOptions() []option.ClientOption {
 
 func defaultReferrerCallOptions() *ReferrerCallOptions {
 	return &ReferrerCallOptions{
-		AnalyzeParodies: []gax.CallOption{},
-		ExportParodies:  []gax.CallOption{},
+		GetCrossRef:      []gax.CallOption{},
+		UpdateCrossRef:   []gax.CallOption{},
+		ListCrossRefs:    []gax.CallOption{},
+		AnalyzeCrossRefs: []gax.CallOption{},
+		ImportCrossRefs:  []gax.CallOption{},
+		ExportCrossRefs:  []gax.CallOption{},
+		AnalyzeParodies:  []gax.CallOption{},
+		ExportParodies:   []gax.CallOption{},
+		GetUniverse:      []gax.CallOption{},
+		UpdateUniverse:   []gax.CallOption{},
+		ExpandUniverse:   []gax.CallOption{},
 	}
 }
 
@@ -66,10 +88,22 @@ type internalReferrerClient interface {
 	Close() error
 	setGoogleClientInfo(...string)
 	Connection() *grpc.ClientConn
+	GetCrossRef(context.Context, *crossrefspb.GetCrossRefRequest, ...gax.CallOption) (*crossrefspb.CrossRef, error)
+	UpdateCrossRef(context.Context, *crossrefspb.UpdateCrossRefRequest, ...gax.CallOption) (*crossrefspb.CrossRef, error)
+	ListCrossRefs(context.Context, *crossrefspb.ListCrossRefsRequest, ...gax.CallOption) *CrossRefIterator
+	AnalyzeCrossRefs(context.Context, *emptypb.Empty, ...gax.CallOption) (*AnalyzeCrossRefsOperation, error)
+	AnalyzeCrossRefsOperation(name string) *AnalyzeCrossRefsOperation
+	ImportCrossRefs(context.Context, *emptypb.Empty, ...gax.CallOption) (*ImportCrossRefsOperation, error)
+	ImportCrossRefsOperation(name string) *ImportCrossRefsOperation
+	ExportCrossRefs(context.Context, *emptypb.Empty, ...gax.CallOption) (*ExportCrossRefsOperation, error)
+	ExportCrossRefsOperation(name string) *ExportCrossRefsOperation
 	AnalyzeParodies(context.Context, *emptypb.Empty, ...gax.CallOption) (*AnalyzeParodiesOperation, error)
 	AnalyzeParodiesOperation(name string) *AnalyzeParodiesOperation
 	ExportParodies(context.Context, *emptypb.Empty, ...gax.CallOption) (*ExportParodiesOperation, error)
 	ExportParodiesOperation(name string) *ExportParodiesOperation
+	GetUniverse(context.Context, *crossrefspb.GetUniverseRequest, ...gax.CallOption) (*crossrefspb.Universe, error)
+	UpdateUniverse(context.Context, *crossrefspb.UpdateUniverseRequest, ...gax.CallOption) (*crossrefspb.Universe, error)
+	ExpandUniverse(context.Context, *crossrefspb.ExpandUniverseRequest, ...gax.CallOption) (*crossrefspb.Universe, error)
 }
 
 // ReferrerClient is a client for interacting with CrossRefs API.
@@ -109,6 +143,52 @@ func (c *ReferrerClient) Connection() *grpc.ClientConn {
 	return c.internalClient.Connection()
 }
 
+func (c *ReferrerClient) GetCrossRef(ctx context.Context, req *crossrefspb.GetCrossRefRequest, opts ...gax.CallOption) (*crossrefspb.CrossRef, error) {
+	return c.internalClient.GetCrossRef(ctx, req, opts...)
+}
+
+func (c *ReferrerClient) UpdateCrossRef(ctx context.Context, req *crossrefspb.UpdateCrossRefRequest, opts ...gax.CallOption) (*crossrefspb.CrossRef, error) {
+	return c.internalClient.UpdateCrossRef(ctx, req, opts...)
+}
+
+func (c *ReferrerClient) ListCrossRefs(ctx context.Context, req *crossrefspb.ListCrossRefsRequest, opts ...gax.CallOption) *CrossRefIterator {
+	return c.internalClient.ListCrossRefs(ctx, req, opts...)
+}
+
+// AnalyzeCrossRefs analyzes and proposes new cross-references according to their similarity.
+func (c *ReferrerClient) AnalyzeCrossRefs(ctx context.Context, req *emptypb.Empty, opts ...gax.CallOption) (*AnalyzeCrossRefsOperation, error) {
+	return c.internalClient.AnalyzeCrossRefs(ctx, req, opts...)
+}
+
+// AnalyzeCrossRefsOperation returns a new AnalyzeCrossRefsOperation from a given name.
+// The name must be that of a previously created AnalyzeCrossRefsOperation, possibly from a different process.
+func (c *ReferrerClient) AnalyzeCrossRefsOperation(name string) *AnalyzeCrossRefsOperation {
+	return c.internalClient.AnalyzeCrossRefsOperation(name)
+}
+
+// ImportCrossRefs imports already existing cross-references from third-parties.
+func (c *ReferrerClient) ImportCrossRefs(ctx context.Context, req *emptypb.Empty, opts ...gax.CallOption) (*ImportCrossRefsOperation, error) {
+	return c.internalClient.ImportCrossRefs(ctx, req, opts...)
+}
+
+// ImportCrossRefsOperation returns a new ImportCrossRefsOperation from a given name.
+// The name must be that of a previously created ImportCrossRefsOperation, possibly from a different process.
+func (c *ReferrerClient) ImportCrossRefsOperation(name string) *ImportCrossRefsOperation {
+	return c.internalClient.ImportCrossRefsOperation(name)
+}
+
+// ExportCrossRefs exports the cross-references to Cloud Pub/Sub for a full synchronization.
+// This operation is usually called after a new import with a clean database.
+func (c *ReferrerClient) ExportCrossRefs(ctx context.Context, req *emptypb.Empty, opts ...gax.CallOption) (*ExportCrossRefsOperation, error) {
+	return c.internalClient.ExportCrossRefs(ctx, req, opts...)
+}
+
+// ExportCrossRefsOperation returns a new ExportCrossRefsOperation from a given name.
+// The name must be that of a previously created ExportCrossRefsOperation, possibly from a different process.
+func (c *ReferrerClient) ExportCrossRefsOperation(name string) *ExportCrossRefsOperation {
+	return c.internalClient.ExportCrossRefsOperation(name)
+}
+
 func (c *ReferrerClient) AnalyzeParodies(ctx context.Context, req *emptypb.Empty, opts ...gax.CallOption) (*AnalyzeParodiesOperation, error) {
 	return c.internalClient.AnalyzeParodies(ctx, req, opts...)
 }
@@ -127,6 +207,18 @@ func (c *ReferrerClient) ExportParodies(ctx context.Context, req *emptypb.Empty,
 // The name must be that of a previously created ExportParodiesOperation, possibly from a different process.
 func (c *ReferrerClient) ExportParodiesOperation(name string) *ExportParodiesOperation {
 	return c.internalClient.ExportParodiesOperation(name)
+}
+
+func (c *ReferrerClient) GetUniverse(ctx context.Context, req *crossrefspb.GetUniverseRequest, opts ...gax.CallOption) (*crossrefspb.Universe, error) {
+	return c.internalClient.GetUniverse(ctx, req, opts...)
+}
+
+func (c *ReferrerClient) UpdateUniverse(ctx context.Context, req *crossrefspb.UpdateUniverseRequest, opts ...gax.CallOption) (*crossrefspb.Universe, error) {
+	return c.internalClient.UpdateUniverse(ctx, req, opts...)
+}
+
+func (c *ReferrerClient) ExpandUniverse(ctx context.Context, req *crossrefspb.ExpandUniverseRequest, opts ...gax.CallOption) (*crossrefspb.Universe, error) {
+	return c.internalClient.ExpandUniverse(ctx, req, opts...)
 }
 
 // referrerGRPCClient is a client for interacting with CrossRefs API over gRPC transport.
@@ -223,6 +315,128 @@ func (c *referrerGRPCClient) Close() error {
 	return c.connPool.Close()
 }
 
+func (c *referrerGRPCClient) GetCrossRef(ctx context.Context, req *crossrefspb.GetCrossRefRequest, opts ...gax.CallOption) (*crossrefspb.CrossRef, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).GetCrossRef[0:len((*c.CallOptions).GetCrossRef):len((*c.CallOptions).GetCrossRef)], opts...)
+	var resp *crossrefspb.CrossRef
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.referrerClient.GetCrossRef(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *referrerGRPCClient) UpdateCrossRef(ctx context.Context, req *crossrefspb.UpdateCrossRefRequest, opts ...gax.CallOption) (*crossrefspb.CrossRef, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "crossref.name", url.QueryEscape(req.GetCrossref().GetName())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).UpdateCrossRef[0:len((*c.CallOptions).UpdateCrossRef):len((*c.CallOptions).UpdateCrossRef)], opts...)
+	var resp *crossrefspb.CrossRef
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.referrerClient.UpdateCrossRef(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *referrerGRPCClient) ListCrossRefs(ctx context.Context, req *crossrefspb.ListCrossRefsRequest, opts ...gax.CallOption) *CrossRefIterator {
+	ctx = insertMetadata(ctx, c.xGoogMetadata)
+	opts = append((*c.CallOptions).ListCrossRefs[0:len((*c.CallOptions).ListCrossRefs):len((*c.CallOptions).ListCrossRefs)], opts...)
+	it := &CrossRefIterator{}
+	req = proto.Clone(req).(*crossrefspb.ListCrossRefsRequest)
+	it.InternalFetch = func(pageSize int, pageToken string) ([]*crossrefspb.CrossRef, string, error) {
+		var resp *crossrefspb.ListCrossRefsResponse
+		req.PageToken = pageToken
+		if pageSize > math.MaxInt32 {
+			req.PageSize = math.MaxInt32
+		} else {
+			req.PageSize = int32(pageSize)
+		}
+		err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+			var err error
+			resp, err = c.referrerClient.ListCrossRefs(ctx, req, settings.GRPC...)
+			return err
+		}, opts...)
+		if err != nil {
+			return nil, "", err
+		}
+
+		it.Response = resp
+		return resp.GetCrossrefs(), resp.GetNextPageToken(), nil
+	}
+	fetch := func(pageSize int, pageToken string) (string, error) {
+		items, nextPageToken, err := it.InternalFetch(pageSize, pageToken)
+		if err != nil {
+			return "", err
+		}
+		it.items = append(it.items, items...)
+		return nextPageToken, nil
+	}
+	it.pageInfo, it.nextFunc = iterator.NewPageInfo(fetch, it.bufLen, it.takeBuf)
+	it.pageInfo.MaxSize = int(req.GetPageSize())
+	it.pageInfo.Token = req.GetPageToken()
+	return it
+}
+
+func (c *referrerGRPCClient) AnalyzeCrossRefs(ctx context.Context, req *emptypb.Empty, opts ...gax.CallOption) (*AnalyzeCrossRefsOperation, error) {
+	ctx = insertMetadata(ctx, c.xGoogMetadata)
+	opts = append((*c.CallOptions).AnalyzeCrossRefs[0:len((*c.CallOptions).AnalyzeCrossRefs):len((*c.CallOptions).AnalyzeCrossRefs)], opts...)
+	var resp *longrunningpb.Operation
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.referrerClient.AnalyzeCrossRefs(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &AnalyzeCrossRefsOperation{
+		lro: longrunning.InternalNewOperation(*c.LROClient, resp),
+	}, nil
+}
+
+func (c *referrerGRPCClient) ImportCrossRefs(ctx context.Context, req *emptypb.Empty, opts ...gax.CallOption) (*ImportCrossRefsOperation, error) {
+	ctx = insertMetadata(ctx, c.xGoogMetadata)
+	opts = append((*c.CallOptions).ImportCrossRefs[0:len((*c.CallOptions).ImportCrossRefs):len((*c.CallOptions).ImportCrossRefs)], opts...)
+	var resp *longrunningpb.Operation
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.referrerClient.ImportCrossRefs(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &ImportCrossRefsOperation{
+		lro: longrunning.InternalNewOperation(*c.LROClient, resp),
+	}, nil
+}
+
+func (c *referrerGRPCClient) ExportCrossRefs(ctx context.Context, req *emptypb.Empty, opts ...gax.CallOption) (*ExportCrossRefsOperation, error) {
+	ctx = insertMetadata(ctx, c.xGoogMetadata)
+	opts = append((*c.CallOptions).ExportCrossRefs[0:len((*c.CallOptions).ExportCrossRefs):len((*c.CallOptions).ExportCrossRefs)], opts...)
+	var resp *longrunningpb.Operation
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.referrerClient.ExportCrossRefs(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &ExportCrossRefsOperation{
+		lro: longrunning.InternalNewOperation(*c.LROClient, resp),
+	}, nil
+}
+
 func (c *referrerGRPCClient) AnalyzeParodies(ctx context.Context, req *emptypb.Empty, opts ...gax.CallOption) (*AnalyzeParodiesOperation, error) {
 	ctx = insertMetadata(ctx, c.xGoogMetadata)
 	opts = append((*c.CallOptions).AnalyzeParodies[0:len((*c.CallOptions).AnalyzeParodies):len((*c.CallOptions).AnalyzeParodies)], opts...)
@@ -255,6 +469,123 @@ func (c *referrerGRPCClient) ExportParodies(ctx context.Context, req *emptypb.Em
 	return &ExportParodiesOperation{
 		lro: longrunning.InternalNewOperation(*c.LROClient, resp),
 	}, nil
+}
+
+func (c *referrerGRPCClient) GetUniverse(ctx context.Context, req *crossrefspb.GetUniverseRequest, opts ...gax.CallOption) (*crossrefspb.Universe, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).GetUniverse[0:len((*c.CallOptions).GetUniverse):len((*c.CallOptions).GetUniverse)], opts...)
+	var resp *crossrefspb.Universe
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.referrerClient.GetUniverse(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *referrerGRPCClient) UpdateUniverse(ctx context.Context, req *crossrefspb.UpdateUniverseRequest, opts ...gax.CallOption) (*crossrefspb.Universe, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "universe.name", url.QueryEscape(req.GetUniverse().GetName())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).UpdateUniverse[0:len((*c.CallOptions).UpdateUniverse):len((*c.CallOptions).UpdateUniverse)], opts...)
+	var resp *crossrefspb.Universe
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.referrerClient.UpdateUniverse(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *referrerGRPCClient) ExpandUniverse(ctx context.Context, req *crossrefspb.ExpandUniverseRequest, opts ...gax.CallOption) (*crossrefspb.Universe, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).ExpandUniverse[0:len((*c.CallOptions).ExpandUniverse):len((*c.CallOptions).ExpandUniverse)], opts...)
+	var resp *crossrefspb.Universe
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.referrerClient.ExpandUniverse(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+// AnalyzeCrossRefsOperation manages a long-running operation from AnalyzeCrossRefs.
+type AnalyzeCrossRefsOperation struct {
+	lro *longrunning.Operation
+}
+
+// AnalyzeCrossRefsOperation returns a new AnalyzeCrossRefsOperation from a given name.
+// The name must be that of a previously created AnalyzeCrossRefsOperation, possibly from a different process.
+func (c *referrerGRPCClient) AnalyzeCrossRefsOperation(name string) *AnalyzeCrossRefsOperation {
+	return &AnalyzeCrossRefsOperation{
+		lro: longrunning.InternalNewOperation(*c.LROClient, &longrunningpb.Operation{Name: name}),
+	}
+}
+
+// Wait blocks until the long-running operation is completed, returning the response and any errors encountered.
+//
+// See documentation of Poll for error-handling information.
+func (op *AnalyzeCrossRefsOperation) Wait(ctx context.Context, opts ...gax.CallOption) (*crossrefspb.AnalyzeCrossRefsResponse, error) {
+	var resp crossrefspb.AnalyzeCrossRefsResponse
+	if err := op.lro.WaitWithInterval(ctx, &resp, time.Minute, opts...); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+// Poll fetches the latest state of the long-running operation.
+//
+// Poll also fetches the latest metadata, which can be retrieved by Metadata.
+//
+// If Poll fails, the error is returned and op is unmodified. If Poll succeeds and
+// the operation has completed with failure, the error is returned and op.Done will return true.
+// If Poll succeeds and the operation has completed successfully,
+// op.Done will return true, and the response of the operation is returned.
+// If Poll succeeds and the operation has not completed, the returned response and error are both nil.
+func (op *AnalyzeCrossRefsOperation) Poll(ctx context.Context, opts ...gax.CallOption) (*crossrefspb.AnalyzeCrossRefsResponse, error) {
+	var resp crossrefspb.AnalyzeCrossRefsResponse
+	if err := op.lro.Poll(ctx, &resp, opts...); err != nil {
+		return nil, err
+	}
+	if !op.Done() {
+		return nil, nil
+	}
+	return &resp, nil
+}
+
+// Metadata returns metadata associated with the long-running operation.
+// Metadata itself does not contact the server, but Poll does.
+// To get the latest metadata, call this method after a successful call to Poll.
+// If the metadata is not available, the returned metadata and error are both nil.
+func (op *AnalyzeCrossRefsOperation) Metadata() (*crossrefspb.OperationMetadata, error) {
+	var meta crossrefspb.OperationMetadata
+	if err := op.lro.Metadata(&meta); err == longrunning.ErrNoMetadata {
+		return nil, nil
+	} else if err != nil {
+		return nil, err
+	}
+	return &meta, nil
+}
+
+// Done reports whether the long-running operation has completed.
+func (op *AnalyzeCrossRefsOperation) Done() bool {
+	return op.lro.Done()
+}
+
+// Name returns the name of the long-running operation.
+// The name is assigned by the server and is unique within the service from which the operation is created.
+func (op *AnalyzeCrossRefsOperation) Name() string {
+	return op.lro.Name()
 }
 
 // AnalyzeParodiesOperation manages a long-running operation from AnalyzeParodies.
@@ -326,6 +657,75 @@ func (op *AnalyzeParodiesOperation) Name() string {
 	return op.lro.Name()
 }
 
+// ExportCrossRefsOperation manages a long-running operation from ExportCrossRefs.
+type ExportCrossRefsOperation struct {
+	lro *longrunning.Operation
+}
+
+// ExportCrossRefsOperation returns a new ExportCrossRefsOperation from a given name.
+// The name must be that of a previously created ExportCrossRefsOperation, possibly from a different process.
+func (c *referrerGRPCClient) ExportCrossRefsOperation(name string) *ExportCrossRefsOperation {
+	return &ExportCrossRefsOperation{
+		lro: longrunning.InternalNewOperation(*c.LROClient, &longrunningpb.Operation{Name: name}),
+	}
+}
+
+// Wait blocks until the long-running operation is completed, returning the response and any errors encountered.
+//
+// See documentation of Poll for error-handling information.
+func (op *ExportCrossRefsOperation) Wait(ctx context.Context, opts ...gax.CallOption) (*crossrefspb.ExportCrossRefsResponse, error) {
+	var resp crossrefspb.ExportCrossRefsResponse
+	if err := op.lro.WaitWithInterval(ctx, &resp, time.Minute, opts...); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+// Poll fetches the latest state of the long-running operation.
+//
+// Poll also fetches the latest metadata, which can be retrieved by Metadata.
+//
+// If Poll fails, the error is returned and op is unmodified. If Poll succeeds and
+// the operation has completed with failure, the error is returned and op.Done will return true.
+// If Poll succeeds and the operation has completed successfully,
+// op.Done will return true, and the response of the operation is returned.
+// If Poll succeeds and the operation has not completed, the returned response and error are both nil.
+func (op *ExportCrossRefsOperation) Poll(ctx context.Context, opts ...gax.CallOption) (*crossrefspb.ExportCrossRefsResponse, error) {
+	var resp crossrefspb.ExportCrossRefsResponse
+	if err := op.lro.Poll(ctx, &resp, opts...); err != nil {
+		return nil, err
+	}
+	if !op.Done() {
+		return nil, nil
+	}
+	return &resp, nil
+}
+
+// Metadata returns metadata associated with the long-running operation.
+// Metadata itself does not contact the server, but Poll does.
+// To get the latest metadata, call this method after a successful call to Poll.
+// If the metadata is not available, the returned metadata and error are both nil.
+func (op *ExportCrossRefsOperation) Metadata() (*crossrefspb.OperationMetadata, error) {
+	var meta crossrefspb.OperationMetadata
+	if err := op.lro.Metadata(&meta); err == longrunning.ErrNoMetadata {
+		return nil, nil
+	} else if err != nil {
+		return nil, err
+	}
+	return &meta, nil
+}
+
+// Done reports whether the long-running operation has completed.
+func (op *ExportCrossRefsOperation) Done() bool {
+	return op.lro.Done()
+}
+
+// Name returns the name of the long-running operation.
+// The name is assigned by the server and is unique within the service from which the operation is created.
+func (op *ExportCrossRefsOperation) Name() string {
+	return op.lro.Name()
+}
+
 // ExportParodiesOperation manages a long-running operation from ExportParodies.
 type ExportParodiesOperation struct {
 	lro *longrunning.Operation
@@ -393,4 +793,120 @@ func (op *ExportParodiesOperation) Done() bool {
 // The name is assigned by the server and is unique within the service from which the operation is created.
 func (op *ExportParodiesOperation) Name() string {
 	return op.lro.Name()
+}
+
+// ImportCrossRefsOperation manages a long-running operation from ImportCrossRefs.
+type ImportCrossRefsOperation struct {
+	lro *longrunning.Operation
+}
+
+// ImportCrossRefsOperation returns a new ImportCrossRefsOperation from a given name.
+// The name must be that of a previously created ImportCrossRefsOperation, possibly from a different process.
+func (c *referrerGRPCClient) ImportCrossRefsOperation(name string) *ImportCrossRefsOperation {
+	return &ImportCrossRefsOperation{
+		lro: longrunning.InternalNewOperation(*c.LROClient, &longrunningpb.Operation{Name: name}),
+	}
+}
+
+// Wait blocks until the long-running operation is completed, returning the response and any errors encountered.
+//
+// See documentation of Poll for error-handling information.
+func (op *ImportCrossRefsOperation) Wait(ctx context.Context, opts ...gax.CallOption) (*crossrefspb.ImportCrossRefsResponse, error) {
+	var resp crossrefspb.ImportCrossRefsResponse
+	if err := op.lro.WaitWithInterval(ctx, &resp, time.Minute, opts...); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+// Poll fetches the latest state of the long-running operation.
+//
+// Poll also fetches the latest metadata, which can be retrieved by Metadata.
+//
+// If Poll fails, the error is returned and op is unmodified. If Poll succeeds and
+// the operation has completed with failure, the error is returned and op.Done will return true.
+// If Poll succeeds and the operation has completed successfully,
+// op.Done will return true, and the response of the operation is returned.
+// If Poll succeeds and the operation has not completed, the returned response and error are both nil.
+func (op *ImportCrossRefsOperation) Poll(ctx context.Context, opts ...gax.CallOption) (*crossrefspb.ImportCrossRefsResponse, error) {
+	var resp crossrefspb.ImportCrossRefsResponse
+	if err := op.lro.Poll(ctx, &resp, opts...); err != nil {
+		return nil, err
+	}
+	if !op.Done() {
+		return nil, nil
+	}
+	return &resp, nil
+}
+
+// Metadata returns metadata associated with the long-running operation.
+// Metadata itself does not contact the server, but Poll does.
+// To get the latest metadata, call this method after a successful call to Poll.
+// If the metadata is not available, the returned metadata and error are both nil.
+func (op *ImportCrossRefsOperation) Metadata() (*crossrefspb.OperationMetadata, error) {
+	var meta crossrefspb.OperationMetadata
+	if err := op.lro.Metadata(&meta); err == longrunning.ErrNoMetadata {
+		return nil, nil
+	} else if err != nil {
+		return nil, err
+	}
+	return &meta, nil
+}
+
+// Done reports whether the long-running operation has completed.
+func (op *ImportCrossRefsOperation) Done() bool {
+	return op.lro.Done()
+}
+
+// Name returns the name of the long-running operation.
+// The name is assigned by the server and is unique within the service from which the operation is created.
+func (op *ImportCrossRefsOperation) Name() string {
+	return op.lro.Name()
+}
+
+// CrossRefIterator manages a stream of *crossrefspb.CrossRef.
+type CrossRefIterator struct {
+	items    []*crossrefspb.CrossRef
+	pageInfo *iterator.PageInfo
+	nextFunc func() error
+
+	// Response is the raw response for the current page.
+	// It must be cast to the RPC response type.
+	// Calling Next() or InternalFetch() updates this value.
+	Response interface{}
+
+	// InternalFetch is for use by the Google Cloud Libraries only.
+	// It is not part of the stable interface of this package.
+	//
+	// InternalFetch returns results from a single call to the underlying RPC.
+	// The number of results is no greater than pageSize.
+	// If there are no more results, nextPageToken is empty and err is nil.
+	InternalFetch func(pageSize int, pageToken string) (results []*crossrefspb.CrossRef, nextPageToken string, err error)
+}
+
+// PageInfo supports pagination. See the google.golang.org/api/iterator package for details.
+func (it *CrossRefIterator) PageInfo() *iterator.PageInfo {
+	return it.pageInfo
+}
+
+// Next returns the next result. Its second return value is iterator.Done if there are no more
+// results. Once Next returns Done, all subsequent calls will return Done.
+func (it *CrossRefIterator) Next() (*crossrefspb.CrossRef, error) {
+	var item *crossrefspb.CrossRef
+	if err := it.nextFunc(); err != nil {
+		return item, err
+	}
+	item = it.items[0]
+	it.items = it.items[1:]
+	return item, nil
+}
+
+func (it *CrossRefIterator) bufLen() int {
+	return len(it.items)
+}
+
+func (it *CrossRefIterator) takeBuf() interface{} {
+	b := it.items
+	it.items = nil
+	return b
 }

@@ -20,6 +20,8 @@ import (
 	"context"
 
 	crossrefs "github.com/animeapis/api-go-client/crossrefs/v1alpha1"
+	crossrefspb "github.com/animeapis/go-genproto/crossrefs/v1alpha1"
+	"google.golang.org/api/iterator"
 	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
@@ -33,6 +35,141 @@ func ExampleNewReferrerClient() {
 
 	// TODO: Use client.
 	_ = c
+}
+
+func ExampleReferrerClient_GetCrossRef() {
+	ctx := context.Background()
+	c, err := crossrefs.NewReferrerClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &crossrefspb.GetCrossRefRequest{
+		// TODO: Fill request struct fields.
+	}
+	resp, err := c.GetCrossRef(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
+func ExampleReferrerClient_UpdateCrossRef() {
+	ctx := context.Background()
+	c, err := crossrefs.NewReferrerClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &crossrefspb.UpdateCrossRefRequest{
+		// TODO: Fill request struct fields.
+	}
+	resp, err := c.UpdateCrossRef(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
+func ExampleReferrerClient_ListCrossRefs() {
+	ctx := context.Background()
+	c, err := crossrefs.NewReferrerClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &crossrefspb.ListCrossRefsRequest{
+		// TODO: Fill request struct fields.
+	}
+	it := c.ListCrossRefs(ctx, req)
+	for {
+		resp, err := it.Next()
+		if err == iterator.Done {
+			break
+		}
+		if err != nil {
+			// TODO: Handle error.
+		}
+		// TODO: Use resp.
+		_ = resp
+	}
+}
+
+func ExampleReferrerClient_AnalyzeCrossRefs() {
+	ctx := context.Background()
+	c, err := crossrefs.NewReferrerClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &emptypb.Empty{
+		// TODO: Fill request struct fields.
+	}
+	op, err := c.AnalyzeCrossRefs(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+
+	resp, err := op.Wait(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
+func ExampleReferrerClient_ImportCrossRefs() {
+	ctx := context.Background()
+	c, err := crossrefs.NewReferrerClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &emptypb.Empty{
+		// TODO: Fill request struct fields.
+	}
+	op, err := c.ImportCrossRefs(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+
+	resp, err := op.Wait(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
+func ExampleReferrerClient_ExportCrossRefs() {
+	ctx := context.Background()
+	c, err := crossrefs.NewReferrerClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &emptypb.Empty{
+		// TODO: Fill request struct fields.
+	}
+	op, err := c.ExportCrossRefs(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+
+	resp, err := op.Wait(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
 }
 
 func ExampleReferrerClient_AnalyzeParodies() {
@@ -76,6 +213,63 @@ func ExampleReferrerClient_ExportParodies() {
 	}
 
 	resp, err := op.Wait(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
+func ExampleReferrerClient_GetUniverse() {
+	ctx := context.Background()
+	c, err := crossrefs.NewReferrerClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &crossrefspb.GetUniverseRequest{
+		// TODO: Fill request struct fields.
+	}
+	resp, err := c.GetUniverse(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
+func ExampleReferrerClient_UpdateUniverse() {
+	ctx := context.Background()
+	c, err := crossrefs.NewReferrerClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &crossrefspb.UpdateUniverseRequest{
+		// TODO: Fill request struct fields.
+	}
+	resp, err := c.UpdateUniverse(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
+func ExampleReferrerClient_ExpandUniverse() {
+	ctx := context.Background()
+	c, err := crossrefs.NewReferrerClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &crossrefspb.ExpandUniverseRequest{
+		// TODO: Fill request struct fields.
+	}
+	resp, err := c.ExpandUniverse(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
 	}
