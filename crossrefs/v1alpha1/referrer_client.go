@@ -273,8 +273,12 @@ func (c *referrerGRPCClient) AnalyzeParodiesOperation(name string) *AnalyzeParod
 // Wait blocks until the long-running operation is completed, returning the response and any errors encountered.
 //
 // See documentation of Poll for error-handling information.
-func (op *AnalyzeParodiesOperation) Wait(ctx context.Context, opts ...gax.CallOption) error {
-	return op.lro.WaitWithInterval(ctx, nil, time.Minute, opts...)
+func (op *AnalyzeParodiesOperation) Wait(ctx context.Context, opts ...gax.CallOption) (*crossrefspb.AnalyzeParodiesResponse, error) {
+	var resp crossrefspb.AnalyzeParodiesResponse
+	if err := op.lro.WaitWithInterval(ctx, &resp, time.Minute, opts...); err != nil {
+		return nil, err
+	}
+	return &resp, nil
 }
 
 // Poll fetches the latest state of the long-running operation.
@@ -286,8 +290,15 @@ func (op *AnalyzeParodiesOperation) Wait(ctx context.Context, opts ...gax.CallOp
 // If Poll succeeds and the operation has completed successfully,
 // op.Done will return true, and the response of the operation is returned.
 // If Poll succeeds and the operation has not completed, the returned response and error are both nil.
-func (op *AnalyzeParodiesOperation) Poll(ctx context.Context, opts ...gax.CallOption) error {
-	return op.lro.Poll(ctx, nil, opts...)
+func (op *AnalyzeParodiesOperation) Poll(ctx context.Context, opts ...gax.CallOption) (*crossrefspb.AnalyzeParodiesResponse, error) {
+	var resp crossrefspb.AnalyzeParodiesResponse
+	if err := op.lro.Poll(ctx, &resp, opts...); err != nil {
+		return nil, err
+	}
+	if !op.Done() {
+		return nil, nil
+	}
+	return &resp, nil
 }
 
 // Metadata returns metadata associated with the long-running operation.
@@ -331,8 +342,12 @@ func (c *referrerGRPCClient) ExportParodiesOperation(name string) *ExportParodie
 // Wait blocks until the long-running operation is completed, returning the response and any errors encountered.
 //
 // See documentation of Poll for error-handling information.
-func (op *ExportParodiesOperation) Wait(ctx context.Context, opts ...gax.CallOption) error {
-	return op.lro.WaitWithInterval(ctx, nil, time.Minute, opts...)
+func (op *ExportParodiesOperation) Wait(ctx context.Context, opts ...gax.CallOption) (*crossrefspb.ExportParodiesResponse, error) {
+	var resp crossrefspb.ExportParodiesResponse
+	if err := op.lro.WaitWithInterval(ctx, &resp, time.Minute, opts...); err != nil {
+		return nil, err
+	}
+	return &resp, nil
 }
 
 // Poll fetches the latest state of the long-running operation.
@@ -344,8 +359,15 @@ func (op *ExportParodiesOperation) Wait(ctx context.Context, opts ...gax.CallOpt
 // If Poll succeeds and the operation has completed successfully,
 // op.Done will return true, and the response of the operation is returned.
 // If Poll succeeds and the operation has not completed, the returned response and error are both nil.
-func (op *ExportParodiesOperation) Poll(ctx context.Context, opts ...gax.CallOption) error {
-	return op.lro.Poll(ctx, nil, opts...)
+func (op *ExportParodiesOperation) Poll(ctx context.Context, opts ...gax.CallOption) (*crossrefspb.ExportParodiesResponse, error) {
+	var resp crossrefspb.ExportParodiesResponse
+	if err := op.lro.Poll(ctx, &resp, opts...); err != nil {
+		return nil, err
+	}
+	if !op.Done() {
+		return nil, nil
+	}
+	return &resp, nil
 }
 
 // Metadata returns metadata associated with the long-running operation.
