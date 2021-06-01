@@ -103,7 +103,7 @@ type internalReferrerClient interface {
 	ExportParodiesOperation(name string) *ExportParodiesOperation
 	GetUniverse(context.Context, *crossrefspb.GetUniverseRequest, ...gax.CallOption) (*crossrefspb.Universe, error)
 	UpdateUniverse(context.Context, *crossrefspb.UpdateUniverseRequest, ...gax.CallOption) (*crossrefspb.Universe, error)
-	ExpandUniverse(context.Context, *crossrefspb.ExpandUniverseRequest, ...gax.CallOption) (*crossrefspb.Universe, error)
+	ExpandUniverse(context.Context, *crossrefspb.ExpandUniverseRequest, ...gax.CallOption) (*crossrefspb.ExpandUniverseResponse, error)
 }
 
 // ReferrerClient is a client for interacting with CrossRefs API.
@@ -217,7 +217,7 @@ func (c *ReferrerClient) UpdateUniverse(ctx context.Context, req *crossrefspb.Up
 	return c.internalClient.UpdateUniverse(ctx, req, opts...)
 }
 
-func (c *ReferrerClient) ExpandUniverse(ctx context.Context, req *crossrefspb.ExpandUniverseRequest, opts ...gax.CallOption) (*crossrefspb.Universe, error) {
+func (c *ReferrerClient) ExpandUniverse(ctx context.Context, req *crossrefspb.ExpandUniverseRequest, opts ...gax.CallOption) (*crossrefspb.ExpandUniverseResponse, error) {
 	return c.internalClient.ExpandUniverse(ctx, req, opts...)
 }
 
@@ -503,11 +503,11 @@ func (c *referrerGRPCClient) UpdateUniverse(ctx context.Context, req *crossrefsp
 	return resp, nil
 }
 
-func (c *referrerGRPCClient) ExpandUniverse(ctx context.Context, req *crossrefspb.ExpandUniverseRequest, opts ...gax.CallOption) (*crossrefspb.Universe, error) {
+func (c *referrerGRPCClient) ExpandUniverse(ctx context.Context, req *crossrefspb.ExpandUniverseRequest, opts ...gax.CallOption) (*crossrefspb.ExpandUniverseResponse, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).ExpandUniverse[0:len((*c.CallOptions).ExpandUniverse):len((*c.CallOptions).ExpandUniverse)], opts...)
-	var resp *crossrefspb.Universe
+	var resp *crossrefspb.ExpandUniverseResponse
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
 		resp, err = c.referrerClient.ExpandUniverse(ctx, req, settings.GRPC...)
