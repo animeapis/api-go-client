@@ -1,0 +1,43 @@
+{
+  "schema": "1.0",
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods.",
+  "language": "go",
+  "protoPackage": "animeshon.knowledge.v1alpha1",
+  "libraryPackage": "github.com/animeapis/api-go-client/knowledge/v1alpha1",
+  "services": {
+    "Knowledge": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "Client",
+          "rpcs": {
+            "ApproveContribution": {
+              "methods": [
+                "ApproveContribution"
+              ]
+            },
+            "CreateContribution": {
+              "methods": [
+                "CreateContribution"
+              ]
+            },
+            "GetContribution": {
+              "methods": [
+                "GetContribution"
+              ]
+            },
+            "ListContributions": {
+              "methods": [
+                "ListContributions"
+              ]
+            },
+            "RejectContribution": {
+              "methods": [
+                "RejectContribution"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}
