@@ -20,6 +20,11 @@
                 "AnalyzeParodies"
               ]
             },
+            "CreateCrossRef": {
+              "methods": [
+                "CreateCrossRef"
+              ]
+            },
             "ExpandUniverse": {
               "methods": [
                 "ExpandUniverse"
