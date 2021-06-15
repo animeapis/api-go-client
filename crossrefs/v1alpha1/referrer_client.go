@@ -94,7 +94,7 @@ type internalReferrerClient interface {
 	CreateCrossRef(context.Context, *crossrefspb.CreateCrossRefRequest, ...gax.CallOption) (*crossrefspb.CrossRef, error)
 	UpdateCrossRef(context.Context, *crossrefspb.UpdateCrossRefRequest, ...gax.CallOption) (*crossrefspb.CrossRef, error)
 	ListCrossRefs(context.Context, *crossrefspb.ListCrossRefsRequest, ...gax.CallOption) *CrossRefIterator
-	AnalyzeCrossRefs(context.Context, *emptypb.Empty, ...gax.CallOption) (*AnalyzeCrossRefsOperation, error)
+	AnalyzeCrossRefs(context.Context, *crossrefspb.AnalyzeCrossRefRequest, ...gax.CallOption) (*AnalyzeCrossRefsOperation, error)
 	AnalyzeCrossRefsOperation(name string) *AnalyzeCrossRefsOperation
 	ImportCrossRefs(context.Context, *emptypb.Empty, ...gax.CallOption) (*ImportCrossRefsOperation, error)
 	ImportCrossRefsOperation(name string) *ImportCrossRefsOperation
@@ -165,7 +165,7 @@ func (c *ReferrerClient) ListCrossRefs(ctx context.Context, req *crossrefspb.Lis
 }
 
 // AnalyzeCrossRefs analyzes and proposes new cross-references according to their similarity.
-func (c *ReferrerClient) AnalyzeCrossRefs(ctx context.Context, req *emptypb.Empty, opts ...gax.CallOption) (*AnalyzeCrossRefsOperation, error) {
+func (c *ReferrerClient) AnalyzeCrossRefs(ctx context.Context, req *crossrefspb.AnalyzeCrossRefRequest, opts ...gax.CallOption) (*AnalyzeCrossRefsOperation, error) {
 	return c.internalClient.AnalyzeCrossRefs(ctx, req, opts...)
 }
 
@@ -410,7 +410,7 @@ func (c *referrerGRPCClient) ListCrossRefs(ctx context.Context, req *crossrefspb
 	return it
 }
 
-func (c *referrerGRPCClient) AnalyzeCrossRefs(ctx context.Context, req *emptypb.Empty, opts ...gax.CallOption) (*AnalyzeCrossRefsOperation, error) {
+func (c *referrerGRPCClient) AnalyzeCrossRefs(ctx context.Context, req *crossrefspb.AnalyzeCrossRefRequest, opts ...gax.CallOption) (*AnalyzeCrossRefsOperation, error) {
 	ctx = insertMetadata(ctx, c.xGoogMetadata)
 	opts = append((*c.CallOptions).AnalyzeCrossRefs[0:len((*c.CallOptions).AnalyzeCrossRefs):len((*c.CallOptions).AnalyzeCrossRefs)], opts...)
 	var resp *longrunningpb.Operation

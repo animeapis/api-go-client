@@ -127,7 +127,7 @@ func ExampleReferrerClient_AnalyzeCrossRefs() {
 	}
 	defer c.Close()
 
-	req := &emptypb.Empty{
+	req := &crossrefspb.AnalyzeCrossRefRequest{
 		// TODO: Fill request struct fields.
 	}
 	op, err := c.AnalyzeCrossRefs(ctx, req)
