@@ -151,7 +151,7 @@ func ExampleReferrerClient_ImportCrossRefs() {
 	}
 	defer c.Close()
 
-	req := &emptypb.Empty{
+	req := &crossrefspb.ImportCrossRefRequest{
 		// TODO: Fill request struct fields.
 	}
 	op, err := c.ImportCrossRefs(ctx, req)

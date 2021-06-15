@@ -96,7 +96,7 @@ type internalReferrerClient interface {
 	ListCrossRefs(context.Context, *crossrefspb.ListCrossRefsRequest, ...gax.CallOption) *CrossRefIterator
 	AnalyzeCrossRefs(context.Context, *crossrefspb.AnalyzeCrossRefRequest, ...gax.CallOption) (*AnalyzeCrossRefsOperation, error)
 	AnalyzeCrossRefsOperation(name string) *AnalyzeCrossRefsOperation
-	ImportCrossRefs(context.Context, *emptypb.Empty, ...gax.CallOption) (*ImportCrossRefsOperation, error)
+	ImportCrossRefs(context.Context, *crossrefspb.ImportCrossRefRequest, ...gax.CallOption) (*ImportCrossRefsOperation, error)
 	ImportCrossRefsOperation(name string) *ImportCrossRefsOperation
 	ExportCrossRefs(context.Context, *emptypb.Empty, ...gax.CallOption) (*ExportCrossRefsOperation, error)
 	ExportCrossRefsOperation(name string) *ExportCrossRefsOperation
@@ -176,7 +176,7 @@ func (c *ReferrerClient) AnalyzeCrossRefsOperation(name string) *AnalyzeCrossRef
 }
 
 // ImportCrossRefs imports already existing cross-references from third-parties.
-func (c *ReferrerClient) ImportCrossRefs(ctx context.Context, req *emptypb.Empty, opts ...gax.CallOption) (*ImportCrossRefsOperation, error) {
+func (c *ReferrerClient) ImportCrossRefs(ctx context.Context, req *crossrefspb.ImportCrossRefRequest, opts ...gax.CallOption) (*ImportCrossRefsOperation, error) {
 	return c.internalClient.ImportCrossRefs(ctx, req, opts...)
 }
 
@@ -427,7 +427,7 @@ func (c *referrerGRPCClient) AnalyzeCrossRefs(ctx context.Context, req *crossref
 	}, nil
 }
 
-func (c *referrerGRPCClient) ImportCrossRefs(ctx context.Context, req *emptypb.Empty, opts ...gax.CallOption) (*ImportCrossRefsOperation, error) {
+func (c *referrerGRPCClient) ImportCrossRefs(ctx context.Context, req *crossrefspb.ImportCrossRefRequest, opts ...gax.CallOption) (*ImportCrossRefsOperation, error) {
 	ctx = insertMetadata(ctx, c.xGoogMetadata)
 	opts = append((*c.CallOptions).ImportCrossRefs[0:len((*c.CallOptions).ImportCrossRefs):len((*c.CallOptions).ImportCrossRefs)], opts...)
 	var resp *longrunningpb.Operation
