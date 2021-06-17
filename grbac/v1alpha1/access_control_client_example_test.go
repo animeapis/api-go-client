@@ -21,6 +21,7 @@ import (
 
 	grbac "github.com/animeapis/api-go-client/grbac/v1alpha1"
 	grbacpb "github.com/animeapis/go-genproto/grbac/v1alpha1"
+	iampb "google.golang.org/genproto/googleapis/iam/v1"
 )
 
 func ExampleNewAccessControlClient() {
@@ -50,6 +51,44 @@ func ExampleAccessControlClient_Authorize() {
 	if err != nil {
 		// TODO: Handle error.
 	}
+}
+
+func ExampleAccessControlClient_GetIamPolicy() {
+	ctx := context.Background()
+	c, err := grbac.NewAccessControlClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &iampb.GetIamPolicyRequest{
+		// TODO: Fill request struct fields.
+	}
+	resp, err := c.GetIamPolicy(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
+func ExampleAccessControlClient_SetIamPolicy() {
+	ctx := context.Background()
+	c, err := grbac.NewAccessControlClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &iampb.SetIamPolicyRequest{
+		// TODO: Fill request struct fields.
+	}
+	resp, err := c.SetIamPolicy(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
 }
 
 func ExampleAccessControlClient_GetResource() {
@@ -212,6 +251,44 @@ func ExampleAccessControlClient_UpdateGroup() {
 		// TODO: Fill request struct fields.
 	}
 	resp, err := c.UpdateGroup(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
+func ExampleAccessControlClient_AddGroupMember() {
+	ctx := context.Background()
+	c, err := grbac.NewAccessControlClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &grbacpb.AddGroupMemberRequest{
+		// TODO: Fill request struct fields.
+	}
+	resp, err := c.AddGroupMember(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
+func ExampleAccessControlClient_RemoveGroupMember() {
+	ctx := context.Background()
+	c, err := grbac.NewAccessControlClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &grbacpb.RemoveGroupMemberRequest{
+		// TODO: Fill request struct fields.
+	}
+	resp, err := c.RemoveGroupMember(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
 	}

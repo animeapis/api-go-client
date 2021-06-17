@@ -10,6 +10,11 @@
         "grpc": {
           "libraryClient": "AccessControlClient",
           "rpcs": {
+            "AddGroupMember": {
+              "methods": [
+                "AddGroupMember"
+              ]
+            },
             "Authorize": {
               "methods": [
                 "Authorize"
@@ -60,6 +65,11 @@
                 "GetGroup"
               ]
             },
+            "GetIamPolicy": {
+              "methods": [
+                "GetIamPolicy"
+              ]
+            },
             "GetResource": {
               "methods": [
                 "GetResource"
@@ -68,6 +78,16 @@
             "GetRole": {
               "methods": [
                 "GetRole"
+              ]
+            },
+            "RemoveGroupMember": {
+              "methods": [
+                "RemoveGroupMember"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "SetIamPolicy"
               ]
             },
             "UpdateGroup": {

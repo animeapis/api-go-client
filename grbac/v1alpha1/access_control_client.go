@@ -27,6 +27,7 @@ import (
 	"google.golang.org/api/option"
 	"google.golang.org/api/option/internaloption"
 	gtransport "google.golang.org/api/transport/grpc"
+	iampb "google.golang.org/genproto/googleapis/iam/v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 )
@@ -35,21 +36,25 @@ var newAccessControlClientHook clientHook
 
 // AccessControlCallOptions contains the retry settings for each method of AccessControlClient.
 type AccessControlCallOptions struct {
-	Authorize      []gax.CallOption
-	GetResource    []gax.CallOption
-	CreateResource []gax.CallOption
-	UpdateResource []gax.CallOption
-	DeleteResource []gax.CallOption
-	CreateSubject  []gax.CallOption
-	DeleteSubject  []gax.CallOption
-	GetGroup       []gax.CallOption
-	CreateGroup    []gax.CallOption
-	UpdateGroup    []gax.CallOption
-	DeleteGroup    []gax.CallOption
-	GetRole        []gax.CallOption
-	CreateRole     []gax.CallOption
-	UpdateRole     []gax.CallOption
-	DeleteRole     []gax.CallOption
+	Authorize         []gax.CallOption
+	GetIamPolicy      []gax.CallOption
+	SetIamPolicy      []gax.CallOption
+	GetResource       []gax.CallOption
+	CreateResource    []gax.CallOption
+	UpdateResource    []gax.CallOption
+	DeleteResource    []gax.CallOption
+	CreateSubject     []gax.CallOption
+	DeleteSubject     []gax.CallOption
+	GetGroup          []gax.CallOption
+	CreateGroup       []gax.CallOption
+	UpdateGroup       []gax.CallOption
+	AddGroupMember    []gax.CallOption
+	RemoveGroupMember []gax.CallOption
+	DeleteGroup       []gax.CallOption
+	GetRole           []gax.CallOption
+	CreateRole        []gax.CallOption
+	UpdateRole        []gax.CallOption
+	DeleteRole        []gax.CallOption
 }
 
 func defaultAccessControlGRPCClientOptions() []option.ClientOption {
@@ -66,21 +71,25 @@ func defaultAccessControlGRPCClientOptions() []option.ClientOption {
 
 func defaultAccessControlCallOptions() *AccessControlCallOptions {
 	return &AccessControlCallOptions{
-		Authorize:      []gax.CallOption{},
-		GetResource:    []gax.CallOption{},
-		CreateResource: []gax.CallOption{},
-		UpdateResource: []gax.CallOption{},
-		DeleteResource: []gax.CallOption{},
-		CreateSubject:  []gax.CallOption{},
-		DeleteSubject:  []gax.CallOption{},
-		GetGroup:       []gax.CallOption{},
-		CreateGroup:    []gax.CallOption{},
-		UpdateGroup:    []gax.CallOption{},
-		DeleteGroup:    []gax.CallOption{},
-		GetRole:        []gax.CallOption{},
-		CreateRole:     []gax.CallOption{},
-		UpdateRole:     []gax.CallOption{},
-		DeleteRole:     []gax.CallOption{},
+		Authorize:         []gax.CallOption{},
+		GetIamPolicy:      []gax.CallOption{},
+		SetIamPolicy:      []gax.CallOption{},
+		GetResource:       []gax.CallOption{},
+		CreateResource:    []gax.CallOption{},
+		UpdateResource:    []gax.CallOption{},
+		DeleteResource:    []gax.CallOption{},
+		CreateSubject:     []gax.CallOption{},
+		DeleteSubject:     []gax.CallOption{},
+		GetGroup:          []gax.CallOption{},
+		CreateGroup:       []gax.CallOption{},
+		UpdateGroup:       []gax.CallOption{},
+		AddGroupMember:    []gax.CallOption{},
+		RemoveGroupMember: []gax.CallOption{},
+		DeleteGroup:       []gax.CallOption{},
+		GetRole:           []gax.CallOption{},
+		CreateRole:        []gax.CallOption{},
+		UpdateRole:        []gax.CallOption{},
+		DeleteRole:        []gax.CallOption{},
 	}
 }
 
@@ -90,6 +99,8 @@ type internalAccessControlClient interface {
 	setGoogleClientInfo(...string)
 	Connection() *grpc.ClientConn
 	Authorize(context.Context, *grbacpb.AuthorizeRequest, ...gax.CallOption) error
+	GetIamPolicy(context.Context, *iampb.GetIamPolicyRequest, ...gax.CallOption) (*iampb.Policy, error)
+	SetIamPolicy(context.Context, *iampb.SetIamPolicyRequest, ...gax.CallOption) (*iampb.Policy, error)
 	GetResource(context.Context, *grbacpb.GetResourceRequest, ...gax.CallOption) (*grbacpb.Resource, error)
 	CreateResource(context.Context, *grbacpb.CreateResourceRequest, ...gax.CallOption) (*grbacpb.Resource, error)
 	UpdateResource(context.Context, *grbacpb.UpdateResourceRequest, ...gax.CallOption) (*grbacpb.Resource, error)
@@ -99,6 +110,8 @@ type internalAccessControlClient interface {
 	GetGroup(context.Context, *grbacpb.GetGroupRequest, ...gax.CallOption) (*grbacpb.Group, error)
 	CreateGroup(context.Context, *grbacpb.CreateGroupRequest, ...gax.CallOption) (*grbacpb.Group, error)
 	UpdateGroup(context.Context, *grbacpb.UpdateGroupRequest, ...gax.CallOption) (*grbacpb.Group, error)
+	AddGroupMember(context.Context, *grbacpb.AddGroupMemberRequest, ...gax.CallOption) (*grbacpb.Group, error)
+	RemoveGroupMember(context.Context, *grbacpb.RemoveGroupMemberRequest, ...gax.CallOption) (*grbacpb.Group, error)
 	DeleteGroup(context.Context, *grbacpb.DeleteGroupRequest, ...gax.CallOption) error
 	GetRole(context.Context, *grbacpb.GetRoleRequest, ...gax.CallOption) (*grbacpb.Role, error)
 	CreateRole(context.Context, *grbacpb.CreateRoleRequest, ...gax.CallOption) (*grbacpb.Role, error)
@@ -147,6 +160,16 @@ func (c *AccessControlClient) Authorize(ctx context.Context, req *grbacpb.Author
 	return c.internalClient.Authorize(ctx, req, opts...)
 }
 
+// GetIamPolicy gets the IAM policy that is attached to a generic resource.
+func (c *AccessControlClient) GetIamPolicy(ctx context.Context, req *iampb.GetIamPolicyRequest, opts ...gax.CallOption) (*iampb.Policy, error) {
+	return c.internalClient.GetIamPolicy(ctx, req, opts...)
+}
+
+// SetIamPolicy sets the IAM policy that is attached to a generic resource.
+func (c *AccessControlClient) SetIamPolicy(ctx context.Context, req *iampb.SetIamPolicyRequest, opts ...gax.CallOption) (*iampb.Policy, error) {
+	return c.internalClient.SetIamPolicy(ctx, req, opts...)
+}
+
 // GetResource getResource returns a resource.
 func (c *AccessControlClient) GetResource(ctx context.Context, req *grbacpb.GetResourceRequest, opts ...gax.CallOption) (*grbacpb.Resource, error) {
 	return c.internalClient.GetResource(ctx, req, opts...)
@@ -190,6 +213,16 @@ func (c *AccessControlClient) CreateGroup(ctx context.Context, req *grbacpb.Crea
 // UpdateGroup updateGroup updates a group with a field mask.
 func (c *AccessControlClient) UpdateGroup(ctx context.Context, req *grbacpb.UpdateGroupRequest, opts ...gax.CallOption) (*grbacpb.Group, error) {
 	return c.internalClient.UpdateGroup(ctx, req, opts...)
+}
+
+// AddGroupMember addGroupMember adds a member to a group.
+func (c *AccessControlClient) AddGroupMember(ctx context.Context, req *grbacpb.AddGroupMemberRequest, opts ...gax.CallOption) (*grbacpb.Group, error) {
+	return c.internalClient.AddGroupMember(ctx, req, opts...)
+}
+
+// RemoveGroupMember removeGroupMember removes a member from a group.
+func (c *AccessControlClient) RemoveGroupMember(ctx context.Context, req *grbacpb.RemoveGroupMemberRequest, opts ...gax.CallOption) (*grbacpb.Group, error) {
+	return c.internalClient.RemoveGroupMember(ctx, req, opts...)
 }
 
 // DeleteGroup deleteGroup deletes a group.
@@ -306,6 +339,38 @@ func (c *accessControlGRPCClient) Authorize(ctx context.Context, req *grbacpb.Au
 		return err
 	}, opts...)
 	return err
+}
+
+func (c *accessControlGRPCClient) GetIamPolicy(ctx context.Context, req *iampb.GetIamPolicyRequest, opts ...gax.CallOption) (*iampb.Policy, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "resource", url.QueryEscape(req.GetResource())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).GetIamPolicy[0:len((*c.CallOptions).GetIamPolicy):len((*c.CallOptions).GetIamPolicy)], opts...)
+	var resp *iampb.Policy
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.accessControlClient.GetIamPolicy(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *accessControlGRPCClient) SetIamPolicy(ctx context.Context, req *iampb.SetIamPolicyRequest, opts ...gax.CallOption) (*iampb.Policy, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "resource", url.QueryEscape(req.GetResource())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).SetIamPolicy[0:len((*c.CallOptions).SetIamPolicy):len((*c.CallOptions).SetIamPolicy)], opts...)
+	var resp *iampb.Policy
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.accessControlClient.SetIamPolicy(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 func (c *accessControlGRPCClient) GetResource(ctx context.Context, req *grbacpb.GetResourceRequest, opts ...gax.CallOption) (*grbacpb.Resource, error) {
@@ -433,6 +498,38 @@ func (c *accessControlGRPCClient) UpdateGroup(ctx context.Context, req *grbacpb.
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
 		resp, err = c.accessControlClient.UpdateGroup(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *accessControlGRPCClient) AddGroupMember(ctx context.Context, req *grbacpb.AddGroupMemberRequest, opts ...gax.CallOption) (*grbacpb.Group, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "group", url.QueryEscape(req.GetGroup())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).AddGroupMember[0:len((*c.CallOptions).AddGroupMember):len((*c.CallOptions).AddGroupMember)], opts...)
+	var resp *grbacpb.Group
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.accessControlClient.AddGroupMember(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *accessControlGRPCClient) RemoveGroupMember(ctx context.Context, req *grbacpb.RemoveGroupMemberRequest, opts ...gax.CallOption) (*grbacpb.Group, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "group", url.QueryEscape(req.GetGroup())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).RemoveGroupMember[0:len((*c.CallOptions).RemoveGroupMember):len((*c.CallOptions).RemoveGroupMember)], opts...)
+	var resp *grbacpb.Group
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.accessControlClient.RemoveGroupMember(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	if err != nil {
