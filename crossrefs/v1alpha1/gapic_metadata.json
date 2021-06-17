@@ -45,6 +45,11 @@
                 "ExportParodies"
               ]
             },
+            "GetContent": {
+              "methods": [
+                "GetContent"
+              ]
+            },
             "GetCrossRef": {
               "methods": [
                 "GetCrossRef"

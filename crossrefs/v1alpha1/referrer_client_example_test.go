@@ -314,3 +314,22 @@ func ExampleReferrerClient_ExpandUniverse() {
 	// TODO: Use resp.
 	_ = resp
 }
+
+func ExampleReferrerClient_GetContent() {
+	ctx := context.Background()
+	c, err := crossrefs.NewReferrerClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &crossrefspb.GetContentRequest{
+		// TODO: Fill request struct fields.
+	}
+	resp, err := c.GetContent(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
