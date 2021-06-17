@@ -46,6 +46,7 @@ type ReferrerCallOptions struct {
 	CreateCrossRef   []gax.CallOption
 	UpdateCrossRef   []gax.CallOption
 	ListCrossRefs    []gax.CallOption
+	CountCrossRefs   []gax.CallOption
 	AnalyzeCrossRefs []gax.CallOption
 	ImportCrossRefs  []gax.CallOption
 	ExportCrossRefs  []gax.CallOption
@@ -74,6 +75,7 @@ func defaultReferrerCallOptions() *ReferrerCallOptions {
 		CreateCrossRef:   []gax.CallOption{},
 		UpdateCrossRef:   []gax.CallOption{},
 		ListCrossRefs:    []gax.CallOption{},
+		CountCrossRefs:   []gax.CallOption{},
 		AnalyzeCrossRefs: []gax.CallOption{},
 		ImportCrossRefs:  []gax.CallOption{},
 		ExportCrossRefs:  []gax.CallOption{},
@@ -94,6 +96,7 @@ type internalReferrerClient interface {
 	CreateCrossRef(context.Context, *crossrefspb.CreateCrossRefRequest, ...gax.CallOption) (*crossrefspb.CrossRef, error)
 	UpdateCrossRef(context.Context, *crossrefspb.UpdateCrossRefRequest, ...gax.CallOption) (*crossrefspb.CrossRef, error)
 	ListCrossRefs(context.Context, *crossrefspb.ListCrossRefsRequest, ...gax.CallOption) *CrossRefIterator
+	CountCrossRefs(context.Context, *crossrefspb.CountCrossRefsRequest, ...gax.CallOption) (*crossrefspb.CountCrossRefsResponse, error)
 	AnalyzeCrossRefs(context.Context, *crossrefspb.AnalyzeCrossRefRequest, ...gax.CallOption) (*AnalyzeCrossRefsOperation, error)
 	AnalyzeCrossRefsOperation(name string) *AnalyzeCrossRefsOperation
 	ImportCrossRefs(context.Context, *crossrefspb.ImportCrossRefRequest, ...gax.CallOption) (*ImportCrossRefsOperation, error)
@@ -162,6 +165,10 @@ func (c *ReferrerClient) UpdateCrossRef(ctx context.Context, req *crossrefspb.Up
 
 func (c *ReferrerClient) ListCrossRefs(ctx context.Context, req *crossrefspb.ListCrossRefsRequest, opts ...gax.CallOption) *CrossRefIterator {
 	return c.internalClient.ListCrossRefs(ctx, req, opts...)
+}
+
+func (c *ReferrerClient) CountCrossRefs(ctx context.Context, req *crossrefspb.CountCrossRefsRequest, opts ...gax.CallOption) (*crossrefspb.CountCrossRefsResponse, error) {
+	return c.internalClient.CountCrossRefs(ctx, req, opts...)
 }
 
 // AnalyzeCrossRefs analyzes and proposes new cross-references according to their similarity.
@@ -408,6 +415,21 @@ func (c *referrerGRPCClient) ListCrossRefs(ctx context.Context, req *crossrefspb
 	it.pageInfo.MaxSize = int(req.GetPageSize())
 	it.pageInfo.Token = req.GetPageToken()
 	return it
+}
+
+func (c *referrerGRPCClient) CountCrossRefs(ctx context.Context, req *crossrefspb.CountCrossRefsRequest, opts ...gax.CallOption) (*crossrefspb.CountCrossRefsResponse, error) {
+	ctx = insertMetadata(ctx, c.xGoogMetadata)
+	opts = append((*c.CallOptions).CountCrossRefs[0:len((*c.CallOptions).CountCrossRefs):len((*c.CallOptions).CountCrossRefs)], opts...)
+	var resp *crossrefspb.CountCrossRefsResponse
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.referrerClient.CountCrossRefs(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 func (c *referrerGRPCClient) AnalyzeCrossRefs(ctx context.Context, req *crossrefspb.AnalyzeCrossRefRequest, opts ...gax.CallOption) (*AnalyzeCrossRefsOperation, error) {

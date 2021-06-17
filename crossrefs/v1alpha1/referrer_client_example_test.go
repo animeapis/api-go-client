@@ -119,6 +119,25 @@ func ExampleReferrerClient_ListCrossRefs() {
 	}
 }
 
+func ExampleReferrerClient_CountCrossRefs() {
+	ctx := context.Background()
+	c, err := crossrefs.NewReferrerClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &crossrefspb.CountCrossRefsRequest{
+		// TODO: Fill request struct fields.
+	}
+	resp, err := c.CountCrossRefs(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
 func ExampleReferrerClient_AnalyzeCrossRefs() {
 	ctx := context.Background()
 	c, err := crossrefs.NewReferrerClient(ctx)

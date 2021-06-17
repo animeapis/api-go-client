@@ -20,6 +20,11 @@
                 "AnalyzeParodies"
               ]
             },
+            "CountCrossRefs": {
+              "methods": [
+                "CountCrossRefs"
+              ]
+            },
             "CreateCrossRef": {
               "methods": [
                 "CreateCrossRef"
