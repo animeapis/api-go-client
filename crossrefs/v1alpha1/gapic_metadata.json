@@ -45,11 +45,6 @@
                 "ExportParodies"
               ]
             },
-            "GetContent": {
-              "methods": [
-                "GetContent"
-              ]
-            },
             "GetCrossRef": {
               "methods": [
                 "GetCrossRef"
@@ -58,6 +53,11 @@
             "GetUniverse": {
               "methods": [
                 "GetUniverse"
+              ]
+            },
+            "GetWormholeInformation": {
+              "methods": [
+                "GetWormholeInformation"
               ]
             },
             "ImportCrossRefs": {

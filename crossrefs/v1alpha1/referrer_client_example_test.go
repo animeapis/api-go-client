@@ -315,7 +315,7 @@ func ExampleReferrerClient_ExpandUniverse() {
 	_ = resp
 }
 
-func ExampleReferrerClient_GetContent() {
+func ExampleReferrerClient_GetWormholeInformation() {
 	ctx := context.Background()
 	c, err := crossrefs.NewReferrerClient(ctx)
 	if err != nil {
@@ -323,10 +323,10 @@ func ExampleReferrerClient_GetContent() {
 	}
 	defer c.Close()
 
-	req := &crossrefspb.GetContentRequest{
+	req := &crossrefspb.GetWormholeInformationRequest{
 		// TODO: Fill request struct fields.
 	}
-	resp, err := c.GetContent(ctx, req)
+	resp, err := c.GetWormholeInformation(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
 	}
