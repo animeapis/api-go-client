@@ -573,7 +573,8 @@ func (c *referrerGRPCClient) ExpandUniverse(ctx context.Context, req *crossrefsp
 }
 
 func (c *referrerGRPCClient) GetWormholeInformation(ctx context.Context, req *crossrefspb.GetWormholeInformationRequest, opts ...gax.CallOption) (*crossrefspb.WormholeInformation, error) {
-	ctx = insertMetadata(ctx, c.xGoogMetadata)
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).GetWormholeInformation[0:len((*c.CallOptions).GetWormholeInformation):len((*c.CallOptions).GetWormholeInformation)], opts...)
 	var resp *crossrefspb.WormholeInformation
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
