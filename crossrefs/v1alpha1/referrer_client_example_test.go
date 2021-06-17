@@ -75,25 +75,6 @@ func ExampleReferrerClient_CreateCrossRef() {
 	_ = resp
 }
 
-func ExampleReferrerClient_UpdateCrossRef() {
-	ctx := context.Background()
-	c, err := crossrefs.NewReferrerClient(ctx)
-	if err != nil {
-		// TODO: Handle error.
-	}
-	defer c.Close()
-
-	req := &crossrefspb.UpdateCrossRefRequest{
-		// TODO: Fill request struct fields.
-	}
-	resp, err := c.UpdateCrossRef(ctx, req)
-	if err != nil {
-		// TODO: Handle error.
-	}
-	// TODO: Use resp.
-	_ = resp
-}
-
 func ExampleReferrerClient_ListCrossRefs() {
 	ctx := context.Background()
 	c, err := crossrefs.NewReferrerClient(ctx)
