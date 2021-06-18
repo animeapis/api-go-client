@@ -448,7 +448,7 @@ func (c *accessControlGRPCClient) CreateSubject(ctx context.Context, req *grbacp
 }
 
 func (c *accessControlGRPCClient) DeleteSubject(ctx context.Context, req *grbacpb.DeleteSubjectRequest, opts ...gax.CallOption) error {
-	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "subject.name", url.QueryEscape(req.GetSubject().GetName())))
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).DeleteSubject[0:len((*c.CallOptions).DeleteSubject):len((*c.CallOptions).DeleteSubject)], opts...)
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
