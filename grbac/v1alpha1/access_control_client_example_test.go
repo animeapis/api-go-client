@@ -313,6 +313,42 @@ func ExampleAccessControlClient_DeleteGroup() {
 	}
 }
 
+func ExampleAccessControlClient_CreatePermission() {
+	ctx := context.Background()
+	c, err := grbac.NewAccessControlClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &grbacpb.CreatePermissionRequest{
+		// TODO: Fill request struct fields.
+	}
+	resp, err := c.CreatePermission(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
+func ExampleAccessControlClient_DeletePermission() {
+	ctx := context.Background()
+	c, err := grbac.NewAccessControlClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &grbacpb.DeletePermissionRequest{
+		// TODO: Fill request struct fields.
+	}
+	err = c.DeletePermission(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+}
+
 func ExampleAccessControlClient_GetRole() {
 	ctx := context.Background()
 	c, err := grbac.NewAccessControlClient(ctx)

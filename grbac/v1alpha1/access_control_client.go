@@ -51,6 +51,8 @@ type AccessControlCallOptions struct {
 	AddGroupMember    []gax.CallOption
 	RemoveGroupMember []gax.CallOption
 	DeleteGroup       []gax.CallOption
+	CreatePermission  []gax.CallOption
+	DeletePermission  []gax.CallOption
 	GetRole           []gax.CallOption
 	CreateRole        []gax.CallOption
 	UpdateRole        []gax.CallOption
@@ -86,6 +88,8 @@ func defaultAccessControlCallOptions() *AccessControlCallOptions {
 		AddGroupMember:    []gax.CallOption{},
 		RemoveGroupMember: []gax.CallOption{},
 		DeleteGroup:       []gax.CallOption{},
+		CreatePermission:  []gax.CallOption{},
+		DeletePermission:  []gax.CallOption{},
 		GetRole:           []gax.CallOption{},
 		CreateRole:        []gax.CallOption{},
 		UpdateRole:        []gax.CallOption{},
@@ -113,6 +117,8 @@ type internalAccessControlClient interface {
 	AddGroupMember(context.Context, *grbacpb.AddGroupMemberRequest, ...gax.CallOption) (*grbacpb.Group, error)
 	RemoveGroupMember(context.Context, *grbacpb.RemoveGroupMemberRequest, ...gax.CallOption) (*grbacpb.Group, error)
 	DeleteGroup(context.Context, *grbacpb.DeleteGroupRequest, ...gax.CallOption) error
+	CreatePermission(context.Context, *grbacpb.CreatePermissionRequest, ...gax.CallOption) (*grbacpb.Permission, error)
+	DeletePermission(context.Context, *grbacpb.DeletePermissionRequest, ...gax.CallOption) error
 	GetRole(context.Context, *grbacpb.GetRoleRequest, ...gax.CallOption) (*grbacpb.Role, error)
 	CreateRole(context.Context, *grbacpb.CreateRoleRequest, ...gax.CallOption) (*grbacpb.Role, error)
 	UpdateRole(context.Context, *grbacpb.UpdateRoleRequest, ...gax.CallOption) (*grbacpb.Role, error)
@@ -228,6 +234,16 @@ func (c *AccessControlClient) RemoveGroupMember(ctx context.Context, req *grbacp
 // DeleteGroup deleteGroup deletes a group.
 func (c *AccessControlClient) DeleteGroup(ctx context.Context, req *grbacpb.DeleteGroupRequest, opts ...gax.CallOption) error {
 	return c.internalClient.DeleteGroup(ctx, req, opts...)
+}
+
+// CreatePermission createPermission creates a new permission.
+func (c *AccessControlClient) CreatePermission(ctx context.Context, req *grbacpb.CreatePermissionRequest, opts ...gax.CallOption) (*grbacpb.Permission, error) {
+	return c.internalClient.CreatePermission(ctx, req, opts...)
+}
+
+// DeletePermission deletePermission deletes a permission.
+func (c *AccessControlClient) DeletePermission(ctx context.Context, req *grbacpb.DeletePermissionRequest, opts ...gax.CallOption) error {
+	return c.internalClient.DeletePermission(ctx, req, opts...)
 }
 
 // GetRole getRole returns a role.
@@ -545,6 +561,33 @@ func (c *accessControlGRPCClient) DeleteGroup(ctx context.Context, req *grbacpb.
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
 		_, err = c.accessControlClient.DeleteGroup(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	return err
+}
+
+func (c *accessControlGRPCClient) CreatePermission(ctx context.Context, req *grbacpb.CreatePermissionRequest, opts ...gax.CallOption) (*grbacpb.Permission, error) {
+	ctx = insertMetadata(ctx, c.xGoogMetadata)
+	opts = append((*c.CallOptions).CreatePermission[0:len((*c.CallOptions).CreatePermission):len((*c.CallOptions).CreatePermission)], opts...)
+	var resp *grbacpb.Permission
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.accessControlClient.CreatePermission(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *accessControlGRPCClient) DeletePermission(ctx context.Context, req *grbacpb.DeletePermissionRequest, opts ...gax.CallOption) error {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).DeletePermission[0:len((*c.CallOptions).DeletePermission):len((*c.CallOptions).DeletePermission)], opts...)
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		_, err = c.accessControlClient.DeletePermission(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	return err
