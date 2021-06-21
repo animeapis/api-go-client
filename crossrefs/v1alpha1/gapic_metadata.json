@@ -65,6 +65,11 @@
                 "ImportCrossRefs"
               ]
             },
+            "InitializeCrossRefs": {
+              "methods": [
+                "InitializeCrossRefs"
+              ]
+            },
             "ListCrossRefs": {
               "methods": [
                 "ListCrossRefs"

@@ -234,6 +234,30 @@ func ExampleReferrerClient_AnalyzeParodies() {
 	_ = resp
 }
 
+func ExampleReferrerClient_InitializeCrossRefs() {
+	ctx := context.Background()
+	c, err := crossrefs.NewReferrerClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &emptypb.Empty{
+		// TODO: Fill request struct fields.
+	}
+	op, err := c.InitializeCrossRefs(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+
+	resp, err := op.Wait(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
 func ExampleReferrerClient_ExportParodies() {
 	ctx := context.Background()
 	c, err := crossrefs.NewReferrerClient(ctx)

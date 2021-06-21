@@ -51,6 +51,7 @@ type ReferrerCallOptions struct {
 	ImportCrossRefs        []gax.CallOption
 	ExportCrossRefs        []gax.CallOption
 	AnalyzeParodies        []gax.CallOption
+	InitializeCrossRefs    []gax.CallOption
 	ExportParodies         []gax.CallOption
 	GetUniverse            []gax.CallOption
 	UpdateUniverse         []gax.CallOption
@@ -81,6 +82,7 @@ func defaultReferrerCallOptions() *ReferrerCallOptions {
 		ImportCrossRefs:        []gax.CallOption{},
 		ExportCrossRefs:        []gax.CallOption{},
 		AnalyzeParodies:        []gax.CallOption{},
+		InitializeCrossRefs:    []gax.CallOption{},
 		ExportParodies:         []gax.CallOption{},
 		GetUniverse:            []gax.CallOption{},
 		UpdateUniverse:         []gax.CallOption{},
@@ -107,6 +109,8 @@ type internalReferrerClient interface {
 	ExportCrossRefsOperation(name string) *ExportCrossRefsOperation
 	AnalyzeParodies(context.Context, *emptypb.Empty, ...gax.CallOption) (*AnalyzeParodiesOperation, error)
 	AnalyzeParodiesOperation(name string) *AnalyzeParodiesOperation
+	InitializeCrossRefs(context.Context, *emptypb.Empty, ...gax.CallOption) (*InitializeCrossRefsOperation, error)
+	InitializeCrossRefsOperation(name string) *InitializeCrossRefsOperation
 	ExportParodies(context.Context, *emptypb.Empty, ...gax.CallOption) (*ExportParodiesOperation, error)
 	ExportParodiesOperation(name string) *ExportParodiesOperation
 	GetUniverse(context.Context, *crossrefspb.GetUniverseRequest, ...gax.CallOption) (*crossrefspb.Universe, error)
@@ -216,6 +220,19 @@ func (c *ReferrerClient) AnalyzeParodies(ctx context.Context, req *emptypb.Empty
 // The name must be that of a previously created AnalyzeParodiesOperation, possibly from a different process.
 func (c *ReferrerClient) AnalyzeParodiesOperation(name string) *AnalyzeParodiesOperation {
 	return c.internalClient.AnalyzeParodiesOperation(name)
+}
+
+// InitializeCrossRefs initialize the cross-references using specific namespaces for each kind.
+// This operation first analyzes the entities meeting the kind and namespace precondition
+// to match new entities with existing ones
+func (c *ReferrerClient) InitializeCrossRefs(ctx context.Context, req *emptypb.Empty, opts ...gax.CallOption) (*InitializeCrossRefsOperation, error) {
+	return c.internalClient.InitializeCrossRefs(ctx, req, opts...)
+}
+
+// InitializeCrossRefsOperation returns a new InitializeCrossRefsOperation from a given name.
+// The name must be that of a previously created InitializeCrossRefsOperation, possibly from a different process.
+func (c *ReferrerClient) InitializeCrossRefsOperation(name string) *InitializeCrossRefsOperation {
+	return c.internalClient.InitializeCrossRefsOperation(name)
 }
 
 func (c *ReferrerClient) ExportParodies(ctx context.Context, req *emptypb.Empty, opts ...gax.CallOption) (*ExportParodiesOperation, error) {
@@ -503,6 +520,23 @@ func (c *referrerGRPCClient) AnalyzeParodies(ctx context.Context, req *emptypb.E
 		return nil, err
 	}
 	return &AnalyzeParodiesOperation{
+		lro: longrunning.InternalNewOperation(*c.LROClient, resp),
+	}, nil
+}
+
+func (c *referrerGRPCClient) InitializeCrossRefs(ctx context.Context, req *emptypb.Empty, opts ...gax.CallOption) (*InitializeCrossRefsOperation, error) {
+	ctx = insertMetadata(ctx, c.xGoogMetadata)
+	opts = append((*c.CallOptions).InitializeCrossRefs[0:len((*c.CallOptions).InitializeCrossRefs):len((*c.CallOptions).InitializeCrossRefs)], opts...)
+	var resp *longrunningpb.Operation
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.referrerClient.InitializeCrossRefs(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &InitializeCrossRefsOperation{
 		lro: longrunning.InternalNewOperation(*c.LROClient, resp),
 	}, nil
 }
@@ -930,6 +964,75 @@ func (op *ImportCrossRefsOperation) Done() bool {
 // Name returns the name of the long-running operation.
 // The name is assigned by the server and is unique within the service from which the operation is created.
 func (op *ImportCrossRefsOperation) Name() string {
+	return op.lro.Name()
+}
+
+// InitializeCrossRefsOperation manages a long-running operation from InitializeCrossRefs.
+type InitializeCrossRefsOperation struct {
+	lro *longrunning.Operation
+}
+
+// InitializeCrossRefsOperation returns a new InitializeCrossRefsOperation from a given name.
+// The name must be that of a previously created InitializeCrossRefsOperation, possibly from a different process.
+func (c *referrerGRPCClient) InitializeCrossRefsOperation(name string) *InitializeCrossRefsOperation {
+	return &InitializeCrossRefsOperation{
+		lro: longrunning.InternalNewOperation(*c.LROClient, &longrunningpb.Operation{Name: name}),
+	}
+}
+
+// Wait blocks until the long-running operation is completed, returning the response and any errors encountered.
+//
+// See documentation of Poll for error-handling information.
+func (op *InitializeCrossRefsOperation) Wait(ctx context.Context, opts ...gax.CallOption) (*crossrefspb.InitializeCrossRefsResponse, error) {
+	var resp crossrefspb.InitializeCrossRefsResponse
+	if err := op.lro.WaitWithInterval(ctx, &resp, time.Minute, opts...); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+// Poll fetches the latest state of the long-running operation.
+//
+// Poll also fetches the latest metadata, which can be retrieved by Metadata.
+//
+// If Poll fails, the error is returned and op is unmodified. If Poll succeeds and
+// the operation has completed with failure, the error is returned and op.Done will return true.
+// If Poll succeeds and the operation has completed successfully,
+// op.Done will return true, and the response of the operation is returned.
+// If Poll succeeds and the operation has not completed, the returned response and error are both nil.
+func (op *InitializeCrossRefsOperation) Poll(ctx context.Context, opts ...gax.CallOption) (*crossrefspb.InitializeCrossRefsResponse, error) {
+	var resp crossrefspb.InitializeCrossRefsResponse
+	if err := op.lro.Poll(ctx, &resp, opts...); err != nil {
+		return nil, err
+	}
+	if !op.Done() {
+		return nil, nil
+	}
+	return &resp, nil
+}
+
+// Metadata returns metadata associated with the long-running operation.
+// Metadata itself does not contact the server, but Poll does.
+// To get the latest metadata, call this method after a successful call to Poll.
+// If the metadata is not available, the returned metadata and error are both nil.
+func (op *InitializeCrossRefsOperation) Metadata() (*crossrefspb.OperationMetadata, error) {
+	var meta crossrefspb.OperationMetadata
+	if err := op.lro.Metadata(&meta); err == longrunning.ErrNoMetadata {
+		return nil, nil
+	} else if err != nil {
+		return nil, err
+	}
+	return &meta, nil
+}
+
+// Done reports whether the long-running operation has completed.
+func (op *InitializeCrossRefsOperation) Done() bool {
+	return op.lro.Done()
+}
+
+// Name returns the name of the long-running operation.
+// The name is assigned by the server and is unique within the service from which the operation is created.
+func (op *InitializeCrossRefsOperation) Name() string {
 	return op.lro.Name()
 }
 
