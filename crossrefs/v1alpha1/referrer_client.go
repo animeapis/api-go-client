@@ -50,8 +50,8 @@ type ReferrerCallOptions struct {
 	AnalyzeCrossRefs       []gax.CallOption
 	ImportCrossRefs        []gax.CallOption
 	ExportCrossRefs        []gax.CallOption
-	AnalyzeParodies        []gax.CallOption
 	InitializeCrossRefs    []gax.CallOption
+	AnalyzeParodies        []gax.CallOption
 	ExportParodies         []gax.CallOption
 	GetUniverse            []gax.CallOption
 	UpdateUniverse         []gax.CallOption
@@ -81,8 +81,8 @@ func defaultReferrerCallOptions() *ReferrerCallOptions {
 		AnalyzeCrossRefs:       []gax.CallOption{},
 		ImportCrossRefs:        []gax.CallOption{},
 		ExportCrossRefs:        []gax.CallOption{},
-		AnalyzeParodies:        []gax.CallOption{},
 		InitializeCrossRefs:    []gax.CallOption{},
+		AnalyzeParodies:        []gax.CallOption{},
 		ExportParodies:         []gax.CallOption{},
 		GetUniverse:            []gax.CallOption{},
 		UpdateUniverse:         []gax.CallOption{},
@@ -107,10 +107,10 @@ type internalReferrerClient interface {
 	ImportCrossRefsOperation(name string) *ImportCrossRefsOperation
 	ExportCrossRefs(context.Context, *emptypb.Empty, ...gax.CallOption) (*ExportCrossRefsOperation, error)
 	ExportCrossRefsOperation(name string) *ExportCrossRefsOperation
-	AnalyzeParodies(context.Context, *emptypb.Empty, ...gax.CallOption) (*AnalyzeParodiesOperation, error)
-	AnalyzeParodiesOperation(name string) *AnalyzeParodiesOperation
 	InitializeCrossRefs(context.Context, *emptypb.Empty, ...gax.CallOption) (*InitializeCrossRefsOperation, error)
 	InitializeCrossRefsOperation(name string) *InitializeCrossRefsOperation
+	AnalyzeParodies(context.Context, *emptypb.Empty, ...gax.CallOption) (*AnalyzeParodiesOperation, error)
+	AnalyzeParodiesOperation(name string) *AnalyzeParodiesOperation
 	ExportParodies(context.Context, *emptypb.Empty, ...gax.CallOption) (*ExportParodiesOperation, error)
 	ExportParodiesOperation(name string) *ExportParodiesOperation
 	GetUniverse(context.Context, *crossrefspb.GetUniverseRequest, ...gax.CallOption) (*crossrefspb.Universe, error)
@@ -212,16 +212,6 @@ func (c *ReferrerClient) ExportCrossRefsOperation(name string) *ExportCrossRefsO
 	return c.internalClient.ExportCrossRefsOperation(name)
 }
 
-func (c *ReferrerClient) AnalyzeParodies(ctx context.Context, req *emptypb.Empty, opts ...gax.CallOption) (*AnalyzeParodiesOperation, error) {
-	return c.internalClient.AnalyzeParodies(ctx, req, opts...)
-}
-
-// AnalyzeParodiesOperation returns a new AnalyzeParodiesOperation from a given name.
-// The name must be that of a previously created AnalyzeParodiesOperation, possibly from a different process.
-func (c *ReferrerClient) AnalyzeParodiesOperation(name string) *AnalyzeParodiesOperation {
-	return c.internalClient.AnalyzeParodiesOperation(name)
-}
-
 // InitializeCrossRefs initialize the cross-references using specific namespaces for each kind.
 // This operation first analyzes the entities meeting the kind and namespace precondition
 // to match new entities with existing ones
@@ -233,6 +223,16 @@ func (c *ReferrerClient) InitializeCrossRefs(ctx context.Context, req *emptypb.E
 // The name must be that of a previously created InitializeCrossRefsOperation, possibly from a different process.
 func (c *ReferrerClient) InitializeCrossRefsOperation(name string) *InitializeCrossRefsOperation {
 	return c.internalClient.InitializeCrossRefsOperation(name)
+}
+
+func (c *ReferrerClient) AnalyzeParodies(ctx context.Context, req *emptypb.Empty, opts ...gax.CallOption) (*AnalyzeParodiesOperation, error) {
+	return c.internalClient.AnalyzeParodies(ctx, req, opts...)
+}
+
+// AnalyzeParodiesOperation returns a new AnalyzeParodiesOperation from a given name.
+// The name must be that of a previously created AnalyzeParodiesOperation, possibly from a different process.
+func (c *ReferrerClient) AnalyzeParodiesOperation(name string) *AnalyzeParodiesOperation {
+	return c.internalClient.AnalyzeParodiesOperation(name)
 }
 
 func (c *ReferrerClient) ExportParodies(ctx context.Context, req *emptypb.Empty, opts ...gax.CallOption) (*ExportParodiesOperation, error) {
@@ -507,23 +507,6 @@ func (c *referrerGRPCClient) ExportCrossRefs(ctx context.Context, req *emptypb.E
 	}, nil
 }
 
-func (c *referrerGRPCClient) AnalyzeParodies(ctx context.Context, req *emptypb.Empty, opts ...gax.CallOption) (*AnalyzeParodiesOperation, error) {
-	ctx = insertMetadata(ctx, c.xGoogMetadata)
-	opts = append((*c.CallOptions).AnalyzeParodies[0:len((*c.CallOptions).AnalyzeParodies):len((*c.CallOptions).AnalyzeParodies)], opts...)
-	var resp *longrunningpb.Operation
-	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
-		var err error
-		resp, err = c.referrerClient.AnalyzeParodies(ctx, req, settings.GRPC...)
-		return err
-	}, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return &AnalyzeParodiesOperation{
-		lro: longrunning.InternalNewOperation(*c.LROClient, resp),
-	}, nil
-}
-
 func (c *referrerGRPCClient) InitializeCrossRefs(ctx context.Context, req *emptypb.Empty, opts ...gax.CallOption) (*InitializeCrossRefsOperation, error) {
 	ctx = insertMetadata(ctx, c.xGoogMetadata)
 	opts = append((*c.CallOptions).InitializeCrossRefs[0:len((*c.CallOptions).InitializeCrossRefs):len((*c.CallOptions).InitializeCrossRefs)], opts...)
@@ -537,6 +520,23 @@ func (c *referrerGRPCClient) InitializeCrossRefs(ctx context.Context, req *empty
 		return nil, err
 	}
 	return &InitializeCrossRefsOperation{
+		lro: longrunning.InternalNewOperation(*c.LROClient, resp),
+	}, nil
+}
+
+func (c *referrerGRPCClient) AnalyzeParodies(ctx context.Context, req *emptypb.Empty, opts ...gax.CallOption) (*AnalyzeParodiesOperation, error) {
+	ctx = insertMetadata(ctx, c.xGoogMetadata)
+	opts = append((*c.CallOptions).AnalyzeParodies[0:len((*c.CallOptions).AnalyzeParodies):len((*c.CallOptions).AnalyzeParodies)], opts...)
+	var resp *longrunningpb.Operation
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.referrerClient.AnalyzeParodies(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &AnalyzeParodiesOperation{
 		lro: longrunning.InternalNewOperation(*c.LROClient, resp),
 	}, nil
 }
