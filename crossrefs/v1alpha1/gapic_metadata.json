@@ -55,9 +55,9 @@
                 "GetUniverse"
               ]
             },
-            "GetWormholeInformation": {
+            "GetWormhole": {
               "methods": [
-                "GetWormholeInformation"
+                "GetWormhole"
               ]
             },
             "ImportCrossRefs": {
