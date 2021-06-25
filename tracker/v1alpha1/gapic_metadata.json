@@ -1,0 +1,43 @@
+{
+  "schema": "1.0",
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods.",
+  "language": "go",
+  "protoPackage": "animeshon.tracker.v1alpha1",
+  "libraryPackage": "github.com/animeapis/api-go-client/tracker/v1alpha1",
+  "services": {
+    "TrackerService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "Client",
+          "rpcs": {
+            "CreateTracker": {
+              "methods": [
+                "CreateTracker"
+              ]
+            },
+            "DeleteTracker": {
+              "methods": [
+                "DeleteTracker"
+              ]
+            },
+            "GetTracker": {
+              "methods": [
+                "GetTracker"
+              ]
+            },
+            "ListTrackers": {
+              "methods": [
+                "ListTrackers"
+              ]
+            },
+            "UpdateTracker": {
+              "methods": [
+                "UpdateTracker"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}
