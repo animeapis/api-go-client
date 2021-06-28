@@ -1,0 +1,38 @@
+{
+  "schema": "1.0",
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods.",
+  "language": "go",
+  "protoPackage": "animeshon.image.v1alpha1",
+  "libraryPackage": "github.com/animeapis/api-go-client/image/v1alpha1",
+  "services": {
+    "Image": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "Client",
+          "rpcs": {
+            "GetCdnImage": {
+              "methods": [
+                "GetCdnImage"
+              ]
+            },
+            "GetImage": {
+              "methods": [
+                "GetImage"
+              ]
+            },
+            "ImportImage": {
+              "methods": [
+                "ImportImage"
+              ]
+            },
+            "UploadImage": {
+              "methods": [
+                "UploadImage"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}
