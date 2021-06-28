@@ -46,10 +46,12 @@ func ExampleClient_UploadImage() {
 	req := &imagepb.UploadImageRequest{
 		// TODO: Fill request struct fields.
 	}
-	err = c.UploadImage(ctx, req)
+	resp, err := c.UploadImage(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
 	}
+	// TODO: Use resp.
+	_ = resp
 }
 
 func ExampleClient_ImportImage() {
@@ -63,10 +65,12 @@ func ExampleClient_ImportImage() {
 	req := &imagepb.ImportImageRequest{
 		// TODO: Fill request struct fields.
 	}
-	err = c.ImportImage(ctx, req)
+	resp, err := c.ImportImage(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
 	}
+	// TODO: Use resp.
+	_ = resp
 }
 
 func ExampleClient_GetImage() {
