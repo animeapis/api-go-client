@@ -10,6 +10,16 @@
         "grpc": {
           "libraryClient": "Client",
           "rpcs": {
+            "CreateGallery": {
+              "methods": [
+                "CreateGallery"
+              ]
+            },
+            "DeleteGallery": {
+              "methods": [
+                "DeleteGallery"
+              ]
+            },
             "GetCdnImage": {
               "methods": [
                 "GetCdnImage"

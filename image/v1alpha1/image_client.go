@@ -36,10 +36,12 @@ var newClientHook clientHook
 
 // CallOptions contains the retry settings for each method of Client.
 type CallOptions struct {
-	UploadImage []gax.CallOption
-	ImportImage []gax.CallOption
-	GetImage    []gax.CallOption
-	GetCdnImage []gax.CallOption
+	UploadImage   []gax.CallOption
+	ImportImage   []gax.CallOption
+	GetImage      []gax.CallOption
+	GetCdnImage   []gax.CallOption
+	CreateGallery []gax.CallOption
+	DeleteGallery []gax.CallOption
 }
 
 func defaultGRPCClientOptions() []option.ClientOption {
@@ -56,10 +58,12 @@ func defaultGRPCClientOptions() []option.ClientOption {
 
 func defaultCallOptions() *CallOptions {
 	return &CallOptions{
-		UploadImage: []gax.CallOption{},
-		ImportImage: []gax.CallOption{},
-		GetImage:    []gax.CallOption{},
-		GetCdnImage: []gax.CallOption{},
+		UploadImage:   []gax.CallOption{},
+		ImportImage:   []gax.CallOption{},
+		GetImage:      []gax.CallOption{},
+		GetCdnImage:   []gax.CallOption{},
+		CreateGallery: []gax.CallOption{},
+		DeleteGallery: []gax.CallOption{},
 	}
 }
 
@@ -72,6 +76,8 @@ type internalClient interface {
 	ImportImage(context.Context, *imagepb.ImportImageRequest, ...gax.CallOption) (*imagepb.ImportImageResponse, error)
 	GetImage(context.Context, *imagepb.GetImageRequest, ...gax.CallOption) (*httpbodypb.HttpBody, error)
 	GetCdnImage(context.Context, *imagepb.GetImageRequest, ...gax.CallOption) (*httpbodypb.HttpBody, error)
+	CreateGallery(context.Context, *imagepb.CreateGalleryRequest, ...gax.CallOption) (*imagepb.Gallery, error)
+	DeleteGallery(context.Context, *imagepb.DeleteGalleryRequest, ...gax.CallOption) error
 }
 
 // Client is a client for interacting with Image API.
@@ -120,6 +126,14 @@ func (c *Client) GetImage(ctx context.Context, req *imagepb.GetImageRequest, opt
 
 func (c *Client) GetCdnImage(ctx context.Context, req *imagepb.GetImageRequest, opts ...gax.CallOption) (*httpbodypb.HttpBody, error) {
 	return c.internalClient.GetCdnImage(ctx, req, opts...)
+}
+
+func (c *Client) CreateGallery(ctx context.Context, req *imagepb.CreateGalleryRequest, opts ...gax.CallOption) (*imagepb.Gallery, error) {
+	return c.internalClient.CreateGallery(ctx, req, opts...)
+}
+
+func (c *Client) DeleteGallery(ctx context.Context, req *imagepb.DeleteGalleryRequest, opts ...gax.CallOption) error {
+	return c.internalClient.DeleteGallery(ctx, req, opts...)
 }
 
 // gRPCClient is a client for interacting with Image API over gRPC transport.
@@ -201,7 +215,8 @@ func (c *gRPCClient) Close() error {
 }
 
 func (c *gRPCClient) UploadImage(ctx context.Context, req *imagepb.UploadImageRequest, opts ...gax.CallOption) (*imagepb.UploadImageResponse, error) {
-	ctx = insertMetadata(ctx, c.xGoogMetadata)
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).UploadImage[0:len((*c.CallOptions).UploadImage):len((*c.CallOptions).UploadImage)], opts...)
 	var resp *imagepb.UploadImageResponse
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -216,7 +231,8 @@ func (c *gRPCClient) UploadImage(ctx context.Context, req *imagepb.UploadImageRe
 }
 
 func (c *gRPCClient) ImportImage(ctx context.Context, req *imagepb.ImportImageRequest, opts ...gax.CallOption) (*imagepb.ImportImageResponse, error) {
-	ctx = insertMetadata(ctx, c.xGoogMetadata)
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).ImportImage[0:len((*c.CallOptions).ImportImage):len((*c.CallOptions).ImportImage)], opts...)
 	var resp *imagepb.ImportImageResponse
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -260,4 +276,32 @@ func (c *gRPCClient) GetCdnImage(ctx context.Context, req *imagepb.GetImageReque
 		return nil, err
 	}
 	return resp, nil
+}
+
+func (c *gRPCClient) CreateGallery(ctx context.Context, req *imagepb.CreateGalleryRequest, opts ...gax.CallOption) (*imagepb.Gallery, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).CreateGallery[0:len((*c.CallOptions).CreateGallery):len((*c.CallOptions).CreateGallery)], opts...)
+	var resp *imagepb.Gallery
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.client.CreateGallery(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *gRPCClient) DeleteGallery(ctx context.Context, req *imagepb.DeleteGalleryRequest, opts ...gax.CallOption) error {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).DeleteGallery[0:len((*c.CallOptions).DeleteGallery):len((*c.CallOptions).DeleteGallery)], opts...)
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		_, err = c.client.DeleteGallery(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	return err
 }

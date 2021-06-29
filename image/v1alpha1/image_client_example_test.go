@@ -110,3 +110,39 @@ func ExampleClient_GetCdnImage() {
 	// TODO: Use resp.
 	_ = resp
 }
+
+func ExampleClient_CreateGallery() {
+	ctx := context.Background()
+	c, err := image.NewClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &imagepb.CreateGalleryRequest{
+		// TODO: Fill request struct fields.
+	}
+	resp, err := c.CreateGallery(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
+func ExampleClient_DeleteGallery() {
+	ctx := context.Background()
+	c, err := image.NewClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &imagepb.DeleteGalleryRequest{
+		// TODO: Fill request struct fields.
+	}
+	err = c.DeleteGallery(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+}
