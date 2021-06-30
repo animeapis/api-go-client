@@ -100,7 +100,7 @@ func ExampleClient_GetCdnImage() {
 	}
 	defer c.Close()
 
-	req := &imagepb.GetImageRequest{
+	req := &imagepb.GetCdnImageRequest{
 		// TODO: Fill request struct fields.
 	}
 	resp, err := c.GetCdnImage(ctx, req)

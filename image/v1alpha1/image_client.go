@@ -75,7 +75,7 @@ type internalClient interface {
 	UploadImage(context.Context, *imagepb.UploadImageRequest, ...gax.CallOption) (*imagepb.UploadImageResponse, error)
 	ImportImage(context.Context, *imagepb.ImportImageRequest, ...gax.CallOption) (*imagepb.ImportImageResponse, error)
 	GetImage(context.Context, *imagepb.GetImageRequest, ...gax.CallOption) (*httpbodypb.HttpBody, error)
-	GetCdnImage(context.Context, *imagepb.GetImageRequest, ...gax.CallOption) (*httpbodypb.HttpBody, error)
+	GetCdnImage(context.Context, *imagepb.GetCdnImageRequest, ...gax.CallOption) (*httpbodypb.HttpBody, error)
 	CreateGallery(context.Context, *imagepb.CreateGalleryRequest, ...gax.CallOption) (*imagepb.Gallery, error)
 	DeleteGallery(context.Context, *imagepb.DeleteGalleryRequest, ...gax.CallOption) error
 }
@@ -124,7 +124,7 @@ func (c *Client) GetImage(ctx context.Context, req *imagepb.GetImageRequest, opt
 	return c.internalClient.GetImage(ctx, req, opts...)
 }
 
-func (c *Client) GetCdnImage(ctx context.Context, req *imagepb.GetImageRequest, opts ...gax.CallOption) (*httpbodypb.HttpBody, error) {
+func (c *Client) GetCdnImage(ctx context.Context, req *imagepb.GetCdnImageRequest, opts ...gax.CallOption) (*httpbodypb.HttpBody, error) {
 	return c.internalClient.GetCdnImage(ctx, req, opts...)
 }
 
@@ -262,8 +262,8 @@ func (c *gRPCClient) GetImage(ctx context.Context, req *imagepb.GetImageRequest,
 	return resp, nil
 }
 
-func (c *gRPCClient) GetCdnImage(ctx context.Context, req *imagepb.GetImageRequest, opts ...gax.CallOption) (*httpbodypb.HttpBody, error) {
-	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+func (c *gRPCClient) GetCdnImage(ctx context.Context, req *imagepb.GetCdnImageRequest, opts ...gax.CallOption) (*httpbodypb.HttpBody, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "get", url.QueryEscape(req.GetGet())))
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).GetCdnImage[0:len((*c.CallOptions).GetCdnImage):len((*c.CallOptions).GetCdnImage)], opts...)
 	var resp *httpbodypb.HttpBody
@@ -279,7 +279,7 @@ func (c *gRPCClient) GetCdnImage(ctx context.Context, req *imagepb.GetImageReque
 }
 
 func (c *gRPCClient) CreateGallery(ctx context.Context, req *imagepb.CreateGalleryRequest, opts ...gax.CallOption) (*imagepb.Gallery, error) {
-	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).CreateGallery[0:len((*c.CallOptions).CreateGallery):len((*c.CallOptions).CreateGallery)], opts...)
 	var resp *imagepb.Gallery

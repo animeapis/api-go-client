@@ -209,7 +209,8 @@ func (c *gRPCClient) Close() error {
 }
 
 func (c *gRPCClient) CreateTracker(ctx context.Context, req *trackerpb.CreateTrackerRequest, opts ...gax.CallOption) (*trackerpb.Tracker, error) {
-	ctx = insertMetadata(ctx, c.xGoogMetadata)
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).CreateTracker[0:len((*c.CallOptions).CreateTracker):len((*c.CallOptions).CreateTracker)], opts...)
 	var resp *trackerpb.Tracker
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -224,7 +225,8 @@ func (c *gRPCClient) CreateTracker(ctx context.Context, req *trackerpb.CreateTra
 }
 
 func (c *gRPCClient) ListTrackers(ctx context.Context, req *trackerpb.ListTrackersRequest, opts ...gax.CallOption) *TrackerIterator {
-	ctx = insertMetadata(ctx, c.xGoogMetadata)
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).ListTrackers[0:len((*c.CallOptions).ListTrackers):len((*c.CallOptions).ListTrackers)], opts...)
 	it := &TrackerIterator{}
 	req = proto.Clone(req).(*trackerpb.ListTrackersRequest)
