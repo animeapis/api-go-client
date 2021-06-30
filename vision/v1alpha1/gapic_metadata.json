@@ -1,0 +1,63 @@
+{
+  "schema": "1.0",
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods.",
+  "language": "go",
+  "protoPackage": "animeshon.vision.v1alpha1",
+  "libraryPackage": "github.com/animeapis/api-go-client/vision/v1alpha1",
+  "services": {
+    "Vision": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "Client",
+          "rpcs": {
+            "CreateImageAnnotationHint": {
+              "methods": [
+                "CreateImageAnnotationHint"
+              ]
+            },
+            "CreateImageReport": {
+              "methods": [
+                "CreateImageReport"
+              ]
+            },
+            "DeleteImageAnnotationHint": {
+              "methods": [
+                "DeleteImageAnnotationHint"
+              ]
+            },
+            "DeleteImageReport": {
+              "methods": [
+                "DeleteImageReport"
+              ]
+            },
+            "GetImageAnnotationHint": {
+              "methods": [
+                "GetImageAnnotationHint"
+              ]
+            },
+            "GetImageReport": {
+              "methods": [
+                "GetImageReport"
+              ]
+            },
+            "ListImageAnnotationHints": {
+              "methods": [
+                "ListImageAnnotationHints"
+              ]
+            },
+            "ListImageReports": {
+              "methods": [
+                "ListImageReports"
+              ]
+            },
+            "UpdateImageAnnotationHint": {
+              "methods": [
+                "UpdateImageAnnotationHint"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}
