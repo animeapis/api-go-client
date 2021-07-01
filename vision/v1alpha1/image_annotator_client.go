@@ -31,10 +31,10 @@ import (
 	"google.golang.org/grpc/metadata"
 )
 
-var newClientHook clientHook
+var newImageAnnotatorClientHook clientHook
 
-// CallOptions contains the retry settings for each method of Client.
-type CallOptions struct {
+// ImageAnnotatorCallOptions contains the retry settings for each method of ImageAnnotatorClient.
+type ImageAnnotatorCallOptions struct {
 	CreateImageReport         []gax.CallOption
 	ListImageReports          []gax.CallOption
 	GetImageReport            []gax.CallOption
@@ -46,7 +46,7 @@ type CallOptions struct {
 	DeleteImageAnnotationHint []gax.CallOption
 }
 
-func defaultGRPCClientOptions() []option.ClientOption {
+func defaultImageAnnotatorGRPCClientOptions() []option.ClientOption {
 	return []option.ClientOption{
 		internaloption.WithDefaultEndpoint("vision.animeapis.com:443"),
 		internaloption.WithDefaultMTLSEndpoint("vision.animeapis.com:443"),
@@ -58,8 +58,8 @@ func defaultGRPCClientOptions() []option.ClientOption {
 	}
 }
 
-func defaultCallOptions() *CallOptions {
-	return &CallOptions{
+func defaultImageAnnotatorCallOptions() *ImageAnnotatorCallOptions {
+	return &ImageAnnotatorCallOptions{
 		CreateImageReport:         []gax.CallOption{},
 		ListImageReports:          []gax.CallOption{},
 		GetImageReport:            []gax.CallOption{},
@@ -72,8 +72,8 @@ func defaultCallOptions() *CallOptions {
 	}
 }
 
-// internalClient is an interface that defines the methods availaible from Vision API.
-type internalClient interface {
+// internalImageAnnotatorClient is an interface that defines the methods availaible from Vision API.
+type internalImageAnnotatorClient interface {
 	Close() error
 	setGoogleClientInfo(...string)
 	Connection() *grpc.ClientConn
@@ -88,100 +88,100 @@ type internalClient interface {
 	DeleteImageAnnotationHint(context.Context, *visionpb.DeleteImageAnnotationHintRequest, ...gax.CallOption) error
 }
 
-// Client is a client for interacting with Vision API.
+// ImageAnnotatorClient is a client for interacting with Vision API.
 // Methods, except Close, may be called concurrently. However, fields must not be modified concurrently with method calls.
-type Client struct {
+type ImageAnnotatorClient struct {
 	// The internal transport-dependent client.
-	internalClient internalClient
+	internalClient internalImageAnnotatorClient
 
 	// The call options for this service.
-	CallOptions *CallOptions
+	CallOptions *ImageAnnotatorCallOptions
 }
 
 // Wrapper methods routed to the internal client.
 
 // Close closes the connection to the API service. The user should invoke this when
 // the client is no longer required.
-func (c *Client) Close() error {
+func (c *ImageAnnotatorClient) Close() error {
 	return c.internalClient.Close()
 }
 
 // setGoogleClientInfo sets the name and version of the application in
 // the `x-goog-api-client` header passed on each request. Intended for
 // use by Google-written clients.
-func (c *Client) setGoogleClientInfo(keyval ...string) {
+func (c *ImageAnnotatorClient) setGoogleClientInfo(keyval ...string) {
 	c.internalClient.setGoogleClientInfo(keyval...)
 }
 
 // Connection returns a connection to the API service.
 //
 // Deprecated.
-func (c *Client) Connection() *grpc.ClientConn {
+func (c *ImageAnnotatorClient) Connection() *grpc.ClientConn {
 	return c.internalClient.Connection()
 }
 
-func (c *Client) CreateImageReport(ctx context.Context, req *visionpb.CreateImageReportRequest, opts ...gax.CallOption) (*visionpb.ImageReport, error) {
+func (c *ImageAnnotatorClient) CreateImageReport(ctx context.Context, req *visionpb.CreateImageReportRequest, opts ...gax.CallOption) (*visionpb.ImageReport, error) {
 	return c.internalClient.CreateImageReport(ctx, req, opts...)
 }
 
-func (c *Client) ListImageReports(ctx context.Context, req *visionpb.ListImageReportsRequest, opts ...gax.CallOption) (*visionpb.ListImageReportsResponse, error) {
+func (c *ImageAnnotatorClient) ListImageReports(ctx context.Context, req *visionpb.ListImageReportsRequest, opts ...gax.CallOption) (*visionpb.ListImageReportsResponse, error) {
 	return c.internalClient.ListImageReports(ctx, req, opts...)
 }
 
-func (c *Client) GetImageReport(ctx context.Context, req *visionpb.GetImageReportRequest, opts ...gax.CallOption) (*visionpb.ImageReport, error) {
+func (c *ImageAnnotatorClient) GetImageReport(ctx context.Context, req *visionpb.GetImageReportRequest, opts ...gax.CallOption) (*visionpb.ImageReport, error) {
 	return c.internalClient.GetImageReport(ctx, req, opts...)
 }
 
-func (c *Client) DeleteImageReport(ctx context.Context, req *visionpb.DeleteImageReportRequest, opts ...gax.CallOption) error {
+func (c *ImageAnnotatorClient) DeleteImageReport(ctx context.Context, req *visionpb.DeleteImageReportRequest, opts ...gax.CallOption) error {
 	return c.internalClient.DeleteImageReport(ctx, req, opts...)
 }
 
-func (c *Client) CreateImageAnnotationHint(ctx context.Context, req *visionpb.CreateImageAnnotationHintRequest, opts ...gax.CallOption) (*visionpb.ImageAnnotationHint, error) {
+func (c *ImageAnnotatorClient) CreateImageAnnotationHint(ctx context.Context, req *visionpb.CreateImageAnnotationHintRequest, opts ...gax.CallOption) (*visionpb.ImageAnnotationHint, error) {
 	return c.internalClient.CreateImageAnnotationHint(ctx, req, opts...)
 }
 
-func (c *Client) ListImageAnnotationHints(ctx context.Context, req *visionpb.ListImageAnnotationHintsRequest, opts ...gax.CallOption) (*visionpb.ListImageAnnotationHintsResponse, error) {
+func (c *ImageAnnotatorClient) ListImageAnnotationHints(ctx context.Context, req *visionpb.ListImageAnnotationHintsRequest, opts ...gax.CallOption) (*visionpb.ListImageAnnotationHintsResponse, error) {
 	return c.internalClient.ListImageAnnotationHints(ctx, req, opts...)
 }
 
-func (c *Client) GetImageAnnotationHint(ctx context.Context, req *visionpb.GetImageAnnotationHintRequest, opts ...gax.CallOption) (*visionpb.ImageAnnotationHint, error) {
+func (c *ImageAnnotatorClient) GetImageAnnotationHint(ctx context.Context, req *visionpb.GetImageAnnotationHintRequest, opts ...gax.CallOption) (*visionpb.ImageAnnotationHint, error) {
 	return c.internalClient.GetImageAnnotationHint(ctx, req, opts...)
 }
 
-func (c *Client) UpdateImageAnnotationHint(ctx context.Context, req *visionpb.UpdateImageAnnotationHintRequest, opts ...gax.CallOption) (*visionpb.ImageAnnotationHint, error) {
+func (c *ImageAnnotatorClient) UpdateImageAnnotationHint(ctx context.Context, req *visionpb.UpdateImageAnnotationHintRequest, opts ...gax.CallOption) (*visionpb.ImageAnnotationHint, error) {
 	return c.internalClient.UpdateImageAnnotationHint(ctx, req, opts...)
 }
 
-func (c *Client) DeleteImageAnnotationHint(ctx context.Context, req *visionpb.DeleteImageAnnotationHintRequest, opts ...gax.CallOption) error {
+func (c *ImageAnnotatorClient) DeleteImageAnnotationHint(ctx context.Context, req *visionpb.DeleteImageAnnotationHintRequest, opts ...gax.CallOption) error {
 	return c.internalClient.DeleteImageAnnotationHint(ctx, req, opts...)
 }
 
-// gRPCClient is a client for interacting with Vision API over gRPC transport.
+// imageAnnotatorGRPCClient is a client for interacting with Vision API over gRPC transport.
 //
 // Methods, except Close, may be called concurrently. However, fields must not be modified concurrently with method calls.
-type gRPCClient struct {
+type imageAnnotatorGRPCClient struct {
 	// Connection pool of gRPC connections to the service.
 	connPool gtransport.ConnPool
 
 	// flag to opt out of default deadlines via GOOGLE_API_GO_EXPERIMENTAL_DISABLE_DEFAULT_DEADLINE
 	disableDeadlines bool
 
-	// Points back to the CallOptions field of the containing Client
-	CallOptions **CallOptions
+	// Points back to the CallOptions field of the containing ImageAnnotatorClient
+	CallOptions **ImageAnnotatorCallOptions
 
 	// The gRPC API client.
-	client visionpb.VisionClient
+	imageAnnotatorClient visionpb.ImageAnnotatorClient
 
 	// The x-goog-* metadata to be sent with each request.
 	xGoogMetadata metadata.MD
 }
 
-// NewClient creates a new vision client based on gRPC.
+// NewImageAnnotatorClient creates a new image annotator client based on gRPC.
 // The returned client must be Closed when it is done being used to clean up its underlying connections.
-func NewClient(ctx context.Context, opts ...option.ClientOption) (*Client, error) {
-	clientOpts := defaultGRPCClientOptions()
-	if newClientHook != nil {
-		hookOpts, err := newClientHook(ctx, clientHookParams{})
+func NewImageAnnotatorClient(ctx context.Context, opts ...option.ClientOption) (*ImageAnnotatorClient, error) {
+	clientOpts := defaultImageAnnotatorGRPCClientOptions()
+	if newImageAnnotatorClientHook != nil {
+		hookOpts, err := newImageAnnotatorClientHook(ctx, clientHookParams{})
 		if err != nil {
 			return nil, err
 		}
@@ -197,13 +197,13 @@ func NewClient(ctx context.Context, opts ...option.ClientOption) (*Client, error
 	if err != nil {
 		return nil, err
 	}
-	client := Client{CallOptions: defaultCallOptions()}
+	client := ImageAnnotatorClient{CallOptions: defaultImageAnnotatorCallOptions()}
 
-	c := &gRPCClient{
-		connPool:         connPool,
-		disableDeadlines: disableDeadlines,
-		client:           visionpb.NewVisionClient(connPool),
-		CallOptions:      &client.CallOptions,
+	c := &imageAnnotatorGRPCClient{
+		connPool:             connPool,
+		disableDeadlines:     disableDeadlines,
+		imageAnnotatorClient: visionpb.NewImageAnnotatorClient(connPool),
+		CallOptions:          &client.CallOptions,
 	}
 	c.setGoogleClientInfo()
 
@@ -215,14 +215,14 @@ func NewClient(ctx context.Context, opts ...option.ClientOption) (*Client, error
 // Connection returns a connection to the API service.
 //
 // Deprecated.
-func (c *gRPCClient) Connection() *grpc.ClientConn {
+func (c *imageAnnotatorGRPCClient) Connection() *grpc.ClientConn {
 	return c.connPool.Conn()
 }
 
 // setGoogleClientInfo sets the name and version of the application in
 // the `x-goog-api-client` header passed on each request. Intended for
 // use by Google-written clients.
-func (c *gRPCClient) setGoogleClientInfo(keyval ...string) {
+func (c *imageAnnotatorGRPCClient) setGoogleClientInfo(keyval ...string) {
 	kv := append([]string{"gl-go", versionGo()}, keyval...)
 	kv = append(kv, "gapic", versionClient, "gax", gax.Version, "grpc", grpc.Version)
 	c.xGoogMetadata = metadata.Pairs("x-goog-api-client", gax.XGoogHeader(kv...))
@@ -230,18 +230,18 @@ func (c *gRPCClient) setGoogleClientInfo(keyval ...string) {
 
 // Close closes the connection to the API service. The user should invoke this when
 // the client is no longer required.
-func (c *gRPCClient) Close() error {
+func (c *imageAnnotatorGRPCClient) Close() error {
 	return c.connPool.Close()
 }
 
-func (c *gRPCClient) CreateImageReport(ctx context.Context, req *visionpb.CreateImageReportRequest, opts ...gax.CallOption) (*visionpb.ImageReport, error) {
+func (c *imageAnnotatorGRPCClient) CreateImageReport(ctx context.Context, req *visionpb.CreateImageReportRequest, opts ...gax.CallOption) (*visionpb.ImageReport, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).CreateImageReport[0:len((*c.CallOptions).CreateImageReport):len((*c.CallOptions).CreateImageReport)], opts...)
 	var resp *visionpb.ImageReport
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
-		resp, err = c.client.CreateImageReport(ctx, req, settings.GRPC...)
+		resp, err = c.imageAnnotatorClient.CreateImageReport(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	if err != nil {
@@ -250,14 +250,14 @@ func (c *gRPCClient) CreateImageReport(ctx context.Context, req *visionpb.Create
 	return resp, nil
 }
 
-func (c *gRPCClient) ListImageReports(ctx context.Context, req *visionpb.ListImageReportsRequest, opts ...gax.CallOption) (*visionpb.ListImageReportsResponse, error) {
+func (c *imageAnnotatorGRPCClient) ListImageReports(ctx context.Context, req *visionpb.ListImageReportsRequest, opts ...gax.CallOption) (*visionpb.ListImageReportsResponse, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).ListImageReports[0:len((*c.CallOptions).ListImageReports):len((*c.CallOptions).ListImageReports)], opts...)
 	var resp *visionpb.ListImageReportsResponse
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
-		resp, err = c.client.ListImageReports(ctx, req, settings.GRPC...)
+		resp, err = c.imageAnnotatorClient.ListImageReports(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	if err != nil {
@@ -266,14 +266,14 @@ func (c *gRPCClient) ListImageReports(ctx context.Context, req *visionpb.ListIma
 	return resp, nil
 }
 
-func (c *gRPCClient) GetImageReport(ctx context.Context, req *visionpb.GetImageReportRequest, opts ...gax.CallOption) (*visionpb.ImageReport, error) {
+func (c *imageAnnotatorGRPCClient) GetImageReport(ctx context.Context, req *visionpb.GetImageReportRequest, opts ...gax.CallOption) (*visionpb.ImageReport, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).GetImageReport[0:len((*c.CallOptions).GetImageReport):len((*c.CallOptions).GetImageReport)], opts...)
 	var resp *visionpb.ImageReport
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
-		resp, err = c.client.GetImageReport(ctx, req, settings.GRPC...)
+		resp, err = c.imageAnnotatorClient.GetImageReport(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	if err != nil {
@@ -282,26 +282,26 @@ func (c *gRPCClient) GetImageReport(ctx context.Context, req *visionpb.GetImageR
 	return resp, nil
 }
 
-func (c *gRPCClient) DeleteImageReport(ctx context.Context, req *visionpb.DeleteImageReportRequest, opts ...gax.CallOption) error {
+func (c *imageAnnotatorGRPCClient) DeleteImageReport(ctx context.Context, req *visionpb.DeleteImageReportRequest, opts ...gax.CallOption) error {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).DeleteImageReport[0:len((*c.CallOptions).DeleteImageReport):len((*c.CallOptions).DeleteImageReport)], opts...)
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
-		_, err = c.client.DeleteImageReport(ctx, req, settings.GRPC...)
+		_, err = c.imageAnnotatorClient.DeleteImageReport(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	return err
 }
 
-func (c *gRPCClient) CreateImageAnnotationHint(ctx context.Context, req *visionpb.CreateImageAnnotationHintRequest, opts ...gax.CallOption) (*visionpb.ImageAnnotationHint, error) {
+func (c *imageAnnotatorGRPCClient) CreateImageAnnotationHint(ctx context.Context, req *visionpb.CreateImageAnnotationHintRequest, opts ...gax.CallOption) (*visionpb.ImageAnnotationHint, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).CreateImageAnnotationHint[0:len((*c.CallOptions).CreateImageAnnotationHint):len((*c.CallOptions).CreateImageAnnotationHint)], opts...)
 	var resp *visionpb.ImageAnnotationHint
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
-		resp, err = c.client.CreateImageAnnotationHint(ctx, req, settings.GRPC...)
+		resp, err = c.imageAnnotatorClient.CreateImageAnnotationHint(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	if err != nil {
@@ -310,14 +310,14 @@ func (c *gRPCClient) CreateImageAnnotationHint(ctx context.Context, req *visionp
 	return resp, nil
 }
 
-func (c *gRPCClient) ListImageAnnotationHints(ctx context.Context, req *visionpb.ListImageAnnotationHintsRequest, opts ...gax.CallOption) (*visionpb.ListImageAnnotationHintsResponse, error) {
+func (c *imageAnnotatorGRPCClient) ListImageAnnotationHints(ctx context.Context, req *visionpb.ListImageAnnotationHintsRequest, opts ...gax.CallOption) (*visionpb.ListImageAnnotationHintsResponse, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).ListImageAnnotationHints[0:len((*c.CallOptions).ListImageAnnotationHints):len((*c.CallOptions).ListImageAnnotationHints)], opts...)
 	var resp *visionpb.ListImageAnnotationHintsResponse
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
-		resp, err = c.client.ListImageAnnotationHints(ctx, req, settings.GRPC...)
+		resp, err = c.imageAnnotatorClient.ListImageAnnotationHints(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	if err != nil {
@@ -326,14 +326,14 @@ func (c *gRPCClient) ListImageAnnotationHints(ctx context.Context, req *visionpb
 	return resp, nil
 }
 
-func (c *gRPCClient) GetImageAnnotationHint(ctx context.Context, req *visionpb.GetImageAnnotationHintRequest, opts ...gax.CallOption) (*visionpb.ImageAnnotationHint, error) {
+func (c *imageAnnotatorGRPCClient) GetImageAnnotationHint(ctx context.Context, req *visionpb.GetImageAnnotationHintRequest, opts ...gax.CallOption) (*visionpb.ImageAnnotationHint, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).GetImageAnnotationHint[0:len((*c.CallOptions).GetImageAnnotationHint):len((*c.CallOptions).GetImageAnnotationHint)], opts...)
 	var resp *visionpb.ImageAnnotationHint
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
-		resp, err = c.client.GetImageAnnotationHint(ctx, req, settings.GRPC...)
+		resp, err = c.imageAnnotatorClient.GetImageAnnotationHint(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	if err != nil {
@@ -342,14 +342,14 @@ func (c *gRPCClient) GetImageAnnotationHint(ctx context.Context, req *visionpb.G
 	return resp, nil
 }
 
-func (c *gRPCClient) UpdateImageAnnotationHint(ctx context.Context, req *visionpb.UpdateImageAnnotationHintRequest, opts ...gax.CallOption) (*visionpb.ImageAnnotationHint, error) {
+func (c *imageAnnotatorGRPCClient) UpdateImageAnnotationHint(ctx context.Context, req *visionpb.UpdateImageAnnotationHintRequest, opts ...gax.CallOption) (*visionpb.ImageAnnotationHint, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "hint.name", url.QueryEscape(req.GetHint().GetName())))
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).UpdateImageAnnotationHint[0:len((*c.CallOptions).UpdateImageAnnotationHint):len((*c.CallOptions).UpdateImageAnnotationHint)], opts...)
 	var resp *visionpb.ImageAnnotationHint
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
-		resp, err = c.client.UpdateImageAnnotationHint(ctx, req, settings.GRPC...)
+		resp, err = c.imageAnnotatorClient.UpdateImageAnnotationHint(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	if err != nil {
@@ -358,13 +358,13 @@ func (c *gRPCClient) UpdateImageAnnotationHint(ctx context.Context, req *visionp
 	return resp, nil
 }
 
-func (c *gRPCClient) DeleteImageAnnotationHint(ctx context.Context, req *visionpb.DeleteImageAnnotationHintRequest, opts ...gax.CallOption) error {
+func (c *imageAnnotatorGRPCClient) DeleteImageAnnotationHint(ctx context.Context, req *visionpb.DeleteImageAnnotationHintRequest, opts ...gax.CallOption) error {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).DeleteImageAnnotationHint[0:len((*c.CallOptions).DeleteImageAnnotationHint):len((*c.CallOptions).DeleteImageAnnotationHint)], opts...)
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
-		_, err = c.client.DeleteImageAnnotationHint(ctx, req, settings.GRPC...)
+		_, err = c.imageAnnotatorClient.DeleteImageAnnotationHint(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	return err

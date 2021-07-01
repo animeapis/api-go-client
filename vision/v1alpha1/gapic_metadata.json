@@ -5,10 +5,10 @@
   "protoPackage": "animeshon.vision.v1alpha1",
   "libraryPackage": "github.com/animeapis/api-go-client/vision/v1alpha1",
   "services": {
-    "Vision": {
+    "ImageAnnotator": {
       "clients": {
         "grpc": {
-          "libraryClient": "Client",
+          "libraryClient": "ImageAnnotatorClient",
           "rpcs": {
             "CreateImageAnnotationHint": {
               "methods": [

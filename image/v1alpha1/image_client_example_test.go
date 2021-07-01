@@ -92,25 +92,6 @@ func ExampleClient_GetImage() {
 	_ = resp
 }
 
-func ExampleClient_GetCdnImage() {
-	ctx := context.Background()
-	c, err := image.NewClient(ctx)
-	if err != nil {
-		// TODO: Handle error.
-	}
-	defer c.Close()
-
-	req := &imagepb.GetCdnImageRequest{
-		// TODO: Fill request struct fields.
-	}
-	resp, err := c.GetCdnImage(ctx, req)
-	if err != nil {
-		// TODO: Handle error.
-	}
-	// TODO: Use resp.
-	_ = resp
-}
-
 func ExampleClient_CreateGallery() {
 	ctx := context.Background()
 	c, err := image.NewClient(ctx)

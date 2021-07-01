@@ -23,9 +23,9 @@ import (
 	visionpb "github.com/animeapis/go-genproto/vision/v1alpha1"
 )
 
-func ExampleNewClient() {
+func ExampleNewImageAnnotatorClient() {
 	ctx := context.Background()
-	c, err := vision.NewClient(ctx)
+	c, err := vision.NewImageAnnotatorClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -35,9 +35,9 @@ func ExampleNewClient() {
 	_ = c
 }
 
-func ExampleClient_CreateImageReport() {
+func ExampleImageAnnotatorClient_CreateImageReport() {
 	ctx := context.Background()
-	c, err := vision.NewClient(ctx)
+	c, err := vision.NewImageAnnotatorClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -54,9 +54,9 @@ func ExampleClient_CreateImageReport() {
 	_ = resp
 }
 
-func ExampleClient_ListImageReports() {
+func ExampleImageAnnotatorClient_ListImageReports() {
 	ctx := context.Background()
-	c, err := vision.NewClient(ctx)
+	c, err := vision.NewImageAnnotatorClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -73,9 +73,9 @@ func ExampleClient_ListImageReports() {
 	_ = resp
 }
 
-func ExampleClient_GetImageReport() {
+func ExampleImageAnnotatorClient_GetImageReport() {
 	ctx := context.Background()
-	c, err := vision.NewClient(ctx)
+	c, err := vision.NewImageAnnotatorClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -92,9 +92,9 @@ func ExampleClient_GetImageReport() {
 	_ = resp
 }
 
-func ExampleClient_DeleteImageReport() {
+func ExampleImageAnnotatorClient_DeleteImageReport() {
 	ctx := context.Background()
-	c, err := vision.NewClient(ctx)
+	c, err := vision.NewImageAnnotatorClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -109,9 +109,9 @@ func ExampleClient_DeleteImageReport() {
 	}
 }
 
-func ExampleClient_CreateImageAnnotationHint() {
+func ExampleImageAnnotatorClient_CreateImageAnnotationHint() {
 	ctx := context.Background()
-	c, err := vision.NewClient(ctx)
+	c, err := vision.NewImageAnnotatorClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -128,9 +128,9 @@ func ExampleClient_CreateImageAnnotationHint() {
 	_ = resp
 }
 
-func ExampleClient_ListImageAnnotationHints() {
+func ExampleImageAnnotatorClient_ListImageAnnotationHints() {
 	ctx := context.Background()
-	c, err := vision.NewClient(ctx)
+	c, err := vision.NewImageAnnotatorClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -147,9 +147,9 @@ func ExampleClient_ListImageAnnotationHints() {
 	_ = resp
 }
 
-func ExampleClient_GetImageAnnotationHint() {
+func ExampleImageAnnotatorClient_GetImageAnnotationHint() {
 	ctx := context.Background()
-	c, err := vision.NewClient(ctx)
+	c, err := vision.NewImageAnnotatorClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -166,9 +166,9 @@ func ExampleClient_GetImageAnnotationHint() {
 	_ = resp
 }
 
-func ExampleClient_UpdateImageAnnotationHint() {
+func ExampleImageAnnotatorClient_UpdateImageAnnotationHint() {
 	ctx := context.Background()
-	c, err := vision.NewClient(ctx)
+	c, err := vision.NewImageAnnotatorClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -185,9 +185,9 @@ func ExampleClient_UpdateImageAnnotationHint() {
 	_ = resp
 }
 
-func ExampleClient_DeleteImageAnnotationHint() {
+func ExampleImageAnnotatorClient_DeleteImageAnnotationHint() {
 	ctx := context.Background()
-	c, err := vision.NewClient(ctx)
+	c, err := vision.NewImageAnnotatorClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
 	}

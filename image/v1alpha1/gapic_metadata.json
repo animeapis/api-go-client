@@ -20,11 +20,6 @@
                 "DeleteGallery"
               ]
             },
-            "GetCdnImage": {
-              "methods": [
-                "GetCdnImage"
-              ]
-            },
             "GetImage": {
               "methods": [
                 "GetImage"
@@ -38,6 +33,25 @@
             "UploadImage": {
               "methods": [
                 "UploadImage"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "ImageRouter": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ImageRouterClient",
+          "rpcs": {
+            "GetImageRoute": {
+              "methods": [
+                "GetImageRoute"
+              ]
+            },
+            "RouteImage": {
+              "methods": [
+                "RouteImage"
               ]
             }
           }
