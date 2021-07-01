@@ -15,11 +15,6 @@
                 "AddGroupMember"
               ]
             },
-            "Authorize": {
-              "methods": [
-                "Authorize"
-              ]
-            },
             "CreateGroup": {
               "methods": [
                 "CreateGroup"
@@ -38,6 +33,11 @@
             "CreateRole": {
               "methods": [
                 "CreateRole"
+              ]
+            },
+            "CreateService": {
+              "methods": [
+                "CreateService"
               ]
             },
             "CreateSubject": {
@@ -63,6 +63,11 @@
             "DeleteRole": {
               "methods": [
                 "DeleteRole"
+              ]
+            },
+            "DeleteService": {
+              "methods": [
+                "DeleteService"
               ]
             },
             "DeleteSubject": {
@@ -98,6 +103,11 @@
             "SetIamPolicy": {
               "methods": [
                 "SetIamPolicy"
+              ]
+            },
+            "TestIamPolicy": {
+              "methods": [
+                "TestIamPolicy"
               ]
             },
             "UpdateGroup": {

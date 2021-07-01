@@ -36,7 +36,7 @@ func ExampleNewAccessControlClient() {
 	_ = c
 }
 
-func ExampleAccessControlClient_Authorize() {
+func ExampleAccessControlClient_TestIamPolicy() {
 	ctx := context.Background()
 	c, err := grbac.NewAccessControlClient(ctx)
 	if err != nil {
@@ -44,10 +44,10 @@ func ExampleAccessControlClient_Authorize() {
 	}
 	defer c.Close()
 
-	req := &grbacpb.AuthorizeRequest{
+	req := &grbacpb.TestIamPolicyRequest{
 		// TODO: Fill request struct fields.
 	}
-	err = c.Authorize(ctx, req)
+	err = c.TestIamPolicy(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -160,6 +160,42 @@ func ExampleAccessControlClient_DeleteResource() {
 		// TODO: Fill request struct fields.
 	}
 	err = c.DeleteResource(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+}
+
+func ExampleAccessControlClient_CreateService() {
+	ctx := context.Background()
+	c, err := grbac.NewAccessControlClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &grbacpb.CreateServiceRequest{
+		// TODO: Fill request struct fields.
+	}
+	resp, err := c.CreateService(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
+func ExampleAccessControlClient_DeleteService() {
+	ctx := context.Background()
+	c, err := grbac.NewAccessControlClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &grbacpb.DeleteServiceRequest{
+		// TODO: Fill request struct fields.
+	}
+	err = c.DeleteService(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
 	}

@@ -74,8 +74,8 @@ type internalClient interface {
 	CreateContribution(context.Context, *knowledgepb.CreateContributionRequest, ...gax.CallOption) (*knowledgepb.Contribution, error)
 	ListContributions(context.Context, *knowledgepb.ListContributionsRequest, ...gax.CallOption) *ContributionIterator
 	GetContribution(context.Context, *knowledgepb.GetContributionRequest, ...gax.CallOption) (*knowledgepb.Contribution, error)
-	ApproveContribution(context.Context, *knowledgepb.ApproveContributionRequest, ...gax.CallOption) error
-	RejectContribution(context.Context, *knowledgepb.RejectContributionRequest, ...gax.CallOption) error
+	ApproveContribution(context.Context, *knowledgepb.ApproveContributionRequest, ...gax.CallOption) (*knowledgepb.Contribution, error)
+	RejectContribution(context.Context, *knowledgepb.RejectContributionRequest, ...gax.CallOption) (*knowledgepb.Contribution, error)
 }
 
 // Client is a client for interacting with Knowledge API.
@@ -122,11 +122,11 @@ func (c *Client) GetContribution(ctx context.Context, req *knowledgepb.GetContri
 	return c.internalClient.GetContribution(ctx, req, opts...)
 }
 
-func (c *Client) ApproveContribution(ctx context.Context, req *knowledgepb.ApproveContributionRequest, opts ...gax.CallOption) error {
+func (c *Client) ApproveContribution(ctx context.Context, req *knowledgepb.ApproveContributionRequest, opts ...gax.CallOption) (*knowledgepb.Contribution, error) {
 	return c.internalClient.ApproveContribution(ctx, req, opts...)
 }
 
-func (c *Client) RejectContribution(ctx context.Context, req *knowledgepb.RejectContributionRequest, opts ...gax.CallOption) error {
+func (c *Client) RejectContribution(ctx context.Context, req *knowledgepb.RejectContributionRequest, opts ...gax.CallOption) (*knowledgepb.Contribution, error) {
 	return c.internalClient.RejectContribution(ctx, req, opts...)
 }
 
@@ -278,28 +278,36 @@ func (c *gRPCClient) GetContribution(ctx context.Context, req *knowledgepb.GetCo
 	return resp, nil
 }
 
-func (c *gRPCClient) ApproveContribution(ctx context.Context, req *knowledgepb.ApproveContributionRequest, opts ...gax.CallOption) error {
+func (c *gRPCClient) ApproveContribution(ctx context.Context, req *knowledgepb.ApproveContributionRequest, opts ...gax.CallOption) (*knowledgepb.Contribution, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).ApproveContribution[0:len((*c.CallOptions).ApproveContribution):len((*c.CallOptions).ApproveContribution)], opts...)
+	var resp *knowledgepb.Contribution
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
-		_, err = c.client.ApproveContribution(ctx, req, settings.GRPC...)
+		resp, err = c.client.ApproveContribution(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
-	return err
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
-func (c *gRPCClient) RejectContribution(ctx context.Context, req *knowledgepb.RejectContributionRequest, opts ...gax.CallOption) error {
+func (c *gRPCClient) RejectContribution(ctx context.Context, req *knowledgepb.RejectContributionRequest, opts ...gax.CallOption) (*knowledgepb.Contribution, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).RejectContribution[0:len((*c.CallOptions).RejectContribution):len((*c.CallOptions).RejectContribution)], opts...)
+	var resp *knowledgepb.Contribution
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
-		_, err = c.client.RejectContribution(ctx, req, settings.GRPC...)
+		resp, err = c.client.RejectContribution(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
-	return err
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 // ContributionIterator manages a stream of *knowledgepb.Contribution.

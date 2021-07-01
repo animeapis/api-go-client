@@ -110,10 +110,12 @@ func ExampleClient_ApproveContribution() {
 	req := &knowledgepb.ApproveContributionRequest{
 		// TODO: Fill request struct fields.
 	}
-	err = c.ApproveContribution(ctx, req)
+	resp, err := c.ApproveContribution(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
 	}
+	// TODO: Use resp.
+	_ = resp
 }
 
 func ExampleClient_RejectContribution() {
@@ -127,8 +129,10 @@ func ExampleClient_RejectContribution() {
 	req := &knowledgepb.RejectContributionRequest{
 		// TODO: Fill request struct fields.
 	}
-	err = c.RejectContribution(ctx, req)
+	resp, err := c.RejectContribution(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
 	}
+	// TODO: Use resp.
+	_ = resp
 }
