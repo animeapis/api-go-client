@@ -1,0 +1,68 @@
+{
+  "schema": "1.0",
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods.",
+  "language": "go",
+  "protoPackage": "animeshon.identity.v1alpha1",
+  "libraryPackage": "github.com/animeapis/api-go-client/identity/v1alpha1",
+  "services": {
+    "Identity": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "Client",
+          "rpcs": {
+            "CreateGroup": {
+              "methods": [
+                "CreateGroup"
+              ]
+            },
+            "CreateUser": {
+              "methods": [
+                "CreateUser"
+              ]
+            },
+            "DeleteGroup": {
+              "methods": [
+                "DeleteGroup"
+              ]
+            },
+            "DeleteUser": {
+              "methods": [
+                "DeleteUser"
+              ]
+            },
+            "GetGroup": {
+              "methods": [
+                "GetGroup"
+              ]
+            },
+            "GetUser": {
+              "methods": [
+                "GetUser"
+              ]
+            },
+            "ListGroups": {
+              "methods": [
+                "ListGroups"
+              ]
+            },
+            "ListUsers": {
+              "methods": [
+                "ListUsers"
+              ]
+            },
+            "UpdateGroup": {
+              "methods": [
+                "UpdateGroup"
+              ]
+            },
+            "UpdateUser": {
+              "methods": [
+                "UpdateUser"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

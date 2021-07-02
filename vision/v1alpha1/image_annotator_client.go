@@ -128,6 +128,7 @@ func (c *ImageAnnotatorClient) ListImageReports(ctx context.Context, req *vision
 	return c.internalClient.ListImageReports(ctx, req, opts...)
 }
 
+// GetImageReport note: to fetch the latest available report use “latest” as report id.
 func (c *ImageAnnotatorClient) GetImageReport(ctx context.Context, req *visionpb.GetImageReportRequest, opts ...gax.CallOption) (*visionpb.ImageReport, error) {
 	return c.internalClient.GetImageReport(ctx, req, opts...)
 }

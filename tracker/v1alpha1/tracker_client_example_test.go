@@ -36,7 +36,7 @@ func ExampleNewClient() {
 	_ = c
 }
 
-func ExampleClient_CreateTracker() {
+func ExampleClient_GetTracker() {
 	ctx := context.Background()
 	c, err := tracker.NewClient(ctx)
 	if err != nil {
@@ -44,10 +44,10 @@ func ExampleClient_CreateTracker() {
 	}
 	defer c.Close()
 
-	req := &trackerpb.CreateTrackerRequest{
+	req := &trackerpb.GetTrackerRequest{
 		// TODO: Fill request struct fields.
 	}
-	resp, err := c.CreateTracker(ctx, req)
+	resp, err := c.GetTracker(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -80,7 +80,7 @@ func ExampleClient_ListTrackers() {
 	}
 }
 
-func ExampleClient_GetTracker() {
+func ExampleClient_CreateTracker() {
 	ctx := context.Background()
 	c, err := tracker.NewClient(ctx)
 	if err != nil {
@@ -88,10 +88,10 @@ func ExampleClient_GetTracker() {
 	}
 	defer c.Close()
 
-	req := &trackerpb.GetTrackerRequest{
+	req := &trackerpb.CreateTrackerRequest{
 		// TODO: Fill request struct fields.
 	}
-	resp, err := c.GetTracker(ctx, req)
+	resp, err := c.CreateTracker(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
 	}

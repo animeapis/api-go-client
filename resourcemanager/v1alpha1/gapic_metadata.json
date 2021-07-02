@@ -1,0 +1,68 @@
+{
+  "schema": "1.0",
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods.",
+  "language": "go",
+  "protoPackage": "animeshon.resourcemanager.v1alpha1",
+  "libraryPackage": "github.com/animeapis/api-go-client/resourcemanager/v1alpha1",
+  "services": {
+    "ResourceManager": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "Client",
+          "rpcs": {
+            "CreateOrganization": {
+              "methods": [
+                "CreateOrganization"
+              ]
+            },
+            "CreateTeam": {
+              "methods": [
+                "CreateTeam"
+              ]
+            },
+            "DeleteOrganization": {
+              "methods": [
+                "DeleteOrganization"
+              ]
+            },
+            "DeleteTeam": {
+              "methods": [
+                "DeleteTeam"
+              ]
+            },
+            "GetOrganization": {
+              "methods": [
+                "GetOrganization"
+              ]
+            },
+            "GetTeam": {
+              "methods": [
+                "GetTeam"
+              ]
+            },
+            "ListOrganizations": {
+              "methods": [
+                "ListOrganizations"
+              ]
+            },
+            "ListTeams": {
+              "methods": [
+                "ListTeams"
+              ]
+            },
+            "UpdateOrganization": {
+              "methods": [
+                "UpdateOrganization"
+              ]
+            },
+            "UpdateTeam": {
+              "methods": [
+                "UpdateTeam"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

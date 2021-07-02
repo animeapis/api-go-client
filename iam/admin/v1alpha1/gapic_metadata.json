@@ -1,0 +1,108 @@
+{
+  "schema": "1.0",
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods.",
+  "language": "go",
+  "protoPackage": "animeshon.iam.admin.v1alpha1",
+  "libraryPackage": "github.com/animeapis/api-go-client/iam/admin/v1alpha1",
+  "services": {
+    "IAM": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "IamClient",
+          "rpcs": {
+            "CreatePermission": {
+              "methods": [
+                "CreatePermission"
+              ]
+            },
+            "CreateRole": {
+              "methods": [
+                "CreateRole"
+              ]
+            },
+            "CreateServiceAccount": {
+              "methods": [
+                "CreateServiceAccount"
+              ]
+            },
+            "DeletePermission": {
+              "methods": [
+                "DeletePermission"
+              ]
+            },
+            "DeleteRole": {
+              "methods": [
+                "DeleteRole"
+              ]
+            },
+            "DeleteServiceAccount": {
+              "methods": [
+                "DeleteServiceAccount"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "GetIamPolicy"
+              ]
+            },
+            "GetPermission": {
+              "methods": [
+                "GetPermission"
+              ]
+            },
+            "GetRole": {
+              "methods": [
+                "GetRole"
+              ]
+            },
+            "GetServiceAccount": {
+              "methods": [
+                "GetServiceAccount"
+              ]
+            },
+            "ListPermissions": {
+              "methods": [
+                "ListPermissions"
+              ]
+            },
+            "ListRoles": {
+              "methods": [
+                "ListRoles"
+              ]
+            },
+            "ListServiceAccounts": {
+              "methods": [
+                "ListServiceAccounts"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "SetIamPolicy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "TestIamPermissions"
+              ]
+            },
+            "UpdatePermission": {
+              "methods": [
+                "UpdatePermission"
+              ]
+            },
+            "UpdateRole": {
+              "methods": [
+                "UpdateRole"
+              ]
+            },
+            "UpdateServiceAccount": {
+              "methods": [
+                "UpdateServiceAccount"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -37,9 +37,9 @@ var newClientHook clientHook
 
 // CallOptions contains the retry settings for each method of Client.
 type CallOptions struct {
-	CreateTracker []gax.CallOption
-	ListTrackers  []gax.CallOption
 	GetTracker    []gax.CallOption
+	ListTrackers  []gax.CallOption
+	CreateTracker []gax.CallOption
 	UpdateTracker []gax.CallOption
 	DeleteTracker []gax.CallOption
 }
@@ -58,9 +58,9 @@ func defaultGRPCClientOptions() []option.ClientOption {
 
 func defaultCallOptions() *CallOptions {
 	return &CallOptions{
-		CreateTracker: []gax.CallOption{},
-		ListTrackers:  []gax.CallOption{},
 		GetTracker:    []gax.CallOption{},
+		ListTrackers:  []gax.CallOption{},
+		CreateTracker: []gax.CallOption{},
 		UpdateTracker: []gax.CallOption{},
 		DeleteTracker: []gax.CallOption{},
 	}
@@ -71,9 +71,9 @@ type internalClient interface {
 	Close() error
 	setGoogleClientInfo(...string)
 	Connection() *grpc.ClientConn
-	CreateTracker(context.Context, *trackerpb.CreateTrackerRequest, ...gax.CallOption) (*trackerpb.Tracker, error)
-	ListTrackers(context.Context, *trackerpb.ListTrackersRequest, ...gax.CallOption) *TrackerIterator
 	GetTracker(context.Context, *trackerpb.GetTrackerRequest, ...gax.CallOption) (*trackerpb.Tracker, error)
+	ListTrackers(context.Context, *trackerpb.ListTrackersRequest, ...gax.CallOption) *TrackerIterator
+	CreateTracker(context.Context, *trackerpb.CreateTrackerRequest, ...gax.CallOption) (*trackerpb.Tracker, error)
 	UpdateTracker(context.Context, *trackerpb.UpdateTrackerRequest, ...gax.CallOption) (*trackerpb.Tracker, error)
 	DeleteTracker(context.Context, *trackerpb.DeleteTrackerRequest, ...gax.CallOption) error
 }
@@ -110,16 +110,16 @@ func (c *Client) Connection() *grpc.ClientConn {
 	return c.internalClient.Connection()
 }
 
-func (c *Client) CreateTracker(ctx context.Context, req *trackerpb.CreateTrackerRequest, opts ...gax.CallOption) (*trackerpb.Tracker, error) {
-	return c.internalClient.CreateTracker(ctx, req, opts...)
+func (c *Client) GetTracker(ctx context.Context, req *trackerpb.GetTrackerRequest, opts ...gax.CallOption) (*trackerpb.Tracker, error) {
+	return c.internalClient.GetTracker(ctx, req, opts...)
 }
 
 func (c *Client) ListTrackers(ctx context.Context, req *trackerpb.ListTrackersRequest, opts ...gax.CallOption) *TrackerIterator {
 	return c.internalClient.ListTrackers(ctx, req, opts...)
 }
 
-func (c *Client) GetTracker(ctx context.Context, req *trackerpb.GetTrackerRequest, opts ...gax.CallOption) (*trackerpb.Tracker, error) {
-	return c.internalClient.GetTracker(ctx, req, opts...)
+func (c *Client) CreateTracker(ctx context.Context, req *trackerpb.CreateTrackerRequest, opts ...gax.CallOption) (*trackerpb.Tracker, error) {
+	return c.internalClient.CreateTracker(ctx, req, opts...)
 }
 
 func (c *Client) UpdateTracker(ctx context.Context, req *trackerpb.UpdateTrackerRequest, opts ...gax.CallOption) (*trackerpb.Tracker, error) {
@@ -208,14 +208,14 @@ func (c *gRPCClient) Close() error {
 	return c.connPool.Close()
 }
 
-func (c *gRPCClient) CreateTracker(ctx context.Context, req *trackerpb.CreateTrackerRequest, opts ...gax.CallOption) (*trackerpb.Tracker, error) {
-	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+func (c *gRPCClient) GetTracker(ctx context.Context, req *trackerpb.GetTrackerRequest, opts ...gax.CallOption) (*trackerpb.Tracker, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
-	opts = append((*c.CallOptions).CreateTracker[0:len((*c.CallOptions).CreateTracker):len((*c.CallOptions).CreateTracker)], opts...)
+	opts = append((*c.CallOptions).GetTracker[0:len((*c.CallOptions).GetTracker):len((*c.CallOptions).GetTracker)], opts...)
 	var resp *trackerpb.Tracker
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
-		resp, err = c.client.CreateTracker(ctx, req, settings.GRPC...)
+		resp, err = c.client.GetTracker(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	if err != nil {
@@ -264,14 +264,14 @@ func (c *gRPCClient) ListTrackers(ctx context.Context, req *trackerpb.ListTracke
 	return it
 }
 
-func (c *gRPCClient) GetTracker(ctx context.Context, req *trackerpb.GetTrackerRequest, opts ...gax.CallOption) (*trackerpb.Tracker, error) {
-	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+func (c *gRPCClient) CreateTracker(ctx context.Context, req *trackerpb.CreateTrackerRequest, opts ...gax.CallOption) (*trackerpb.Tracker, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
-	opts = append((*c.CallOptions).GetTracker[0:len((*c.CallOptions).GetTracker):len((*c.CallOptions).GetTracker)], opts...)
+	opts = append((*c.CallOptions).CreateTracker[0:len((*c.CallOptions).CreateTracker):len((*c.CallOptions).CreateTracker)], opts...)
 	var resp *trackerpb.Tracker
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
-		resp, err = c.client.GetTracker(ctx, req, settings.GRPC...)
+		resp, err = c.client.CreateTracker(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	if err != nil {
