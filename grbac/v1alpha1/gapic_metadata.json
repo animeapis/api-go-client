@@ -115,11 +115,6 @@
                 "UpdateGroup"
               ]
             },
-            "UpdateResource": {
-              "methods": [
-                "UpdateResource"
-              ]
-            },
             "UpdateRole": {
               "methods": [
                 "UpdateRole"

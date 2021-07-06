@@ -41,7 +41,6 @@ type AccessControlCallOptions struct {
 	SetIamPolicy      []gax.CallOption
 	GetResource       []gax.CallOption
 	CreateResource    []gax.CallOption
-	UpdateResource    []gax.CallOption
 	DeleteResource    []gax.CallOption
 	CreateService     []gax.CallOption
 	DeleteService     []gax.CallOption
@@ -80,7 +79,6 @@ func defaultAccessControlCallOptions() *AccessControlCallOptions {
 		SetIamPolicy:      []gax.CallOption{},
 		GetResource:       []gax.CallOption{},
 		CreateResource:    []gax.CallOption{},
-		UpdateResource:    []gax.CallOption{},
 		DeleteResource:    []gax.CallOption{},
 		CreateService:     []gax.CallOption{},
 		DeleteService:     []gax.CallOption{},
@@ -111,7 +109,6 @@ type internalAccessControlClient interface {
 	SetIamPolicy(context.Context, *iampb.SetIamPolicyRequest, ...gax.CallOption) (*iampb.Policy, error)
 	GetResource(context.Context, *grbacpb.GetResourceRequest, ...gax.CallOption) (*grbacpb.Resource, error)
 	CreateResource(context.Context, *grbacpb.CreateResourceRequest, ...gax.CallOption) (*grbacpb.Resource, error)
-	UpdateResource(context.Context, *grbacpb.UpdateResourceRequest, ...gax.CallOption) (*grbacpb.Resource, error)
 	DeleteResource(context.Context, *grbacpb.DeleteResourceRequest, ...gax.CallOption) error
 	CreateService(context.Context, *grbacpb.CreateServiceRequest, ...gax.CallOption) (*grbacpb.Service, error)
 	DeleteService(context.Context, *grbacpb.DeleteServiceRequest, ...gax.CallOption) error
@@ -191,11 +188,6 @@ func (c *AccessControlClient) GetResource(ctx context.Context, req *grbacpb.GetR
 // CreateResource createResource creates a new resource.
 func (c *AccessControlClient) CreateResource(ctx context.Context, req *grbacpb.CreateResourceRequest, opts ...gax.CallOption) (*grbacpb.Resource, error) {
 	return c.internalClient.CreateResource(ctx, req, opts...)
-}
-
-// UpdateResource updateResource updates a resource with a field mask.
-func (c *AccessControlClient) UpdateResource(ctx context.Context, req *grbacpb.UpdateResourceRequest, opts ...gax.CallOption) (*grbacpb.Resource, error) {
-	return c.internalClient.UpdateResource(ctx, req, opts...)
 }
 
 // DeleteResource deleteResource deletes a resource.
@@ -428,22 +420,6 @@ func (c *accessControlGRPCClient) CreateResource(ctx context.Context, req *grbac
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
 		resp, err = c.accessControlClient.CreateResource(ctx, req, settings.GRPC...)
-		return err
-	}, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-func (c *accessControlGRPCClient) UpdateResource(ctx context.Context, req *grbacpb.UpdateResourceRequest, opts ...gax.CallOption) (*grbacpb.Resource, error) {
-	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v&%s=%v", "resource.service", url.QueryEscape(req.GetResource().GetService()), "resource.name", url.QueryEscape(req.GetResource().GetName())))
-	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
-	opts = append((*c.CallOptions).UpdateResource[0:len((*c.CallOptions).UpdateResource):len((*c.CallOptions).UpdateResource)], opts...)
-	var resp *grbacpb.Resource
-	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
-		var err error
-		resp, err = c.accessControlClient.UpdateResource(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	if err != nil {

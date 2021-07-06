@@ -129,25 +129,6 @@ func ExampleAccessControlClient_CreateResource() {
 	_ = resp
 }
 
-func ExampleAccessControlClient_UpdateResource() {
-	ctx := context.Background()
-	c, err := grbac.NewAccessControlClient(ctx)
-	if err != nil {
-		// TODO: Handle error.
-	}
-	defer c.Close()
-
-	req := &grbacpb.UpdateResourceRequest{
-		// TODO: Fill request struct fields.
-	}
-	resp, err := c.UpdateResource(ctx, req)
-	if err != nil {
-		// TODO: Handle error.
-	}
-	// TODO: Use resp.
-	_ = resp
-}
-
 func ExampleAccessControlClient_DeleteResource() {
 	ctx := context.Background()
 	c, err := grbac.NewAccessControlClient(ctx)
