@@ -35,11 +35,6 @@
                 "CreateRole"
               ]
             },
-            "CreateService": {
-              "methods": [
-                "CreateService"
-              ]
-            },
             "CreateSubject": {
               "methods": [
                 "CreateSubject"
@@ -63,11 +58,6 @@
             "DeleteRole": {
               "methods": [
                 "DeleteRole"
-              ]
-            },
-            "DeleteService": {
-              "methods": [
-                "DeleteService"
               ]
             },
             "DeleteSubject": {

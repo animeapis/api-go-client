@@ -165,42 +165,6 @@ func ExampleAccessControlClient_DeleteResource() {
 	}
 }
 
-func ExampleAccessControlClient_CreateService() {
-	ctx := context.Background()
-	c, err := grbac.NewAccessControlClient(ctx)
-	if err != nil {
-		// TODO: Handle error.
-	}
-	defer c.Close()
-
-	req := &grbacpb.CreateServiceRequest{
-		// TODO: Fill request struct fields.
-	}
-	resp, err := c.CreateService(ctx, req)
-	if err != nil {
-		// TODO: Handle error.
-	}
-	// TODO: Use resp.
-	_ = resp
-}
-
-func ExampleAccessControlClient_DeleteService() {
-	ctx := context.Background()
-	c, err := grbac.NewAccessControlClient(ctx)
-	if err != nil {
-		// TODO: Handle error.
-	}
-	defer c.Close()
-
-	req := &grbacpb.DeleteServiceRequest{
-		// TODO: Fill request struct fields.
-	}
-	err = c.DeleteService(ctx, req)
-	if err != nil {
-		// TODO: Handle error.
-	}
-}
-
 func ExampleAccessControlClient_CreateSubject() {
 	ctx := context.Background()
 	c, err := grbac.NewAccessControlClient(ctx)
