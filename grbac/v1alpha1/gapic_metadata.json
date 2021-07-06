@@ -110,6 +110,11 @@
                 "TestIamPolicy"
               ]
             },
+            "TransferResource": {
+              "methods": [
+                "TransferResource"
+              ]
+            },
             "UpdateGroup": {
               "methods": [
                 "UpdateGroup"
