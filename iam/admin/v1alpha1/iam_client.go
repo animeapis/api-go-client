@@ -110,12 +110,12 @@ type internalIamClient interface {
 	ListRoles(context.Context, *adminpb.ListRolesRequest, ...gax.CallOption) *RoleIterator
 	CreateRole(context.Context, *adminpb.CreateRoleRequest, ...gax.CallOption) (*adminpb.Role, error)
 	UpdateRole(context.Context, *adminpb.UpdateRoleRequest, ...gax.CallOption) (*adminpb.Role, error)
-	DeleteRole(context.Context, *adminpb.DeleteRoleRequest, ...gax.CallOption) (*adminpb.Role, error)
+	DeleteRole(context.Context, *adminpb.DeleteRoleRequest, ...gax.CallOption) error
 	GetPermission(context.Context, *adminpb.GetPermissionRequest, ...gax.CallOption) (*adminpb.Permission, error)
 	ListPermissions(context.Context, *adminpb.ListPermissionsRequest, ...gax.CallOption) *PermissionIterator
 	CreatePermission(context.Context, *adminpb.CreatePermissionRequest, ...gax.CallOption) (*adminpb.Permission, error)
 	UpdatePermission(context.Context, *adminpb.UpdatePermissionRequest, ...gax.CallOption) (*adminpb.Permission, error)
-	DeletePermission(context.Context, *adminpb.DeletePermissionRequest, ...gax.CallOption) (*adminpb.Permission, error)
+	DeletePermission(context.Context, *adminpb.DeletePermissionRequest, ...gax.CallOption) error
 }
 
 // IamClient is a client for interacting with Identity and Access Management API.
@@ -198,7 +198,7 @@ func (c *IamClient) UpdateRole(ctx context.Context, req *adminpb.UpdateRoleReque
 	return c.internalClient.UpdateRole(ctx, req, opts...)
 }
 
-func (c *IamClient) DeleteRole(ctx context.Context, req *adminpb.DeleteRoleRequest, opts ...gax.CallOption) (*adminpb.Role, error) {
+func (c *IamClient) DeleteRole(ctx context.Context, req *adminpb.DeleteRoleRequest, opts ...gax.CallOption) error {
 	return c.internalClient.DeleteRole(ctx, req, opts...)
 }
 
@@ -218,7 +218,7 @@ func (c *IamClient) UpdatePermission(ctx context.Context, req *adminpb.UpdatePer
 	return c.internalClient.UpdatePermission(ctx, req, opts...)
 }
 
-func (c *IamClient) DeletePermission(ctx context.Context, req *adminpb.DeletePermissionRequest, opts ...gax.CallOption) (*adminpb.Permission, error) {
+func (c *IamClient) DeletePermission(ctx context.Context, req *adminpb.DeletePermissionRequest, opts ...gax.CallOption) error {
 	return c.internalClient.DeletePermission(ctx, req, opts...)
 }
 
@@ -534,20 +534,16 @@ func (c *iamGRPCClient) UpdateRole(ctx context.Context, req *adminpb.UpdateRoleR
 	return resp, nil
 }
 
-func (c *iamGRPCClient) DeleteRole(ctx context.Context, req *adminpb.DeleteRoleRequest, opts ...gax.CallOption) (*adminpb.Role, error) {
+func (c *iamGRPCClient) DeleteRole(ctx context.Context, req *adminpb.DeleteRoleRequest, opts ...gax.CallOption) error {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).DeleteRole[0:len((*c.CallOptions).DeleteRole):len((*c.CallOptions).DeleteRole)], opts...)
-	var resp *adminpb.Role
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
-		resp, err = c.iamClient.DeleteRole(ctx, req, settings.GRPC...)
+		_, err = c.iamClient.DeleteRole(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return err
 }
 
 func (c *iamGRPCClient) GetPermission(ctx context.Context, req *adminpb.GetPermissionRequest, opts ...gax.CallOption) (*adminpb.Permission, error) {
@@ -636,20 +632,16 @@ func (c *iamGRPCClient) UpdatePermission(ctx context.Context, req *adminpb.Updat
 	return resp, nil
 }
 
-func (c *iamGRPCClient) DeletePermission(ctx context.Context, req *adminpb.DeletePermissionRequest, opts ...gax.CallOption) (*adminpb.Permission, error) {
+func (c *iamGRPCClient) DeletePermission(ctx context.Context, req *adminpb.DeletePermissionRequest, opts ...gax.CallOption) error {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).DeletePermission[0:len((*c.CallOptions).DeletePermission):len((*c.CallOptions).DeletePermission)], opts...)
-	var resp *adminpb.Permission
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
-		resp, err = c.iamClient.DeletePermission(ctx, req, settings.GRPC...)
+		_, err = c.iamClient.DeletePermission(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
+	return err
 }
 
 // PermissionIterator manages a stream of *adminpb.Permission.

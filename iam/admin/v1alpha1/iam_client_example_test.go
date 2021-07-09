@@ -286,12 +286,10 @@ func ExampleIamClient_DeleteRole() {
 	req := &adminpb.DeleteRoleRequest{
 		// TODO: Fill request struct fields.
 	}
-	resp, err := c.DeleteRole(ctx, req)
+	err = c.DeleteRole(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
 	}
-	// TODO: Use resp.
-	_ = resp
 }
 
 func ExampleIamClient_GetPermission() {
@@ -387,10 +385,8 @@ func ExampleIamClient_DeletePermission() {
 	req := &adminpb.DeletePermissionRequest{
 		// TODO: Fill request struct fields.
 	}
-	resp, err := c.DeletePermission(ctx, req)
+	err = c.DeletePermission(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
 	}
-	// TODO: Use resp.
-	_ = resp
 }
