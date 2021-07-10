@@ -105,7 +105,7 @@ type internalReferrerClient interface {
 	AnalyzeCrossRefsOperation(name string) *AnalyzeCrossRefsOperation
 	ImportCrossRefs(context.Context, *crossrefspb.ImportCrossRefRequest, ...gax.CallOption) (*ImportCrossRefsOperation, error)
 	ImportCrossRefsOperation(name string) *ImportCrossRefsOperation
-	ExportCrossRefs(context.Context, *emptypb.Empty, ...gax.CallOption) (*ExportCrossRefsOperation, error)
+	ExportCrossRefs(context.Context, *crossrefspb.ExportCrossRefRequest, ...gax.CallOption) (*ExportCrossRefsOperation, error)
 	ExportCrossRefsOperation(name string) *ExportCrossRefsOperation
 	InitializeCrossRefs(context.Context, *emptypb.Empty, ...gax.CallOption) (*InitializeCrossRefsOperation, error)
 	InitializeCrossRefsOperation(name string) *InitializeCrossRefsOperation
@@ -202,7 +202,7 @@ func (c *ReferrerClient) ImportCrossRefsOperation(name string) *ImportCrossRefsO
 
 // ExportCrossRefs exports the cross-references to Cloud Pub/Sub for a full synchronization.
 // This operation is usually called after a new import with a clean database.
-func (c *ReferrerClient) ExportCrossRefs(ctx context.Context, req *emptypb.Empty, opts ...gax.CallOption) (*ExportCrossRefsOperation, error) {
+func (c *ReferrerClient) ExportCrossRefs(ctx context.Context, req *crossrefspb.ExportCrossRefRequest, opts ...gax.CallOption) (*ExportCrossRefsOperation, error) {
 	return c.internalClient.ExportCrossRefs(ctx, req, opts...)
 }
 
@@ -490,7 +490,7 @@ func (c *referrerGRPCClient) ImportCrossRefs(ctx context.Context, req *crossrefs
 	}, nil
 }
 
-func (c *referrerGRPCClient) ExportCrossRefs(ctx context.Context, req *emptypb.Empty, opts ...gax.CallOption) (*ExportCrossRefsOperation, error) {
+func (c *referrerGRPCClient) ExportCrossRefs(ctx context.Context, req *crossrefspb.ExportCrossRefRequest, opts ...gax.CallOption) (*ExportCrossRefsOperation, error) {
 	ctx = insertMetadata(ctx, c.xGoogMetadata)
 	opts = append((*c.CallOptions).ExportCrossRefs[0:len((*c.CallOptions).ExportCrossRefs):len((*c.CallOptions).ExportCrossRefs)], opts...)
 	var resp *longrunningpb.Operation

@@ -194,7 +194,7 @@ func ExampleReferrerClient_ExportCrossRefs() {
 	}
 	defer c.Close()
 
-	req := &emptypb.Empty{
+	req := &crossrefspb.ExportCrossRefRequest{
 		// TODO: Fill request struct fields.
 	}
 	op, err := c.ExportCrossRefs(ctx, req)
