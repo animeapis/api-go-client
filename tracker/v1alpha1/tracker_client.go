@@ -37,11 +37,15 @@ var newClientHook clientHook
 
 // CallOptions contains the retry settings for each method of Client.
 type CallOptions struct {
-	GetTracker    []gax.CallOption
-	ListTrackers  []gax.CallOption
-	CreateTracker []gax.CallOption
-	UpdateTracker []gax.CallOption
-	DeleteTracker []gax.CallOption
+	GetTracker     []gax.CallOption
+	ListTrackers   []gax.CallOption
+	CreateTracker  []gax.CallOption
+	UpdateTracker  []gax.CallOption
+	DeleteTracker  []gax.CallOption
+	GetOAuthInfo   []gax.CallOption
+	SetAuth        []gax.CallOption
+	ImportTrackers []gax.CallOption
+	ExportTrackers []gax.CallOption
 }
 
 func defaultGRPCClientOptions() []option.ClientOption {
@@ -58,11 +62,15 @@ func defaultGRPCClientOptions() []option.ClientOption {
 
 func defaultCallOptions() *CallOptions {
 	return &CallOptions{
-		GetTracker:    []gax.CallOption{},
-		ListTrackers:  []gax.CallOption{},
-		CreateTracker: []gax.CallOption{},
-		UpdateTracker: []gax.CallOption{},
-		DeleteTracker: []gax.CallOption{},
+		GetTracker:     []gax.CallOption{},
+		ListTrackers:   []gax.CallOption{},
+		CreateTracker:  []gax.CallOption{},
+		UpdateTracker:  []gax.CallOption{},
+		DeleteTracker:  []gax.CallOption{},
+		GetOAuthInfo:   []gax.CallOption{},
+		SetAuth:        []gax.CallOption{},
+		ImportTrackers: []gax.CallOption{},
+		ExportTrackers: []gax.CallOption{},
 	}
 }
 
@@ -76,6 +84,10 @@ type internalClient interface {
 	CreateTracker(context.Context, *trackerpb.CreateTrackerRequest, ...gax.CallOption) (*trackerpb.Tracker, error)
 	UpdateTracker(context.Context, *trackerpb.UpdateTrackerRequest, ...gax.CallOption) (*trackerpb.Tracker, error)
 	DeleteTracker(context.Context, *trackerpb.DeleteTrackerRequest, ...gax.CallOption) error
+	GetOAuthInfo(context.Context, *trackerpb.OAuthInfoRequest, ...gax.CallOption) (*trackerpb.OAuthInfoResponse, error)
+	SetAuth(context.Context, *trackerpb.SetAuthRequest, ...gax.CallOption) error
+	ImportTrackers(context.Context, *trackerpb.ImportTrackersRequest, ...gax.CallOption) error
+	ExportTrackers(context.Context, *trackerpb.ExportTrackersRequest, ...gax.CallOption) error
 }
 
 // Client is a client for interacting with Tracker API.
@@ -128,6 +140,23 @@ func (c *Client) UpdateTracker(ctx context.Context, req *trackerpb.UpdateTracker
 
 func (c *Client) DeleteTracker(ctx context.Context, req *trackerpb.DeleteTrackerRequest, opts ...gax.CallOption) error {
 	return c.internalClient.DeleteTracker(ctx, req, opts...)
+}
+
+// GetOAuthInfo only used for OAuth as we need to set up the flow
+func (c *Client) GetOAuthInfo(ctx context.Context, req *trackerpb.OAuthInfoRequest, opts ...gax.CallOption) (*trackerpb.OAuthInfoResponse, error) {
+	return c.internalClient.GetOAuthInfo(ctx, req, opts...)
+}
+
+func (c *Client) SetAuth(ctx context.Context, req *trackerpb.SetAuthRequest, opts ...gax.CallOption) error {
+	return c.internalClient.SetAuth(ctx, req, opts...)
+}
+
+func (c *Client) ImportTrackers(ctx context.Context, req *trackerpb.ImportTrackersRequest, opts ...gax.CallOption) error {
+	return c.internalClient.ImportTrackers(ctx, req, opts...)
+}
+
+func (c *Client) ExportTrackers(ctx context.Context, req *trackerpb.ExportTrackersRequest, opts ...gax.CallOption) error {
+	return c.internalClient.ExportTrackers(ctx, req, opts...)
 }
 
 // gRPCClient is a client for interacting with Tracker API over gRPC transport.
@@ -303,6 +332,58 @@ func (c *gRPCClient) DeleteTracker(ctx context.Context, req *trackerpb.DeleteTra
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
 		_, err = c.client.DeleteTracker(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	return err
+}
+
+func (c *gRPCClient) GetOAuthInfo(ctx context.Context, req *trackerpb.OAuthInfoRequest, opts ...gax.CallOption) (*trackerpb.OAuthInfoResponse, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).GetOAuthInfo[0:len((*c.CallOptions).GetOAuthInfo):len((*c.CallOptions).GetOAuthInfo)], opts...)
+	var resp *trackerpb.OAuthInfoResponse
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.client.GetOAuthInfo(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *gRPCClient) SetAuth(ctx context.Context, req *trackerpb.SetAuthRequest, opts ...gax.CallOption) error {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).SetAuth[0:len((*c.CallOptions).SetAuth):len((*c.CallOptions).SetAuth)], opts...)
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		_, err = c.client.SetAuth(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	return err
+}
+
+func (c *gRPCClient) ImportTrackers(ctx context.Context, req *trackerpb.ImportTrackersRequest, opts ...gax.CallOption) error {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).ImportTrackers[0:len((*c.CallOptions).ImportTrackers):len((*c.CallOptions).ImportTrackers)], opts...)
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		_, err = c.client.ImportTrackers(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	return err
+}
+
+func (c *gRPCClient) ExportTrackers(ctx context.Context, req *trackerpb.ExportTrackersRequest, opts ...gax.CallOption) error {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).ExportTrackers[0:len((*c.CallOptions).ExportTrackers):len((*c.CallOptions).ExportTrackers)], opts...)
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		_, err = c.client.ExportTrackers(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	return err

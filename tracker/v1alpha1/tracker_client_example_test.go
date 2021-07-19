@@ -134,3 +134,73 @@ func ExampleClient_DeleteTracker() {
 		// TODO: Handle error.
 	}
 }
+
+func ExampleClient_GetOAuthInfo() {
+	ctx := context.Background()
+	c, err := tracker.NewClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &trackerpb.OAuthInfoRequest{
+		// TODO: Fill request struct fields.
+	}
+	resp, err := c.GetOAuthInfo(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
+func ExampleClient_SetAuth() {
+	ctx := context.Background()
+	c, err := tracker.NewClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &trackerpb.SetAuthRequest{
+		// TODO: Fill request struct fields.
+	}
+	err = c.SetAuth(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+}
+
+func ExampleClient_ImportTrackers() {
+	ctx := context.Background()
+	c, err := tracker.NewClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &trackerpb.ImportTrackersRequest{
+		// TODO: Fill request struct fields.
+	}
+	err = c.ImportTrackers(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+}
+
+func ExampleClient_ExportTrackers() {
+	ctx := context.Background()
+	c, err := tracker.NewClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &trackerpb.ExportTrackersRequest{
+		// TODO: Fill request struct fields.
+	}
+	err = c.ExportTrackers(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+}

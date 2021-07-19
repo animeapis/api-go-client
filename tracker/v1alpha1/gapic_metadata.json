@@ -20,14 +20,34 @@
                 "DeleteTracker"
               ]
             },
+            "ExportTrackers": {
+              "methods": [
+                "ExportTrackers"
+              ]
+            },
+            "GetOAuthInfo": {
+              "methods": [
+                "GetOAuthInfo"
+              ]
+            },
             "GetTracker": {
               "methods": [
                 "GetTracker"
               ]
             },
+            "ImportTrackers": {
+              "methods": [
+                "ImportTrackers"
+              ]
+            },
             "ListTrackers": {
               "methods": [
                 "ListTrackers"
+              ]
+            },
+            "SetAuth": {
+              "methods": [
+                "SetAuth"
               ]
             },
             "UpdateTracker": {
