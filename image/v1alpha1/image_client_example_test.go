@@ -92,7 +92,7 @@ func ExampleClient_GetImage() {
 	_ = resp
 }
 
-func ExampleClient_CreateGallery() {
+func ExampleClient_CreateFolder() {
 	ctx := context.Background()
 	c, err := image.NewClient(ctx)
 	if err != nil {
@@ -100,10 +100,10 @@ func ExampleClient_CreateGallery() {
 	}
 	defer c.Close()
 
-	req := &imagepb.CreateGalleryRequest{
+	req := &imagepb.CreateFolderRequest{
 		// TODO: Fill request struct fields.
 	}
-	resp, err := c.CreateGallery(ctx, req)
+	resp, err := c.CreateFolder(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -111,7 +111,7 @@ func ExampleClient_CreateGallery() {
 	_ = resp
 }
 
-func ExampleClient_DeleteGallery() {
+func ExampleClient_DeleteFolder() {
 	ctx := context.Background()
 	c, err := image.NewClient(ctx)
 	if err != nil {
@@ -119,10 +119,10 @@ func ExampleClient_DeleteGallery() {
 	}
 	defer c.Close()
 
-	req := &imagepb.DeleteGalleryRequest{
+	req := &imagepb.DeleteFolderRequest{
 		// TODO: Fill request struct fields.
 	}
-	err = c.DeleteGallery(ctx, req)
+	err = c.DeleteFolder(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
 	}

@@ -10,14 +10,14 @@
         "grpc": {
           "libraryClient": "Client",
           "rpcs": {
-            "CreateGallery": {
+            "CreateFolder": {
               "methods": [
-                "CreateGallery"
+                "CreateFolder"
               ]
             },
-            "DeleteGallery": {
+            "DeleteFolder": {
               "methods": [
-                "DeleteGallery"
+                "DeleteFolder"
               ]
             },
             "GetImage": {
