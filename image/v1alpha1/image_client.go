@@ -140,10 +140,12 @@ func (c *Client) DeleteFolder(ctx context.Context, req *imagepb.DeleteFolderRequ
 	return c.internalClient.DeleteFolder(ctx, req, opts...)
 }
 
+// GetFolderSettings gets the settings of an image folder.
 func (c *Client) GetFolderSettings(ctx context.Context, req *imagepb.GetFolderSettingsRequest, opts ...gax.CallOption) (*imagepb.FolderSettings, error) {
 	return c.internalClient.GetFolderSettings(ctx, req, opts...)
 }
 
+// UpdateFolderSettings updates the settings of an image folder.
 func (c *Client) UpdateFolderSettings(ctx context.Context, req *imagepb.UpdateFolderSettingsRequest, opts ...gax.CallOption) (*imagepb.FolderSettings, error) {
 	return c.internalClient.UpdateFolderSettings(ctx, req, opts...)
 }
