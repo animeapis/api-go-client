@@ -20,6 +20,11 @@
                 "DeleteFolder"
               ]
             },
+            "GetFolderSettings": {
+              "methods": [
+                "GetFolderSettings"
+              ]
+            },
             "GetImage": {
               "methods": [
                 "GetImage"
@@ -28,6 +33,11 @@
             "ImportImage": {
               "methods": [
                 "ImportImage"
+              ]
+            },
+            "UpdateFolderSettings": {
+              "methods": [
+                "UpdateFolderSettings"
               ]
             },
             "UploadImage": {

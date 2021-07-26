@@ -36,11 +36,13 @@ var newClientHook clientHook
 
 // CallOptions contains the retry settings for each method of Client.
 type CallOptions struct {
-	UploadImage  []gax.CallOption
-	ImportImage  []gax.CallOption
-	GetImage     []gax.CallOption
-	CreateFolder []gax.CallOption
-	DeleteFolder []gax.CallOption
+	UploadImage          []gax.CallOption
+	ImportImage          []gax.CallOption
+	GetImage             []gax.CallOption
+	CreateFolder         []gax.CallOption
+	DeleteFolder         []gax.CallOption
+	GetFolderSettings    []gax.CallOption
+	UpdateFolderSettings []gax.CallOption
 }
 
 func defaultGRPCClientOptions() []option.ClientOption {
@@ -57,11 +59,13 @@ func defaultGRPCClientOptions() []option.ClientOption {
 
 func defaultCallOptions() *CallOptions {
 	return &CallOptions{
-		UploadImage:  []gax.CallOption{},
-		ImportImage:  []gax.CallOption{},
-		GetImage:     []gax.CallOption{},
-		CreateFolder: []gax.CallOption{},
-		DeleteFolder: []gax.CallOption{},
+		UploadImage:          []gax.CallOption{},
+		ImportImage:          []gax.CallOption{},
+		GetImage:             []gax.CallOption{},
+		CreateFolder:         []gax.CallOption{},
+		DeleteFolder:         []gax.CallOption{},
+		GetFolderSettings:    []gax.CallOption{},
+		UpdateFolderSettings: []gax.CallOption{},
 	}
 }
 
@@ -75,6 +79,8 @@ type internalClient interface {
 	GetImage(context.Context, *imagepb.GetImageRequest, ...gax.CallOption) (*httpbodypb.HttpBody, error)
 	CreateFolder(context.Context, *imagepb.CreateFolderRequest, ...gax.CallOption) (*imagepb.Folder, error)
 	DeleteFolder(context.Context, *imagepb.DeleteFolderRequest, ...gax.CallOption) error
+	GetFolderSettings(context.Context, *imagepb.GetFolderSettingsRequest, ...gax.CallOption) (*imagepb.FolderSettings, error)
+	UpdateFolderSettings(context.Context, *imagepb.UpdateFolderSettingsRequest, ...gax.CallOption) (*imagepb.FolderSettings, error)
 }
 
 // Client is a client for interacting with Image API.
@@ -132,6 +138,14 @@ func (c *Client) CreateFolder(ctx context.Context, req *imagepb.CreateFolderRequ
 // DeleteFolder deletes an existing image folder.
 func (c *Client) DeleteFolder(ctx context.Context, req *imagepb.DeleteFolderRequest, opts ...gax.CallOption) error {
 	return c.internalClient.DeleteFolder(ctx, req, opts...)
+}
+
+func (c *Client) GetFolderSettings(ctx context.Context, req *imagepb.GetFolderSettingsRequest, opts ...gax.CallOption) (*imagepb.FolderSettings, error) {
+	return c.internalClient.GetFolderSettings(ctx, req, opts...)
+}
+
+func (c *Client) UpdateFolderSettings(ctx context.Context, req *imagepb.UpdateFolderSettingsRequest, opts ...gax.CallOption) (*imagepb.FolderSettings, error) {
+	return c.internalClient.UpdateFolderSettings(ctx, req, opts...)
 }
 
 // gRPCClient is a client for interacting with Image API over gRPC transport.
@@ -286,4 +300,36 @@ func (c *gRPCClient) DeleteFolder(ctx context.Context, req *imagepb.DeleteFolder
 		return err
 	}, opts...)
 	return err
+}
+
+func (c *gRPCClient) GetFolderSettings(ctx context.Context, req *imagepb.GetFolderSettingsRequest, opts ...gax.CallOption) (*imagepb.FolderSettings, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).GetFolderSettings[0:len((*c.CallOptions).GetFolderSettings):len((*c.CallOptions).GetFolderSettings)], opts...)
+	var resp *imagepb.FolderSettings
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.client.GetFolderSettings(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *gRPCClient) UpdateFolderSettings(ctx context.Context, req *imagepb.UpdateFolderSettingsRequest, opts ...gax.CallOption) (*imagepb.FolderSettings, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "settings.name", url.QueryEscape(req.GetSettings().GetName())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).UpdateFolderSettings[0:len((*c.CallOptions).UpdateFolderSettings):len((*c.CallOptions).UpdateFolderSettings)], opts...)
+	var resp *imagepb.FolderSettings
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.client.UpdateFolderSettings(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
