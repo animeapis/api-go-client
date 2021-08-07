@@ -24,12 +24,14 @@ import (
 
 	imagepb "github.com/animeapis/go-genproto/image/v1alpha1"
 	gax "github.com/googleapis/gax-go/v2"
+	"google.golang.org/api/iterator"
 	"google.golang.org/api/option"
 	"google.golang.org/api/option/internaloption"
 	gtransport "google.golang.org/api/transport/grpc"
 	httpbodypb "google.golang.org/genproto/googleapis/api/httpbody"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
+	"google.golang.org/protobuf/proto"
 )
 
 var newClientHook clientHook
@@ -39,6 +41,8 @@ type CallOptions struct {
 	UploadImage          []gax.CallOption
 	ImportImage          []gax.CallOption
 	GetImage             []gax.CallOption
+	GetFolder            []gax.CallOption
+	ListFolders          []gax.CallOption
 	CreateFolder         []gax.CallOption
 	DeleteFolder         []gax.CallOption
 	GetFolderSettings    []gax.CallOption
@@ -62,6 +66,8 @@ func defaultCallOptions() *CallOptions {
 		UploadImage:          []gax.CallOption{},
 		ImportImage:          []gax.CallOption{},
 		GetImage:             []gax.CallOption{},
+		GetFolder:            []gax.CallOption{},
+		ListFolders:          []gax.CallOption{},
 		CreateFolder:         []gax.CallOption{},
 		DeleteFolder:         []gax.CallOption{},
 		GetFolderSettings:    []gax.CallOption{},
@@ -77,6 +83,8 @@ type internalClient interface {
 	UploadImage(context.Context, *imagepb.UploadImageRequest, ...gax.CallOption) (*imagepb.UploadImageResponse, error)
 	ImportImage(context.Context, *imagepb.ImportImageRequest, ...gax.CallOption) (*imagepb.ImportImageResponse, error)
 	GetImage(context.Context, *imagepb.GetImageRequest, ...gax.CallOption) (*httpbodypb.HttpBody, error)
+	GetFolder(context.Context, *imagepb.GetFolderRequest, ...gax.CallOption) (*imagepb.Folder, error)
+	ListFolders(context.Context, *imagepb.ListFoldersRequest, ...gax.CallOption) *FolderIterator
 	CreateFolder(context.Context, *imagepb.CreateFolderRequest, ...gax.CallOption) (*imagepb.Folder, error)
 	DeleteFolder(context.Context, *imagepb.DeleteFolderRequest, ...gax.CallOption) error
 	GetFolderSettings(context.Context, *imagepb.GetFolderSettingsRequest, ...gax.CallOption) (*imagepb.FolderSettings, error)
@@ -128,6 +136,16 @@ func (c *Client) ImportImage(ctx context.Context, req *imagepb.ImportImageReques
 // GetImage gets an image in binary representation with the format and size requested.
 func (c *Client) GetImage(ctx context.Context, req *imagepb.GetImageRequest, opts ...gax.CallOption) (*httpbodypb.HttpBody, error) {
 	return c.internalClient.GetImage(ctx, req, opts...)
+}
+
+// GetFolder gets an image folder.
+func (c *Client) GetFolder(ctx context.Context, req *imagepb.GetFolderRequest, opts ...gax.CallOption) (*imagepb.Folder, error) {
+	return c.internalClient.GetFolder(ctx, req, opts...)
+}
+
+// ListFolders lists image folders with pagination.
+func (c *Client) ListFolders(ctx context.Context, req *imagepb.ListFoldersRequest, opts ...gax.CallOption) *FolderIterator {
+	return c.internalClient.ListFolders(ctx, req, opts...)
 }
 
 // CreateFolder creates a new image folder.
@@ -276,6 +294,62 @@ func (c *gRPCClient) GetImage(ctx context.Context, req *imagepb.GetImageRequest,
 	return resp, nil
 }
 
+func (c *gRPCClient) GetFolder(ctx context.Context, req *imagepb.GetFolderRequest, opts ...gax.CallOption) (*imagepb.Folder, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).GetFolder[0:len((*c.CallOptions).GetFolder):len((*c.CallOptions).GetFolder)], opts...)
+	var resp *imagepb.Folder
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.client.GetFolder(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *gRPCClient) ListFolders(ctx context.Context, req *imagepb.ListFoldersRequest, opts ...gax.CallOption) *FolderIterator {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).ListFolders[0:len((*c.CallOptions).ListFolders):len((*c.CallOptions).ListFolders)], opts...)
+	it := &FolderIterator{}
+	req = proto.Clone(req).(*imagepb.ListFoldersRequest)
+	it.InternalFetch = func(pageSize int, pageToken string) ([]*imagepb.Folder, string, error) {
+		var resp *imagepb.ListFoldersResponse
+		req.PageToken = pageToken
+		if pageSize > math.MaxInt32 {
+			req.PageSize = math.MaxInt32
+		} else {
+			req.PageSize = int32(pageSize)
+		}
+		err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+			var err error
+			resp, err = c.client.ListFolders(ctx, req, settings.GRPC...)
+			return err
+		}, opts...)
+		if err != nil {
+			return nil, "", err
+		}
+
+		it.Response = resp
+		return resp.GetFolders(), resp.GetNextPageToken(), nil
+	}
+	fetch := func(pageSize int, pageToken string) (string, error) {
+		items, nextPageToken, err := it.InternalFetch(pageSize, pageToken)
+		if err != nil {
+			return "", err
+		}
+		it.items = append(it.items, items...)
+		return nextPageToken, nil
+	}
+	it.pageInfo, it.nextFunc = iterator.NewPageInfo(fetch, it.bufLen, it.takeBuf)
+	it.pageInfo.MaxSize = int(req.GetPageSize())
+	it.pageInfo.Token = req.GetPageToken()
+	return it
+}
+
 func (c *gRPCClient) CreateFolder(ctx context.Context, req *imagepb.CreateFolderRequest, opts ...gax.CallOption) (*imagepb.Folder, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
@@ -334,4 +408,51 @@ func (c *gRPCClient) UpdateFolderSettings(ctx context.Context, req *imagepb.Upda
 		return nil, err
 	}
 	return resp, nil
+}
+
+// FolderIterator manages a stream of *imagepb.Folder.
+type FolderIterator struct {
+	items    []*imagepb.Folder
+	pageInfo *iterator.PageInfo
+	nextFunc func() error
+
+	// Response is the raw response for the current page.
+	// It must be cast to the RPC response type.
+	// Calling Next() or InternalFetch() updates this value.
+	Response interface{}
+
+	// InternalFetch is for use by the Google Cloud Libraries only.
+	// It is not part of the stable interface of this package.
+	//
+	// InternalFetch returns results from a single call to the underlying RPC.
+	// The number of results is no greater than pageSize.
+	// If there are no more results, nextPageToken is empty and err is nil.
+	InternalFetch func(pageSize int, pageToken string) (results []*imagepb.Folder, nextPageToken string, err error)
+}
+
+// PageInfo supports pagination. See the google.golang.org/api/iterator package for details.
+func (it *FolderIterator) PageInfo() *iterator.PageInfo {
+	return it.pageInfo
+}
+
+// Next returns the next result. Its second return value is iterator.Done if there are no more
+// results. Once Next returns Done, all subsequent calls will return Done.
+func (it *FolderIterator) Next() (*imagepb.Folder, error) {
+	var item *imagepb.Folder
+	if err := it.nextFunc(); err != nil {
+		return item, err
+	}
+	item = it.items[0]
+	it.items = it.items[1:]
+	return item, nil
+}
+
+func (it *FolderIterator) bufLen() int {
+	return len(it.items)
+}
+
+func (it *FolderIterator) takeBuf() interface{} {
+	b := it.items
+	it.items = nil
+	return b
 }

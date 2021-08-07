@@ -21,6 +21,7 @@ import (
 
 	image "github.com/animeapis/api-go-client/image/v1alpha1"
 	imagepb "github.com/animeapis/go-genproto/image/v1alpha1"
+	"google.golang.org/api/iterator"
 )
 
 func ExampleNewClient() {
@@ -90,6 +91,50 @@ func ExampleClient_GetImage() {
 	}
 	// TODO: Use resp.
 	_ = resp
+}
+
+func ExampleClient_GetFolder() {
+	ctx := context.Background()
+	c, err := image.NewClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &imagepb.GetFolderRequest{
+		// TODO: Fill request struct fields.
+	}
+	resp, err := c.GetFolder(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
+func ExampleClient_ListFolders() {
+	ctx := context.Background()
+	c, err := image.NewClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &imagepb.ListFoldersRequest{
+		// TODO: Fill request struct fields.
+	}
+	it := c.ListFolders(ctx, req)
+	for {
+		resp, err := it.Next()
+		if err == iterator.Done {
+			break
+		}
+		if err != nil {
+			// TODO: Handle error.
+		}
+		// TODO: Use resp.
+		_ = resp
+	}
 }
 
 func ExampleClient_CreateFolder() {
