@@ -115,6 +115,7 @@ func (c *Client) ListCaches(ctx context.Context, req *webcachepb.ListCachesReque
 	return c.internalClient.ListCaches(ctx, req, opts...)
 }
 
+// GetCache see https://google.aip.dev/162#referencing-revisions (at https://google.aip.dev/162#referencing-revisions) for more information.
 func (c *Client) GetCache(ctx context.Context, req *webcachepb.GetCacheRequest, opts ...gax.CallOption) (*webcachepb.Cache, error) {
 	return c.internalClient.GetCache(ctx, req, opts...)
 }
