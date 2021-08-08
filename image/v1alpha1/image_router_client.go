@@ -213,7 +213,7 @@ func (c *imageRouterGRPCClient) GetImageRoute(ctx context.Context, req *imagepb.
 }
 
 func (c *imageRouterGRPCClient) RouteImage(ctx context.Context, req *imagepb.RouteImageRequest, opts ...gax.CallOption) (*httpbodypb.HttpBody, error) {
-	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "get", url.QueryEscape(req.GetGet())))
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v&%s=%v", "host", url.QueryEscape(req.GetHost()), "path", url.QueryEscape(req.GetPath())))
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).RouteImage[0:len((*c.CallOptions).RouteImage):len((*c.CallOptions).RouteImage)], opts...)
 	var resp *httpbodypb.HttpBody
