@@ -10,49 +10,49 @@
         "grpc": {
           "libraryClient": "ImageAnnotatorClient",
           "rpcs": {
-            "CreateImageAnnotationHint": {
+            "AnalyzeImage": {
               "methods": [
-                "CreateImageAnnotationHint"
+                "AnalyzeImage"
               ]
             },
-            "CreateImageReport": {
+            "CreateImageAnnotation": {
               "methods": [
-                "CreateImageReport"
+                "CreateImageAnnotation"
               ]
             },
-            "DeleteImageAnnotationHint": {
+            "DeleteImageAnalysis": {
               "methods": [
-                "DeleteImageAnnotationHint"
+                "DeleteImageAnalysis"
               ]
             },
-            "DeleteImageReport": {
+            "DeleteImageAnnotation": {
               "methods": [
-                "DeleteImageReport"
+                "DeleteImageAnnotation"
               ]
             },
-            "GetImageAnnotationHint": {
+            "GetImageAnalysis": {
               "methods": [
-                "GetImageAnnotationHint"
+                "GetImageAnalysis"
               ]
             },
-            "GetImageReport": {
+            "GetImageAnnotation": {
               "methods": [
-                "GetImageReport"
+                "GetImageAnnotation"
               ]
             },
-            "ListImageAnnotationHints": {
+            "ListImageAnalyses": {
               "methods": [
-                "ListImageAnnotationHints"
+                "ListImageAnalyses"
               ]
             },
-            "ListImageReports": {
+            "ListImageAnnotations": {
               "methods": [
-                "ListImageReports"
+                "ListImageAnnotations"
               ]
             },
-            "UpdateImageAnnotationHint": {
+            "UpdateImageAnnotation": {
               "methods": [
-                "UpdateImageAnnotationHint"
+                "UpdateImageAnnotation"
               ]
             }
           }

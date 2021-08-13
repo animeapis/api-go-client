@@ -93,7 +93,7 @@ func ExampleClient_GetImage() {
 	_ = resp
 }
 
-func ExampleClient_GetFolder() {
+func ExampleClient_GetAlbum() {
 	ctx := context.Background()
 	c, err := image.NewClient(ctx)
 	if err != nil {
@@ -101,10 +101,10 @@ func ExampleClient_GetFolder() {
 	}
 	defer c.Close()
 
-	req := &imagepb.GetFolderRequest{
+	req := &imagepb.GetAlbumRequest{
 		// TODO: Fill request struct fields.
 	}
-	resp, err := c.GetFolder(ctx, req)
+	resp, err := c.GetAlbum(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -112,7 +112,7 @@ func ExampleClient_GetFolder() {
 	_ = resp
 }
 
-func ExampleClient_ListFolders() {
+func ExampleClient_ListAlbums() {
 	ctx := context.Background()
 	c, err := image.NewClient(ctx)
 	if err != nil {
@@ -120,10 +120,10 @@ func ExampleClient_ListFolders() {
 	}
 	defer c.Close()
 
-	req := &imagepb.ListFoldersRequest{
+	req := &imagepb.ListAlbumsRequest{
 		// TODO: Fill request struct fields.
 	}
-	it := c.ListFolders(ctx, req)
+	it := c.ListAlbums(ctx, req)
 	for {
 		resp, err := it.Next()
 		if err == iterator.Done {
@@ -137,7 +137,7 @@ func ExampleClient_ListFolders() {
 	}
 }
 
-func ExampleClient_CreateFolder() {
+func ExampleClient_CreateAlbum() {
 	ctx := context.Background()
 	c, err := image.NewClient(ctx)
 	if err != nil {
@@ -145,10 +145,10 @@ func ExampleClient_CreateFolder() {
 	}
 	defer c.Close()
 
-	req := &imagepb.CreateFolderRequest{
+	req := &imagepb.CreateAlbumRequest{
 		// TODO: Fill request struct fields.
 	}
-	resp, err := c.CreateFolder(ctx, req)
+	resp, err := c.CreateAlbum(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -156,7 +156,7 @@ func ExampleClient_CreateFolder() {
 	_ = resp
 }
 
-func ExampleClient_DeleteFolder() {
+func ExampleClient_DeleteAlbum() {
 	ctx := context.Background()
 	c, err := image.NewClient(ctx)
 	if err != nil {
@@ -164,16 +164,16 @@ func ExampleClient_DeleteFolder() {
 	}
 	defer c.Close()
 
-	req := &imagepb.DeleteFolderRequest{
+	req := &imagepb.DeleteAlbumRequest{
 		// TODO: Fill request struct fields.
 	}
-	err = c.DeleteFolder(ctx, req)
+	err = c.DeleteAlbum(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
 	}
 }
 
-func ExampleClient_GetFolderSettings() {
+func ExampleClient_GetAlbumSettings() {
 	ctx := context.Background()
 	c, err := image.NewClient(ctx)
 	if err != nil {
@@ -181,10 +181,10 @@ func ExampleClient_GetFolderSettings() {
 	}
 	defer c.Close()
 
-	req := &imagepb.GetFolderSettingsRequest{
+	req := &imagepb.GetAlbumSettingsRequest{
 		// TODO: Fill request struct fields.
 	}
-	resp, err := c.GetFolderSettings(ctx, req)
+	resp, err := c.GetAlbumSettings(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -192,7 +192,7 @@ func ExampleClient_GetFolderSettings() {
 	_ = resp
 }
 
-func ExampleClient_UpdateFolderSettings() {
+func ExampleClient_UpdateAlbumSettings() {
 	ctx := context.Background()
 	c, err := image.NewClient(ctx)
 	if err != nil {
@@ -200,10 +200,10 @@ func ExampleClient_UpdateFolderSettings() {
 	}
 	defer c.Close()
 
-	req := &imagepb.UpdateFolderSettingsRequest{
+	req := &imagepb.UpdateAlbumSettingsRequest{
 		// TODO: Fill request struct fields.
 	}
-	resp, err := c.UpdateFolderSettings(ctx, req)
+	resp, err := c.UpdateAlbumSettings(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
 	}

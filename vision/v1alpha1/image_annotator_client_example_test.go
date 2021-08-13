@@ -21,6 +21,7 @@ import (
 
 	vision "github.com/animeapis/api-go-client/vision/v1alpha1"
 	visionpb "github.com/animeapis/go-genproto/vision/v1alpha1"
+	"google.golang.org/api/iterator"
 )
 
 func ExampleNewImageAnnotatorClient() {
@@ -35,7 +36,7 @@ func ExampleNewImageAnnotatorClient() {
 	_ = c
 }
 
-func ExampleImageAnnotatorClient_CreateImageReport() {
+func ExampleImageAnnotatorClient_AnalyzeImage() {
 	ctx := context.Background()
 	c, err := vision.NewImageAnnotatorClient(ctx)
 	if err != nil {
@@ -43,10 +44,10 @@ func ExampleImageAnnotatorClient_CreateImageReport() {
 	}
 	defer c.Close()
 
-	req := &visionpb.CreateImageReportRequest{
+	req := &visionpb.AnalyzeImageRequest{
 		// TODO: Fill request struct fields.
 	}
-	resp, err := c.CreateImageReport(ctx, req)
+	resp, err := c.AnalyzeImage(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -54,7 +55,7 @@ func ExampleImageAnnotatorClient_CreateImageReport() {
 	_ = resp
 }
 
-func ExampleImageAnnotatorClient_ListImageReports() {
+func ExampleImageAnnotatorClient_ListImageAnalyses() {
 	ctx := context.Background()
 	c, err := vision.NewImageAnnotatorClient(ctx)
 	if err != nil {
@@ -62,10 +63,35 @@ func ExampleImageAnnotatorClient_ListImageReports() {
 	}
 	defer c.Close()
 
-	req := &visionpb.ListImageReportsRequest{
+	req := &visionpb.ListImageAnalysesRequest{
 		// TODO: Fill request struct fields.
 	}
-	resp, err := c.ListImageReports(ctx, req)
+	it := c.ListImageAnalyses(ctx, req)
+	for {
+		resp, err := it.Next()
+		if err == iterator.Done {
+			break
+		}
+		if err != nil {
+			// TODO: Handle error.
+		}
+		// TODO: Use resp.
+		_ = resp
+	}
+}
+
+func ExampleImageAnnotatorClient_GetImageAnalysis() {
+	ctx := context.Background()
+	c, err := vision.NewImageAnnotatorClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &visionpb.GetImageAnalysisRequest{
+		// TODO: Fill request struct fields.
+	}
+	resp, err := c.GetImageAnalysis(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -73,7 +99,7 @@ func ExampleImageAnnotatorClient_ListImageReports() {
 	_ = resp
 }
 
-func ExampleImageAnnotatorClient_GetImageReport() {
+func ExampleImageAnnotatorClient_DeleteImageAnalysis() {
 	ctx := context.Background()
 	c, err := vision.NewImageAnnotatorClient(ctx)
 	if err != nil {
@@ -81,10 +107,27 @@ func ExampleImageAnnotatorClient_GetImageReport() {
 	}
 	defer c.Close()
 
-	req := &visionpb.GetImageReportRequest{
+	req := &visionpb.DeleteImageAnalysisRequest{
 		// TODO: Fill request struct fields.
 	}
-	resp, err := c.GetImageReport(ctx, req)
+	err = c.DeleteImageAnalysis(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+}
+
+func ExampleImageAnnotatorClient_CreateImageAnnotation() {
+	ctx := context.Background()
+	c, err := vision.NewImageAnnotatorClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &visionpb.CreateImageAnnotationRequest{
+		// TODO: Fill request struct fields.
+	}
+	resp, err := c.CreateImageAnnotation(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -92,7 +135,7 @@ func ExampleImageAnnotatorClient_GetImageReport() {
 	_ = resp
 }
 
-func ExampleImageAnnotatorClient_DeleteImageReport() {
+func ExampleImageAnnotatorClient_ListImageAnnotations() {
 	ctx := context.Background()
 	c, err := vision.NewImageAnnotatorClient(ctx)
 	if err != nil {
@@ -100,16 +143,24 @@ func ExampleImageAnnotatorClient_DeleteImageReport() {
 	}
 	defer c.Close()
 
-	req := &visionpb.DeleteImageReportRequest{
+	req := &visionpb.ListImageAnnotationsRequest{
 		// TODO: Fill request struct fields.
 	}
-	err = c.DeleteImageReport(ctx, req)
-	if err != nil {
-		// TODO: Handle error.
+	it := c.ListImageAnnotations(ctx, req)
+	for {
+		resp, err := it.Next()
+		if err == iterator.Done {
+			break
+		}
+		if err != nil {
+			// TODO: Handle error.
+		}
+		// TODO: Use resp.
+		_ = resp
 	}
 }
 
-func ExampleImageAnnotatorClient_CreateImageAnnotationHint() {
+func ExampleImageAnnotatorClient_GetImageAnnotation() {
 	ctx := context.Background()
 	c, err := vision.NewImageAnnotatorClient(ctx)
 	if err != nil {
@@ -117,10 +168,10 @@ func ExampleImageAnnotatorClient_CreateImageAnnotationHint() {
 	}
 	defer c.Close()
 
-	req := &visionpb.CreateImageAnnotationHintRequest{
+	req := &visionpb.GetImageAnnotationRequest{
 		// TODO: Fill request struct fields.
 	}
-	resp, err := c.CreateImageAnnotationHint(ctx, req)
+	resp, err := c.GetImageAnnotation(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -128,7 +179,7 @@ func ExampleImageAnnotatorClient_CreateImageAnnotationHint() {
 	_ = resp
 }
 
-func ExampleImageAnnotatorClient_ListImageAnnotationHints() {
+func ExampleImageAnnotatorClient_UpdateImageAnnotation() {
 	ctx := context.Background()
 	c, err := vision.NewImageAnnotatorClient(ctx)
 	if err != nil {
@@ -136,10 +187,10 @@ func ExampleImageAnnotatorClient_ListImageAnnotationHints() {
 	}
 	defer c.Close()
 
-	req := &visionpb.ListImageAnnotationHintsRequest{
+	req := &visionpb.UpdateImageAnnotationRequest{
 		// TODO: Fill request struct fields.
 	}
-	resp, err := c.ListImageAnnotationHints(ctx, req)
+	resp, err := c.UpdateImageAnnotation(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -147,7 +198,7 @@ func ExampleImageAnnotatorClient_ListImageAnnotationHints() {
 	_ = resp
 }
 
-func ExampleImageAnnotatorClient_GetImageAnnotationHint() {
+func ExampleImageAnnotatorClient_DeleteImageAnnotation() {
 	ctx := context.Background()
 	c, err := vision.NewImageAnnotatorClient(ctx)
 	if err != nil {
@@ -155,48 +206,10 @@ func ExampleImageAnnotatorClient_GetImageAnnotationHint() {
 	}
 	defer c.Close()
 
-	req := &visionpb.GetImageAnnotationHintRequest{
+	req := &visionpb.DeleteImageAnnotationRequest{
 		// TODO: Fill request struct fields.
 	}
-	resp, err := c.GetImageAnnotationHint(ctx, req)
-	if err != nil {
-		// TODO: Handle error.
-	}
-	// TODO: Use resp.
-	_ = resp
-}
-
-func ExampleImageAnnotatorClient_UpdateImageAnnotationHint() {
-	ctx := context.Background()
-	c, err := vision.NewImageAnnotatorClient(ctx)
-	if err != nil {
-		// TODO: Handle error.
-	}
-	defer c.Close()
-
-	req := &visionpb.UpdateImageAnnotationHintRequest{
-		// TODO: Fill request struct fields.
-	}
-	resp, err := c.UpdateImageAnnotationHint(ctx, req)
-	if err != nil {
-		// TODO: Handle error.
-	}
-	// TODO: Use resp.
-	_ = resp
-}
-
-func ExampleImageAnnotatorClient_DeleteImageAnnotationHint() {
-	ctx := context.Background()
-	c, err := vision.NewImageAnnotatorClient(ctx)
-	if err != nil {
-		// TODO: Handle error.
-	}
-	defer c.Close()
-
-	req := &visionpb.DeleteImageAnnotationHintRequest{
-		// TODO: Fill request struct fields.
-	}
-	err = c.DeleteImageAnnotationHint(ctx, req)
+	err = c.DeleteImageAnnotation(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
 	}

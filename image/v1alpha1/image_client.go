@@ -38,15 +38,15 @@ var newClientHook clientHook
 
 // CallOptions contains the retry settings for each method of Client.
 type CallOptions struct {
-	UploadImage          []gax.CallOption
-	ImportImage          []gax.CallOption
-	GetImage             []gax.CallOption
-	GetFolder            []gax.CallOption
-	ListFolders          []gax.CallOption
-	CreateFolder         []gax.CallOption
-	DeleteFolder         []gax.CallOption
-	GetFolderSettings    []gax.CallOption
-	UpdateFolderSettings []gax.CallOption
+	UploadImage         []gax.CallOption
+	ImportImage         []gax.CallOption
+	GetImage            []gax.CallOption
+	GetAlbum            []gax.CallOption
+	ListAlbums          []gax.CallOption
+	CreateAlbum         []gax.CallOption
+	DeleteAlbum         []gax.CallOption
+	GetAlbumSettings    []gax.CallOption
+	UpdateAlbumSettings []gax.CallOption
 }
 
 func defaultGRPCClientOptions() []option.ClientOption {
@@ -63,15 +63,15 @@ func defaultGRPCClientOptions() []option.ClientOption {
 
 func defaultCallOptions() *CallOptions {
 	return &CallOptions{
-		UploadImage:          []gax.CallOption{},
-		ImportImage:          []gax.CallOption{},
-		GetImage:             []gax.CallOption{},
-		GetFolder:            []gax.CallOption{},
-		ListFolders:          []gax.CallOption{},
-		CreateFolder:         []gax.CallOption{},
-		DeleteFolder:         []gax.CallOption{},
-		GetFolderSettings:    []gax.CallOption{},
-		UpdateFolderSettings: []gax.CallOption{},
+		UploadImage:         []gax.CallOption{},
+		ImportImage:         []gax.CallOption{},
+		GetImage:            []gax.CallOption{},
+		GetAlbum:            []gax.CallOption{},
+		ListAlbums:          []gax.CallOption{},
+		CreateAlbum:         []gax.CallOption{},
+		DeleteAlbum:         []gax.CallOption{},
+		GetAlbumSettings:    []gax.CallOption{},
+		UpdateAlbumSettings: []gax.CallOption{},
 	}
 }
 
@@ -83,12 +83,12 @@ type internalClient interface {
 	UploadImage(context.Context, *imagepb.UploadImageRequest, ...gax.CallOption) (*imagepb.UploadImageResponse, error)
 	ImportImage(context.Context, *imagepb.ImportImageRequest, ...gax.CallOption) (*imagepb.ImportImageResponse, error)
 	GetImage(context.Context, *imagepb.GetImageRequest, ...gax.CallOption) (*httpbodypb.HttpBody, error)
-	GetFolder(context.Context, *imagepb.GetFolderRequest, ...gax.CallOption) (*imagepb.Folder, error)
-	ListFolders(context.Context, *imagepb.ListFoldersRequest, ...gax.CallOption) *FolderIterator
-	CreateFolder(context.Context, *imagepb.CreateFolderRequest, ...gax.CallOption) (*imagepb.Folder, error)
-	DeleteFolder(context.Context, *imagepb.DeleteFolderRequest, ...gax.CallOption) error
-	GetFolderSettings(context.Context, *imagepb.GetFolderSettingsRequest, ...gax.CallOption) (*imagepb.FolderSettings, error)
-	UpdateFolderSettings(context.Context, *imagepb.UpdateFolderSettingsRequest, ...gax.CallOption) (*imagepb.FolderSettings, error)
+	GetAlbum(context.Context, *imagepb.GetAlbumRequest, ...gax.CallOption) (*imagepb.Album, error)
+	ListAlbums(context.Context, *imagepb.ListAlbumsRequest, ...gax.CallOption) *AlbumIterator
+	CreateAlbum(context.Context, *imagepb.CreateAlbumRequest, ...gax.CallOption) (*imagepb.Album, error)
+	DeleteAlbum(context.Context, *imagepb.DeleteAlbumRequest, ...gax.CallOption) error
+	GetAlbumSettings(context.Context, *imagepb.GetAlbumSettingsRequest, ...gax.CallOption) (*imagepb.AlbumSettings, error)
+	UpdateAlbumSettings(context.Context, *imagepb.UpdateAlbumSettingsRequest, ...gax.CallOption) (*imagepb.AlbumSettings, error)
 }
 
 // Client is a client for interacting with Image API.
@@ -138,34 +138,34 @@ func (c *Client) GetImage(ctx context.Context, req *imagepb.GetImageRequest, opt
 	return c.internalClient.GetImage(ctx, req, opts...)
 }
 
-// GetFolder gets an image folder.
-func (c *Client) GetFolder(ctx context.Context, req *imagepb.GetFolderRequest, opts ...gax.CallOption) (*imagepb.Folder, error) {
-	return c.internalClient.GetFolder(ctx, req, opts...)
+// GetAlbum gets an image album.
+func (c *Client) GetAlbum(ctx context.Context, req *imagepb.GetAlbumRequest, opts ...gax.CallOption) (*imagepb.Album, error) {
+	return c.internalClient.GetAlbum(ctx, req, opts...)
 }
 
-// ListFolders lists image folders with pagination.
-func (c *Client) ListFolders(ctx context.Context, req *imagepb.ListFoldersRequest, opts ...gax.CallOption) *FolderIterator {
-	return c.internalClient.ListFolders(ctx, req, opts...)
+// ListAlbums lists image albums with pagination.
+func (c *Client) ListAlbums(ctx context.Context, req *imagepb.ListAlbumsRequest, opts ...gax.CallOption) *AlbumIterator {
+	return c.internalClient.ListAlbums(ctx, req, opts...)
 }
 
-// CreateFolder creates a new image folder.
-func (c *Client) CreateFolder(ctx context.Context, req *imagepb.CreateFolderRequest, opts ...gax.CallOption) (*imagepb.Folder, error) {
-	return c.internalClient.CreateFolder(ctx, req, opts...)
+// CreateAlbum creates a new image album.
+func (c *Client) CreateAlbum(ctx context.Context, req *imagepb.CreateAlbumRequest, opts ...gax.CallOption) (*imagepb.Album, error) {
+	return c.internalClient.CreateAlbum(ctx, req, opts...)
 }
 
-// DeleteFolder deletes an existing image folder.
-func (c *Client) DeleteFolder(ctx context.Context, req *imagepb.DeleteFolderRequest, opts ...gax.CallOption) error {
-	return c.internalClient.DeleteFolder(ctx, req, opts...)
+// DeleteAlbum deletes an existing image album.
+func (c *Client) DeleteAlbum(ctx context.Context, req *imagepb.DeleteAlbumRequest, opts ...gax.CallOption) error {
+	return c.internalClient.DeleteAlbum(ctx, req, opts...)
 }
 
-// GetFolderSettings gets the settings of an image folder.
-func (c *Client) GetFolderSettings(ctx context.Context, req *imagepb.GetFolderSettingsRequest, opts ...gax.CallOption) (*imagepb.FolderSettings, error) {
-	return c.internalClient.GetFolderSettings(ctx, req, opts...)
+// GetAlbumSettings gets the settings of an image album.
+func (c *Client) GetAlbumSettings(ctx context.Context, req *imagepb.GetAlbumSettingsRequest, opts ...gax.CallOption) (*imagepb.AlbumSettings, error) {
+	return c.internalClient.GetAlbumSettings(ctx, req, opts...)
 }
 
-// UpdateFolderSettings updates the settings of an image folder.
-func (c *Client) UpdateFolderSettings(ctx context.Context, req *imagepb.UpdateFolderSettingsRequest, opts ...gax.CallOption) (*imagepb.FolderSettings, error) {
-	return c.internalClient.UpdateFolderSettings(ctx, req, opts...)
+// UpdateAlbumSettings updates the settings of an image album.
+func (c *Client) UpdateAlbumSettings(ctx context.Context, req *imagepb.UpdateAlbumSettingsRequest, opts ...gax.CallOption) (*imagepb.AlbumSettings, error) {
+	return c.internalClient.UpdateAlbumSettings(ctx, req, opts...)
 }
 
 // gRPCClient is a client for interacting with Image API over gRPC transport.
@@ -294,14 +294,14 @@ func (c *gRPCClient) GetImage(ctx context.Context, req *imagepb.GetImageRequest,
 	return resp, nil
 }
 
-func (c *gRPCClient) GetFolder(ctx context.Context, req *imagepb.GetFolderRequest, opts ...gax.CallOption) (*imagepb.Folder, error) {
+func (c *gRPCClient) GetAlbum(ctx context.Context, req *imagepb.GetAlbumRequest, opts ...gax.CallOption) (*imagepb.Album, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
-	opts = append((*c.CallOptions).GetFolder[0:len((*c.CallOptions).GetFolder):len((*c.CallOptions).GetFolder)], opts...)
-	var resp *imagepb.Folder
+	opts = append((*c.CallOptions).GetAlbum[0:len((*c.CallOptions).GetAlbum):len((*c.CallOptions).GetAlbum)], opts...)
+	var resp *imagepb.Album
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
-		resp, err = c.client.GetFolder(ctx, req, settings.GRPC...)
+		resp, err = c.client.GetAlbum(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	if err != nil {
@@ -310,14 +310,14 @@ func (c *gRPCClient) GetFolder(ctx context.Context, req *imagepb.GetFolderReques
 	return resp, nil
 }
 
-func (c *gRPCClient) ListFolders(ctx context.Context, req *imagepb.ListFoldersRequest, opts ...gax.CallOption) *FolderIterator {
+func (c *gRPCClient) ListAlbums(ctx context.Context, req *imagepb.ListAlbumsRequest, opts ...gax.CallOption) *AlbumIterator {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
-	opts = append((*c.CallOptions).ListFolders[0:len((*c.CallOptions).ListFolders):len((*c.CallOptions).ListFolders)], opts...)
-	it := &FolderIterator{}
-	req = proto.Clone(req).(*imagepb.ListFoldersRequest)
-	it.InternalFetch = func(pageSize int, pageToken string) ([]*imagepb.Folder, string, error) {
-		var resp *imagepb.ListFoldersResponse
+	opts = append((*c.CallOptions).ListAlbums[0:len((*c.CallOptions).ListAlbums):len((*c.CallOptions).ListAlbums)], opts...)
+	it := &AlbumIterator{}
+	req = proto.Clone(req).(*imagepb.ListAlbumsRequest)
+	it.InternalFetch = func(pageSize int, pageToken string) ([]*imagepb.Album, string, error) {
+		var resp *imagepb.ListAlbumsResponse
 		req.PageToken = pageToken
 		if pageSize > math.MaxInt32 {
 			req.PageSize = math.MaxInt32
@@ -326,7 +326,7 @@ func (c *gRPCClient) ListFolders(ctx context.Context, req *imagepb.ListFoldersRe
 		}
 		err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 			var err error
-			resp, err = c.client.ListFolders(ctx, req, settings.GRPC...)
+			resp, err = c.client.ListAlbums(ctx, req, settings.GRPC...)
 			return err
 		}, opts...)
 		if err != nil {
@@ -334,7 +334,7 @@ func (c *gRPCClient) ListFolders(ctx context.Context, req *imagepb.ListFoldersRe
 		}
 
 		it.Response = resp
-		return resp.GetFolders(), resp.GetNextPageToken(), nil
+		return resp.GetAlbums(), resp.GetNextPageToken(), nil
 	}
 	fetch := func(pageSize int, pageToken string) (string, error) {
 		items, nextPageToken, err := it.InternalFetch(pageSize, pageToken)
@@ -350,14 +350,14 @@ func (c *gRPCClient) ListFolders(ctx context.Context, req *imagepb.ListFoldersRe
 	return it
 }
 
-func (c *gRPCClient) CreateFolder(ctx context.Context, req *imagepb.CreateFolderRequest, opts ...gax.CallOption) (*imagepb.Folder, error) {
+func (c *gRPCClient) CreateAlbum(ctx context.Context, req *imagepb.CreateAlbumRequest, opts ...gax.CallOption) (*imagepb.Album, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
-	opts = append((*c.CallOptions).CreateFolder[0:len((*c.CallOptions).CreateFolder):len((*c.CallOptions).CreateFolder)], opts...)
-	var resp *imagepb.Folder
+	opts = append((*c.CallOptions).CreateAlbum[0:len((*c.CallOptions).CreateAlbum):len((*c.CallOptions).CreateAlbum)], opts...)
+	var resp *imagepb.Album
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
-		resp, err = c.client.CreateFolder(ctx, req, settings.GRPC...)
+		resp, err = c.client.CreateAlbum(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	if err != nil {
@@ -366,26 +366,26 @@ func (c *gRPCClient) CreateFolder(ctx context.Context, req *imagepb.CreateFolder
 	return resp, nil
 }
 
-func (c *gRPCClient) DeleteFolder(ctx context.Context, req *imagepb.DeleteFolderRequest, opts ...gax.CallOption) error {
+func (c *gRPCClient) DeleteAlbum(ctx context.Context, req *imagepb.DeleteAlbumRequest, opts ...gax.CallOption) error {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
-	opts = append((*c.CallOptions).DeleteFolder[0:len((*c.CallOptions).DeleteFolder):len((*c.CallOptions).DeleteFolder)], opts...)
+	opts = append((*c.CallOptions).DeleteAlbum[0:len((*c.CallOptions).DeleteAlbum):len((*c.CallOptions).DeleteAlbum)], opts...)
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
-		_, err = c.client.DeleteFolder(ctx, req, settings.GRPC...)
+		_, err = c.client.DeleteAlbum(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	return err
 }
 
-func (c *gRPCClient) GetFolderSettings(ctx context.Context, req *imagepb.GetFolderSettingsRequest, opts ...gax.CallOption) (*imagepb.FolderSettings, error) {
+func (c *gRPCClient) GetAlbumSettings(ctx context.Context, req *imagepb.GetAlbumSettingsRequest, opts ...gax.CallOption) (*imagepb.AlbumSettings, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
-	opts = append((*c.CallOptions).GetFolderSettings[0:len((*c.CallOptions).GetFolderSettings):len((*c.CallOptions).GetFolderSettings)], opts...)
-	var resp *imagepb.FolderSettings
+	opts = append((*c.CallOptions).GetAlbumSettings[0:len((*c.CallOptions).GetAlbumSettings):len((*c.CallOptions).GetAlbumSettings)], opts...)
+	var resp *imagepb.AlbumSettings
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
-		resp, err = c.client.GetFolderSettings(ctx, req, settings.GRPC...)
+		resp, err = c.client.GetAlbumSettings(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	if err != nil {
@@ -394,14 +394,14 @@ func (c *gRPCClient) GetFolderSettings(ctx context.Context, req *imagepb.GetFold
 	return resp, nil
 }
 
-func (c *gRPCClient) UpdateFolderSettings(ctx context.Context, req *imagepb.UpdateFolderSettingsRequest, opts ...gax.CallOption) (*imagepb.FolderSettings, error) {
+func (c *gRPCClient) UpdateAlbumSettings(ctx context.Context, req *imagepb.UpdateAlbumSettingsRequest, opts ...gax.CallOption) (*imagepb.AlbumSettings, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "settings.name", url.QueryEscape(req.GetSettings().GetName())))
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
-	opts = append((*c.CallOptions).UpdateFolderSettings[0:len((*c.CallOptions).UpdateFolderSettings):len((*c.CallOptions).UpdateFolderSettings)], opts...)
-	var resp *imagepb.FolderSettings
+	opts = append((*c.CallOptions).UpdateAlbumSettings[0:len((*c.CallOptions).UpdateAlbumSettings):len((*c.CallOptions).UpdateAlbumSettings)], opts...)
+	var resp *imagepb.AlbumSettings
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
-		resp, err = c.client.UpdateFolderSettings(ctx, req, settings.GRPC...)
+		resp, err = c.client.UpdateAlbumSettings(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	if err != nil {
@@ -410,9 +410,9 @@ func (c *gRPCClient) UpdateFolderSettings(ctx context.Context, req *imagepb.Upda
 	return resp, nil
 }
 
-// FolderIterator manages a stream of *imagepb.Folder.
-type FolderIterator struct {
-	items    []*imagepb.Folder
+// AlbumIterator manages a stream of *imagepb.Album.
+type AlbumIterator struct {
+	items    []*imagepb.Album
 	pageInfo *iterator.PageInfo
 	nextFunc func() error
 
@@ -427,18 +427,18 @@ type FolderIterator struct {
 	// InternalFetch returns results from a single call to the underlying RPC.
 	// The number of results is no greater than pageSize.
 	// If there are no more results, nextPageToken is empty and err is nil.
-	InternalFetch func(pageSize int, pageToken string) (results []*imagepb.Folder, nextPageToken string, err error)
+	InternalFetch func(pageSize int, pageToken string) (results []*imagepb.Album, nextPageToken string, err error)
 }
 
 // PageInfo supports pagination. See the google.golang.org/api/iterator package for details.
-func (it *FolderIterator) PageInfo() *iterator.PageInfo {
+func (it *AlbumIterator) PageInfo() *iterator.PageInfo {
 	return it.pageInfo
 }
 
 // Next returns the next result. Its second return value is iterator.Done if there are no more
 // results. Once Next returns Done, all subsequent calls will return Done.
-func (it *FolderIterator) Next() (*imagepb.Folder, error) {
-	var item *imagepb.Folder
+func (it *AlbumIterator) Next() (*imagepb.Album, error) {
+	var item *imagepb.Album
 	if err := it.nextFunc(); err != nil {
 		return item, err
 	}
@@ -447,11 +447,11 @@ func (it *FolderIterator) Next() (*imagepb.Folder, error) {
 	return item, nil
 }
 
-func (it *FolderIterator) bufLen() int {
+func (it *AlbumIterator) bufLen() int {
 	return len(it.items)
 }
 
-func (it *FolderIterator) takeBuf() interface{} {
+func (it *AlbumIterator) takeBuf() interface{} {
 	b := it.items
 	it.items = nil
 	return b

@@ -10,24 +10,24 @@
         "grpc": {
           "libraryClient": "Client",
           "rpcs": {
-            "CreateFolder": {
+            "CreateAlbum": {
               "methods": [
-                "CreateFolder"
+                "CreateAlbum"
               ]
             },
-            "DeleteFolder": {
+            "DeleteAlbum": {
               "methods": [
-                "DeleteFolder"
+                "DeleteAlbum"
               ]
             },
-            "GetFolder": {
+            "GetAlbum": {
               "methods": [
-                "GetFolder"
+                "GetAlbum"
               ]
             },
-            "GetFolderSettings": {
+            "GetAlbumSettings": {
               "methods": [
-                "GetFolderSettings"
+                "GetAlbumSettings"
               ]
             },
             "GetImage": {
@@ -40,14 +40,14 @@
                 "ImportImage"
               ]
             },
-            "ListFolders": {
+            "ListAlbums": {
               "methods": [
-                "ListFolders"
+                "ListAlbums"
               ]
             },
-            "UpdateFolderSettings": {
+            "UpdateAlbumSettings": {
               "methods": [
-                "UpdateFolderSettings"
+                "UpdateAlbumSettings"
               ]
             },
             "UploadImage": {
