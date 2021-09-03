@@ -135,42 +135,6 @@ func ExampleClient_DeleteTracker() {
 	}
 }
 
-func ExampleClient_GetOAuthInfo() {
-	ctx := context.Background()
-	c, err := tracker.NewClient(ctx)
-	if err != nil {
-		// TODO: Handle error.
-	}
-	defer c.Close()
-
-	req := &trackerpb.OAuthInfoRequest{
-		// TODO: Fill request struct fields.
-	}
-	resp, err := c.GetOAuthInfo(ctx, req)
-	if err != nil {
-		// TODO: Handle error.
-	}
-	// TODO: Use resp.
-	_ = resp
-}
-
-func ExampleClient_SetAuth() {
-	ctx := context.Background()
-	c, err := tracker.NewClient(ctx)
-	if err != nil {
-		// TODO: Handle error.
-	}
-	defer c.Close()
-
-	req := &trackerpb.SetAuthRequest{
-		// TODO: Fill request struct fields.
-	}
-	err = c.SetAuth(ctx, req)
-	if err != nil {
-		// TODO: Handle error.
-	}
-}
-
 func ExampleClient_ImportTrackers() {
 	ctx := context.Background()
 	c, err := tracker.NewClient(ctx)
@@ -182,10 +146,17 @@ func ExampleClient_ImportTrackers() {
 	req := &trackerpb.ImportTrackersRequest{
 		// TODO: Fill request struct fields.
 	}
-	err = c.ImportTrackers(ctx, req)
+	op, err := c.ImportTrackers(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
 	}
+
+	resp, err := op.Wait(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
 }
 
 func ExampleClient_ExportTrackers() {
@@ -199,7 +170,50 @@ func ExampleClient_ExportTrackers() {
 	req := &trackerpb.ExportTrackersRequest{
 		// TODO: Fill request struct fields.
 	}
-	err = c.ExportTrackers(ctx, req)
+	op, err := c.ExportTrackers(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+
+	resp, err := op.Wait(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
+func ExampleClient_CreateActivity() {
+	ctx := context.Background()
+	c, err := tracker.NewClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &trackerpb.CreateActivityRequest{
+		// TODO: Fill request struct fields.
+	}
+	resp, err := c.CreateActivity(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
+func ExampleClient_DeleteActivity() {
+	ctx := context.Background()
+	c, err := tracker.NewClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &trackerpb.DeleteActivityRequest{
+		// TODO: Fill request struct fields.
+	}
+	err = c.DeleteActivity(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
 	}

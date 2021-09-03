@@ -5,14 +5,43 @@
   "protoPackage": "animeshon.tracker.v1alpha1",
   "libraryPackage": "github.com/animeapis/api-go-client/tracker/v1alpha1",
   "services": {
+    "Credentials": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "CredentialsClient",
+          "rpcs": {
+            "GetOAuthInfo": {
+              "methods": [
+                "GetOAuthInfo"
+              ]
+            },
+            "SetAuth": {
+              "methods": [
+                "SetAuth"
+              ]
+            }
+          }
+        }
+      }
+    },
     "TrackerService": {
       "clients": {
         "grpc": {
           "libraryClient": "Client",
           "rpcs": {
+            "CreateActivity": {
+              "methods": [
+                "CreateActivity"
+              ]
+            },
             "CreateTracker": {
               "methods": [
                 "CreateTracker"
+              ]
+            },
+            "DeleteActivity": {
+              "methods": [
+                "DeleteActivity"
               ]
             },
             "DeleteTracker": {
@@ -23,11 +52,6 @@
             "ExportTrackers": {
               "methods": [
                 "ExportTrackers"
-              ]
-            },
-            "GetOAuthInfo": {
-              "methods": [
-                "GetOAuthInfo"
               ]
             },
             "GetTracker": {
@@ -43,11 +67,6 @@
             "ListTrackers": {
               "methods": [
                 "ListTrackers"
-              ]
-            },
-            "SetAuth": {
-              "methods": [
-                "SetAuth"
               ]
             },
             "UpdateTracker": {

@@ -21,13 +21,17 @@ import (
 	"fmt"
 	"math"
 	"net/url"
+	"time"
 
+	"cloud.google.com/go/longrunning"
+	lroauto "cloud.google.com/go/longrunning/autogen"
 	trackerpb "github.com/animeapis/go-genproto/tracker/v1alpha1"
 	gax "github.com/googleapis/gax-go/v2"
 	"google.golang.org/api/iterator"
 	"google.golang.org/api/option"
 	"google.golang.org/api/option/internaloption"
 	gtransport "google.golang.org/api/transport/grpc"
+	longrunningpb "google.golang.org/genproto/googleapis/longrunning"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/protobuf/proto"
@@ -42,10 +46,10 @@ type CallOptions struct {
 	CreateTracker  []gax.CallOption
 	UpdateTracker  []gax.CallOption
 	DeleteTracker  []gax.CallOption
-	GetOAuthInfo   []gax.CallOption
-	SetAuth        []gax.CallOption
 	ImportTrackers []gax.CallOption
 	ExportTrackers []gax.CallOption
+	CreateActivity []gax.CallOption
+	DeleteActivity []gax.CallOption
 }
 
 func defaultGRPCClientOptions() []option.ClientOption {
@@ -67,10 +71,10 @@ func defaultCallOptions() *CallOptions {
 		CreateTracker:  []gax.CallOption{},
 		UpdateTracker:  []gax.CallOption{},
 		DeleteTracker:  []gax.CallOption{},
-		GetOAuthInfo:   []gax.CallOption{},
-		SetAuth:        []gax.CallOption{},
 		ImportTrackers: []gax.CallOption{},
 		ExportTrackers: []gax.CallOption{},
+		CreateActivity: []gax.CallOption{},
+		DeleteActivity: []gax.CallOption{},
 	}
 }
 
@@ -84,10 +88,12 @@ type internalClient interface {
 	CreateTracker(context.Context, *trackerpb.CreateTrackerRequest, ...gax.CallOption) (*trackerpb.Tracker, error)
 	UpdateTracker(context.Context, *trackerpb.UpdateTrackerRequest, ...gax.CallOption) (*trackerpb.Tracker, error)
 	DeleteTracker(context.Context, *trackerpb.DeleteTrackerRequest, ...gax.CallOption) error
-	GetOAuthInfo(context.Context, *trackerpb.OAuthInfoRequest, ...gax.CallOption) (*trackerpb.OAuthInfoResponse, error)
-	SetAuth(context.Context, *trackerpb.SetAuthRequest, ...gax.CallOption) error
-	ImportTrackers(context.Context, *trackerpb.ImportTrackersRequest, ...gax.CallOption) error
-	ExportTrackers(context.Context, *trackerpb.ExportTrackersRequest, ...gax.CallOption) error
+	ImportTrackers(context.Context, *trackerpb.ImportTrackersRequest, ...gax.CallOption) (*ImportTrackersOperation, error)
+	ImportTrackersOperation(name string) *ImportTrackersOperation
+	ExportTrackers(context.Context, *trackerpb.ExportTrackersRequest, ...gax.CallOption) (*ExportTrackersOperation, error)
+	ExportTrackersOperation(name string) *ExportTrackersOperation
+	CreateActivity(context.Context, *trackerpb.CreateActivityRequest, ...gax.CallOption) (*trackerpb.Activity, error)
+	DeleteActivity(context.Context, *trackerpb.DeleteActivityRequest, ...gax.CallOption) error
 }
 
 // Client is a client for interacting with Tracker API.
@@ -98,6 +104,11 @@ type Client struct {
 
 	// The call options for this service.
 	CallOptions *CallOptions
+
+	// LROClient is used internally to handle long-running operations.
+	// It is exposed so that its CallOptions can be modified if required.
+	// Users should not Close this client.
+	LROClient *lroauto.OperationsClient
 }
 
 // Wrapper methods routed to the internal client.
@@ -122,10 +133,15 @@ func (c *Client) Connection() *grpc.ClientConn {
 	return c.internalClient.Connection()
 }
 
+// GetTracker get a tracker by its unique identifier.
+//
+// To fetch a tracker by the resource, use ListTrackers instead with an
+// appropriate filter. Example: filter = "resource:animes/1245678".
 func (c *Client) GetTracker(ctx context.Context, req *trackerpb.GetTrackerRequest, opts ...gax.CallOption) (*trackerpb.Tracker, error) {
 	return c.internalClient.GetTracker(ctx, req, opts...)
 }
 
+// ListTrackers tODO: add documentation about supported filters.
 func (c *Client) ListTrackers(ctx context.Context, req *trackerpb.ListTrackersRequest, opts ...gax.CallOption) *TrackerIterator {
 	return c.internalClient.ListTrackers(ctx, req, opts...)
 }
@@ -142,21 +158,32 @@ func (c *Client) DeleteTracker(ctx context.Context, req *trackerpb.DeleteTracker
 	return c.internalClient.DeleteTracker(ctx, req, opts...)
 }
 
-// GetOAuthInfo only used for OAuth as we need to set up the flow
-func (c *Client) GetOAuthInfo(ctx context.Context, req *trackerpb.OAuthInfoRequest, opts ...gax.CallOption) (*trackerpb.OAuthInfoResponse, error) {
-	return c.internalClient.GetOAuthInfo(ctx, req, opts...)
-}
-
-func (c *Client) SetAuth(ctx context.Context, req *trackerpb.SetAuthRequest, opts ...gax.CallOption) error {
-	return c.internalClient.SetAuth(ctx, req, opts...)
-}
-
-func (c *Client) ImportTrackers(ctx context.Context, req *trackerpb.ImportTrackersRequest, opts ...gax.CallOption) error {
+func (c *Client) ImportTrackers(ctx context.Context, req *trackerpb.ImportTrackersRequest, opts ...gax.CallOption) (*ImportTrackersOperation, error) {
 	return c.internalClient.ImportTrackers(ctx, req, opts...)
 }
 
-func (c *Client) ExportTrackers(ctx context.Context, req *trackerpb.ExportTrackersRequest, opts ...gax.CallOption) error {
+// ImportTrackersOperation returns a new ImportTrackersOperation from a given name.
+// The name must be that of a previously created ImportTrackersOperation, possibly from a different process.
+func (c *Client) ImportTrackersOperation(name string) *ImportTrackersOperation {
+	return c.internalClient.ImportTrackersOperation(name)
+}
+
+func (c *Client) ExportTrackers(ctx context.Context, req *trackerpb.ExportTrackersRequest, opts ...gax.CallOption) (*ExportTrackersOperation, error) {
 	return c.internalClient.ExportTrackers(ctx, req, opts...)
+}
+
+// ExportTrackersOperation returns a new ExportTrackersOperation from a given name.
+// The name must be that of a previously created ExportTrackersOperation, possibly from a different process.
+func (c *Client) ExportTrackersOperation(name string) *ExportTrackersOperation {
+	return c.internalClient.ExportTrackersOperation(name)
+}
+
+func (c *Client) CreateActivity(ctx context.Context, req *trackerpb.CreateActivityRequest, opts ...gax.CallOption) (*trackerpb.Activity, error) {
+	return c.internalClient.CreateActivity(ctx, req, opts...)
+}
+
+func (c *Client) DeleteActivity(ctx context.Context, req *trackerpb.DeleteActivityRequest, opts ...gax.CallOption) error {
+	return c.internalClient.DeleteActivity(ctx, req, opts...)
 }
 
 // gRPCClient is a client for interacting with Tracker API over gRPC transport.
@@ -174,6 +201,11 @@ type gRPCClient struct {
 
 	// The gRPC API client.
 	client trackerpb.TrackerServiceClient
+
+	// LROClient is used internally to handle long-running operations.
+	// It is exposed so that its CallOptions can be modified if required.
+	// Users should not Close this client.
+	LROClient **lroauto.OperationsClient
 
 	// The x-goog-* metadata to be sent with each request.
 	xGoogMetadata metadata.MD
@@ -212,6 +244,17 @@ func NewClient(ctx context.Context, opts ...option.ClientOption) (*Client, error
 
 	client.internalClient = c
 
+	client.LROClient, err = lroauto.NewOperationsClient(ctx, gtransport.WithConnPool(connPool))
+	if err != nil {
+		// This error "should not happen", since we are just reusing old connection pool
+		// and never actually need to dial.
+		// If this does happen, we could leak connp. However, we cannot close conn:
+		// If the user invoked the constructor with option.WithGRPCConn,
+		// we would close a connection that's still in use.
+		// TODO: investigate error conditions.
+		return nil, err
+	}
+	c.LROClient = &client.LROClient
 	return &client, nil
 }
 
@@ -337,14 +380,50 @@ func (c *gRPCClient) DeleteTracker(ctx context.Context, req *trackerpb.DeleteTra
 	return err
 }
 
-func (c *gRPCClient) GetOAuthInfo(ctx context.Context, req *trackerpb.OAuthInfoRequest, opts ...gax.CallOption) (*trackerpb.OAuthInfoResponse, error) {
+func (c *gRPCClient) ImportTrackers(ctx context.Context, req *trackerpb.ImportTrackersRequest, opts ...gax.CallOption) (*ImportTrackersOperation, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
-	opts = append((*c.CallOptions).GetOAuthInfo[0:len((*c.CallOptions).GetOAuthInfo):len((*c.CallOptions).GetOAuthInfo)], opts...)
-	var resp *trackerpb.OAuthInfoResponse
+	opts = append((*c.CallOptions).ImportTrackers[0:len((*c.CallOptions).ImportTrackers):len((*c.CallOptions).ImportTrackers)], opts...)
+	var resp *longrunningpb.Operation
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
-		resp, err = c.client.GetOAuthInfo(ctx, req, settings.GRPC...)
+		resp, err = c.client.ImportTrackers(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &ImportTrackersOperation{
+		lro: longrunning.InternalNewOperation(*c.LROClient, resp),
+	}, nil
+}
+
+func (c *gRPCClient) ExportTrackers(ctx context.Context, req *trackerpb.ExportTrackersRequest, opts ...gax.CallOption) (*ExportTrackersOperation, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).ExportTrackers[0:len((*c.CallOptions).ExportTrackers):len((*c.CallOptions).ExportTrackers)], opts...)
+	var resp *longrunningpb.Operation
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.client.ExportTrackers(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &ExportTrackersOperation{
+		lro: longrunning.InternalNewOperation(*c.LROClient, resp),
+	}, nil
+}
+
+func (c *gRPCClient) CreateActivity(ctx context.Context, req *trackerpb.CreateActivityRequest, opts ...gax.CallOption) (*trackerpb.Activity, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).CreateActivity[0:len((*c.CallOptions).CreateActivity):len((*c.CallOptions).CreateActivity)], opts...)
+	var resp *trackerpb.Activity
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.client.CreateActivity(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	if err != nil {
@@ -353,40 +432,154 @@ func (c *gRPCClient) GetOAuthInfo(ctx context.Context, req *trackerpb.OAuthInfoR
 	return resp, nil
 }
 
-func (c *gRPCClient) SetAuth(ctx context.Context, req *trackerpb.SetAuthRequest, opts ...gax.CallOption) error {
-	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+func (c *gRPCClient) DeleteActivity(ctx context.Context, req *trackerpb.DeleteActivityRequest, opts ...gax.CallOption) error {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
-	opts = append((*c.CallOptions).SetAuth[0:len((*c.CallOptions).SetAuth):len((*c.CallOptions).SetAuth)], opts...)
+	opts = append((*c.CallOptions).DeleteActivity[0:len((*c.CallOptions).DeleteActivity):len((*c.CallOptions).DeleteActivity)], opts...)
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
-		_, err = c.client.SetAuth(ctx, req, settings.GRPC...)
+		_, err = c.client.DeleteActivity(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	return err
 }
 
-func (c *gRPCClient) ImportTrackers(ctx context.Context, req *trackerpb.ImportTrackersRequest, opts ...gax.CallOption) error {
-	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
-	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
-	opts = append((*c.CallOptions).ImportTrackers[0:len((*c.CallOptions).ImportTrackers):len((*c.CallOptions).ImportTrackers)], opts...)
-	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
-		var err error
-		_, err = c.client.ImportTrackers(ctx, req, settings.GRPC...)
-		return err
-	}, opts...)
-	return err
+// ExportTrackersOperation manages a long-running operation from ExportTrackers.
+type ExportTrackersOperation struct {
+	lro *longrunning.Operation
 }
 
-func (c *gRPCClient) ExportTrackers(ctx context.Context, req *trackerpb.ExportTrackersRequest, opts ...gax.CallOption) error {
-	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
-	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
-	opts = append((*c.CallOptions).ExportTrackers[0:len((*c.CallOptions).ExportTrackers):len((*c.CallOptions).ExportTrackers)], opts...)
-	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
-		var err error
-		_, err = c.client.ExportTrackers(ctx, req, settings.GRPC...)
-		return err
-	}, opts...)
-	return err
+// ExportTrackersOperation returns a new ExportTrackersOperation from a given name.
+// The name must be that of a previously created ExportTrackersOperation, possibly from a different process.
+func (c *gRPCClient) ExportTrackersOperation(name string) *ExportTrackersOperation {
+	return &ExportTrackersOperation{
+		lro: longrunning.InternalNewOperation(*c.LROClient, &longrunningpb.Operation{Name: name}),
+	}
+}
+
+// Wait blocks until the long-running operation is completed, returning the response and any errors encountered.
+//
+// See documentation of Poll for error-handling information.
+func (op *ExportTrackersOperation) Wait(ctx context.Context, opts ...gax.CallOption) (*trackerpb.ExportTrackersResponse, error) {
+	var resp trackerpb.ExportTrackersResponse
+	if err := op.lro.WaitWithInterval(ctx, &resp, time.Minute, opts...); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+// Poll fetches the latest state of the long-running operation.
+//
+// Poll also fetches the latest metadata, which can be retrieved by Metadata.
+//
+// If Poll fails, the error is returned and op is unmodified. If Poll succeeds and
+// the operation has completed with failure, the error is returned and op.Done will return true.
+// If Poll succeeds and the operation has completed successfully,
+// op.Done will return true, and the response of the operation is returned.
+// If Poll succeeds and the operation has not completed, the returned response and error are both nil.
+func (op *ExportTrackersOperation) Poll(ctx context.Context, opts ...gax.CallOption) (*trackerpb.ExportTrackersResponse, error) {
+	var resp trackerpb.ExportTrackersResponse
+	if err := op.lro.Poll(ctx, &resp, opts...); err != nil {
+		return nil, err
+	}
+	if !op.Done() {
+		return nil, nil
+	}
+	return &resp, nil
+}
+
+// Metadata returns metadata associated with the long-running operation.
+// Metadata itself does not contact the server, but Poll does.
+// To get the latest metadata, call this method after a successful call to Poll.
+// If the metadata is not available, the returned metadata and error are both nil.
+func (op *ExportTrackersOperation) Metadata() (*trackerpb.OperationMetadata, error) {
+	var meta trackerpb.OperationMetadata
+	if err := op.lro.Metadata(&meta); err == longrunning.ErrNoMetadata {
+		return nil, nil
+	} else if err != nil {
+		return nil, err
+	}
+	return &meta, nil
+}
+
+// Done reports whether the long-running operation has completed.
+func (op *ExportTrackersOperation) Done() bool {
+	return op.lro.Done()
+}
+
+// Name returns the name of the long-running operation.
+// The name is assigned by the server and is unique within the service from which the operation is created.
+func (op *ExportTrackersOperation) Name() string {
+	return op.lro.Name()
+}
+
+// ImportTrackersOperation manages a long-running operation from ImportTrackers.
+type ImportTrackersOperation struct {
+	lro *longrunning.Operation
+}
+
+// ImportTrackersOperation returns a new ImportTrackersOperation from a given name.
+// The name must be that of a previously created ImportTrackersOperation, possibly from a different process.
+func (c *gRPCClient) ImportTrackersOperation(name string) *ImportTrackersOperation {
+	return &ImportTrackersOperation{
+		lro: longrunning.InternalNewOperation(*c.LROClient, &longrunningpb.Operation{Name: name}),
+	}
+}
+
+// Wait blocks until the long-running operation is completed, returning the response and any errors encountered.
+//
+// See documentation of Poll for error-handling information.
+func (op *ImportTrackersOperation) Wait(ctx context.Context, opts ...gax.CallOption) (*trackerpb.ImportTrackersResponse, error) {
+	var resp trackerpb.ImportTrackersResponse
+	if err := op.lro.WaitWithInterval(ctx, &resp, time.Minute, opts...); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+// Poll fetches the latest state of the long-running operation.
+//
+// Poll also fetches the latest metadata, which can be retrieved by Metadata.
+//
+// If Poll fails, the error is returned and op is unmodified. If Poll succeeds and
+// the operation has completed with failure, the error is returned and op.Done will return true.
+// If Poll succeeds and the operation has completed successfully,
+// op.Done will return true, and the response of the operation is returned.
+// If Poll succeeds and the operation has not completed, the returned response and error are both nil.
+func (op *ImportTrackersOperation) Poll(ctx context.Context, opts ...gax.CallOption) (*trackerpb.ImportTrackersResponse, error) {
+	var resp trackerpb.ImportTrackersResponse
+	if err := op.lro.Poll(ctx, &resp, opts...); err != nil {
+		return nil, err
+	}
+	if !op.Done() {
+		return nil, nil
+	}
+	return &resp, nil
+}
+
+// Metadata returns metadata associated with the long-running operation.
+// Metadata itself does not contact the server, but Poll does.
+// To get the latest metadata, call this method after a successful call to Poll.
+// If the metadata is not available, the returned metadata and error are both nil.
+func (op *ImportTrackersOperation) Metadata() (*trackerpb.OperationMetadata, error) {
+	var meta trackerpb.OperationMetadata
+	if err := op.lro.Metadata(&meta); err == longrunning.ErrNoMetadata {
+		return nil, nil
+	} else if err != nil {
+		return nil, err
+	}
+	return &meta, nil
+}
+
+// Done reports whether the long-running operation has completed.
+func (op *ImportTrackersOperation) Done() bool {
+	return op.lro.Done()
+}
+
+// Name returns the name of the long-running operation.
+// The name is assigned by the server and is unique within the service from which the operation is created.
+func (op *ImportTrackersOperation) Name() string {
+	return op.lro.Name()
 }
 
 // TrackerIterator manages a stream of *trackerpb.Tracker.
