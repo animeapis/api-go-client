@@ -75,6 +75,11 @@
                 "ListCrossRefs"
               ]
             },
+            "ListWormholeCrossRefs": {
+              "methods": [
+                "ListWormholeCrossRefs"
+              ]
+            },
             "UpdateCrossRef": {
               "methods": [
                 "UpdateCrossRef"

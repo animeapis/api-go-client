@@ -42,21 +42,22 @@ var newReferrerClientHook clientHook
 
 // ReferrerCallOptions contains the retry settings for each method of ReferrerClient.
 type ReferrerCallOptions struct {
-	GetCrossRef         []gax.CallOption
-	CreateCrossRef      []gax.CallOption
-	UpdateCrossRef      []gax.CallOption
-	ListCrossRefs       []gax.CallOption
-	CountCrossRefs      []gax.CallOption
-	AnalyzeCrossRefs    []gax.CallOption
-	ImportCrossRefs     []gax.CallOption
-	ExportCrossRefs     []gax.CallOption
-	InitializeCrossRefs []gax.CallOption
-	AnalyzeParodies     []gax.CallOption
-	ExportParodies      []gax.CallOption
-	GetUniverse         []gax.CallOption
-	UpdateUniverse      []gax.CallOption
-	ExpandUniverse      []gax.CallOption
-	GetWormhole         []gax.CallOption
+	GetCrossRef           []gax.CallOption
+	CreateCrossRef        []gax.CallOption
+	UpdateCrossRef        []gax.CallOption
+	ListCrossRefs         []gax.CallOption
+	CountCrossRefs        []gax.CallOption
+	AnalyzeCrossRefs      []gax.CallOption
+	ImportCrossRefs       []gax.CallOption
+	ExportCrossRefs       []gax.CallOption
+	InitializeCrossRefs   []gax.CallOption
+	AnalyzeParodies       []gax.CallOption
+	ExportParodies        []gax.CallOption
+	GetUniverse           []gax.CallOption
+	UpdateUniverse        []gax.CallOption
+	ExpandUniverse        []gax.CallOption
+	GetWormhole           []gax.CallOption
+	ListWormholeCrossRefs []gax.CallOption
 }
 
 func defaultReferrerGRPCClientOptions() []option.ClientOption {
@@ -73,21 +74,22 @@ func defaultReferrerGRPCClientOptions() []option.ClientOption {
 
 func defaultReferrerCallOptions() *ReferrerCallOptions {
 	return &ReferrerCallOptions{
-		GetCrossRef:         []gax.CallOption{},
-		CreateCrossRef:      []gax.CallOption{},
-		UpdateCrossRef:      []gax.CallOption{},
-		ListCrossRefs:       []gax.CallOption{},
-		CountCrossRefs:      []gax.CallOption{},
-		AnalyzeCrossRefs:    []gax.CallOption{},
-		ImportCrossRefs:     []gax.CallOption{},
-		ExportCrossRefs:     []gax.CallOption{},
-		InitializeCrossRefs: []gax.CallOption{},
-		AnalyzeParodies:     []gax.CallOption{},
-		ExportParodies:      []gax.CallOption{},
-		GetUniverse:         []gax.CallOption{},
-		UpdateUniverse:      []gax.CallOption{},
-		ExpandUniverse:      []gax.CallOption{},
-		GetWormhole:         []gax.CallOption{},
+		GetCrossRef:           []gax.CallOption{},
+		CreateCrossRef:        []gax.CallOption{},
+		UpdateCrossRef:        []gax.CallOption{},
+		ListCrossRefs:         []gax.CallOption{},
+		CountCrossRefs:        []gax.CallOption{},
+		AnalyzeCrossRefs:      []gax.CallOption{},
+		ImportCrossRefs:       []gax.CallOption{},
+		ExportCrossRefs:       []gax.CallOption{},
+		InitializeCrossRefs:   []gax.CallOption{},
+		AnalyzeParodies:       []gax.CallOption{},
+		ExportParodies:        []gax.CallOption{},
+		GetUniverse:           []gax.CallOption{},
+		UpdateUniverse:        []gax.CallOption{},
+		ExpandUniverse:        []gax.CallOption{},
+		GetWormhole:           []gax.CallOption{},
+		ListWormholeCrossRefs: []gax.CallOption{},
 	}
 }
 
@@ -117,6 +119,7 @@ type internalReferrerClient interface {
 	UpdateUniverse(context.Context, *crossrefspb.UpdateUniverseRequest, ...gax.CallOption) (*crossrefspb.Universe, error)
 	ExpandUniverse(context.Context, *crossrefspb.ExpandUniverseRequest, ...gax.CallOption) (*crossrefspb.ExpandUniverseResponse, error)
 	GetWormhole(context.Context, *crossrefspb.GetWormholeRequest, ...gax.CallOption) (*crossrefspb.Wormhole, error)
+	ListWormholeCrossRefs(context.Context, *crossrefspb.ListWormholeCrossRefsRequest, ...gax.CallOption) (*crossrefspb.ListWormholeCrossRefsResponse, error)
 }
 
 // ReferrerClient is a client for interacting with CrossRefs API.
@@ -259,6 +262,10 @@ func (c *ReferrerClient) ExpandUniverse(ctx context.Context, req *crossrefspb.Ex
 
 func (c *ReferrerClient) GetWormhole(ctx context.Context, req *crossrefspb.GetWormholeRequest, opts ...gax.CallOption) (*crossrefspb.Wormhole, error) {
 	return c.internalClient.GetWormhole(ctx, req, opts...)
+}
+
+func (c *ReferrerClient) ListWormholeCrossRefs(ctx context.Context, req *crossrefspb.ListWormholeCrossRefsRequest, opts ...gax.CallOption) (*crossrefspb.ListWormholeCrossRefsResponse, error) {
+	return c.internalClient.ListWormholeCrossRefs(ctx, req, opts...)
 }
 
 // referrerGRPCClient is a client for interacting with CrossRefs API over gRPC transport.
@@ -614,6 +621,22 @@ func (c *referrerGRPCClient) GetWormhole(ctx context.Context, req *crossrefspb.G
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
 		resp, err = c.referrerClient.GetWormhole(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *referrerGRPCClient) ListWormholeCrossRefs(ctx context.Context, req *crossrefspb.ListWormholeCrossRefsRequest, opts ...gax.CallOption) (*crossrefspb.ListWormholeCrossRefsResponse, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).ListWormholeCrossRefs[0:len((*c.CallOptions).ListWormholeCrossRefs):len((*c.CallOptions).ListWormholeCrossRefs)], opts...)
+	var resp *crossrefspb.ListWormholeCrossRefsResponse
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.referrerClient.ListWormholeCrossRefs(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	if err != nil {
