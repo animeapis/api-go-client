@@ -357,7 +357,7 @@ func (c *iamGRPCClient) ListServiceAccounts(ctx context.Context, req *adminpb.Li
 }
 
 func (c *iamGRPCClient) CreateServiceAccount(ctx context.Context, req *adminpb.CreateServiceAccountRequest, opts ...gax.CallOption) (*adminpb.ServiceAccount, error) {
-	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "service_account.name", url.QueryEscape(req.GetServiceAccount().GetName())))
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).CreateServiceAccount[0:len((*c.CallOptions).CreateServiceAccount):len((*c.CallOptions).CreateServiceAccount)], opts...)
 	var resp *adminpb.ServiceAccount
@@ -504,7 +504,8 @@ func (c *iamGRPCClient) ListRoles(ctx context.Context, req *adminpb.ListRolesReq
 }
 
 func (c *iamGRPCClient) CreateRole(ctx context.Context, req *adminpb.CreateRoleRequest, opts ...gax.CallOption) (*adminpb.Role, error) {
-	ctx = insertMetadata(ctx, c.xGoogMetadata)
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "role.name", url.QueryEscape(req.GetRole().GetName())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).CreateRole[0:len((*c.CallOptions).CreateRole):len((*c.CallOptions).CreateRole)], opts...)
 	var resp *adminpb.Role
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -602,7 +603,8 @@ func (c *iamGRPCClient) ListPermissions(ctx context.Context, req *adminpb.ListPe
 }
 
 func (c *iamGRPCClient) CreatePermission(ctx context.Context, req *adminpb.CreatePermissionRequest, opts ...gax.CallOption) (*adminpb.Permission, error) {
-	ctx = insertMetadata(ctx, c.xGoogMetadata)
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "permission.name", url.QueryEscape(req.GetPermission().GetName())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).CreatePermission[0:len((*c.CallOptions).CreatePermission):len((*c.CallOptions).CreatePermission)], opts...)
 	var resp *adminpb.Permission
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
