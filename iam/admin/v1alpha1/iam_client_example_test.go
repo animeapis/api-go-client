@@ -22,7 +22,6 @@ import (
 	admin "github.com/animeapis/api-go-client/iam/admin/v1alpha1"
 	adminpb "github.com/animeapis/go-genproto/iam/admin/v1alpha1"
 	"google.golang.org/api/iterator"
-	iampb "google.golang.org/genproto/googleapis/iam/v1"
 )
 
 func ExampleNewIamClient() {
@@ -134,63 +133,6 @@ func ExampleIamClient_DeleteServiceAccount() {
 	if err != nil {
 		// TODO: Handle error.
 	}
-}
-
-func ExampleIamClient_GetIamPolicy() {
-	ctx := context.Background()
-	c, err := admin.NewIamClient(ctx)
-	if err != nil {
-		// TODO: Handle error.
-	}
-	defer c.Close()
-
-	req := &iampb.GetIamPolicyRequest{
-		// TODO: Fill request struct fields.
-	}
-	resp, err := c.GetIamPolicy(ctx, req)
-	if err != nil {
-		// TODO: Handle error.
-	}
-	// TODO: Use resp.
-	_ = resp
-}
-
-func ExampleIamClient_SetIamPolicy() {
-	ctx := context.Background()
-	c, err := admin.NewIamClient(ctx)
-	if err != nil {
-		// TODO: Handle error.
-	}
-	defer c.Close()
-
-	req := &iampb.SetIamPolicyRequest{
-		// TODO: Fill request struct fields.
-	}
-	resp, err := c.SetIamPolicy(ctx, req)
-	if err != nil {
-		// TODO: Handle error.
-	}
-	// TODO: Use resp.
-	_ = resp
-}
-
-func ExampleIamClient_TestIamPermissions() {
-	ctx := context.Background()
-	c, err := admin.NewIamClient(ctx)
-	if err != nil {
-		// TODO: Handle error.
-	}
-	defer c.Close()
-
-	req := &iampb.TestIamPermissionsRequest{
-		// TODO: Fill request struct fields.
-	}
-	resp, err := c.TestIamPermissions(ctx, req)
-	if err != nil {
-		// TODO: Handle error.
-	}
-	// TODO: Use resp.
-	_ = resp
 }
 
 func ExampleIamClient_GetRole() {

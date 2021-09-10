@@ -40,11 +40,6 @@
                 "DeleteServiceAccount"
               ]
             },
-            "GetIamPolicy": {
-              "methods": [
-                "GetIamPolicy"
-              ]
-            },
             "GetPermission": {
               "methods": [
                 "GetPermission"
@@ -73,16 +68,6 @@
             "ListServiceAccounts": {
               "methods": [
                 "ListServiceAccounts"
-              ]
-            },
-            "SetIamPolicy": {
-              "methods": [
-                "SetIamPolicy"
-              ]
-            },
-            "TestIamPermissions": {
-              "methods": [
-                "TestIamPermissions"
               ]
             },
             "UpdatePermission": {

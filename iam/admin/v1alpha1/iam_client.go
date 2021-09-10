@@ -28,7 +28,6 @@ import (
 	"google.golang.org/api/option"
 	"google.golang.org/api/option/internaloption"
 	gtransport "google.golang.org/api/transport/grpc"
-	iampb "google.golang.org/genproto/googleapis/iam/v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/protobuf/proto"
@@ -43,9 +42,6 @@ type IamCallOptions struct {
 	CreateServiceAccount []gax.CallOption
 	UpdateServiceAccount []gax.CallOption
 	DeleteServiceAccount []gax.CallOption
-	GetIamPolicy         []gax.CallOption
-	SetIamPolicy         []gax.CallOption
-	TestIamPermissions   []gax.CallOption
 	GetRole              []gax.CallOption
 	ListRoles            []gax.CallOption
 	CreateRole           []gax.CallOption
@@ -77,9 +73,6 @@ func defaultIamCallOptions() *IamCallOptions {
 		CreateServiceAccount: []gax.CallOption{},
 		UpdateServiceAccount: []gax.CallOption{},
 		DeleteServiceAccount: []gax.CallOption{},
-		GetIamPolicy:         []gax.CallOption{},
-		SetIamPolicy:         []gax.CallOption{},
-		TestIamPermissions:   []gax.CallOption{},
 		GetRole:              []gax.CallOption{},
 		ListRoles:            []gax.CallOption{},
 		CreateRole:           []gax.CallOption{},
@@ -103,9 +96,6 @@ type internalIamClient interface {
 	CreateServiceAccount(context.Context, *adminpb.CreateServiceAccountRequest, ...gax.CallOption) (*adminpb.ServiceAccount, error)
 	UpdateServiceAccount(context.Context, *adminpb.UpdateServiceAccountRequest, ...gax.CallOption) (*adminpb.ServiceAccount, error)
 	DeleteServiceAccount(context.Context, *adminpb.DeleteServiceAccountRequest, ...gax.CallOption) error
-	GetIamPolicy(context.Context, *iampb.GetIamPolicyRequest, ...gax.CallOption) (*iampb.Policy, error)
-	SetIamPolicy(context.Context, *iampb.SetIamPolicyRequest, ...gax.CallOption) (*iampb.Policy, error)
-	TestIamPermissions(context.Context, *iampb.TestIamPermissionsRequest, ...gax.CallOption) (*iampb.TestIamPermissionsResponse, error)
 	GetRole(context.Context, *adminpb.GetRoleRequest, ...gax.CallOption) (*adminpb.Role, error)
 	ListRoles(context.Context, *adminpb.ListRolesRequest, ...gax.CallOption) *RoleIterator
 	CreateRole(context.Context, *adminpb.CreateRoleRequest, ...gax.CallOption) (*adminpb.Role, error)
@@ -168,18 +158,6 @@ func (c *IamClient) UpdateServiceAccount(ctx context.Context, req *adminpb.Updat
 
 func (c *IamClient) DeleteServiceAccount(ctx context.Context, req *adminpb.DeleteServiceAccountRequest, opts ...gax.CallOption) error {
 	return c.internalClient.DeleteServiceAccount(ctx, req, opts...)
-}
-
-func (c *IamClient) GetIamPolicy(ctx context.Context, req *iampb.GetIamPolicyRequest, opts ...gax.CallOption) (*iampb.Policy, error) {
-	return c.internalClient.GetIamPolicy(ctx, req, opts...)
-}
-
-func (c *IamClient) SetIamPolicy(ctx context.Context, req *iampb.SetIamPolicyRequest, opts ...gax.CallOption) (*iampb.Policy, error) {
-	return c.internalClient.SetIamPolicy(ctx, req, opts...)
-}
-
-func (c *IamClient) TestIamPermissions(ctx context.Context, req *iampb.TestIamPermissionsRequest, opts ...gax.CallOption) (*iampb.TestIamPermissionsResponse, error) {
-	return c.internalClient.TestIamPermissions(ctx, req, opts...)
 }
 
 func (c *IamClient) GetRole(ctx context.Context, req *adminpb.GetRoleRequest, opts ...gax.CallOption) (*adminpb.Role, error) {
@@ -398,54 +376,6 @@ func (c *iamGRPCClient) DeleteServiceAccount(ctx context.Context, req *adminpb.D
 		return err
 	}, opts...)
 	return err
-}
-
-func (c *iamGRPCClient) GetIamPolicy(ctx context.Context, req *iampb.GetIamPolicyRequest, opts ...gax.CallOption) (*iampb.Policy, error) {
-	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "resource", url.QueryEscape(req.GetResource())))
-	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
-	opts = append((*c.CallOptions).GetIamPolicy[0:len((*c.CallOptions).GetIamPolicy):len((*c.CallOptions).GetIamPolicy)], opts...)
-	var resp *iampb.Policy
-	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
-		var err error
-		resp, err = c.iamClient.GetIamPolicy(ctx, req, settings.GRPC...)
-		return err
-	}, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-func (c *iamGRPCClient) SetIamPolicy(ctx context.Context, req *iampb.SetIamPolicyRequest, opts ...gax.CallOption) (*iampb.Policy, error) {
-	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "resource", url.QueryEscape(req.GetResource())))
-	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
-	opts = append((*c.CallOptions).SetIamPolicy[0:len((*c.CallOptions).SetIamPolicy):len((*c.CallOptions).SetIamPolicy)], opts...)
-	var resp *iampb.Policy
-	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
-		var err error
-		resp, err = c.iamClient.SetIamPolicy(ctx, req, settings.GRPC...)
-		return err
-	}, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-func (c *iamGRPCClient) TestIamPermissions(ctx context.Context, req *iampb.TestIamPermissionsRequest, opts ...gax.CallOption) (*iampb.TestIamPermissionsResponse, error) {
-	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "resource", url.QueryEscape(req.GetResource())))
-	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
-	opts = append((*c.CallOptions).TestIamPermissions[0:len((*c.CallOptions).TestIamPermissions):len((*c.CallOptions).TestIamPermissions)], opts...)
-	var resp *iampb.TestIamPermissionsResponse
-	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
-		var err error
-		resp, err = c.iamClient.TestIamPermissions(ctx, req, settings.GRPC...)
-		return err
-	}, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
 }
 
 func (c *iamGRPCClient) GetRole(ctx context.Context, req *adminpb.GetRoleRequest, opts ...gax.CallOption) (*adminpb.Role, error) {
