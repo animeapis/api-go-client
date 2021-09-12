@@ -1,0 +1,58 @@
+{
+  "schema": "1.0",
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods.",
+  "language": "go",
+  "protoPackage": "animeshon.library.v1alpha1",
+  "libraryPackage": "github.com/animeapis/api-go-client/library/v1alpha1",
+  "services": {
+    "Library": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "Client",
+          "rpcs": {
+            "CreatePlaylist": {
+              "methods": [
+                "CreatePlaylist"
+              ]
+            },
+            "CreatePlaylistItem": {
+              "methods": [
+                "CreatePlaylistItem"
+              ]
+            },
+            "DeletePlaylist": {
+              "methods": [
+                "DeletePlaylist"
+              ]
+            },
+            "DeletePlaylistItem": {
+              "methods": [
+                "DeletePlaylistItem"
+              ]
+            },
+            "GetPlaylist": {
+              "methods": [
+                "GetPlaylist"
+              ]
+            },
+            "ListPlaylistItems": {
+              "methods": [
+                "ListPlaylistItems"
+              ]
+            },
+            "ListPlaylists": {
+              "methods": [
+                "ListPlaylists"
+              ]
+            },
+            "UpdatePlaylist": {
+              "methods": [
+                "UpdatePlaylist"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}
