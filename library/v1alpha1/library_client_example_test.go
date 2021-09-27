@@ -179,6 +179,25 @@ func ExampleClient_CreatePlaylistItem() {
 	_ = resp
 }
 
+func ExampleClient_BatchCreatePlaylistItems() {
+	ctx := context.Background()
+	c, err := library.NewClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &librarypb.BatchCreatePlaylistItemsRequest{
+		// TODO: Fill request struct fields.
+	}
+	resp, err := c.BatchCreatePlaylistItems(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
 func ExampleClient_DeletePlaylistItem() {
 	ctx := context.Background()
 	c, err := library.NewClient(ctx)

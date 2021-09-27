@@ -10,6 +10,11 @@
         "grpc": {
           "libraryClient": "Client",
           "rpcs": {
+            "BatchCreatePlaylistItems": {
+              "methods": [
+                "BatchCreatePlaylistItems"
+              ]
+            },
             "CreatePlaylist": {
               "methods": [
                 "CreatePlaylist"

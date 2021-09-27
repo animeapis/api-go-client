@@ -37,14 +37,15 @@ var newClientHook clientHook
 
 // CallOptions contains the retry settings for each method of Client.
 type CallOptions struct {
-	GetPlaylist        []gax.CallOption
-	ListPlaylists      []gax.CallOption
-	CreatePlaylist     []gax.CallOption
-	UpdatePlaylist     []gax.CallOption
-	DeletePlaylist     []gax.CallOption
-	ListPlaylistItems  []gax.CallOption
-	CreatePlaylistItem []gax.CallOption
-	DeletePlaylistItem []gax.CallOption
+	GetPlaylist              []gax.CallOption
+	ListPlaylists            []gax.CallOption
+	CreatePlaylist           []gax.CallOption
+	UpdatePlaylist           []gax.CallOption
+	DeletePlaylist           []gax.CallOption
+	ListPlaylistItems        []gax.CallOption
+	CreatePlaylistItem       []gax.CallOption
+	BatchCreatePlaylistItems []gax.CallOption
+	DeletePlaylistItem       []gax.CallOption
 }
 
 func defaultGRPCClientOptions() []option.ClientOption {
@@ -61,14 +62,15 @@ func defaultGRPCClientOptions() []option.ClientOption {
 
 func defaultCallOptions() *CallOptions {
 	return &CallOptions{
-		GetPlaylist:        []gax.CallOption{},
-		ListPlaylists:      []gax.CallOption{},
-		CreatePlaylist:     []gax.CallOption{},
-		UpdatePlaylist:     []gax.CallOption{},
-		DeletePlaylist:     []gax.CallOption{},
-		ListPlaylistItems:  []gax.CallOption{},
-		CreatePlaylistItem: []gax.CallOption{},
-		DeletePlaylistItem: []gax.CallOption{},
+		GetPlaylist:              []gax.CallOption{},
+		ListPlaylists:            []gax.CallOption{},
+		CreatePlaylist:           []gax.CallOption{},
+		UpdatePlaylist:           []gax.CallOption{},
+		DeletePlaylist:           []gax.CallOption{},
+		ListPlaylistItems:        []gax.CallOption{},
+		CreatePlaylistItem:       []gax.CallOption{},
+		BatchCreatePlaylistItems: []gax.CallOption{},
+		DeletePlaylistItem:       []gax.CallOption{},
 	}
 }
 
@@ -84,6 +86,7 @@ type internalClient interface {
 	DeletePlaylist(context.Context, *librarypb.DeletePlaylistRequest, ...gax.CallOption) error
 	ListPlaylistItems(context.Context, *librarypb.ListPlaylistItemsRequest, ...gax.CallOption) *PlaylistItemIterator
 	CreatePlaylistItem(context.Context, *librarypb.CreatePlaylistItemRequest, ...gax.CallOption) (*librarypb.PlaylistItem, error)
+	BatchCreatePlaylistItems(context.Context, *librarypb.BatchCreatePlaylistItemsRequest, ...gax.CallOption) (*librarypb.BatchCreatePlaylistItemsResponse, error)
 	DeletePlaylistItem(context.Context, *librarypb.DeletePlaylistItemRequest, ...gax.CallOption) error
 }
 
@@ -145,6 +148,10 @@ func (c *Client) ListPlaylistItems(ctx context.Context, req *librarypb.ListPlayl
 
 func (c *Client) CreatePlaylistItem(ctx context.Context, req *librarypb.CreatePlaylistItemRequest, opts ...gax.CallOption) (*librarypb.PlaylistItem, error) {
 	return c.internalClient.CreatePlaylistItem(ctx, req, opts...)
+}
+
+func (c *Client) BatchCreatePlaylistItems(ctx context.Context, req *librarypb.BatchCreatePlaylistItemsRequest, opts ...gax.CallOption) (*librarypb.BatchCreatePlaylistItemsResponse, error) {
+	return c.internalClient.BatchCreatePlaylistItems(ctx, req, opts...)
 }
 
 func (c *Client) DeletePlaylistItem(ctx context.Context, req *librarypb.DeletePlaylistItemRequest, opts ...gax.CallOption) error {
@@ -377,6 +384,22 @@ func (c *gRPCClient) CreatePlaylistItem(ctx context.Context, req *librarypb.Crea
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
 		resp, err = c.client.CreatePlaylistItem(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *gRPCClient) BatchCreatePlaylistItems(ctx context.Context, req *librarypb.BatchCreatePlaylistItemsRequest, opts ...gax.CallOption) (*librarypb.BatchCreatePlaylistItemsResponse, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).BatchCreatePlaylistItems[0:len((*c.CallOptions).BatchCreatePlaylistItems):len((*c.CallOptions).BatchCreatePlaylistItems)], opts...)
+	var resp *librarypb.BatchCreatePlaylistItemsResponse
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.client.BatchCreatePlaylistItems(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	if err != nil {
