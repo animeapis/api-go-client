@@ -99,6 +99,25 @@ func ExampleClient_GetContribution() {
 	_ = resp
 }
 
+func ExampleClient_GetContributionChanges() {
+	ctx := context.Background()
+	c, err := knowledge.NewClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &knowledgepb.GetContributionChangesRequest{
+		// TODO: Fill request struct fields.
+	}
+	resp, err := c.GetContributionChanges(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
 func ExampleClient_ApproveContribution() {
 	ctx := context.Background()
 	c, err := knowledge.NewClient(ctx)
@@ -111,6 +130,25 @@ func ExampleClient_ApproveContribution() {
 		// TODO: Fill request struct fields.
 	}
 	resp, err := c.ApproveContribution(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
+func ExampleClient_ReviewContribution() {
+	ctx := context.Background()
+	c, err := knowledge.NewClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &knowledgepb.ReviewContributionRequest{
+		// TODO: Fill request struct fields.
+	}
+	resp, err := c.ReviewContribution(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
 	}

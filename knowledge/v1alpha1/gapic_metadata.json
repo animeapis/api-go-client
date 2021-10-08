@@ -25,6 +25,11 @@
                 "GetContribution"
               ]
             },
+            "GetContributionChanges": {
+              "methods": [
+                "GetContributionChanges"
+              ]
+            },
             "ListContributions": {
               "methods": [
                 "ListContributions"
@@ -33,6 +38,11 @@
             "RejectContribution": {
               "methods": [
                 "RejectContribution"
+              ]
+            },
+            "ReviewContribution": {
+              "methods": [
+                "ReviewContribution"
               ]
             }
           }
