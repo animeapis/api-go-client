@@ -1,0 +1,73 @@
+{
+  "schema": "1.0",
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods.",
+  "language": "go",
+  "protoPackage": "animeshon.release.v1alpha1",
+  "libraryPackage": "github.com/animeapis/api-go-client/release/v1alpha1",
+  "services": {
+    "Publisher": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "PublisherClient",
+          "rpcs": {
+            "CancelRelease": {
+              "methods": [
+                "CancelRelease"
+              ]
+            },
+            "CreateRelease": {
+              "methods": [
+                "CreateRelease"
+              ]
+            },
+            "DeleteRelease": {
+              "methods": [
+                "DeleteRelease"
+              ]
+            },
+            "GetRelease": {
+              "methods": [
+                "GetRelease"
+              ]
+            },
+            "ListReleases": {
+              "methods": [
+                "ListReleases"
+              ]
+            },
+            "PublishRelease": {
+              "methods": [
+                "PublishRelease"
+              ]
+            },
+            "ScheduleRelease": {
+              "methods": [
+                "ScheduleRelease"
+              ]
+            },
+            "SuspendRelease": {
+              "methods": [
+                "SuspendRelease"
+              ]
+            },
+            "UndeleteRelease": {
+              "methods": [
+                "UndeleteRelease"
+              ]
+            },
+            "UnpublishRelease": {
+              "methods": [
+                "UnpublishRelease"
+              ]
+            },
+            "UpdateRelease": {
+              "methods": [
+                "UpdateRelease"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}
