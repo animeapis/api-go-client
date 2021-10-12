@@ -36,6 +36,25 @@ func ExampleNewClient() {
 	_ = c
 }
 
+func ExampleClient_GetUserProfile() {
+	ctx := context.Background()
+	c, err := identity.NewClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &identitypb.GetUserProfileRequest{
+		// TODO: Fill request struct fields.
+	}
+	resp, err := c.GetUserProfile(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
 func ExampleClient_GetUser() {
 	ctx := context.Background()
 	c, err := identity.NewClient(ctx)
@@ -133,6 +152,44 @@ func ExampleClient_DeleteUser() {
 	if err != nil {
 		// TODO: Handle error.
 	}
+}
+
+func ExampleClient_GetUserSettings() {
+	ctx := context.Background()
+	c, err := identity.NewClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &identitypb.GetUserSettingsRequest{
+		// TODO: Fill request struct fields.
+	}
+	resp, err := c.GetUserSettings(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
+func ExampleClient_UpdateUserSettings() {
+	ctx := context.Background()
+	c, err := identity.NewClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &identitypb.UpdateUserSettingsRequest{
+		// TODO: Fill request struct fields.
+	}
+	resp, err := c.UpdateUserSettings(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
 }
 
 func ExampleClient_GetGroup() {

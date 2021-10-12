@@ -37,16 +37,19 @@ var newClientHook clientHook
 
 // CallOptions contains the retry settings for each method of Client.
 type CallOptions struct {
-	GetUser     []gax.CallOption
-	ListUsers   []gax.CallOption
-	CreateUser  []gax.CallOption
-	UpdateUser  []gax.CallOption
-	DeleteUser  []gax.CallOption
-	GetGroup    []gax.CallOption
-	ListGroups  []gax.CallOption
-	CreateGroup []gax.CallOption
-	UpdateGroup []gax.CallOption
-	DeleteGroup []gax.CallOption
+	GetUserProfile     []gax.CallOption
+	GetUser            []gax.CallOption
+	ListUsers          []gax.CallOption
+	CreateUser         []gax.CallOption
+	UpdateUser         []gax.CallOption
+	DeleteUser         []gax.CallOption
+	GetUserSettings    []gax.CallOption
+	UpdateUserSettings []gax.CallOption
+	GetGroup           []gax.CallOption
+	ListGroups         []gax.CallOption
+	CreateGroup        []gax.CallOption
+	UpdateGroup        []gax.CallOption
+	DeleteGroup        []gax.CallOption
 }
 
 func defaultGRPCClientOptions() []option.ClientOption {
@@ -63,16 +66,19 @@ func defaultGRPCClientOptions() []option.ClientOption {
 
 func defaultCallOptions() *CallOptions {
 	return &CallOptions{
-		GetUser:     []gax.CallOption{},
-		ListUsers:   []gax.CallOption{},
-		CreateUser:  []gax.CallOption{},
-		UpdateUser:  []gax.CallOption{},
-		DeleteUser:  []gax.CallOption{},
-		GetGroup:    []gax.CallOption{},
-		ListGroups:  []gax.CallOption{},
-		CreateGroup: []gax.CallOption{},
-		UpdateGroup: []gax.CallOption{},
-		DeleteGroup: []gax.CallOption{},
+		GetUserProfile:     []gax.CallOption{},
+		GetUser:            []gax.CallOption{},
+		ListUsers:          []gax.CallOption{},
+		CreateUser:         []gax.CallOption{},
+		UpdateUser:         []gax.CallOption{},
+		DeleteUser:         []gax.CallOption{},
+		GetUserSettings:    []gax.CallOption{},
+		UpdateUserSettings: []gax.CallOption{},
+		GetGroup:           []gax.CallOption{},
+		ListGroups:         []gax.CallOption{},
+		CreateGroup:        []gax.CallOption{},
+		UpdateGroup:        []gax.CallOption{},
+		DeleteGroup:        []gax.CallOption{},
 	}
 }
 
@@ -81,11 +87,14 @@ type internalClient interface {
 	Close() error
 	setGoogleClientInfo(...string)
 	Connection() *grpc.ClientConn
+	GetUserProfile(context.Context, *identitypb.GetUserProfileRequest, ...gax.CallOption) (*identitypb.UserProfile, error)
 	GetUser(context.Context, *identitypb.GetUserRequest, ...gax.CallOption) (*identitypb.User, error)
 	ListUsers(context.Context, *identitypb.ListUsersRequest, ...gax.CallOption) *UserIterator
 	CreateUser(context.Context, *identitypb.CreateUserRequest, ...gax.CallOption) (*identitypb.User, error)
 	UpdateUser(context.Context, *identitypb.UpdateUserRequest, ...gax.CallOption) (*identitypb.User, error)
 	DeleteUser(context.Context, *identitypb.DeleteUserRequest, ...gax.CallOption) error
+	GetUserSettings(context.Context, *identitypb.GetUserSettingsRequest, ...gax.CallOption) (*identitypb.UserSettings, error)
+	UpdateUserSettings(context.Context, *identitypb.UpdateUserSettingsRequest, ...gax.CallOption) (*identitypb.UserSettings, error)
 	GetGroup(context.Context, *identitypb.GetGroupRequest, ...gax.CallOption) (*identitypb.Group, error)
 	ListGroups(context.Context, *identitypb.ListGroupsRequest, ...gax.CallOption) *GroupIterator
 	CreateGroup(context.Context, *identitypb.CreateGroupRequest, ...gax.CallOption) (*identitypb.Group, error)
@@ -125,6 +134,10 @@ func (c *Client) Connection() *grpc.ClientConn {
 	return c.internalClient.Connection()
 }
 
+func (c *Client) GetUserProfile(ctx context.Context, req *identitypb.GetUserProfileRequest, opts ...gax.CallOption) (*identitypb.UserProfile, error) {
+	return c.internalClient.GetUserProfile(ctx, req, opts...)
+}
+
 func (c *Client) GetUser(ctx context.Context, req *identitypb.GetUserRequest, opts ...gax.CallOption) (*identitypb.User, error) {
 	return c.internalClient.GetUser(ctx, req, opts...)
 }
@@ -143,6 +156,14 @@ func (c *Client) UpdateUser(ctx context.Context, req *identitypb.UpdateUserReque
 
 func (c *Client) DeleteUser(ctx context.Context, req *identitypb.DeleteUserRequest, opts ...gax.CallOption) error {
 	return c.internalClient.DeleteUser(ctx, req, opts...)
+}
+
+func (c *Client) GetUserSettings(ctx context.Context, req *identitypb.GetUserSettingsRequest, opts ...gax.CallOption) (*identitypb.UserSettings, error) {
+	return c.internalClient.GetUserSettings(ctx, req, opts...)
+}
+
+func (c *Client) UpdateUserSettings(ctx context.Context, req *identitypb.UpdateUserSettingsRequest, opts ...gax.CallOption) (*identitypb.UserSettings, error) {
+	return c.internalClient.UpdateUserSettings(ctx, req, opts...)
 }
 
 func (c *Client) GetGroup(ctx context.Context, req *identitypb.GetGroupRequest, opts ...gax.CallOption) (*identitypb.Group, error) {
@@ -243,6 +264,22 @@ func (c *gRPCClient) Close() error {
 	return c.connPool.Close()
 }
 
+func (c *gRPCClient) GetUserProfile(ctx context.Context, req *identitypb.GetUserProfileRequest, opts ...gax.CallOption) (*identitypb.UserProfile, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).GetUserProfile[0:len((*c.CallOptions).GetUserProfile):len((*c.CallOptions).GetUserProfile)], opts...)
+	var resp *identitypb.UserProfile
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.client.GetUserProfile(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
 func (c *gRPCClient) GetUser(ctx context.Context, req *identitypb.GetUserRequest, opts ...gax.CallOption) (*identitypb.User, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
@@ -339,6 +376,38 @@ func (c *gRPCClient) DeleteUser(ctx context.Context, req *identitypb.DeleteUserR
 		return err
 	}, opts...)
 	return err
+}
+
+func (c *gRPCClient) GetUserSettings(ctx context.Context, req *identitypb.GetUserSettingsRequest, opts ...gax.CallOption) (*identitypb.UserSettings, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).GetUserSettings[0:len((*c.CallOptions).GetUserSettings):len((*c.CallOptions).GetUserSettings)], opts...)
+	var resp *identitypb.UserSettings
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.client.GetUserSettings(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *gRPCClient) UpdateUserSettings(ctx context.Context, req *identitypb.UpdateUserSettingsRequest, opts ...gax.CallOption) (*identitypb.UserSettings, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "settings.name", url.QueryEscape(req.GetSettings().GetName())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).UpdateUserSettings[0:len((*c.CallOptions).UpdateUserSettings):len((*c.CallOptions).UpdateUserSettings)], opts...)
+	var resp *identitypb.UserSettings
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.client.UpdateUserSettings(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 func (c *gRPCClient) GetGroup(ctx context.Context, req *identitypb.GetGroupRequest, opts ...gax.CallOption) (*identitypb.Group, error) {

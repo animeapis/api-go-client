@@ -40,6 +40,16 @@
                 "GetUser"
               ]
             },
+            "GetUserProfile": {
+              "methods": [
+                "GetUserProfile"
+              ]
+            },
+            "GetUserSettings": {
+              "methods": [
+                "GetUserSettings"
+              ]
+            },
             "ListGroups": {
               "methods": [
                 "ListGroups"
@@ -58,6 +68,11 @@
             "UpdateUser": {
               "methods": [
                 "UpdateUser"
+              ]
+            },
+            "UpdateUserSettings": {
+              "methods": [
+                "UpdateUserSettings"
               ]
             }
           }
