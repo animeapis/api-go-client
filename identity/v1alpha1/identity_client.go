@@ -37,19 +37,21 @@ var newClientHook clientHook
 
 // CallOptions contains the retry settings for each method of Client.
 type CallOptions struct {
-	GetUserProfile     []gax.CallOption
-	GetUser            []gax.CallOption
-	ListUsers          []gax.CallOption
-	CreateUser         []gax.CallOption
-	UpdateUser         []gax.CallOption
-	DeleteUser         []gax.CallOption
-	GetUserSettings    []gax.CallOption
-	UpdateUserSettings []gax.CallOption
-	GetGroup           []gax.CallOption
-	ListGroups         []gax.CallOption
-	CreateGroup        []gax.CallOption
-	UpdateGroup        []gax.CallOption
-	DeleteGroup        []gax.CallOption
+	GetUserProfile          []gax.CallOption
+	GetUser                 []gax.CallOption
+	ListUsers               []gax.CallOption
+	CreateUser              []gax.CallOption
+	UpdateUser              []gax.CallOption
+	DeleteUser              []gax.CallOption
+	GetUserSettings         []gax.CallOption
+	UpdateUserSettings      []gax.CallOption
+	GetUserNotifications    []gax.CallOption
+	UpdateUserNotifications []gax.CallOption
+	GetGroup                []gax.CallOption
+	ListGroups              []gax.CallOption
+	CreateGroup             []gax.CallOption
+	UpdateGroup             []gax.CallOption
+	DeleteGroup             []gax.CallOption
 }
 
 func defaultGRPCClientOptions() []option.ClientOption {
@@ -66,19 +68,21 @@ func defaultGRPCClientOptions() []option.ClientOption {
 
 func defaultCallOptions() *CallOptions {
 	return &CallOptions{
-		GetUserProfile:     []gax.CallOption{},
-		GetUser:            []gax.CallOption{},
-		ListUsers:          []gax.CallOption{},
-		CreateUser:         []gax.CallOption{},
-		UpdateUser:         []gax.CallOption{},
-		DeleteUser:         []gax.CallOption{},
-		GetUserSettings:    []gax.CallOption{},
-		UpdateUserSettings: []gax.CallOption{},
-		GetGroup:           []gax.CallOption{},
-		ListGroups:         []gax.CallOption{},
-		CreateGroup:        []gax.CallOption{},
-		UpdateGroup:        []gax.CallOption{},
-		DeleteGroup:        []gax.CallOption{},
+		GetUserProfile:          []gax.CallOption{},
+		GetUser:                 []gax.CallOption{},
+		ListUsers:               []gax.CallOption{},
+		CreateUser:              []gax.CallOption{},
+		UpdateUser:              []gax.CallOption{},
+		DeleteUser:              []gax.CallOption{},
+		GetUserSettings:         []gax.CallOption{},
+		UpdateUserSettings:      []gax.CallOption{},
+		GetUserNotifications:    []gax.CallOption{},
+		UpdateUserNotifications: []gax.CallOption{},
+		GetGroup:                []gax.CallOption{},
+		ListGroups:              []gax.CallOption{},
+		CreateGroup:             []gax.CallOption{},
+		UpdateGroup:             []gax.CallOption{},
+		DeleteGroup:             []gax.CallOption{},
 	}
 }
 
@@ -95,6 +99,8 @@ type internalClient interface {
 	DeleteUser(context.Context, *identitypb.DeleteUserRequest, ...gax.CallOption) error
 	GetUserSettings(context.Context, *identitypb.GetUserSettingsRequest, ...gax.CallOption) (*identitypb.UserSettings, error)
 	UpdateUserSettings(context.Context, *identitypb.UpdateUserSettingsRequest, ...gax.CallOption) (*identitypb.UserSettings, error)
+	GetUserNotifications(context.Context, *identitypb.GetUserNotificationsRequest, ...gax.CallOption) (*identitypb.UserNotifications, error)
+	UpdateUserNotifications(context.Context, *identitypb.UpdateUserNotificationsRequest, ...gax.CallOption) (*identitypb.UserNotifications, error)
 	GetGroup(context.Context, *identitypb.GetGroupRequest, ...gax.CallOption) (*identitypb.Group, error)
 	ListGroups(context.Context, *identitypb.ListGroupsRequest, ...gax.CallOption) *GroupIterator
 	CreateGroup(context.Context, *identitypb.CreateGroupRequest, ...gax.CallOption) (*identitypb.Group, error)
@@ -164,6 +170,14 @@ func (c *Client) GetUserSettings(ctx context.Context, req *identitypb.GetUserSet
 
 func (c *Client) UpdateUserSettings(ctx context.Context, req *identitypb.UpdateUserSettingsRequest, opts ...gax.CallOption) (*identitypb.UserSettings, error) {
 	return c.internalClient.UpdateUserSettings(ctx, req, opts...)
+}
+
+func (c *Client) GetUserNotifications(ctx context.Context, req *identitypb.GetUserNotificationsRequest, opts ...gax.CallOption) (*identitypb.UserNotifications, error) {
+	return c.internalClient.GetUserNotifications(ctx, req, opts...)
+}
+
+func (c *Client) UpdateUserNotifications(ctx context.Context, req *identitypb.UpdateUserNotificationsRequest, opts ...gax.CallOption) (*identitypb.UserNotifications, error) {
+	return c.internalClient.UpdateUserNotifications(ctx, req, opts...)
 }
 
 func (c *Client) GetGroup(ctx context.Context, req *identitypb.GetGroupRequest, opts ...gax.CallOption) (*identitypb.Group, error) {
@@ -402,6 +416,38 @@ func (c *gRPCClient) UpdateUserSettings(ctx context.Context, req *identitypb.Upd
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
 		resp, err = c.client.UpdateUserSettings(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *gRPCClient) GetUserNotifications(ctx context.Context, req *identitypb.GetUserNotificationsRequest, opts ...gax.CallOption) (*identitypb.UserNotifications, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).GetUserNotifications[0:len((*c.CallOptions).GetUserNotifications):len((*c.CallOptions).GetUserNotifications)], opts...)
+	var resp *identitypb.UserNotifications
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.client.GetUserNotifications(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *gRPCClient) UpdateUserNotifications(ctx context.Context, req *identitypb.UpdateUserNotificationsRequest, opts ...gax.CallOption) (*identitypb.UserNotifications, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "notifications.name", url.QueryEscape(req.GetNotifications().GetName())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).UpdateUserNotifications[0:len((*c.CallOptions).UpdateUserNotifications):len((*c.CallOptions).UpdateUserNotifications)], opts...)
+	var resp *identitypb.UserNotifications
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.client.UpdateUserNotifications(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	if err != nil {

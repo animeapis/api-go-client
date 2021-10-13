@@ -192,6 +192,44 @@ func ExampleClient_UpdateUserSettings() {
 	_ = resp
 }
 
+func ExampleClient_GetUserNotifications() {
+	ctx := context.Background()
+	c, err := identity.NewClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &identitypb.GetUserNotificationsRequest{
+		// TODO: Fill request struct fields.
+	}
+	resp, err := c.GetUserNotifications(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
+func ExampleClient_UpdateUserNotifications() {
+	ctx := context.Background()
+	c, err := identity.NewClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &identitypb.UpdateUserNotificationsRequest{
+		// TODO: Fill request struct fields.
+	}
+	resp, err := c.UpdateUserNotifications(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
 func ExampleClient_GetGroup() {
 	ctx := context.Background()
 	c, err := identity.NewClient(ctx)
