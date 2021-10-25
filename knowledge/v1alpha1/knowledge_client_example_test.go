@@ -36,7 +36,7 @@ func ExampleNewClient() {
 	_ = c
 }
 
-func ExampleClient_CreateContribution() {
+func ExampleClient_GetContribution() {
 	ctx := context.Background()
 	c, err := knowledge.NewClient(ctx)
 	if err != nil {
@@ -44,10 +44,10 @@ func ExampleClient_CreateContribution() {
 	}
 	defer c.Close()
 
-	req := &knowledgepb.CreateContributionRequest{
+	req := &knowledgepb.GetContributionRequest{
 		// TODO: Fill request struct fields.
 	}
-	resp, err := c.CreateContribution(ctx, req)
+	resp, err := c.GetContribution(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -80,7 +80,7 @@ func ExampleClient_ListContributions() {
 	}
 }
 
-func ExampleClient_GetContribution() {
+func ExampleClient_CreateContribution() {
 	ctx := context.Background()
 	c, err := knowledge.NewClient(ctx)
 	if err != nil {
@@ -88,10 +88,10 @@ func ExampleClient_GetContribution() {
 	}
 	defer c.Close()
 
-	req := &knowledgepb.GetContributionRequest{
+	req := &knowledgepb.CreateContributionRequest{
 		// TODO: Fill request struct fields.
 	}
-	resp, err := c.GetContribution(ctx, req)
+	resp, err := c.CreateContribution(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -118,25 +118,6 @@ func ExampleClient_GetContributionChanges() {
 	_ = resp
 }
 
-func ExampleClient_ApproveContribution() {
-	ctx := context.Background()
-	c, err := knowledge.NewClient(ctx)
-	if err != nil {
-		// TODO: Handle error.
-	}
-	defer c.Close()
-
-	req := &knowledgepb.ApproveContributionRequest{
-		// TODO: Fill request struct fields.
-	}
-	resp, err := c.ApproveContribution(ctx, req)
-	if err != nil {
-		// TODO: Handle error.
-	}
-	// TODO: Use resp.
-	_ = resp
-}
-
 func ExampleClient_ReviewContribution() {
 	ctx := context.Background()
 	c, err := knowledge.NewClient(ctx)
@@ -156,6 +137,25 @@ func ExampleClient_ReviewContribution() {
 	_ = resp
 }
 
+func ExampleClient_ApproveContribution() {
+	ctx := context.Background()
+	c, err := knowledge.NewClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &knowledgepb.ApproveContributionRequest{
+		// TODO: Fill request struct fields.
+	}
+	resp, err := c.ApproveContribution(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
 func ExampleClient_RejectContribution() {
 	ctx := context.Background()
 	c, err := knowledge.NewClient(ctx)
@@ -168,6 +168,25 @@ func ExampleClient_RejectContribution() {
 		// TODO: Fill request struct fields.
 	}
 	resp, err := c.RejectContribution(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
+func ExampleClient_AllocateResourceName() {
+	ctx := context.Background()
+	c, err := knowledge.NewClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &knowledgepb.AllocateResourceNameRequest{
+		// TODO: Fill request struct fields.
+	}
+	resp, err := c.AllocateResourceName(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
 	}

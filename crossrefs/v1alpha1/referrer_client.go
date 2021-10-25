@@ -43,9 +43,9 @@ var newReferrerClientHook clientHook
 // ReferrerCallOptions contains the retry settings for each method of ReferrerClient.
 type ReferrerCallOptions struct {
 	GetCrossRef           []gax.CallOption
+	ListCrossRefs         []gax.CallOption
 	CreateCrossRef        []gax.CallOption
 	UpdateCrossRef        []gax.CallOption
-	ListCrossRefs         []gax.CallOption
 	CountCrossRefs        []gax.CallOption
 	AnalyzeCrossRefs      []gax.CallOption
 	ImportCrossRefs       []gax.CallOption
@@ -75,9 +75,9 @@ func defaultReferrerGRPCClientOptions() []option.ClientOption {
 func defaultReferrerCallOptions() *ReferrerCallOptions {
 	return &ReferrerCallOptions{
 		GetCrossRef:           []gax.CallOption{},
+		ListCrossRefs:         []gax.CallOption{},
 		CreateCrossRef:        []gax.CallOption{},
 		UpdateCrossRef:        []gax.CallOption{},
-		ListCrossRefs:         []gax.CallOption{},
 		CountCrossRefs:        []gax.CallOption{},
 		AnalyzeCrossRefs:      []gax.CallOption{},
 		ImportCrossRefs:       []gax.CallOption{},
@@ -99,9 +99,9 @@ type internalReferrerClient interface {
 	setGoogleClientInfo(...string)
 	Connection() *grpc.ClientConn
 	GetCrossRef(context.Context, *crossrefspb.GetCrossRefRequest, ...gax.CallOption) (*crossrefspb.CrossRef, error)
+	ListCrossRefs(context.Context, *crossrefspb.ListCrossRefsRequest, ...gax.CallOption) *CrossRefIterator
 	CreateCrossRef(context.Context, *crossrefspb.CreateCrossRefRequest, ...gax.CallOption) (*crossrefspb.CrossRef, error)
 	UpdateCrossRef(context.Context, *crossrefspb.UpdateCrossRefRequest, ...gax.CallOption) (*crossrefspb.UpdateCrossRefResponse, error)
-	ListCrossRefs(context.Context, *crossrefspb.ListCrossRefsRequest, ...gax.CallOption) *CrossRefIterator
 	CountCrossRefs(context.Context, *crossrefspb.CountCrossRefsRequest, ...gax.CallOption) (*crossrefspb.CountCrossRefsResponse, error)
 	AnalyzeCrossRefs(context.Context, *crossrefspb.AnalyzeCrossRefRequest, ...gax.CallOption) (*AnalyzeCrossRefsOperation, error)
 	AnalyzeCrossRefsOperation(name string) *AnalyzeCrossRefsOperation
@@ -164,6 +164,10 @@ func (c *ReferrerClient) GetCrossRef(ctx context.Context, req *crossrefspb.GetCr
 	return c.internalClient.GetCrossRef(ctx, req, opts...)
 }
 
+func (c *ReferrerClient) ListCrossRefs(ctx context.Context, req *crossrefspb.ListCrossRefsRequest, opts ...gax.CallOption) *CrossRefIterator {
+	return c.internalClient.ListCrossRefs(ctx, req, opts...)
+}
+
 // CreateCrossRef createCrossRef creates a new crossref.
 func (c *ReferrerClient) CreateCrossRef(ctx context.Context, req *crossrefspb.CreateCrossRefRequest, opts ...gax.CallOption) (*crossrefspb.CrossRef, error) {
 	return c.internalClient.CreateCrossRef(ctx, req, opts...)
@@ -171,10 +175,6 @@ func (c *ReferrerClient) CreateCrossRef(ctx context.Context, req *crossrefspb.Cr
 
 func (c *ReferrerClient) UpdateCrossRef(ctx context.Context, req *crossrefspb.UpdateCrossRefRequest, opts ...gax.CallOption) (*crossrefspb.UpdateCrossRefResponse, error) {
 	return c.internalClient.UpdateCrossRef(ctx, req, opts...)
-}
-
-func (c *ReferrerClient) ListCrossRefs(ctx context.Context, req *crossrefspb.ListCrossRefsRequest, opts ...gax.CallOption) *CrossRefIterator {
-	return c.internalClient.ListCrossRefs(ctx, req, opts...)
 }
 
 func (c *ReferrerClient) CountCrossRefs(ctx context.Context, req *crossrefspb.CountCrossRefsRequest, opts ...gax.CallOption) (*crossrefspb.CountCrossRefsResponse, error) {
@@ -378,37 +378,6 @@ func (c *referrerGRPCClient) GetCrossRef(ctx context.Context, req *crossrefspb.G
 	return resp, nil
 }
 
-func (c *referrerGRPCClient) CreateCrossRef(ctx context.Context, req *crossrefspb.CreateCrossRefRequest, opts ...gax.CallOption) (*crossrefspb.CrossRef, error) {
-	ctx = insertMetadata(ctx, c.xGoogMetadata)
-	opts = append((*c.CallOptions).CreateCrossRef[0:len((*c.CallOptions).CreateCrossRef):len((*c.CallOptions).CreateCrossRef)], opts...)
-	var resp *crossrefspb.CrossRef
-	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
-		var err error
-		resp, err = c.referrerClient.CreateCrossRef(ctx, req, settings.GRPC...)
-		return err
-	}, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
-func (c *referrerGRPCClient) UpdateCrossRef(ctx context.Context, req *crossrefspb.UpdateCrossRefRequest, opts ...gax.CallOption) (*crossrefspb.UpdateCrossRefResponse, error) {
-	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "crossref.name", url.QueryEscape(req.GetCrossref().GetName())))
-	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
-	opts = append((*c.CallOptions).UpdateCrossRef[0:len((*c.CallOptions).UpdateCrossRef):len((*c.CallOptions).UpdateCrossRef)], opts...)
-	var resp *crossrefspb.UpdateCrossRefResponse
-	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
-		var err error
-		resp, err = c.referrerClient.UpdateCrossRef(ctx, req, settings.GRPC...)
-		return err
-	}, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
 func (c *referrerGRPCClient) ListCrossRefs(ctx context.Context, req *crossrefspb.ListCrossRefsRequest, opts ...gax.CallOption) *CrossRefIterator {
 	ctx = insertMetadata(ctx, c.xGoogMetadata)
 	opts = append((*c.CallOptions).ListCrossRefs[0:len((*c.CallOptions).ListCrossRefs):len((*c.CallOptions).ListCrossRefs)], opts...)
@@ -446,6 +415,37 @@ func (c *referrerGRPCClient) ListCrossRefs(ctx context.Context, req *crossrefspb
 	it.pageInfo.MaxSize = int(req.GetPageSize())
 	it.pageInfo.Token = req.GetPageToken()
 	return it
+}
+
+func (c *referrerGRPCClient) CreateCrossRef(ctx context.Context, req *crossrefspb.CreateCrossRefRequest, opts ...gax.CallOption) (*crossrefspb.CrossRef, error) {
+	ctx = insertMetadata(ctx, c.xGoogMetadata)
+	opts = append((*c.CallOptions).CreateCrossRef[0:len((*c.CallOptions).CreateCrossRef):len((*c.CallOptions).CreateCrossRef)], opts...)
+	var resp *crossrefspb.CrossRef
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.referrerClient.CreateCrossRef(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *referrerGRPCClient) UpdateCrossRef(ctx context.Context, req *crossrefspb.UpdateCrossRefRequest, opts ...gax.CallOption) (*crossrefspb.UpdateCrossRefResponse, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "crossref.name", url.QueryEscape(req.GetCrossref().GetName())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).UpdateCrossRef[0:len((*c.CallOptions).UpdateCrossRef):len((*c.CallOptions).UpdateCrossRef)], opts...)
+	var resp *crossrefspb.UpdateCrossRefResponse
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.referrerClient.UpdateCrossRef(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 func (c *referrerGRPCClient) CountCrossRefs(ctx context.Context, req *crossrefspb.CountCrossRefsRequest, opts ...gax.CallOption) (*crossrefspb.CountCrossRefsResponse, error) {

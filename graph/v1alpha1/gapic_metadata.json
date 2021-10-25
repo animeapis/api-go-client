@@ -1,0 +1,28 @@
+{
+  "schema": "1.0",
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods.",
+  "language": "go",
+  "protoPackage": "animeshon.graph.v1alpha1",
+  "libraryPackage": "github.com/animeapis/api-go-client/graph/v1alpha1",
+  "services": {
+    "Graph": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "Client",
+          "rpcs": {
+            "DeleteGraph": {
+              "methods": [
+                "DeleteGraph"
+              ]
+            },
+            "MigrateGraph": {
+              "methods": [
+                "MigrateGraph"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -56,6 +56,31 @@ func ExampleReferrerClient_GetCrossRef() {
 	_ = resp
 }
 
+func ExampleReferrerClient_ListCrossRefs() {
+	ctx := context.Background()
+	c, err := crossrefs.NewReferrerClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &crossrefspb.ListCrossRefsRequest{
+		// TODO: Fill request struct fields.
+	}
+	it := c.ListCrossRefs(ctx, req)
+	for {
+		resp, err := it.Next()
+		if err == iterator.Done {
+			break
+		}
+		if err != nil {
+			// TODO: Handle error.
+		}
+		// TODO: Use resp.
+		_ = resp
+	}
+}
+
 func ExampleReferrerClient_CreateCrossRef() {
 	ctx := context.Background()
 	c, err := crossrefs.NewReferrerClient(ctx)
@@ -92,31 +117,6 @@ func ExampleReferrerClient_UpdateCrossRef() {
 	}
 	// TODO: Use resp.
 	_ = resp
-}
-
-func ExampleReferrerClient_ListCrossRefs() {
-	ctx := context.Background()
-	c, err := crossrefs.NewReferrerClient(ctx)
-	if err != nil {
-		// TODO: Handle error.
-	}
-	defer c.Close()
-
-	req := &crossrefspb.ListCrossRefsRequest{
-		// TODO: Fill request struct fields.
-	}
-	it := c.ListCrossRefs(ctx, req)
-	for {
-		resp, err := it.Next()
-		if err == iterator.Done {
-			break
-		}
-		if err != nil {
-			// TODO: Handle error.
-		}
-		// TODO: Use resp.
-		_ = resp
-	}
 }
 
 func ExampleReferrerClient_CountCrossRefs() {
