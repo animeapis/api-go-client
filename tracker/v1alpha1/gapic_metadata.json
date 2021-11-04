@@ -5,25 +5,6 @@
   "protoPackage": "animeshon.tracker.v1alpha1",
   "libraryPackage": "github.com/animeapis/api-go-client/tracker/v1alpha1",
   "services": {
-    "Credentials": {
-      "clients": {
-        "grpc": {
-          "libraryClient": "CredentialsClient",
-          "rpcs": {
-            "GetOAuthInfo": {
-              "methods": [
-                "GetOAuthInfo"
-              ]
-            },
-            "SetAuth": {
-              "methods": [
-                "SetAuth"
-              ]
-            }
-          }
-        }
-      }
-    },
     "TrackerService": {
       "clients": {
         "grpc": {
