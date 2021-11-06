@@ -135,18 +135,24 @@ func (c *Client) GetContributionChanges(ctx context.Context, req *knowledgepb.Ge
 	return c.internalClient.GetContributionChanges(ctx, req, opts...)
 }
 
+// ReviewContribution reviewContribution allows moderators or the owner to modify and correct the contribution
+// while in the PENDING or DRAFT state
 func (c *Client) ReviewContribution(ctx context.Context, req *knowledgepb.ReviewContributionRequest, opts ...gax.CallOption) (*knowledgepb.Contribution, error) {
 	return c.internalClient.ReviewContribution(ctx, req, opts...)
 }
 
+// ApproveContribution approveContribution approves the contribution and applies the changes
 func (c *Client) ApproveContribution(ctx context.Context, req *knowledgepb.ApproveContributionRequest, opts ...gax.CallOption) (*knowledgepb.Contribution, error) {
 	return c.internalClient.ApproveContribution(ctx, req, opts...)
 }
 
+// RejectContribution rejectContribution rejects the contribution and DESTROYS all the changes
 func (c *Client) RejectContribution(ctx context.Context, req *knowledgepb.RejectContributionRequest, opts ...gax.CallOption) (*knowledgepb.Contribution, error) {
 	return c.internalClient.RejectContribution(ctx, req, opts...)
 }
 
+// AllocateResourceName allocateResourceName reserves a new resource name for entities which are not already part of
+// Animeshon’s Encyclopedia
 func (c *Client) AllocateResourceName(ctx context.Context, req *knowledgepb.AllocateResourceNameRequest, opts ...gax.CallOption) (*knowledgepb.AllocateResourceNameResponse, error) {
 	return c.internalClient.AllocateResourceName(ctx, req, opts...)
 }
