@@ -24,11 +24,13 @@ import (
 
 	hubpb "github.com/animeapis/go-genproto/hub/v1alpha1"
 	gax "github.com/googleapis/gax-go/v2"
+	"google.golang.org/api/iterator"
 	"google.golang.org/api/option"
 	"google.golang.org/api/option/internaloption"
 	gtransport "google.golang.org/api/transport/grpc"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
+	"google.golang.org/protobuf/proto"
 )
 
 var newClientHook clientHook
@@ -37,6 +39,7 @@ var newClientHook clientHook
 type CallOptions struct {
 	CreateRepository []gax.CallOption
 	DeleteRepository []gax.CallOption
+	ListRepositories []gax.CallOption
 }
 
 func defaultGRPCClientOptions() []option.ClientOption {
@@ -55,6 +58,7 @@ func defaultCallOptions() *CallOptions {
 	return &CallOptions{
 		CreateRepository: []gax.CallOption{},
 		DeleteRepository: []gax.CallOption{},
+		ListRepositories: []gax.CallOption{},
 	}
 }
 
@@ -65,6 +69,7 @@ type internalClient interface {
 	Connection() *grpc.ClientConn
 	CreateRepository(context.Context, *hubpb.CreateRepositoryRequest, ...gax.CallOption) (*hubpb.Repository, error)
 	DeleteRepository(context.Context, *hubpb.DeleteRepositoryRequest, ...gax.CallOption) error
+	ListRepositories(context.Context, *hubpb.ListRepositoriesRequest, ...gax.CallOption) *RepositoryIterator
 }
 
 // Client is a client for interacting with Hub API.
@@ -105,6 +110,10 @@ func (c *Client) CreateRepository(ctx context.Context, req *hubpb.CreateReposito
 
 func (c *Client) DeleteRepository(ctx context.Context, req *hubpb.DeleteRepositoryRequest, opts ...gax.CallOption) error {
 	return c.internalClient.DeleteRepository(ctx, req, opts...)
+}
+
+func (c *Client) ListRepositories(ctx context.Context, req *hubpb.ListRepositoriesRequest, opts ...gax.CallOption) *RepositoryIterator {
+	return c.internalClient.ListRepositories(ctx, req, opts...)
 }
 
 // gRPCClient is a client for interacting with Hub API over gRPC transport.
@@ -211,4 +220,91 @@ func (c *gRPCClient) DeleteRepository(ctx context.Context, req *hubpb.DeleteRepo
 		return err
 	}, opts...)
 	return err
+}
+
+func (c *gRPCClient) ListRepositories(ctx context.Context, req *hubpb.ListRepositoriesRequest, opts ...gax.CallOption) *RepositoryIterator {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).ListRepositories[0:len((*c.CallOptions).ListRepositories):len((*c.CallOptions).ListRepositories)], opts...)
+	it := &RepositoryIterator{}
+	req = proto.Clone(req).(*hubpb.ListRepositoriesRequest)
+	it.InternalFetch = func(pageSize int, pageToken string) ([]*hubpb.Repository, string, error) {
+		var resp *hubpb.ListRepositoriesResponse
+		req.PageToken = pageToken
+		if pageSize > math.MaxInt32 {
+			req.PageSize = math.MaxInt32
+		} else {
+			req.PageSize = int32(pageSize)
+		}
+		err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+			var err error
+			resp, err = c.client.ListRepositories(ctx, req, settings.GRPC...)
+			return err
+		}, opts...)
+		if err != nil {
+			return nil, "", err
+		}
+
+		it.Response = resp
+		return resp.GetRepositories(), resp.GetNextPageToken(), nil
+	}
+	fetch := func(pageSize int, pageToken string) (string, error) {
+		items, nextPageToken, err := it.InternalFetch(pageSize, pageToken)
+		if err != nil {
+			return "", err
+		}
+		it.items = append(it.items, items...)
+		return nextPageToken, nil
+	}
+	it.pageInfo, it.nextFunc = iterator.NewPageInfo(fetch, it.bufLen, it.takeBuf)
+	it.pageInfo.MaxSize = int(req.GetPageSize())
+	it.pageInfo.Token = req.GetPageToken()
+	return it
+}
+
+// RepositoryIterator manages a stream of *hubpb.Repository.
+type RepositoryIterator struct {
+	items    []*hubpb.Repository
+	pageInfo *iterator.PageInfo
+	nextFunc func() error
+
+	// Response is the raw response for the current page.
+	// It must be cast to the RPC response type.
+	// Calling Next() or InternalFetch() updates this value.
+	Response interface{}
+
+	// InternalFetch is for use by the Google Cloud Libraries only.
+	// It is not part of the stable interface of this package.
+	//
+	// InternalFetch returns results from a single call to the underlying RPC.
+	// The number of results is no greater than pageSize.
+	// If there are no more results, nextPageToken is empty and err is nil.
+	InternalFetch func(pageSize int, pageToken string) (results []*hubpb.Repository, nextPageToken string, err error)
+}
+
+// PageInfo supports pagination. See the google.golang.org/api/iterator package for details.
+func (it *RepositoryIterator) PageInfo() *iterator.PageInfo {
+	return it.pageInfo
+}
+
+// Next returns the next result. Its second return value is iterator.Done if there are no more
+// results. Once Next returns Done, all subsequent calls will return Done.
+func (it *RepositoryIterator) Next() (*hubpb.Repository, error) {
+	var item *hubpb.Repository
+	if err := it.nextFunc(); err != nil {
+		return item, err
+	}
+	item = it.items[0]
+	it.items = it.items[1:]
+	return item, nil
+}
+
+func (it *RepositoryIterator) bufLen() int {
+	return len(it.items)
+}
+
+func (it *RepositoryIterator) takeBuf() interface{} {
+	b := it.items
+	it.items = nil
+	return b
 }

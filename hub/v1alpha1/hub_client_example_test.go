@@ -21,6 +21,7 @@ import (
 
 	hub "github.com/animeapis/api-go-client/hub/v1alpha1"
 	hubpb "github.com/animeapis/go-genproto/hub/v1alpha1"
+	"google.golang.org/api/iterator"
 )
 
 func ExampleNewClient() {
@@ -68,5 +69,30 @@ func ExampleClient_DeleteRepository() {
 	err = c.DeleteRepository(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
+	}
+}
+
+func ExampleClient_ListRepositories() {
+	ctx := context.Background()
+	c, err := hub.NewClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &hubpb.ListRepositoriesRequest{
+		// TODO: Fill request struct fields.
+	}
+	it := c.ListRepositories(ctx, req)
+	for {
+		resp, err := it.Next()
+		if err == iterator.Done {
+			break
+		}
+		if err != nil {
+			// TODO: Handle error.
+		}
+		// TODO: Use resp.
+		_ = resp
 	}
 }
