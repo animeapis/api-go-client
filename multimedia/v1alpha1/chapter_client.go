@@ -225,7 +225,8 @@ func (c *chapterGRPCClient) GetChapter(ctx context.Context, req *multimediapb.Ge
 }
 
 func (c *chapterGRPCClient) ListChapters(ctx context.Context, req *multimediapb.ListChaptersRequest, opts ...gax.CallOption) *ChapterIterator {
-	ctx = insertMetadata(ctx, c.xGoogMetadata)
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).ListChapters[0:len((*c.CallOptions).ListChapters):len((*c.CallOptions).ListChapters)], opts...)
 	it := &ChapterIterator{}
 	req = proto.Clone(req).(*multimediapb.ListChaptersRequest)
@@ -264,7 +265,8 @@ func (c *chapterGRPCClient) ListChapters(ctx context.Context, req *multimediapb.
 }
 
 func (c *chapterGRPCClient) CreateChapter(ctx context.Context, req *multimediapb.CreateChapterRequest, opts ...gax.CallOption) (*multimediapb.Chapter, error) {
-	ctx = insertMetadata(ctx, c.xGoogMetadata)
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).CreateChapter[0:len((*c.CallOptions).CreateChapter):len((*c.CallOptions).CreateChapter)], opts...)
 	var resp *multimediapb.Chapter
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
