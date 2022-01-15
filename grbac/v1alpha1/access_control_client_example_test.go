@@ -46,6 +46,7 @@ func ExampleAccessControlClient_TestIamPolicy() {
 
 	req := &grbacpb.TestIamPolicyRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/grbac/v1alpha1#TestIamPolicyRequest.
 	}
 	err = c.TestIamPolicy(ctx, req)
 	if err != nil {
@@ -63,6 +64,7 @@ func ExampleAccessControlClient_GetIamPolicy() {
 
 	req := &iampb.GetIamPolicyRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/google.golang.org/genproto/googleapis/iam/v1#GetIamPolicyRequest.
 	}
 	resp, err := c.GetIamPolicy(ctx, req)
 	if err != nil {
@@ -82,6 +84,7 @@ func ExampleAccessControlClient_SetIamPolicy() {
 
 	req := &iampb.SetIamPolicyRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/google.golang.org/genproto/googleapis/iam/v1#SetIamPolicyRequest.
 	}
 	resp, err := c.SetIamPolicy(ctx, req)
 	if err != nil {
@@ -101,6 +104,7 @@ func ExampleAccessControlClient_GetResource() {
 
 	req := &grbacpb.GetResourceRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/grbac/v1alpha1#GetResourceRequest.
 	}
 	resp, err := c.GetResource(ctx, req)
 	if err != nil {
@@ -120,6 +124,7 @@ func ExampleAccessControlClient_CreateResource() {
 
 	req := &grbacpb.CreateResourceRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/grbac/v1alpha1#CreateResourceRequest.
 	}
 	resp, err := c.CreateResource(ctx, req)
 	if err != nil {
@@ -139,6 +144,7 @@ func ExampleAccessControlClient_TransferResource() {
 
 	req := &grbacpb.TransferResourceRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/grbac/v1alpha1#TransferResourceRequest.
 	}
 	resp, err := c.TransferResource(ctx, req)
 	if err != nil {
@@ -158,6 +164,7 @@ func ExampleAccessControlClient_DeleteResource() {
 
 	req := &grbacpb.DeleteResourceRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/grbac/v1alpha1#DeleteResourceRequest.
 	}
 	err = c.DeleteResource(ctx, req)
 	if err != nil {
@@ -175,6 +182,7 @@ func ExampleAccessControlClient_CreateSubject() {
 
 	req := &grbacpb.CreateSubjectRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/grbac/v1alpha1#CreateSubjectRequest.
 	}
 	resp, err := c.CreateSubject(ctx, req)
 	if err != nil {
@@ -194,6 +202,7 @@ func ExampleAccessControlClient_DeleteSubject() {
 
 	req := &grbacpb.DeleteSubjectRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/grbac/v1alpha1#DeleteSubjectRequest.
 	}
 	err = c.DeleteSubject(ctx, req)
 	if err != nil {
@@ -211,6 +220,7 @@ func ExampleAccessControlClient_GetGroup() {
 
 	req := &grbacpb.GetGroupRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/grbac/v1alpha1#GetGroupRequest.
 	}
 	resp, err := c.GetGroup(ctx, req)
 	if err != nil {
@@ -230,6 +240,7 @@ func ExampleAccessControlClient_CreateGroup() {
 
 	req := &grbacpb.CreateGroupRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/grbac/v1alpha1#CreateGroupRequest.
 	}
 	resp, err := c.CreateGroup(ctx, req)
 	if err != nil {
@@ -249,6 +260,7 @@ func ExampleAccessControlClient_UpdateGroup() {
 
 	req := &grbacpb.UpdateGroupRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/grbac/v1alpha1#UpdateGroupRequest.
 	}
 	resp, err := c.UpdateGroup(ctx, req)
 	if err != nil {
@@ -268,6 +280,7 @@ func ExampleAccessControlClient_AddGroupMember() {
 
 	req := &grbacpb.AddGroupMemberRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/grbac/v1alpha1#AddGroupMemberRequest.
 	}
 	resp, err := c.AddGroupMember(ctx, req)
 	if err != nil {
@@ -287,6 +300,7 @@ func ExampleAccessControlClient_RemoveGroupMember() {
 
 	req := &grbacpb.RemoveGroupMemberRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/grbac/v1alpha1#RemoveGroupMemberRequest.
 	}
 	resp, err := c.RemoveGroupMember(ctx, req)
 	if err != nil {
@@ -306,6 +320,7 @@ func ExampleAccessControlClient_DeleteGroup() {
 
 	req := &grbacpb.DeleteGroupRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/grbac/v1alpha1#DeleteGroupRequest.
 	}
 	err = c.DeleteGroup(ctx, req)
 	if err != nil {
@@ -323,6 +338,7 @@ func ExampleAccessControlClient_CreatePermission() {
 
 	req := &grbacpb.CreatePermissionRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/grbac/v1alpha1#CreatePermissionRequest.
 	}
 	resp, err := c.CreatePermission(ctx, req)
 	if err != nil {
@@ -342,6 +358,7 @@ func ExampleAccessControlClient_DeletePermission() {
 
 	req := &grbacpb.DeletePermissionRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/grbac/v1alpha1#DeletePermissionRequest.
 	}
 	err = c.DeletePermission(ctx, req)
 	if err != nil {
@@ -359,6 +376,7 @@ func ExampleAccessControlClient_GetRole() {
 
 	req := &grbacpb.GetRoleRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/grbac/v1alpha1#GetRoleRequest.
 	}
 	resp, err := c.GetRole(ctx, req)
 	if err != nil {
@@ -378,6 +396,7 @@ func ExampleAccessControlClient_CreateRole() {
 
 	req := &grbacpb.CreateRoleRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/grbac/v1alpha1#CreateRoleRequest.
 	}
 	resp, err := c.CreateRole(ctx, req)
 	if err != nil {
@@ -397,6 +416,7 @@ func ExampleAccessControlClient_UpdateRole() {
 
 	req := &grbacpb.UpdateRoleRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/grbac/v1alpha1#UpdateRoleRequest.
 	}
 	resp, err := c.UpdateRole(ctx, req)
 	if err != nil {
@@ -416,6 +436,7 @@ func ExampleAccessControlClient_DeleteRole() {
 
 	req := &grbacpb.DeleteRoleRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/grbac/v1alpha1#DeleteRoleRequest.
 	}
 	err = c.DeleteRole(ctx, req)
 	if err != nil {

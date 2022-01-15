@@ -46,6 +46,7 @@ func ExampleIamClient_GetServiceAccount() {
 
 	req := &adminpb.GetServiceAccountRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/iam/admin/v1alpha1#GetServiceAccountRequest.
 	}
 	resp, err := c.GetServiceAccount(ctx, req)
 	if err != nil {
@@ -65,6 +66,7 @@ func ExampleIamClient_ListServiceAccounts() {
 
 	req := &adminpb.ListServiceAccountsRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/iam/admin/v1alpha1#ListServiceAccountsRequest.
 	}
 	it := c.ListServiceAccounts(ctx, req)
 	for {
@@ -90,6 +92,7 @@ func ExampleIamClient_CreateServiceAccount() {
 
 	req := &adminpb.CreateServiceAccountRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/iam/admin/v1alpha1#CreateServiceAccountRequest.
 	}
 	resp, err := c.CreateServiceAccount(ctx, req)
 	if err != nil {
@@ -109,6 +112,7 @@ func ExampleIamClient_UpdateServiceAccount() {
 
 	req := &adminpb.UpdateServiceAccountRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/iam/admin/v1alpha1#UpdateServiceAccountRequest.
 	}
 	resp, err := c.UpdateServiceAccount(ctx, req)
 	if err != nil {
@@ -128,6 +132,7 @@ func ExampleIamClient_DeleteServiceAccount() {
 
 	req := &adminpb.DeleteServiceAccountRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/iam/admin/v1alpha1#DeleteServiceAccountRequest.
 	}
 	err = c.DeleteServiceAccount(ctx, req)
 	if err != nil {
@@ -145,6 +150,7 @@ func ExampleIamClient_GetRole() {
 
 	req := &adminpb.GetRoleRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/iam/admin/v1alpha1#GetRoleRequest.
 	}
 	resp, err := c.GetRole(ctx, req)
 	if err != nil {
@@ -164,6 +170,7 @@ func ExampleIamClient_ListRoles() {
 
 	req := &adminpb.ListRolesRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/iam/admin/v1alpha1#ListRolesRequest.
 	}
 	it := c.ListRoles(ctx, req)
 	for {
@@ -189,6 +196,7 @@ func ExampleIamClient_CreateRole() {
 
 	req := &adminpb.CreateRoleRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/iam/admin/v1alpha1#CreateRoleRequest.
 	}
 	resp, err := c.CreateRole(ctx, req)
 	if err != nil {
@@ -208,6 +216,7 @@ func ExampleIamClient_UpdateRole() {
 
 	req := &adminpb.UpdateRoleRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/iam/admin/v1alpha1#UpdateRoleRequest.
 	}
 	resp, err := c.UpdateRole(ctx, req)
 	if err != nil {
@@ -227,6 +236,7 @@ func ExampleIamClient_DeleteRole() {
 
 	req := &adminpb.DeleteRoleRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/iam/admin/v1alpha1#DeleteRoleRequest.
 	}
 	err = c.DeleteRole(ctx, req)
 	if err != nil {
@@ -244,6 +254,7 @@ func ExampleIamClient_GetPermission() {
 
 	req := &adminpb.GetPermissionRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/iam/admin/v1alpha1#GetPermissionRequest.
 	}
 	resp, err := c.GetPermission(ctx, req)
 	if err != nil {
@@ -263,6 +274,7 @@ func ExampleIamClient_ListPermissions() {
 
 	req := &adminpb.ListPermissionsRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/iam/admin/v1alpha1#ListPermissionsRequest.
 	}
 	it := c.ListPermissions(ctx, req)
 	for {
@@ -288,6 +300,7 @@ func ExampleIamClient_CreatePermission() {
 
 	req := &adminpb.CreatePermissionRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/iam/admin/v1alpha1#CreatePermissionRequest.
 	}
 	resp, err := c.CreatePermission(ctx, req)
 	if err != nil {
@@ -307,6 +320,7 @@ func ExampleIamClient_UpdatePermission() {
 
 	req := &adminpb.UpdatePermissionRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/iam/admin/v1alpha1#UpdatePermissionRequest.
 	}
 	resp, err := c.UpdatePermission(ctx, req)
 	if err != nil {
@@ -326,6 +340,7 @@ func ExampleIamClient_DeletePermission() {
 
 	req := &adminpb.DeletePermissionRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/iam/admin/v1alpha1#DeletePermissionRequest.
 	}
 	err = c.DeletePermission(ctx, req)
 	if err != nil {

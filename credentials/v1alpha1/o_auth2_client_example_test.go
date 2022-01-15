@@ -45,6 +45,7 @@ func ExampleOAuth2Client_SignIn() {
 
 	req := &credentialspb.SignInRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/credentials/v1alpha1#SignInRequest.
 	}
 	resp, err := c.SignIn(ctx, req)
 	if err != nil {
@@ -64,6 +65,7 @@ func ExampleOAuth2Client_Exchange() {
 
 	req := &credentialspb.ExchangeRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/credentials/v1alpha1#ExchangeRequest.
 	}
 	resp, err := c.Exchange(ctx, req)
 	if err != nil {

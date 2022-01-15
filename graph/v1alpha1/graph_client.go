@@ -43,7 +43,7 @@ func defaultGRPCClientOptions() []option.ClientOption {
 		internaloption.WithDefaultMTLSEndpoint("graph.animeapis.com:443"),
 		internaloption.WithDefaultAudience("https://graph.animeapis.com/"),
 		internaloption.WithDefaultScopes(DefaultAuthScopes()...),
-		option.WithGRPCDialOption(grpc.WithDisableServiceConfig()),
+		internaloption.EnableJwtWithScope(),
 		option.WithGRPCDialOption(grpc.WithDefaultCallOptions(
 			grpc.MaxCallRecvMsgSize(math.MaxInt32))),
 	}

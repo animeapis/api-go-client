@@ -66,7 +66,7 @@ func defaultReferrerGRPCClientOptions() []option.ClientOption {
 		internaloption.WithDefaultMTLSEndpoint("crossrefs.animeapis.com:443"),
 		internaloption.WithDefaultAudience("https://crossrefs.animeapis.com/"),
 		internaloption.WithDefaultScopes(DefaultAuthScopes()...),
-		option.WithGRPCDialOption(grpc.WithDisableServiceConfig()),
+		internaloption.EnableJwtWithScope(),
 		option.WithGRPCDialOption(grpc.WithDefaultCallOptions(
 			grpc.MaxCallRecvMsgSize(math.MaxInt32))),
 	}
@@ -384,11 +384,13 @@ func (c *referrerGRPCClient) ListCrossRefs(ctx context.Context, req *crossrefspb
 	it := &CrossRefIterator{}
 	req = proto.Clone(req).(*crossrefspb.ListCrossRefsRequest)
 	it.InternalFetch = func(pageSize int, pageToken string) ([]*crossrefspb.CrossRef, string, error) {
-		var resp *crossrefspb.ListCrossRefsResponse
-		req.PageToken = pageToken
+		resp := &crossrefspb.ListCrossRefsResponse{}
+		if pageToken != "" {
+			req.PageToken = pageToken
+		}
 		if pageSize > math.MaxInt32 {
 			req.PageSize = math.MaxInt32
-		} else {
+		} else if pageSize != 0 {
 			req.PageSize = int32(pageSize)
 		}
 		err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -411,9 +413,11 @@ func (c *referrerGRPCClient) ListCrossRefs(ctx context.Context, req *crossrefspb
 		it.items = append(it.items, items...)
 		return nextPageToken, nil
 	}
+
 	it.pageInfo, it.nextFunc = iterator.NewPageInfo(fetch, it.bufLen, it.takeBuf)
 	it.pageInfo.MaxSize = int(req.GetPageSize())
 	it.pageInfo.Token = req.GetPageToken()
+
 	return it
 }
 

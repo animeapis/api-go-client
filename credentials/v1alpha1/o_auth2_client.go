@@ -45,7 +45,7 @@ func defaultOAuth2GRPCClientOptions() []option.ClientOption {
 		internaloption.WithDefaultMTLSEndpoint("credentials.animeapis.com:443"),
 		internaloption.WithDefaultAudience("https://credentials.animeapis.com/"),
 		internaloption.WithDefaultScopes(DefaultAuthScopes()...),
-		option.WithGRPCDialOption(grpc.WithDisableServiceConfig()),
+		internaloption.EnableJwtWithScope(),
 		option.WithGRPCDialOption(grpc.WithDefaultCallOptions(
 			grpc.MaxCallRecvMsgSize(math.MaxInt32))),
 	}

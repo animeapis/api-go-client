@@ -56,7 +56,7 @@ func defaultPublisherGRPCClientOptions() []option.ClientOption {
 		internaloption.WithDefaultMTLSEndpoint("release.animeapis.com:443"),
 		internaloption.WithDefaultAudience("https://release.animeapis.com/"),
 		internaloption.WithDefaultScopes(DefaultAuthScopes()...),
-		option.WithGRPCDialOption(grpc.WithDisableServiceConfig()),
+		internaloption.EnableJwtWithScope(),
 		option.WithGRPCDialOption(grpc.WithDefaultCallOptions(
 			grpc.MaxCallRecvMsgSize(math.MaxInt32))),
 	}
@@ -286,11 +286,13 @@ func (c *publisherGRPCClient) ListReleases(ctx context.Context, req *releasepb.L
 	it := &ReleaseIterator{}
 	req = proto.Clone(req).(*releasepb.ListReleasesRequest)
 	it.InternalFetch = func(pageSize int, pageToken string) ([]*releasepb.Release, string, error) {
-		var resp *releasepb.ListReleasesResponse
-		req.PageToken = pageToken
+		resp := &releasepb.ListReleasesResponse{}
+		if pageToken != "" {
+			req.PageToken = pageToken
+		}
 		if pageSize > math.MaxInt32 {
 			req.PageSize = math.MaxInt32
-		} else {
+		} else if pageSize != 0 {
 			req.PageSize = int32(pageSize)
 		}
 		err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -313,9 +315,11 @@ func (c *publisherGRPCClient) ListReleases(ctx context.Context, req *releasepb.L
 		it.items = append(it.items, items...)
 		return nextPageToken, nil
 	}
+
 	it.pageInfo, it.nextFunc = iterator.NewPageInfo(fetch, it.bufLen, it.takeBuf)
 	it.pageInfo.MaxSize = int(req.GetPageSize())
 	it.pageInfo.Token = req.GetPageToken()
+
 	return it
 }
 

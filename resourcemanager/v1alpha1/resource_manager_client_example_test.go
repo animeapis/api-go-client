@@ -46,6 +46,7 @@ func ExampleClient_GetOrganization() {
 
 	req := &resourcemanagerpb.GetOrganizationRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/resourcemanager/v1alpha1#GetOrganizationRequest.
 	}
 	resp, err := c.GetOrganization(ctx, req)
 	if err != nil {
@@ -65,6 +66,7 @@ func ExampleClient_ListOrganizations() {
 
 	req := &resourcemanagerpb.ListOrganizationsRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/resourcemanager/v1alpha1#ListOrganizationsRequest.
 	}
 	it := c.ListOrganizations(ctx, req)
 	for {
@@ -90,6 +92,7 @@ func ExampleClient_CreateOrganization() {
 
 	req := &resourcemanagerpb.CreateOrganizationRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/resourcemanager/v1alpha1#CreateOrganizationRequest.
 	}
 	resp, err := c.CreateOrganization(ctx, req)
 	if err != nil {
@@ -109,6 +112,7 @@ func ExampleClient_UpdateOrganization() {
 
 	req := &resourcemanagerpb.UpdateOrganizationRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/resourcemanager/v1alpha1#UpdateOrganizationRequest.
 	}
 	resp, err := c.UpdateOrganization(ctx, req)
 	if err != nil {
@@ -128,6 +132,7 @@ func ExampleClient_DeleteOrganization() {
 
 	req := &resourcemanagerpb.DeleteOrganizationRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/resourcemanager/v1alpha1#DeleteOrganizationRequest.
 	}
 	err = c.DeleteOrganization(ctx, req)
 	if err != nil {
@@ -145,6 +150,7 @@ func ExampleClient_GetTeam() {
 
 	req := &resourcemanagerpb.GetTeamRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/resourcemanager/v1alpha1#GetTeamRequest.
 	}
 	resp, err := c.GetTeam(ctx, req)
 	if err != nil {
@@ -164,6 +170,7 @@ func ExampleClient_ListTeams() {
 
 	req := &resourcemanagerpb.ListTeamsRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/resourcemanager/v1alpha1#ListTeamsRequest.
 	}
 	it := c.ListTeams(ctx, req)
 	for {
@@ -189,6 +196,7 @@ func ExampleClient_CreateTeam() {
 
 	req := &resourcemanagerpb.CreateTeamRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/resourcemanager/v1alpha1#CreateTeamRequest.
 	}
 	resp, err := c.CreateTeam(ctx, req)
 	if err != nil {
@@ -208,6 +216,7 @@ func ExampleClient_UpdateTeam() {
 
 	req := &resourcemanagerpb.UpdateTeamRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/resourcemanager/v1alpha1#UpdateTeamRequest.
 	}
 	resp, err := c.UpdateTeam(ctx, req)
 	if err != nil {
@@ -227,6 +236,7 @@ func ExampleClient_DeleteTeam() {
 
 	req := &resourcemanagerpb.DeleteTeamRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/resourcemanager/v1alpha1#DeleteTeamRequest.
 	}
 	err = c.DeleteTeam(ctx, req)
 	if err != nil {

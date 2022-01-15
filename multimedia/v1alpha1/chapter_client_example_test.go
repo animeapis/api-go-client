@@ -46,6 +46,7 @@ func ExampleChapterClient_GetChapter() {
 
 	req := &multimediapb.GetChapterRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/multimedia/v1alpha1#GetChapterRequest.
 	}
 	resp, err := c.GetChapter(ctx, req)
 	if err != nil {
@@ -65,6 +66,7 @@ func ExampleChapterClient_ListChapters() {
 
 	req := &multimediapb.ListChaptersRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/multimedia/v1alpha1#ListChaptersRequest.
 	}
 	it := c.ListChapters(ctx, req)
 	for {
@@ -90,6 +92,7 @@ func ExampleChapterClient_CreateChapter() {
 
 	req := &multimediapb.CreateChapterRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/multimedia/v1alpha1#CreateChapterRequest.
 	}
 	resp, err := c.CreateChapter(ctx, req)
 	if err != nil {
@@ -109,6 +112,7 @@ func ExampleChapterClient_UpdateChapter() {
 
 	req := &multimediapb.UpdateChapterRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/multimedia/v1alpha1#UpdateChapterRequest.
 	}
 	resp, err := c.UpdateChapter(ctx, req)
 	if err != nil {
@@ -128,6 +132,7 @@ func ExampleChapterClient_DeleteChapter() {
 
 	req := &multimediapb.DeleteChapterRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/multimedia/v1alpha1#DeleteChapterRequest.
 	}
 	err = c.DeleteChapter(ctx, req)
 	if err != nil {

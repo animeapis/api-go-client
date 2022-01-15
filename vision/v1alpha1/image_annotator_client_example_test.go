@@ -46,6 +46,7 @@ func ExampleImageAnnotatorClient_AnalyzeImage() {
 
 	req := &visionpb.AnalyzeImageRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/vision/v1alpha1#AnalyzeImageRequest.
 	}
 	resp, err := c.AnalyzeImage(ctx, req)
 	if err != nil {
@@ -65,6 +66,7 @@ func ExampleImageAnnotatorClient_ListImageAnalyses() {
 
 	req := &visionpb.ListImageAnalysesRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/vision/v1alpha1#ListImageAnalysesRequest.
 	}
 	it := c.ListImageAnalyses(ctx, req)
 	for {
@@ -90,6 +92,7 @@ func ExampleImageAnnotatorClient_GetImageAnalysis() {
 
 	req := &visionpb.GetImageAnalysisRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/vision/v1alpha1#GetImageAnalysisRequest.
 	}
 	resp, err := c.GetImageAnalysis(ctx, req)
 	if err != nil {
@@ -109,6 +112,7 @@ func ExampleImageAnnotatorClient_DeleteImageAnalysis() {
 
 	req := &visionpb.DeleteImageAnalysisRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/vision/v1alpha1#DeleteImageAnalysisRequest.
 	}
 	err = c.DeleteImageAnalysis(ctx, req)
 	if err != nil {
@@ -126,6 +130,7 @@ func ExampleImageAnnotatorClient_CreateImageAnnotation() {
 
 	req := &visionpb.CreateImageAnnotationRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/vision/v1alpha1#CreateImageAnnotationRequest.
 	}
 	resp, err := c.CreateImageAnnotation(ctx, req)
 	if err != nil {
@@ -145,6 +150,7 @@ func ExampleImageAnnotatorClient_ListImageAnnotations() {
 
 	req := &visionpb.ListImageAnnotationsRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/vision/v1alpha1#ListImageAnnotationsRequest.
 	}
 	it := c.ListImageAnnotations(ctx, req)
 	for {
@@ -170,6 +176,7 @@ func ExampleImageAnnotatorClient_GetImageAnnotation() {
 
 	req := &visionpb.GetImageAnnotationRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/vision/v1alpha1#GetImageAnnotationRequest.
 	}
 	resp, err := c.GetImageAnnotation(ctx, req)
 	if err != nil {
@@ -189,6 +196,7 @@ func ExampleImageAnnotatorClient_UpdateImageAnnotation() {
 
 	req := &visionpb.UpdateImageAnnotationRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/vision/v1alpha1#UpdateImageAnnotationRequest.
 	}
 	resp, err := c.UpdateImageAnnotation(ctx, req)
 	if err != nil {
@@ -208,6 +216,7 @@ func ExampleImageAnnotatorClient_DeleteImageAnnotation() {
 
 	req := &visionpb.DeleteImageAnnotationRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/vision/v1alpha1#DeleteImageAnnotationRequest.
 	}
 	err = c.DeleteImageAnnotation(ctx, req)
 	if err != nil {

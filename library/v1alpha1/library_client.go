@@ -54,7 +54,7 @@ func defaultGRPCClientOptions() []option.ClientOption {
 		internaloption.WithDefaultMTLSEndpoint("library.animeapis.com:443"),
 		internaloption.WithDefaultAudience("https://library.animeapis.com/"),
 		internaloption.WithDefaultScopes(DefaultAuthScopes()...),
-		option.WithGRPCDialOption(grpc.WithDisableServiceConfig()),
+		internaloption.EnableJwtWithScope(),
 		option.WithGRPCDialOption(grpc.WithDefaultCallOptions(
 			grpc.MaxCallRecvMsgSize(math.MaxInt32))),
 	}
@@ -259,11 +259,13 @@ func (c *gRPCClient) ListPlaylists(ctx context.Context, req *librarypb.ListPlayl
 	it := &PlaylistIterator{}
 	req = proto.Clone(req).(*librarypb.ListPlaylistsRequest)
 	it.InternalFetch = func(pageSize int, pageToken string) ([]*librarypb.Playlist, string, error) {
-		var resp *librarypb.ListPlaylistsResponse
-		req.PageToken = pageToken
+		resp := &librarypb.ListPlaylistsResponse{}
+		if pageToken != "" {
+			req.PageToken = pageToken
+		}
 		if pageSize > math.MaxInt32 {
 			req.PageSize = math.MaxInt32
-		} else {
+		} else if pageSize != 0 {
 			req.PageSize = int32(pageSize)
 		}
 		err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -286,9 +288,11 @@ func (c *gRPCClient) ListPlaylists(ctx context.Context, req *librarypb.ListPlayl
 		it.items = append(it.items, items...)
 		return nextPageToken, nil
 	}
+
 	it.pageInfo, it.nextFunc = iterator.NewPageInfo(fetch, it.bufLen, it.takeBuf)
 	it.pageInfo.MaxSize = int(req.GetPageSize())
 	it.pageInfo.Token = req.GetPageToken()
+
 	return it
 }
 
@@ -343,11 +347,13 @@ func (c *gRPCClient) ListPlaylistItems(ctx context.Context, req *librarypb.ListP
 	it := &PlaylistItemIterator{}
 	req = proto.Clone(req).(*librarypb.ListPlaylistItemsRequest)
 	it.InternalFetch = func(pageSize int, pageToken string) ([]*librarypb.PlaylistItem, string, error) {
-		var resp *librarypb.ListPlaylistItemsResponse
-		req.PageToken = pageToken
+		resp := &librarypb.ListPlaylistItemsResponse{}
+		if pageToken != "" {
+			req.PageToken = pageToken
+		}
 		if pageSize > math.MaxInt32 {
 			req.PageSize = math.MaxInt32
-		} else {
+		} else if pageSize != 0 {
 			req.PageSize = int32(pageSize)
 		}
 		err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -370,9 +376,11 @@ func (c *gRPCClient) ListPlaylistItems(ctx context.Context, req *librarypb.ListP
 		it.items = append(it.items, items...)
 		return nextPageToken, nil
 	}
+
 	it.pageInfo, it.nextFunc = iterator.NewPageInfo(fetch, it.bufLen, it.takeBuf)
 	it.pageInfo.MaxSize = int(req.GetPageSize())
 	it.pageInfo.Token = req.GetPageToken()
+
 	return it
 }
 

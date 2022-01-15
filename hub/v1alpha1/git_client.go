@@ -47,7 +47,7 @@ func defaultGitGRPCClientOptions() []option.ClientOption {
 		internaloption.WithDefaultMTLSEndpoint("hub.animeapis.com:443"),
 		internaloption.WithDefaultAudience("https://hub.animeapis.com/"),
 		internaloption.WithDefaultScopes(DefaultAuthScopes()...),
-		option.WithGRPCDialOption(grpc.WithDisableServiceConfig()),
+		internaloption.EnableJwtWithScope(),
 		option.WithGRPCDialOption(grpc.WithDefaultCallOptions(
 			grpc.MaxCallRecvMsgSize(math.MaxInt32))),
 	}

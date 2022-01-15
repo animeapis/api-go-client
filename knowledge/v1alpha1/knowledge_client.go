@@ -53,7 +53,7 @@ func defaultGRPCClientOptions() []option.ClientOption {
 		internaloption.WithDefaultMTLSEndpoint("knowledge.animeapis.com:443"),
 		internaloption.WithDefaultAudience("https://knowledge.animeapis.com/"),
 		internaloption.WithDefaultScopes(DefaultAuthScopes()...),
-		option.WithGRPCDialOption(grpc.WithDisableServiceConfig()),
+		internaloption.EnableJwtWithScope(),
 		option.WithGRPCDialOption(grpc.WithDefaultCallOptions(
 			grpc.MaxCallRecvMsgSize(math.MaxInt32))),
 	}
@@ -258,11 +258,13 @@ func (c *gRPCClient) ListContributions(ctx context.Context, req *knowledgepb.Lis
 	it := &ContributionIterator{}
 	req = proto.Clone(req).(*knowledgepb.ListContributionsRequest)
 	it.InternalFetch = func(pageSize int, pageToken string) ([]*knowledgepb.Contribution, string, error) {
-		var resp *knowledgepb.ListContributionsResponse
-		req.PageToken = pageToken
+		resp := &knowledgepb.ListContributionsResponse{}
+		if pageToken != "" {
+			req.PageToken = pageToken
+		}
 		if pageSize > math.MaxInt32 {
 			req.PageSize = math.MaxInt32
-		} else {
+		} else if pageSize != 0 {
 			req.PageSize = int32(pageSize)
 		}
 		err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -285,9 +287,11 @@ func (c *gRPCClient) ListContributions(ctx context.Context, req *knowledgepb.Lis
 		it.items = append(it.items, items...)
 		return nextPageToken, nil
 	}
+
 	it.pageInfo, it.nextFunc = iterator.NewPageInfo(fetch, it.bufLen, it.takeBuf)
 	it.pageInfo.MaxSize = int(req.GetPageSize())
 	it.pageInfo.Token = req.GetPageToken()
+
 	return it
 }
 

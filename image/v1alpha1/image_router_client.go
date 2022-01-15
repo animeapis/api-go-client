@@ -46,7 +46,7 @@ func defaultImageRouterGRPCClientOptions() []option.ClientOption {
 		internaloption.WithDefaultMTLSEndpoint("image.animeapis.com:443"),
 		internaloption.WithDefaultAudience("https://image.animeapis.com/"),
 		internaloption.WithDefaultScopes(DefaultAuthScopes()...),
-		option.WithGRPCDialOption(grpc.WithDisableServiceConfig()),
+		internaloption.EnableJwtWithScope(),
 		option.WithGRPCDialOption(grpc.WithDefaultCallOptions(
 			grpc.MaxCallRecvMsgSize(math.MaxInt32))),
 	}

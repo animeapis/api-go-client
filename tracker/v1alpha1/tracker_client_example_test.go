@@ -46,6 +46,7 @@ func ExampleClient_GetTracker() {
 
 	req := &trackerpb.GetTrackerRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/tracker/v1alpha1#GetTrackerRequest.
 	}
 	resp, err := c.GetTracker(ctx, req)
 	if err != nil {
@@ -65,6 +66,7 @@ func ExampleClient_ListTrackers() {
 
 	req := &trackerpb.ListTrackersRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/tracker/v1alpha1#ListTrackersRequest.
 	}
 	it := c.ListTrackers(ctx, req)
 	for {
@@ -90,6 +92,7 @@ func ExampleClient_CreateTracker() {
 
 	req := &trackerpb.CreateTrackerRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/tracker/v1alpha1#CreateTrackerRequest.
 	}
 	resp, err := c.CreateTracker(ctx, req)
 	if err != nil {
@@ -109,6 +112,7 @@ func ExampleClient_UpdateTracker() {
 
 	req := &trackerpb.UpdateTrackerRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/tracker/v1alpha1#UpdateTrackerRequest.
 	}
 	resp, err := c.UpdateTracker(ctx, req)
 	if err != nil {
@@ -128,6 +132,7 @@ func ExampleClient_DeleteTracker() {
 
 	req := &trackerpb.DeleteTrackerRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/tracker/v1alpha1#DeleteTrackerRequest.
 	}
 	err = c.DeleteTracker(ctx, req)
 	if err != nil {
@@ -145,6 +150,7 @@ func ExampleClient_ImportTrackers() {
 
 	req := &trackerpb.ImportTrackersRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/tracker/v1alpha1#ImportTrackersRequest.
 	}
 	op, err := c.ImportTrackers(ctx, req)
 	if err != nil {
@@ -169,6 +175,7 @@ func ExampleClient_ExportTrackers() {
 
 	req := &trackerpb.ExportTrackersRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/tracker/v1alpha1#ExportTrackersRequest.
 	}
 	op, err := c.ExportTrackers(ctx, req)
 	if err != nil {
@@ -193,6 +200,7 @@ func ExampleClient_CreateActivity() {
 
 	req := &trackerpb.CreateActivityRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/tracker/v1alpha1#CreateActivityRequest.
 	}
 	resp, err := c.CreateActivity(ctx, req)
 	if err != nil {
@@ -212,6 +220,7 @@ func ExampleClient_DeleteActivity() {
 
 	req := &trackerpb.DeleteActivityRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/tracker/v1alpha1#DeleteActivityRequest.
 	}
 	err = c.DeleteActivity(ctx, req)
 	if err != nil {

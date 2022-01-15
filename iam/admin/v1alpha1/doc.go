@@ -17,6 +17,42 @@
 // Package admin is an auto-generated package for the
 // Identity and Access Management API.
 //
+// Example usage
+//
+// To get started with this package, create a client.
+//  ctx := context.Background()
+//  c, err := admin.NewIamClient(ctx)
+//  if err != nil {
+//  	// TODO: Handle error.
+//  }
+//  defer c.Close()
+//
+// The client will use your default application credentials. Clients should be reused instead of created as needed.
+// The methods of Client are safe for concurrent use by multiple goroutines.
+// The returned client must be Closed when it is done being used.
+//
+// Using the Client
+//
+// The following is an example of making an API call with the newly created client.
+//
+//  ctx := context.Background()
+//  c, err := admin.NewIamClient(ctx)
+//  if err != nil {
+//  	// TODO: Handle error.
+//  }
+//  defer c.Close()
+//
+//  req := &adminpb.GetServiceAccountRequest{
+//  	// TODO: Fill request struct fields.
+//  	// See https://pkg.go.dev/github.com/animeapis/go-genproto/iam/admin/v1alpha1#GetServiceAccountRequest.
+//  }
+//  resp, err := c.GetServiceAccount(ctx, req)
+//  if err != nil {
+//  	// TODO: Handle error.
+//  }
+//  // TODO: Use resp.
+//  _ = resp
+//
 // Use of Context
 //
 // The ctx passed to NewClient is used for authentication requests and
@@ -71,7 +107,9 @@ func checkDisableDeadlines() (bool, error) {
 
 // DefaultAuthScopes reports the default set of authentication scopes to use with this package.
 func DefaultAuthScopes() []string {
-	return []string{}
+	return []string{
+		"",
+	}
 }
 
 // versionGo returns the Go runtime version. The returned string

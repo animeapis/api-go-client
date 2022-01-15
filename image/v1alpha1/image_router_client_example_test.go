@@ -45,6 +45,7 @@ func ExampleImageRouterClient_GetImageRoute() {
 
 	req := &imagepb.GetImageRouteRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/image/v1alpha1#GetImageRouteRequest.
 	}
 	resp, err := c.GetImageRoute(ctx, req)
 	if err != nil {
@@ -64,6 +65,7 @@ func ExampleImageRouterClient_RouteImage() {
 
 	req := &imagepb.RouteImageRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/image/v1alpha1#RouteImageRequest.
 	}
 	resp, err := c.RouteImage(ctx, req)
 	if err != nil {

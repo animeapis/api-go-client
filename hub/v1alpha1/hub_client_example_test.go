@@ -46,6 +46,7 @@ func ExampleClient_CreateRepository() {
 
 	req := &hubpb.CreateRepositoryRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/hub/v1alpha1#CreateRepositoryRequest.
 	}
 	resp, err := c.CreateRepository(ctx, req)
 	if err != nil {
@@ -65,6 +66,7 @@ func ExampleClient_DeleteRepository() {
 
 	req := &hubpb.DeleteRepositoryRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/hub/v1alpha1#DeleteRepositoryRequest.
 	}
 	err = c.DeleteRepository(ctx, req)
 	if err != nil {
@@ -82,6 +84,7 @@ func ExampleClient_ListRepositories() {
 
 	req := &hubpb.ListRepositoriesRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/hub/v1alpha1#ListRepositoriesRequest.
 	}
 	it := c.ListRepositories(ctx, req)
 	for {

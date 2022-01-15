@@ -65,7 +65,7 @@ func defaultAccessControlGRPCClientOptions() []option.ClientOption {
 		internaloption.WithDefaultMTLSEndpoint("127.0.0.1:9080"),
 		internaloption.WithDefaultAudience("https://127.0.0.1/"),
 		internaloption.WithDefaultScopes(DefaultAuthScopes()...),
-		option.WithGRPCDialOption(grpc.WithDisableServiceConfig()),
+		internaloption.EnableJwtWithScope(),
 		option.WithGRPCDialOption(grpc.WithDefaultCallOptions(
 			grpc.MaxCallRecvMsgSize(math.MaxInt32))),
 	}

@@ -46,6 +46,7 @@ func ExampleClient_GetUserProfile() {
 
 	req := &identitypb.GetUserProfileRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/identity/v1alpha1#GetUserProfileRequest.
 	}
 	resp, err := c.GetUserProfile(ctx, req)
 	if err != nil {
@@ -65,6 +66,7 @@ func ExampleClient_GetUser() {
 
 	req := &identitypb.GetUserRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/identity/v1alpha1#GetUserRequest.
 	}
 	resp, err := c.GetUser(ctx, req)
 	if err != nil {
@@ -84,6 +86,7 @@ func ExampleClient_ListUsers() {
 
 	req := &identitypb.ListUsersRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/identity/v1alpha1#ListUsersRequest.
 	}
 	it := c.ListUsers(ctx, req)
 	for {
@@ -109,6 +112,7 @@ func ExampleClient_CreateUser() {
 
 	req := &identitypb.CreateUserRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/identity/v1alpha1#CreateUserRequest.
 	}
 	resp, err := c.CreateUser(ctx, req)
 	if err != nil {
@@ -128,6 +132,7 @@ func ExampleClient_UpdateUser() {
 
 	req := &identitypb.UpdateUserRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/identity/v1alpha1#UpdateUserRequest.
 	}
 	resp, err := c.UpdateUser(ctx, req)
 	if err != nil {
@@ -147,6 +152,7 @@ func ExampleClient_DeleteUser() {
 
 	req := &identitypb.DeleteUserRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/identity/v1alpha1#DeleteUserRequest.
 	}
 	err = c.DeleteUser(ctx, req)
 	if err != nil {
@@ -164,6 +170,7 @@ func ExampleClient_GetUserSettings() {
 
 	req := &identitypb.GetUserSettingsRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/identity/v1alpha1#GetUserSettingsRequest.
 	}
 	resp, err := c.GetUserSettings(ctx, req)
 	if err != nil {
@@ -183,6 +190,7 @@ func ExampleClient_UpdateUserSettings() {
 
 	req := &identitypb.UpdateUserSettingsRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/identity/v1alpha1#UpdateUserSettingsRequest.
 	}
 	resp, err := c.UpdateUserSettings(ctx, req)
 	if err != nil {
@@ -202,6 +210,7 @@ func ExampleClient_GetUserNotifications() {
 
 	req := &identitypb.GetUserNotificationsRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/identity/v1alpha1#GetUserNotificationsRequest.
 	}
 	resp, err := c.GetUserNotifications(ctx, req)
 	if err != nil {
@@ -221,6 +230,7 @@ func ExampleClient_UpdateUserNotifications() {
 
 	req := &identitypb.UpdateUserNotificationsRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/identity/v1alpha1#UpdateUserNotificationsRequest.
 	}
 	resp, err := c.UpdateUserNotifications(ctx, req)
 	if err != nil {
@@ -240,6 +250,7 @@ func ExampleClient_GetGroup() {
 
 	req := &identitypb.GetGroupRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/identity/v1alpha1#GetGroupRequest.
 	}
 	resp, err := c.GetGroup(ctx, req)
 	if err != nil {
@@ -259,6 +270,7 @@ func ExampleClient_ListGroups() {
 
 	req := &identitypb.ListGroupsRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/identity/v1alpha1#ListGroupsRequest.
 	}
 	it := c.ListGroups(ctx, req)
 	for {
@@ -284,6 +296,7 @@ func ExampleClient_CreateGroup() {
 
 	req := &identitypb.CreateGroupRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/identity/v1alpha1#CreateGroupRequest.
 	}
 	resp, err := c.CreateGroup(ctx, req)
 	if err != nil {
@@ -303,6 +316,7 @@ func ExampleClient_UpdateGroup() {
 
 	req := &identitypb.UpdateGroupRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/identity/v1alpha1#UpdateGroupRequest.
 	}
 	resp, err := c.UpdateGroup(ctx, req)
 	if err != nil {
@@ -322,6 +336,7 @@ func ExampleClient_DeleteGroup() {
 
 	req := &identitypb.DeleteGroupRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/identity/v1alpha1#DeleteGroupRequest.
 	}
 	err = c.DeleteGroup(ctx, req)
 	if err != nil {

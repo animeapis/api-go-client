@@ -46,6 +46,7 @@ func ExamplePublisherClient_GetRelease() {
 
 	req := &releasepb.GetReleaseRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/release/v1alpha1#GetReleaseRequest.
 	}
 	resp, err := c.GetRelease(ctx, req)
 	if err != nil {
@@ -65,6 +66,7 @@ func ExamplePublisherClient_ListReleases() {
 
 	req := &releasepb.ListReleasesRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/release/v1alpha1#ListReleasesRequest.
 	}
 	it := c.ListReleases(ctx, req)
 	for {
@@ -90,6 +92,7 @@ func ExamplePublisherClient_CreateRelease() {
 
 	req := &releasepb.CreateReleaseRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/release/v1alpha1#CreateReleaseRequest.
 	}
 	resp, err := c.CreateRelease(ctx, req)
 	if err != nil {
@@ -109,6 +112,7 @@ func ExamplePublisherClient_UpdateRelease() {
 
 	req := &releasepb.UpdateReleaseRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/release/v1alpha1#UpdateReleaseRequest.
 	}
 	resp, err := c.UpdateRelease(ctx, req)
 	if err != nil {
@@ -128,6 +132,7 @@ func ExamplePublisherClient_DeleteRelease() {
 
 	req := &releasepb.DeleteReleaseRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/release/v1alpha1#DeleteReleaseRequest.
 	}
 	err = c.DeleteRelease(ctx, req)
 	if err != nil {
@@ -145,6 +150,7 @@ func ExamplePublisherClient_UndeleteRelease() {
 
 	req := &releasepb.UndeleteReleaseRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/release/v1alpha1#UndeleteReleaseRequest.
 	}
 	resp, err := c.UndeleteRelease(ctx, req)
 	if err != nil {
@@ -164,6 +170,7 @@ func ExamplePublisherClient_PublishRelease() {
 
 	req := &releasepb.PublishReleaseRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/release/v1alpha1#PublishReleaseRequest.
 	}
 	resp, err := c.PublishRelease(ctx, req)
 	if err != nil {
@@ -183,6 +190,7 @@ func ExamplePublisherClient_UnpublishRelease() {
 
 	req := &releasepb.UnpublishReleaseRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/release/v1alpha1#UnpublishReleaseRequest.
 	}
 	resp, err := c.UnpublishRelease(ctx, req)
 	if err != nil {
@@ -202,6 +210,7 @@ func ExamplePublisherClient_ScheduleRelease() {
 
 	req := &releasepb.ScheduleReleaseRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/release/v1alpha1#ScheduleReleaseRequest.
 	}
 	resp, err := c.ScheduleRelease(ctx, req)
 	if err != nil {
@@ -221,6 +230,7 @@ func ExamplePublisherClient_CancelRelease() {
 
 	req := &releasepb.CancelReleaseRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/release/v1alpha1#CancelReleaseRequest.
 	}
 	resp, err := c.CancelRelease(ctx, req)
 	if err != nil {
@@ -240,6 +250,7 @@ func ExamplePublisherClient_SuspendRelease() {
 
 	req := &releasepb.SuspendReleaseRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/release/v1alpha1#SuspendReleaseRequest.
 	}
 	resp, err := c.SuspendRelease(ctx, req)
 	if err != nil {

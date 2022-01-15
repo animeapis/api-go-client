@@ -55,7 +55,7 @@ func defaultGRPCClientOptions() []option.ClientOption {
 		internaloption.WithDefaultMTLSEndpoint("image.animeapis.com:443"),
 		internaloption.WithDefaultAudience("https://image.animeapis.com/"),
 		internaloption.WithDefaultScopes(DefaultAuthScopes()...),
-		option.WithGRPCDialOption(grpc.WithDisableServiceConfig()),
+		internaloption.EnableJwtWithScope(),
 		option.WithGRPCDialOption(grpc.WithDefaultCallOptions(
 			grpc.MaxCallRecvMsgSize(math.MaxInt32))),
 	}
@@ -317,11 +317,13 @@ func (c *gRPCClient) ListAlbums(ctx context.Context, req *imagepb.ListAlbumsRequ
 	it := &AlbumIterator{}
 	req = proto.Clone(req).(*imagepb.ListAlbumsRequest)
 	it.InternalFetch = func(pageSize int, pageToken string) ([]*imagepb.Album, string, error) {
-		var resp *imagepb.ListAlbumsResponse
-		req.PageToken = pageToken
+		resp := &imagepb.ListAlbumsResponse{}
+		if pageToken != "" {
+			req.PageToken = pageToken
+		}
 		if pageSize > math.MaxInt32 {
 			req.PageSize = math.MaxInt32
-		} else {
+		} else if pageSize != 0 {
 			req.PageSize = int32(pageSize)
 		}
 		err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -344,9 +346,11 @@ func (c *gRPCClient) ListAlbums(ctx context.Context, req *imagepb.ListAlbumsRequ
 		it.items = append(it.items, items...)
 		return nextPageToken, nil
 	}
+
 	it.pageInfo, it.nextFunc = iterator.NewPageInfo(fetch, it.bufLen, it.takeBuf)
 	it.pageInfo.MaxSize = int(req.GetPageSize())
 	it.pageInfo.Token = req.GetPageToken()
+
 	return it
 }
 

@@ -45,6 +45,7 @@ func ExampleClient_MigrateGraph() {
 
 	req := &graphpb.MigrateGraphRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/graph/v1alpha1#MigrateGraphRequest.
 	}
 	err = c.MigrateGraph(ctx, req)
 	if err != nil {
@@ -62,6 +63,7 @@ func ExampleClient_DeleteGraph() {
 
 	req := &graphpb.DeleteGraphRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/graph/v1alpha1#DeleteGraphRequest.
 	}
 	err = c.DeleteGraph(ctx, req)
 	if err != nil {

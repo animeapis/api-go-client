@@ -46,6 +46,7 @@ func ExampleClient_GetContribution() {
 
 	req := &knowledgepb.GetContributionRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/knowledge/v1alpha1#GetContributionRequest.
 	}
 	resp, err := c.GetContribution(ctx, req)
 	if err != nil {
@@ -65,6 +66,7 @@ func ExampleClient_ListContributions() {
 
 	req := &knowledgepb.ListContributionsRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/knowledge/v1alpha1#ListContributionsRequest.
 	}
 	it := c.ListContributions(ctx, req)
 	for {
@@ -90,6 +92,7 @@ func ExampleClient_CreateContribution() {
 
 	req := &knowledgepb.CreateContributionRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/knowledge/v1alpha1#CreateContributionRequest.
 	}
 	resp, err := c.CreateContribution(ctx, req)
 	if err != nil {
@@ -109,6 +112,7 @@ func ExampleClient_GetContributionChanges() {
 
 	req := &knowledgepb.GetContributionChangesRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/knowledge/v1alpha1#GetContributionChangesRequest.
 	}
 	resp, err := c.GetContributionChanges(ctx, req)
 	if err != nil {
@@ -128,6 +132,7 @@ func ExampleClient_ReviewContribution() {
 
 	req := &knowledgepb.ReviewContributionRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/knowledge/v1alpha1#ReviewContributionRequest.
 	}
 	resp, err := c.ReviewContribution(ctx, req)
 	if err != nil {
@@ -147,6 +152,7 @@ func ExampleClient_ApproveContribution() {
 
 	req := &knowledgepb.ApproveContributionRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/knowledge/v1alpha1#ApproveContributionRequest.
 	}
 	resp, err := c.ApproveContribution(ctx, req)
 	if err != nil {
@@ -166,6 +172,7 @@ func ExampleClient_RejectContribution() {
 
 	req := &knowledgepb.RejectContributionRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/knowledge/v1alpha1#RejectContributionRequest.
 	}
 	resp, err := c.RejectContribution(ctx, req)
 	if err != nil {
@@ -185,6 +192,7 @@ func ExampleClient_AllocateResourceName() {
 
 	req := &knowledgepb.AllocateResourceNameRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/knowledge/v1alpha1#AllocateResourceNameRequest.
 	}
 	resp, err := c.AllocateResourceName(ctx, req)
 	if err != nil {

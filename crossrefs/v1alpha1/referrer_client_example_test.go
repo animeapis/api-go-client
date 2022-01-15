@@ -47,6 +47,7 @@ func ExampleReferrerClient_GetCrossRef() {
 
 	req := &crossrefspb.GetCrossRefRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/crossrefs/v1alpha1#GetCrossRefRequest.
 	}
 	resp, err := c.GetCrossRef(ctx, req)
 	if err != nil {
@@ -66,6 +67,7 @@ func ExampleReferrerClient_ListCrossRefs() {
 
 	req := &crossrefspb.ListCrossRefsRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/crossrefs/v1alpha1#ListCrossRefsRequest.
 	}
 	it := c.ListCrossRefs(ctx, req)
 	for {
@@ -91,6 +93,7 @@ func ExampleReferrerClient_CreateCrossRef() {
 
 	req := &crossrefspb.CreateCrossRefRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/crossrefs/v1alpha1#CreateCrossRefRequest.
 	}
 	resp, err := c.CreateCrossRef(ctx, req)
 	if err != nil {
@@ -110,6 +113,7 @@ func ExampleReferrerClient_UpdateCrossRef() {
 
 	req := &crossrefspb.UpdateCrossRefRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/crossrefs/v1alpha1#UpdateCrossRefRequest.
 	}
 	resp, err := c.UpdateCrossRef(ctx, req)
 	if err != nil {
@@ -129,6 +133,7 @@ func ExampleReferrerClient_CountCrossRefs() {
 
 	req := &crossrefspb.CountCrossRefsRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/crossrefs/v1alpha1#CountCrossRefsRequest.
 	}
 	resp, err := c.CountCrossRefs(ctx, req)
 	if err != nil {
@@ -148,6 +153,7 @@ func ExampleReferrerClient_AnalyzeCrossRefs() {
 
 	req := &crossrefspb.AnalyzeCrossRefRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/crossrefs/v1alpha1#AnalyzeCrossRefRequest.
 	}
 	op, err := c.AnalyzeCrossRefs(ctx, req)
 	if err != nil {
@@ -172,6 +178,7 @@ func ExampleReferrerClient_ImportCrossRefs() {
 
 	req := &crossrefspb.ImportCrossRefRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/crossrefs/v1alpha1#ImportCrossRefRequest.
 	}
 	op, err := c.ImportCrossRefs(ctx, req)
 	if err != nil {
@@ -196,6 +203,7 @@ func ExampleReferrerClient_ExportCrossRefs() {
 
 	req := &crossrefspb.ExportCrossRefRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/crossrefs/v1alpha1#ExportCrossRefRequest.
 	}
 	op, err := c.ExportCrossRefs(ctx, req)
 	if err != nil {
@@ -220,6 +228,7 @@ func ExampleReferrerClient_InitializeCrossRefs() {
 
 	req := &emptypb.Empty{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/google.golang.org/protobuf/types/known/emptypb#Empty.
 	}
 	op, err := c.InitializeCrossRefs(ctx, req)
 	if err != nil {
@@ -244,6 +253,7 @@ func ExampleReferrerClient_AnalyzeParodies() {
 
 	req := &emptypb.Empty{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/google.golang.org/protobuf/types/known/emptypb#Empty.
 	}
 	op, err := c.AnalyzeParodies(ctx, req)
 	if err != nil {
@@ -268,6 +278,7 @@ func ExampleReferrerClient_ExportParodies() {
 
 	req := &emptypb.Empty{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/google.golang.org/protobuf/types/known/emptypb#Empty.
 	}
 	op, err := c.ExportParodies(ctx, req)
 	if err != nil {
@@ -292,6 +303,7 @@ func ExampleReferrerClient_GetUniverse() {
 
 	req := &crossrefspb.GetUniverseRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/crossrefs/v1alpha1#GetUniverseRequest.
 	}
 	resp, err := c.GetUniverse(ctx, req)
 	if err != nil {
@@ -311,6 +323,7 @@ func ExampleReferrerClient_UpdateUniverse() {
 
 	req := &crossrefspb.UpdateUniverseRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/crossrefs/v1alpha1#UpdateUniverseRequest.
 	}
 	resp, err := c.UpdateUniverse(ctx, req)
 	if err != nil {
@@ -330,6 +343,7 @@ func ExampleReferrerClient_ExpandUniverse() {
 
 	req := &crossrefspb.ExpandUniverseRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/crossrefs/v1alpha1#ExpandUniverseRequest.
 	}
 	resp, err := c.ExpandUniverse(ctx, req)
 	if err != nil {
@@ -349,6 +363,7 @@ func ExampleReferrerClient_GetWormhole() {
 
 	req := &crossrefspb.GetWormholeRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/crossrefs/v1alpha1#GetWormholeRequest.
 	}
 	resp, err := c.GetWormhole(ctx, req)
 	if err != nil {
@@ -368,6 +383,7 @@ func ExampleReferrerClient_ListWormholeCrossRefs() {
 
 	req := &crossrefspb.ListWormholeCrossRefsRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/crossrefs/v1alpha1#ListWormholeCrossRefsRequest.
 	}
 	resp, err := c.ListWormholeCrossRefs(ctx, req)
 	if err != nil {

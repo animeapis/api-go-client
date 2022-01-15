@@ -46,6 +46,7 @@ func ExampleClient_CreateCache() {
 
 	req := &webcachepb.CreateCacheRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/webcache/v1alpha1#CreateCacheRequest.
 	}
 	resp, err := c.CreateCache(ctx, req)
 	if err != nil {
@@ -65,6 +66,7 @@ func ExampleClient_ListCaches() {
 
 	req := &webcachepb.ListCachesRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/webcache/v1alpha1#ListCachesRequest.
 	}
 	it := c.ListCaches(ctx, req)
 	for {
@@ -90,6 +92,7 @@ func ExampleClient_GetCache() {
 
 	req := &webcachepb.GetCacheRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/webcache/v1alpha1#GetCacheRequest.
 	}
 	resp, err := c.GetCache(ctx, req)
 	if err != nil {
@@ -109,6 +112,7 @@ func ExampleClient_DeleteCache() {
 
 	req := &webcachepb.DeleteCacheRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/webcache/v1alpha1#DeleteCacheRequest.
 	}
 	err = c.DeleteCache(ctx, req)
 	if err != nil {

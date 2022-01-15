@@ -46,6 +46,7 @@ func ExampleEpisodeClient_GetEpisode() {
 
 	req := &multimediapb.GetEpisodeRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/multimedia/v1alpha1#GetEpisodeRequest.
 	}
 	resp, err := c.GetEpisode(ctx, req)
 	if err != nil {
@@ -65,6 +66,7 @@ func ExampleEpisodeClient_ListEpisodes() {
 
 	req := &multimediapb.ListEpisodesRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/multimedia/v1alpha1#ListEpisodesRequest.
 	}
 	it := c.ListEpisodes(ctx, req)
 	for {
@@ -90,6 +92,7 @@ func ExampleEpisodeClient_CreateEpisode() {
 
 	req := &multimediapb.CreateEpisodeRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/multimedia/v1alpha1#CreateEpisodeRequest.
 	}
 	resp, err := c.CreateEpisode(ctx, req)
 	if err != nil {
@@ -109,6 +112,7 @@ func ExampleEpisodeClient_UpdateEpisode() {
 
 	req := &multimediapb.UpdateEpisodeRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/multimedia/v1alpha1#UpdateEpisodeRequest.
 	}
 	resp, err := c.UpdateEpisode(ctx, req)
 	if err != nil {
@@ -128,6 +132,7 @@ func ExampleEpisodeClient_DeleteEpisode() {
 
 	req := &multimediapb.DeleteEpisodeRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/multimedia/v1alpha1#DeleteEpisodeRequest.
 	}
 	err = c.DeleteEpisode(ctx, req)
 	if err != nil {

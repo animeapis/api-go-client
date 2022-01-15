@@ -45,6 +45,7 @@ func ExampleGitClient_AdvertiseReferences() {
 
 	req := &hubpb.AdvertiseReferencesRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/hub/v1alpha1#AdvertiseReferencesRequest.
 	}
 	resp, err := c.AdvertiseReferences(ctx, req)
 	if err != nil {
@@ -64,6 +65,7 @@ func ExampleGitClient_ReceivePack() {
 
 	req := &hubpb.ReceivePackRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/hub/v1alpha1#ReceivePackRequest.
 	}
 	resp, err := c.ReceivePack(ctx, req)
 	if err != nil {
@@ -83,6 +85,7 @@ func ExampleGitClient_UploadPack() {
 
 	req := &hubpb.UploadPackRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/hub/v1alpha1#UploadPackRequest.
 	}
 	resp, err := c.UploadPack(ctx, req)
 	if err != nil {

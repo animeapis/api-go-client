@@ -46,6 +46,7 @@ func ExampleKeeperClient_GetCredentials() {
 
 	req := &credentialspb.GetCredentialsRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/credentials/v1alpha1#GetCredentialsRequest.
 	}
 	resp, err := c.GetCredentials(ctx, req)
 	if err != nil {
@@ -65,6 +66,7 @@ func ExampleKeeperClient_ListCredentials() {
 
 	req := &credentialspb.ListCredentialsRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/credentials/v1alpha1#ListCredentialsRequest.
 	}
 	it := c.ListCredentials(ctx, req)
 	for {
@@ -90,6 +92,7 @@ func ExampleKeeperClient_CreateCredentials() {
 
 	req := &credentialspb.CreateCredentialsRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/credentials/v1alpha1#CreateCredentialsRequest.
 	}
 	resp, err := c.CreateCredentials(ctx, req)
 	if err != nil {
@@ -109,6 +112,7 @@ func ExampleKeeperClient_DeleteCredentials() {
 
 	req := &credentialspb.DeleteCredentialsRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/credentials/v1alpha1#DeleteCredentialsRequest.
 	}
 	err = c.DeleteCredentials(ctx, req)
 	if err != nil {
@@ -126,6 +130,7 @@ func ExampleKeeperClient_ActAsCredentials() {
 
 	req := &credentialspb.ActAsCredentialsRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/credentials/v1alpha1#ActAsCredentialsRequest.
 	}
 	resp, err := c.ActAsCredentials(ctx, req)
 	if err != nil {

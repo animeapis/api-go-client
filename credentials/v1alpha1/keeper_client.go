@@ -50,7 +50,7 @@ func defaultKeeperGRPCClientOptions() []option.ClientOption {
 		internaloption.WithDefaultMTLSEndpoint("credentials.animeapis.com:443"),
 		internaloption.WithDefaultAudience("https://credentials.animeapis.com/"),
 		internaloption.WithDefaultScopes(DefaultAuthScopes()...),
-		option.WithGRPCDialOption(grpc.WithDisableServiceConfig()),
+		internaloption.EnableJwtWithScope(),
 		option.WithGRPCDialOption(grpc.WithDefaultCallOptions(
 			grpc.MaxCallRecvMsgSize(math.MaxInt32))),
 	}
@@ -231,11 +231,13 @@ func (c *keeperGRPCClient) ListCredentials(ctx context.Context, req *credentials
 	it := &CredentialsIterator{}
 	req = proto.Clone(req).(*credentialspb.ListCredentialsRequest)
 	it.InternalFetch = func(pageSize int, pageToken string) ([]*credentialspb.Credentials, string, error) {
-		var resp *credentialspb.ListCredentialsResponse
-		req.PageToken = pageToken
+		resp := &credentialspb.ListCredentialsResponse{}
+		if pageToken != "" {
+			req.PageToken = pageToken
+		}
 		if pageSize > math.MaxInt32 {
 			req.PageSize = math.MaxInt32
-		} else {
+		} else if pageSize != 0 {
 			req.PageSize = int32(pageSize)
 		}
 		err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -258,9 +260,11 @@ func (c *keeperGRPCClient) ListCredentials(ctx context.Context, req *credentials
 		it.items = append(it.items, items...)
 		return nextPageToken, nil
 	}
+
 	it.pageInfo, it.nextFunc = iterator.NewPageInfo(fetch, it.bufLen, it.takeBuf)
 	it.pageInfo.MaxSize = int(req.GetPageSize())
 	it.pageInfo.Token = req.GetPageToken()
+
 	return it
 }
 

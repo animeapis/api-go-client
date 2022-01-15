@@ -46,6 +46,7 @@ func ExampleClient_GetPlaylist() {
 
 	req := &librarypb.GetPlaylistRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/library/v1alpha1#GetPlaylistRequest.
 	}
 	resp, err := c.GetPlaylist(ctx, req)
 	if err != nil {
@@ -65,6 +66,7 @@ func ExampleClient_ListPlaylists() {
 
 	req := &librarypb.ListPlaylistsRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/library/v1alpha1#ListPlaylistsRequest.
 	}
 	it := c.ListPlaylists(ctx, req)
 	for {
@@ -90,6 +92,7 @@ func ExampleClient_CreatePlaylist() {
 
 	req := &librarypb.CreatePlaylistRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/library/v1alpha1#CreatePlaylistRequest.
 	}
 	resp, err := c.CreatePlaylist(ctx, req)
 	if err != nil {
@@ -109,6 +112,7 @@ func ExampleClient_UpdatePlaylist() {
 
 	req := &librarypb.UpdatePlaylistRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/library/v1alpha1#UpdatePlaylistRequest.
 	}
 	resp, err := c.UpdatePlaylist(ctx, req)
 	if err != nil {
@@ -128,6 +132,7 @@ func ExampleClient_DeletePlaylist() {
 
 	req := &librarypb.DeletePlaylistRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/library/v1alpha1#DeletePlaylistRequest.
 	}
 	err = c.DeletePlaylist(ctx, req)
 	if err != nil {
@@ -145,6 +150,7 @@ func ExampleClient_ListPlaylistItems() {
 
 	req := &librarypb.ListPlaylistItemsRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/library/v1alpha1#ListPlaylistItemsRequest.
 	}
 	it := c.ListPlaylistItems(ctx, req)
 	for {
@@ -170,6 +176,7 @@ func ExampleClient_CreatePlaylistItem() {
 
 	req := &librarypb.CreatePlaylistItemRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/library/v1alpha1#CreatePlaylistItemRequest.
 	}
 	resp, err := c.CreatePlaylistItem(ctx, req)
 	if err != nil {
@@ -189,6 +196,7 @@ func ExampleClient_BatchCreatePlaylistItems() {
 
 	req := &librarypb.BatchCreatePlaylistItemsRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/library/v1alpha1#BatchCreatePlaylistItemsRequest.
 	}
 	resp, err := c.BatchCreatePlaylistItems(ctx, req)
 	if err != nil {
@@ -208,6 +216,7 @@ func ExampleClient_DeletePlaylistItem() {
 
 	req := &librarypb.DeletePlaylistItemRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/library/v1alpha1#DeletePlaylistItemRequest.
 	}
 	err = c.DeletePlaylistItem(ctx, req)
 	if err != nil {

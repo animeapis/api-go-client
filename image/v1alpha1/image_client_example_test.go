@@ -46,6 +46,7 @@ func ExampleClient_UploadImage() {
 
 	req := &imagepb.UploadImageRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/image/v1alpha1#UploadImageRequest.
 	}
 	resp, err := c.UploadImage(ctx, req)
 	if err != nil {
@@ -65,6 +66,7 @@ func ExampleClient_ImportImage() {
 
 	req := &imagepb.ImportImageRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/image/v1alpha1#ImportImageRequest.
 	}
 	resp, err := c.ImportImage(ctx, req)
 	if err != nil {
@@ -84,6 +86,7 @@ func ExampleClient_GetImage() {
 
 	req := &imagepb.GetImageRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/image/v1alpha1#GetImageRequest.
 	}
 	resp, err := c.GetImage(ctx, req)
 	if err != nil {
@@ -103,6 +106,7 @@ func ExampleClient_GetAlbum() {
 
 	req := &imagepb.GetAlbumRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/image/v1alpha1#GetAlbumRequest.
 	}
 	resp, err := c.GetAlbum(ctx, req)
 	if err != nil {
@@ -122,6 +126,7 @@ func ExampleClient_ListAlbums() {
 
 	req := &imagepb.ListAlbumsRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/image/v1alpha1#ListAlbumsRequest.
 	}
 	it := c.ListAlbums(ctx, req)
 	for {
@@ -147,6 +152,7 @@ func ExampleClient_CreateAlbum() {
 
 	req := &imagepb.CreateAlbumRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/image/v1alpha1#CreateAlbumRequest.
 	}
 	resp, err := c.CreateAlbum(ctx, req)
 	if err != nil {
@@ -166,6 +172,7 @@ func ExampleClient_DeleteAlbum() {
 
 	req := &imagepb.DeleteAlbumRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/image/v1alpha1#DeleteAlbumRequest.
 	}
 	err = c.DeleteAlbum(ctx, req)
 	if err != nil {
@@ -183,6 +190,7 @@ func ExampleClient_GetAlbumSettings() {
 
 	req := &imagepb.GetAlbumSettingsRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/image/v1alpha1#GetAlbumSettingsRequest.
 	}
 	resp, err := c.GetAlbumSettings(ctx, req)
 	if err != nil {
@@ -202,6 +210,7 @@ func ExampleClient_UpdateAlbumSettings() {
 
 	req := &imagepb.UpdateAlbumSettingsRequest{
 		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/image/v1alpha1#UpdateAlbumSettingsRequest.
 	}
 	resp, err := c.UpdateAlbumSettings(ctx, req)
 	if err != nil {
