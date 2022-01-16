@@ -47,6 +47,7 @@ type CallOptions struct {
 	UpdateUserSettings      []gax.CallOption
 	GetUserNotifications    []gax.CallOption
 	UpdateUserNotifications []gax.CallOption
+	GetUserDefaults         []gax.CallOption
 	GetGroup                []gax.CallOption
 	ListGroups              []gax.CallOption
 	CreateGroup             []gax.CallOption
@@ -78,6 +79,7 @@ func defaultCallOptions() *CallOptions {
 		UpdateUserSettings:      []gax.CallOption{},
 		GetUserNotifications:    []gax.CallOption{},
 		UpdateUserNotifications: []gax.CallOption{},
+		GetUserDefaults:         []gax.CallOption{},
 		GetGroup:                []gax.CallOption{},
 		ListGroups:              []gax.CallOption{},
 		CreateGroup:             []gax.CallOption{},
@@ -101,6 +103,7 @@ type internalClient interface {
 	UpdateUserSettings(context.Context, *identitypb.UpdateUserSettingsRequest, ...gax.CallOption) (*identitypb.UserSettings, error)
 	GetUserNotifications(context.Context, *identitypb.GetUserNotificationsRequest, ...gax.CallOption) (*identitypb.UserNotifications, error)
 	UpdateUserNotifications(context.Context, *identitypb.UpdateUserNotificationsRequest, ...gax.CallOption) (*identitypb.UserNotifications, error)
+	GetUserDefaults(context.Context, *identitypb.GetUserDefaultsRequest, ...gax.CallOption) (*identitypb.UserDefaults, error)
 	GetGroup(context.Context, *identitypb.GetGroupRequest, ...gax.CallOption) (*identitypb.Group, error)
 	ListGroups(context.Context, *identitypb.ListGroupsRequest, ...gax.CallOption) *GroupIterator
 	CreateGroup(context.Context, *identitypb.CreateGroupRequest, ...gax.CallOption) (*identitypb.Group, error)
@@ -178,6 +181,10 @@ func (c *Client) GetUserNotifications(ctx context.Context, req *identitypb.GetUs
 
 func (c *Client) UpdateUserNotifications(ctx context.Context, req *identitypb.UpdateUserNotificationsRequest, opts ...gax.CallOption) (*identitypb.UserNotifications, error) {
 	return c.internalClient.UpdateUserNotifications(ctx, req, opts...)
+}
+
+func (c *Client) GetUserDefaults(ctx context.Context, req *identitypb.GetUserDefaultsRequest, opts ...gax.CallOption) (*identitypb.UserDefaults, error) {
+	return c.internalClient.GetUserDefaults(ctx, req, opts...)
 }
 
 func (c *Client) GetGroup(ctx context.Context, req *identitypb.GetGroupRequest, opts ...gax.CallOption) (*identitypb.Group, error) {
@@ -452,6 +459,22 @@ func (c *gRPCClient) UpdateUserNotifications(ctx context.Context, req *identityp
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
 		resp, err = c.client.UpdateUserNotifications(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *gRPCClient) GetUserDefaults(ctx context.Context, req *identitypb.GetUserDefaultsRequest, opts ...gax.CallOption) (*identitypb.UserDefaults, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).GetUserDefaults[0:len((*c.CallOptions).GetUserDefaults):len((*c.CallOptions).GetUserDefaults)], opts...)
+	var resp *identitypb.UserDefaults
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.client.GetUserDefaults(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	if err != nil {

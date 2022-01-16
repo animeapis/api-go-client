@@ -40,6 +40,11 @@
                 "GetUser"
               ]
             },
+            "GetUserDefaults": {
+              "methods": [
+                "GetUserDefaults"
+              ]
+            },
             "GetUserNotifications": {
               "methods": [
                 "GetUserNotifications"

@@ -240,6 +240,26 @@ func ExampleClient_UpdateUserNotifications() {
 	_ = resp
 }
 
+func ExampleClient_GetUserDefaults() {
+	ctx := context.Background()
+	c, err := identity.NewClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &identitypb.GetUserDefaultsRequest{
+		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/identity/v1alpha1#GetUserDefaultsRequest.
+	}
+	resp, err := c.GetUserDefaults(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
 func ExampleClient_GetGroup() {
 	ctx := context.Background()
 	c, err := identity.NewClient(ctx)
