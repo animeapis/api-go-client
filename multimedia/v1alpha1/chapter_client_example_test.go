@@ -139,3 +139,28 @@ func ExampleChapterClient_DeleteChapter() {
 		// TODO: Handle error.
 	}
 }
+
+func ExampleChapterClient_ReconcileChapters() {
+	ctx := context.Background()
+	c, err := multimedia.NewChapterClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &multimediapb.ReconcileChaptersRequest{
+		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/multimedia/v1alpha1#ReconcileChaptersRequest.
+	}
+	op, err := c.ReconcileChapters(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+
+	resp, err := op.Wait(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}

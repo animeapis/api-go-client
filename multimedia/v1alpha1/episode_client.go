@@ -21,13 +21,17 @@ import (
 	"fmt"
 	"math"
 	"net/url"
+	"time"
 
+	"cloud.google.com/go/longrunning"
+	lroauto "cloud.google.com/go/longrunning/autogen"
 	multimediapb "github.com/animeapis/go-genproto/multimedia/v1alpha1"
 	gax "github.com/googleapis/gax-go/v2"
 	"google.golang.org/api/iterator"
 	"google.golang.org/api/option"
 	"google.golang.org/api/option/internaloption"
 	gtransport "google.golang.org/api/transport/grpc"
+	longrunningpb "google.golang.org/genproto/googleapis/longrunning"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/protobuf/proto"
@@ -37,11 +41,12 @@ var newEpisodeClientHook clientHook
 
 // EpisodeCallOptions contains the retry settings for each method of EpisodeClient.
 type EpisodeCallOptions struct {
-	GetEpisode    []gax.CallOption
-	ListEpisodes  []gax.CallOption
-	CreateEpisode []gax.CallOption
-	UpdateEpisode []gax.CallOption
-	DeleteEpisode []gax.CallOption
+	GetEpisode        []gax.CallOption
+	ListEpisodes      []gax.CallOption
+	CreateEpisode     []gax.CallOption
+	UpdateEpisode     []gax.CallOption
+	DeleteEpisode     []gax.CallOption
+	ReconcileEpisodes []gax.CallOption
 }
 
 func defaultEpisodeGRPCClientOptions() []option.ClientOption {
@@ -58,11 +63,12 @@ func defaultEpisodeGRPCClientOptions() []option.ClientOption {
 
 func defaultEpisodeCallOptions() *EpisodeCallOptions {
 	return &EpisodeCallOptions{
-		GetEpisode:    []gax.CallOption{},
-		ListEpisodes:  []gax.CallOption{},
-		CreateEpisode: []gax.CallOption{},
-		UpdateEpisode: []gax.CallOption{},
-		DeleteEpisode: []gax.CallOption{},
+		GetEpisode:        []gax.CallOption{},
+		ListEpisodes:      []gax.CallOption{},
+		CreateEpisode:     []gax.CallOption{},
+		UpdateEpisode:     []gax.CallOption{},
+		DeleteEpisode:     []gax.CallOption{},
+		ReconcileEpisodes: []gax.CallOption{},
 	}
 }
 
@@ -76,6 +82,8 @@ type internalEpisodeClient interface {
 	CreateEpisode(context.Context, *multimediapb.CreateEpisodeRequest, ...gax.CallOption) (*multimediapb.Episode, error)
 	UpdateEpisode(context.Context, *multimediapb.UpdateEpisodeRequest, ...gax.CallOption) (*multimediapb.Episode, error)
 	DeleteEpisode(context.Context, *multimediapb.DeleteEpisodeRequest, ...gax.CallOption) error
+	ReconcileEpisodes(context.Context, *multimediapb.ReconcileEpisodesRequest, ...gax.CallOption) (*ReconcileEpisodesOperation, error)
+	ReconcileEpisodesOperation(name string) *ReconcileEpisodesOperation
 }
 
 // EpisodeClient is a client for interacting with Multimedia API.
@@ -86,6 +94,11 @@ type EpisodeClient struct {
 
 	// The call options for this service.
 	CallOptions *EpisodeCallOptions
+
+	// LROClient is used internally to handle long-running operations.
+	// It is exposed so that its CallOptions can be modified if required.
+	// Users should not Close this client.
+	LROClient *lroauto.OperationsClient
 }
 
 // Wrapper methods routed to the internal client.
@@ -130,6 +143,17 @@ func (c *EpisodeClient) DeleteEpisode(ctx context.Context, req *multimediapb.Del
 	return c.internalClient.DeleteEpisode(ctx, req, opts...)
 }
 
+// ReconcileEpisodes reconcile episodes with the search and knowledge base.
+func (c *EpisodeClient) ReconcileEpisodes(ctx context.Context, req *multimediapb.ReconcileEpisodesRequest, opts ...gax.CallOption) (*ReconcileEpisodesOperation, error) {
+	return c.internalClient.ReconcileEpisodes(ctx, req, opts...)
+}
+
+// ReconcileEpisodesOperation returns a new ReconcileEpisodesOperation from a given name.
+// The name must be that of a previously created ReconcileEpisodesOperation, possibly from a different process.
+func (c *EpisodeClient) ReconcileEpisodesOperation(name string) *ReconcileEpisodesOperation {
+	return c.internalClient.ReconcileEpisodesOperation(name)
+}
+
 // episodeGRPCClient is a client for interacting with Multimedia API over gRPC transport.
 //
 // Methods, except Close, may be called concurrently. However, fields must not be modified concurrently with method calls.
@@ -145,6 +169,11 @@ type episodeGRPCClient struct {
 
 	// The gRPC API client.
 	episodeClient multimediapb.EpisodeServiceClient
+
+	// LROClient is used internally to handle long-running operations.
+	// It is exposed so that its CallOptions can be modified if required.
+	// Users should not Close this client.
+	LROClient **lroauto.OperationsClient
 
 	// The x-goog-* metadata to be sent with each request.
 	xGoogMetadata metadata.MD
@@ -183,6 +212,17 @@ func NewEpisodeClient(ctx context.Context, opts ...option.ClientOption) (*Episod
 
 	client.internalClient = c
 
+	client.LROClient, err = lroauto.NewOperationsClient(ctx, gtransport.WithConnPool(connPool))
+	if err != nil {
+		// This error "should not happen", since we are just reusing old connection pool
+		// and never actually need to dial.
+		// If this does happen, we could leak connp. However, we cannot close conn:
+		// If the user invoked the constructor with option.WithGRPCConn,
+		// we would close a connection that's still in use.
+		// TODO: investigate error conditions.
+		return nil, err
+	}
+	c.LROClient = &client.LROClient
 	return &client, nil
 }
 
@@ -310,6 +350,93 @@ func (c *episodeGRPCClient) DeleteEpisode(ctx context.Context, req *multimediapb
 		return err
 	}, opts...)
 	return err
+}
+
+func (c *episodeGRPCClient) ReconcileEpisodes(ctx context.Context, req *multimediapb.ReconcileEpisodesRequest, opts ...gax.CallOption) (*ReconcileEpisodesOperation, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).ReconcileEpisodes[0:len((*c.CallOptions).ReconcileEpisodes):len((*c.CallOptions).ReconcileEpisodes)], opts...)
+	var resp *longrunningpb.Operation
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.episodeClient.ReconcileEpisodes(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return &ReconcileEpisodesOperation{
+		lro: longrunning.InternalNewOperation(*c.LROClient, resp),
+	}, nil
+}
+
+// ReconcileEpisodesOperation manages a long-running operation from ReconcileEpisodes.
+type ReconcileEpisodesOperation struct {
+	lro *longrunning.Operation
+}
+
+// ReconcileEpisodesOperation returns a new ReconcileEpisodesOperation from a given name.
+// The name must be that of a previously created ReconcileEpisodesOperation, possibly from a different process.
+func (c *episodeGRPCClient) ReconcileEpisodesOperation(name string) *ReconcileEpisodesOperation {
+	return &ReconcileEpisodesOperation{
+		lro: longrunning.InternalNewOperation(*c.LROClient, &longrunningpb.Operation{Name: name}),
+	}
+}
+
+// Wait blocks until the long-running operation is completed, returning the response and any errors encountered.
+//
+// See documentation of Poll for error-handling information.
+func (op *ReconcileEpisodesOperation) Wait(ctx context.Context, opts ...gax.CallOption) (*multimediapb.ReconcileEpisodesResponse, error) {
+	var resp multimediapb.ReconcileEpisodesResponse
+	if err := op.lro.WaitWithInterval(ctx, &resp, time.Minute, opts...); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+// Poll fetches the latest state of the long-running operation.
+//
+// Poll also fetches the latest metadata, which can be retrieved by Metadata.
+//
+// If Poll fails, the error is returned and op is unmodified. If Poll succeeds and
+// the operation has completed with failure, the error is returned and op.Done will return true.
+// If Poll succeeds and the operation has completed successfully,
+// op.Done will return true, and the response of the operation is returned.
+// If Poll succeeds and the operation has not completed, the returned response and error are both nil.
+func (op *ReconcileEpisodesOperation) Poll(ctx context.Context, opts ...gax.CallOption) (*multimediapb.ReconcileEpisodesResponse, error) {
+	var resp multimediapb.ReconcileEpisodesResponse
+	if err := op.lro.Poll(ctx, &resp, opts...); err != nil {
+		return nil, err
+	}
+	if !op.Done() {
+		return nil, nil
+	}
+	return &resp, nil
+}
+
+// Metadata returns metadata associated with the long-running operation.
+// Metadata itself does not contact the server, but Poll does.
+// To get the latest metadata, call this method after a successful call to Poll.
+// If the metadata is not available, the returned metadata and error are both nil.
+func (op *ReconcileEpisodesOperation) Metadata() (*multimediapb.OperationMetadata, error) {
+	var meta multimediapb.OperationMetadata
+	if err := op.lro.Metadata(&meta); err == longrunning.ErrNoMetadata {
+		return nil, nil
+	} else if err != nil {
+		return nil, err
+	}
+	return &meta, nil
+}
+
+// Done reports whether the long-running operation has completed.
+func (op *ReconcileEpisodesOperation) Done() bool {
+	return op.lro.Done()
+}
+
+// Name returns the name of the long-running operation.
+// The name is assigned by the server and is unique within the service from which the operation is created.
+func (op *ReconcileEpisodesOperation) Name() string {
+	return op.lro.Name()
 }
 
 // EpisodeIterator manages a stream of *multimediapb.Episode.

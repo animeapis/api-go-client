@@ -30,6 +30,11 @@
                 "ListChapters"
               ]
             },
+            "ReconcileChapters": {
+              "methods": [
+                "ReconcileChapters"
+              ]
+            },
             "UpdateChapter": {
               "methods": [
                 "UpdateChapter"
@@ -62,6 +67,11 @@
             "ListEpisodes": {
               "methods": [
                 "ListEpisodes"
+              ]
+            },
+            "ReconcileEpisodes": {
+              "methods": [
+                "ReconcileEpisodes"
               ]
             },
             "UpdateEpisode": {

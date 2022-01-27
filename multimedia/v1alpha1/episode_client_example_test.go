@@ -139,3 +139,28 @@ func ExampleEpisodeClient_DeleteEpisode() {
 		// TODO: Handle error.
 	}
 }
+
+func ExampleEpisodeClient_ReconcileEpisodes() {
+	ctx := context.Background()
+	c, err := multimedia.NewEpisodeClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &multimediapb.ReconcileEpisodesRequest{
+		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/multimedia/v1alpha1#ReconcileEpisodesRequest.
+	}
+	op, err := c.ReconcileEpisodes(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+
+	resp, err := op.Wait(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
