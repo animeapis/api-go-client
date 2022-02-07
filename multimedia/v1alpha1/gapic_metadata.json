@@ -5,6 +5,45 @@
   "protoPackage": "animeshon.multimedia.v1alpha1",
   "libraryPackage": "github.com/animeapis/api-go-client/multimedia/v1alpha1",
   "services": {
+    "AnimeService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "AnimeClient",
+          "rpcs": {
+            "CreateAnime": {
+              "methods": [
+                "CreateAnime"
+              ]
+            },
+            "DeleteAnime": {
+              "methods": [
+                "DeleteAnime"
+              ]
+            },
+            "GetAnime": {
+              "methods": [
+                "GetAnime"
+              ]
+            },
+            "ListAnimes": {
+              "methods": [
+                "ListAnimes"
+              ]
+            },
+            "ReconcileAnimes": {
+              "methods": [
+                "ReconcileAnimes"
+              ]
+            },
+            "UpdateAnime": {
+              "methods": [
+                "UpdateAnime"
+              ]
+            }
+          }
+        }
+      }
+    },
     "ChapterService": {
       "clients": {
         "grpc": {
@@ -77,6 +116,84 @@
             "UpdateEpisode": {
               "methods": [
                 "UpdateEpisode"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "GraphicNovelService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "GraphicNovelClient",
+          "rpcs": {
+            "CreateGraphicNovel": {
+              "methods": [
+                "CreateGraphicNovel"
+              ]
+            },
+            "DeleteGraphicNovel": {
+              "methods": [
+                "DeleteGraphicNovel"
+              ]
+            },
+            "GetGraphicNovel": {
+              "methods": [
+                "GetGraphicNovel"
+              ]
+            },
+            "ListGraphicNovels": {
+              "methods": [
+                "ListGraphicNovels"
+              ]
+            },
+            "ReconcileGraphicNovels": {
+              "methods": [
+                "ReconcileGraphicNovels"
+              ]
+            },
+            "UpdateGraphicNovel": {
+              "methods": [
+                "UpdateGraphicNovel"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "LightNovelService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "LightNovelClient",
+          "rpcs": {
+            "CreateLightNovel": {
+              "methods": [
+                "CreateLightNovel"
+              ]
+            },
+            "DeleteLightNovel": {
+              "methods": [
+                "DeleteLightNovel"
+              ]
+            },
+            "GetLightNovel": {
+              "methods": [
+                "GetLightNovel"
+              ]
+            },
+            "ListLightNovels": {
+              "methods": [
+                "ListLightNovels"
+              ]
+            },
+            "ReconcileLightNovels": {
+              "methods": [
+                "ReconcileLightNovels"
+              ]
+            },
+            "UpdateLightNovel": {
+              "methods": [
+                "UpdateLightNovel"
               ]
             }
           }

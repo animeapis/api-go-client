@@ -21,7 +21,7 @@
 //
 // To get started with this package, create a client.
 //  ctx := context.Background()
-//  c, err := multimedia.NewChapterClient(ctx)
+//  c, err := multimedia.NewAnimeClient(ctx)
 //  if err != nil {
 //  	// TODO: Handle error.
 //  }
@@ -36,17 +36,17 @@
 // The following is an example of making an API call with the newly created client.
 //
 //  ctx := context.Background()
-//  c, err := multimedia.NewChapterClient(ctx)
+//  c, err := multimedia.NewAnimeClient(ctx)
 //  if err != nil {
 //  	// TODO: Handle error.
 //  }
 //  defer c.Close()
 //
-//  req := &multimediapb.GetChapterRequest{
+//  req := &multimediapb.GetAnimeRequest{
 //  	// TODO: Fill request struct fields.
-//  	// See https://pkg.go.dev/github.com/animeapis/go-genproto/multimedia/v1alpha1#GetChapterRequest.
+//  	// See https://pkg.go.dev/github.com/animeapis/go-genproto/multimedia/v1alpha1#GetAnimeRequest.
 //  }
-//  resp, err := c.GetChapter(ctx, req)
+//  resp, err := c.GetAnime(ctx, req)
 //  if err != nil {
 //  	// TODO: Handle error.
 //  }
