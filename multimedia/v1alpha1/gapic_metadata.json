@@ -199,6 +199,45 @@
           }
         }
       }
+    },
+    "VisualNovelService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "VisualNovelClient",
+          "rpcs": {
+            "CreateVisualNovel": {
+              "methods": [
+                "CreateVisualNovel"
+              ]
+            },
+            "DeleteVisualNovel": {
+              "methods": [
+                "DeleteVisualNovel"
+              ]
+            },
+            "GetVisualNovel": {
+              "methods": [
+                "GetVisualNovel"
+              ]
+            },
+            "ListVisualNovels": {
+              "methods": [
+                "ListVisualNovels"
+              ]
+            },
+            "ReconcileVisualNovels": {
+              "methods": [
+                "ReconcileVisualNovels"
+              ]
+            },
+            "UpdateVisualNovel": {
+              "methods": [
+                "UpdateVisualNovel"
+              ]
+            }
+          }
+        }
+      }
     }
   }
 }
