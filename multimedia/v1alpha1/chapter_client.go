@@ -41,12 +41,13 @@ var newChapterClientHook clientHook
 
 // ChapterCallOptions contains the retry settings for each method of ChapterClient.
 type ChapterCallOptions struct {
-	GetChapter        []gax.CallOption
-	ListChapters      []gax.CallOption
-	CreateChapter     []gax.CallOption
-	UpdateChapter     []gax.CallOption
-	DeleteChapter     []gax.CallOption
-	ReconcileChapters []gax.CallOption
+	GetChapter          []gax.CallOption
+	ListChapters        []gax.CallOption
+	CreateChapter       []gax.CallOption
+	BatchCreateChapters []gax.CallOption
+	UpdateChapter       []gax.CallOption
+	DeleteChapter       []gax.CallOption
+	ReconcileChapters   []gax.CallOption
 }
 
 func defaultChapterGRPCClientOptions() []option.ClientOption {
@@ -63,12 +64,13 @@ func defaultChapterGRPCClientOptions() []option.ClientOption {
 
 func defaultChapterCallOptions() *ChapterCallOptions {
 	return &ChapterCallOptions{
-		GetChapter:        []gax.CallOption{},
-		ListChapters:      []gax.CallOption{},
-		CreateChapter:     []gax.CallOption{},
-		UpdateChapter:     []gax.CallOption{},
-		DeleteChapter:     []gax.CallOption{},
-		ReconcileChapters: []gax.CallOption{},
+		GetChapter:          []gax.CallOption{},
+		ListChapters:        []gax.CallOption{},
+		CreateChapter:       []gax.CallOption{},
+		BatchCreateChapters: []gax.CallOption{},
+		UpdateChapter:       []gax.CallOption{},
+		DeleteChapter:       []gax.CallOption{},
+		ReconcileChapters:   []gax.CallOption{},
 	}
 }
 
@@ -80,6 +82,7 @@ type internalChapterClient interface {
 	GetChapter(context.Context, *multimediapb.GetChapterRequest, ...gax.CallOption) (*multimediapb.Chapter, error)
 	ListChapters(context.Context, *multimediapb.ListChaptersRequest, ...gax.CallOption) *ChapterIterator
 	CreateChapter(context.Context, *multimediapb.CreateChapterRequest, ...gax.CallOption) (*multimediapb.Chapter, error)
+	BatchCreateChapters(context.Context, *multimediapb.BatchCreateChaptersRequest, ...gax.CallOption) (*multimediapb.BatchCreateChaptersResponse, error)
 	UpdateChapter(context.Context, *multimediapb.UpdateChapterRequest, ...gax.CallOption) (*multimediapb.Chapter, error)
 	DeleteChapter(context.Context, *multimediapb.DeleteChapterRequest, ...gax.CallOption) error
 	ReconcileChapters(context.Context, *multimediapb.ReconcileChaptersRequest, ...gax.CallOption) (*ReconcileChaptersOperation, error)
@@ -133,6 +136,10 @@ func (c *ChapterClient) ListChapters(ctx context.Context, req *multimediapb.List
 
 func (c *ChapterClient) CreateChapter(ctx context.Context, req *multimediapb.CreateChapterRequest, opts ...gax.CallOption) (*multimediapb.Chapter, error) {
 	return c.internalClient.CreateChapter(ctx, req, opts...)
+}
+
+func (c *ChapterClient) BatchCreateChapters(ctx context.Context, req *multimediapb.BatchCreateChaptersRequest, opts ...gax.CallOption) (*multimediapb.BatchCreateChaptersResponse, error) {
+	return c.internalClient.BatchCreateChapters(ctx, req, opts...)
 }
 
 func (c *ChapterClient) UpdateChapter(ctx context.Context, req *multimediapb.UpdateChapterRequest, opts ...gax.CallOption) (*multimediapb.Chapter, error) {
@@ -316,6 +323,22 @@ func (c *chapterGRPCClient) CreateChapter(ctx context.Context, req *multimediapb
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
 		resp, err = c.chapterClient.CreateChapter(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *chapterGRPCClient) BatchCreateChapters(ctx context.Context, req *multimediapb.BatchCreateChaptersRequest, opts ...gax.CallOption) (*multimediapb.BatchCreateChaptersResponse, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).BatchCreateChapters[0:len((*c.CallOptions).BatchCreateChapters):len((*c.CallOptions).BatchCreateChapters)], opts...)
+	var resp *multimediapb.BatchCreateChaptersResponse
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.chapterClient.BatchCreateChapters(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	if err != nil {

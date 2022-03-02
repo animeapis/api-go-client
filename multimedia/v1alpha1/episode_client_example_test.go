@@ -102,6 +102,26 @@ func ExampleEpisodeClient_CreateEpisode() {
 	_ = resp
 }
 
+func ExampleEpisodeClient_BatchCreateEpisodes() {
+	ctx := context.Background()
+	c, err := multimedia.NewEpisodeClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &multimediapb.BatchCreateEpisodesRequest{
+		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/multimedia/v1alpha1#BatchCreateEpisodesRequest.
+	}
+	resp, err := c.BatchCreateEpisodes(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
 func ExampleEpisodeClient_UpdateEpisode() {
 	ctx := context.Background()
 	c, err := multimedia.NewEpisodeClient(ctx)

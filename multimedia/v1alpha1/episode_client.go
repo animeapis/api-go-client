@@ -41,12 +41,13 @@ var newEpisodeClientHook clientHook
 
 // EpisodeCallOptions contains the retry settings for each method of EpisodeClient.
 type EpisodeCallOptions struct {
-	GetEpisode        []gax.CallOption
-	ListEpisodes      []gax.CallOption
-	CreateEpisode     []gax.CallOption
-	UpdateEpisode     []gax.CallOption
-	DeleteEpisode     []gax.CallOption
-	ReconcileEpisodes []gax.CallOption
+	GetEpisode          []gax.CallOption
+	ListEpisodes        []gax.CallOption
+	CreateEpisode       []gax.CallOption
+	BatchCreateEpisodes []gax.CallOption
+	UpdateEpisode       []gax.CallOption
+	DeleteEpisode       []gax.CallOption
+	ReconcileEpisodes   []gax.CallOption
 }
 
 func defaultEpisodeGRPCClientOptions() []option.ClientOption {
@@ -63,12 +64,13 @@ func defaultEpisodeGRPCClientOptions() []option.ClientOption {
 
 func defaultEpisodeCallOptions() *EpisodeCallOptions {
 	return &EpisodeCallOptions{
-		GetEpisode:        []gax.CallOption{},
-		ListEpisodes:      []gax.CallOption{},
-		CreateEpisode:     []gax.CallOption{},
-		UpdateEpisode:     []gax.CallOption{},
-		DeleteEpisode:     []gax.CallOption{},
-		ReconcileEpisodes: []gax.CallOption{},
+		GetEpisode:          []gax.CallOption{},
+		ListEpisodes:        []gax.CallOption{},
+		CreateEpisode:       []gax.CallOption{},
+		BatchCreateEpisodes: []gax.CallOption{},
+		UpdateEpisode:       []gax.CallOption{},
+		DeleteEpisode:       []gax.CallOption{},
+		ReconcileEpisodes:   []gax.CallOption{},
 	}
 }
 
@@ -80,6 +82,7 @@ type internalEpisodeClient interface {
 	GetEpisode(context.Context, *multimediapb.GetEpisodeRequest, ...gax.CallOption) (*multimediapb.Episode, error)
 	ListEpisodes(context.Context, *multimediapb.ListEpisodesRequest, ...gax.CallOption) *EpisodeIterator
 	CreateEpisode(context.Context, *multimediapb.CreateEpisodeRequest, ...gax.CallOption) (*multimediapb.Episode, error)
+	BatchCreateEpisodes(context.Context, *multimediapb.BatchCreateEpisodesRequest, ...gax.CallOption) (*multimediapb.BatchCreateEpisodesResponse, error)
 	UpdateEpisode(context.Context, *multimediapb.UpdateEpisodeRequest, ...gax.CallOption) (*multimediapb.Episode, error)
 	DeleteEpisode(context.Context, *multimediapb.DeleteEpisodeRequest, ...gax.CallOption) error
 	ReconcileEpisodes(context.Context, *multimediapb.ReconcileEpisodesRequest, ...gax.CallOption) (*ReconcileEpisodesOperation, error)
@@ -133,6 +136,10 @@ func (c *EpisodeClient) ListEpisodes(ctx context.Context, req *multimediapb.List
 
 func (c *EpisodeClient) CreateEpisode(ctx context.Context, req *multimediapb.CreateEpisodeRequest, opts ...gax.CallOption) (*multimediapb.Episode, error) {
 	return c.internalClient.CreateEpisode(ctx, req, opts...)
+}
+
+func (c *EpisodeClient) BatchCreateEpisodes(ctx context.Context, req *multimediapb.BatchCreateEpisodesRequest, opts ...gax.CallOption) (*multimediapb.BatchCreateEpisodesResponse, error) {
+	return c.internalClient.BatchCreateEpisodes(ctx, req, opts...)
 }
 
 func (c *EpisodeClient) UpdateEpisode(ctx context.Context, req *multimediapb.UpdateEpisodeRequest, opts ...gax.CallOption) (*multimediapb.Episode, error) {
@@ -316,6 +323,22 @@ func (c *episodeGRPCClient) CreateEpisode(ctx context.Context, req *multimediapb
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
 		resp, err = c.episodeClient.CreateEpisode(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *episodeGRPCClient) BatchCreateEpisodes(ctx context.Context, req *multimediapb.BatchCreateEpisodesRequest, opts ...gax.CallOption) (*multimediapb.BatchCreateEpisodesResponse, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).BatchCreateEpisodes[0:len((*c.CallOptions).BatchCreateEpisodes):len((*c.CallOptions).BatchCreateEpisodes)], opts...)
+	var resp *multimediapb.BatchCreateEpisodesResponse
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.episodeClient.BatchCreateEpisodes(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	if err != nil {

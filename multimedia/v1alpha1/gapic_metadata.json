@@ -49,6 +49,11 @@
         "grpc": {
           "libraryClient": "ChapterClient",
           "rpcs": {
+            "BatchCreateChapters": {
+              "methods": [
+                "BatchCreateChapters"
+              ]
+            },
             "CreateChapter": {
               "methods": [
                 "CreateChapter"
@@ -88,6 +93,11 @@
         "grpc": {
           "libraryClient": "EpisodeClient",
           "rpcs": {
+            "BatchCreateEpisodes": {
+              "methods": [
+                "BatchCreateEpisodes"
+              ]
+            },
             "CreateEpisode": {
               "methods": [
                 "CreateEpisode"

@@ -102,6 +102,26 @@ func ExampleChapterClient_CreateChapter() {
 	_ = resp
 }
 
+func ExampleChapterClient_BatchCreateChapters() {
+	ctx := context.Background()
+	c, err := multimedia.NewChapterClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &multimediapb.BatchCreateChaptersRequest{
+		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/multimedia/v1alpha1#BatchCreateChaptersRequest.
+	}
+	resp, err := c.BatchCreateChapters(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
 func ExampleChapterClient_UpdateChapter() {
 	ctx := context.Background()
 	c, err := multimedia.NewChapterClient(ctx)
