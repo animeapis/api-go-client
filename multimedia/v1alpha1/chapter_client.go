@@ -82,7 +82,8 @@ type internalChapterClient interface {
 	GetChapter(context.Context, *multimediapb.GetChapterRequest, ...gax.CallOption) (*multimediapb.Chapter, error)
 	ListChapters(context.Context, *multimediapb.ListChaptersRequest, ...gax.CallOption) *ChapterIterator
 	CreateChapter(context.Context, *multimediapb.CreateChapterRequest, ...gax.CallOption) (*multimediapb.Chapter, error)
-	BatchCreateChapters(context.Context, *multimediapb.BatchCreateChaptersRequest, ...gax.CallOption) (*multimediapb.BatchCreateChaptersResponse, error)
+	BatchCreateChapters(context.Context, *multimediapb.BatchCreateChaptersRequest, ...gax.CallOption) (*BatchCreateChaptersOperation, error)
+	BatchCreateChaptersOperation(name string) *BatchCreateChaptersOperation
 	UpdateChapter(context.Context, *multimediapb.UpdateChapterRequest, ...gax.CallOption) (*multimediapb.Chapter, error)
 	DeleteChapter(context.Context, *multimediapb.DeleteChapterRequest, ...gax.CallOption) error
 	ReconcileChapters(context.Context, *multimediapb.ReconcileChaptersRequest, ...gax.CallOption) (*ReconcileChaptersOperation, error)
@@ -138,8 +139,14 @@ func (c *ChapterClient) CreateChapter(ctx context.Context, req *multimediapb.Cre
 	return c.internalClient.CreateChapter(ctx, req, opts...)
 }
 
-func (c *ChapterClient) BatchCreateChapters(ctx context.Context, req *multimediapb.BatchCreateChaptersRequest, opts ...gax.CallOption) (*multimediapb.BatchCreateChaptersResponse, error) {
+func (c *ChapterClient) BatchCreateChapters(ctx context.Context, req *multimediapb.BatchCreateChaptersRequest, opts ...gax.CallOption) (*BatchCreateChaptersOperation, error) {
 	return c.internalClient.BatchCreateChapters(ctx, req, opts...)
+}
+
+// BatchCreateChaptersOperation returns a new BatchCreateChaptersOperation from a given name.
+// The name must be that of a previously created BatchCreateChaptersOperation, possibly from a different process.
+func (c *ChapterClient) BatchCreateChaptersOperation(name string) *BatchCreateChaptersOperation {
+	return c.internalClient.BatchCreateChaptersOperation(name)
 }
 
 func (c *ChapterClient) UpdateChapter(ctx context.Context, req *multimediapb.UpdateChapterRequest, opts ...gax.CallOption) (*multimediapb.Chapter, error) {
@@ -331,11 +338,11 @@ func (c *chapterGRPCClient) CreateChapter(ctx context.Context, req *multimediapb
 	return resp, nil
 }
 
-func (c *chapterGRPCClient) BatchCreateChapters(ctx context.Context, req *multimediapb.BatchCreateChaptersRequest, opts ...gax.CallOption) (*multimediapb.BatchCreateChaptersResponse, error) {
+func (c *chapterGRPCClient) BatchCreateChapters(ctx context.Context, req *multimediapb.BatchCreateChaptersRequest, opts ...gax.CallOption) (*BatchCreateChaptersOperation, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).BatchCreateChapters[0:len((*c.CallOptions).BatchCreateChapters):len((*c.CallOptions).BatchCreateChapters)], opts...)
-	var resp *multimediapb.BatchCreateChaptersResponse
+	var resp *longrunningpb.Operation
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
 		resp, err = c.chapterClient.BatchCreateChapters(ctx, req, settings.GRPC...)
@@ -344,7 +351,9 @@ func (c *chapterGRPCClient) BatchCreateChapters(ctx context.Context, req *multim
 	if err != nil {
 		return nil, err
 	}
-	return resp, nil
+	return &BatchCreateChaptersOperation{
+		lro: longrunning.InternalNewOperation(*c.LROClient, resp),
+	}, nil
 }
 
 func (c *chapterGRPCClient) UpdateChapter(ctx context.Context, req *multimediapb.UpdateChapterRequest, opts ...gax.CallOption) (*multimediapb.Chapter, error) {
@@ -391,6 +400,75 @@ func (c *chapterGRPCClient) ReconcileChapters(ctx context.Context, req *multimed
 	return &ReconcileChaptersOperation{
 		lro: longrunning.InternalNewOperation(*c.LROClient, resp),
 	}, nil
+}
+
+// BatchCreateChaptersOperation manages a long-running operation from BatchCreateChapters.
+type BatchCreateChaptersOperation struct {
+	lro *longrunning.Operation
+}
+
+// BatchCreateChaptersOperation returns a new BatchCreateChaptersOperation from a given name.
+// The name must be that of a previously created BatchCreateChaptersOperation, possibly from a different process.
+func (c *chapterGRPCClient) BatchCreateChaptersOperation(name string) *BatchCreateChaptersOperation {
+	return &BatchCreateChaptersOperation{
+		lro: longrunning.InternalNewOperation(*c.LROClient, &longrunningpb.Operation{Name: name}),
+	}
+}
+
+// Wait blocks until the long-running operation is completed, returning the response and any errors encountered.
+//
+// See documentation of Poll for error-handling information.
+func (op *BatchCreateChaptersOperation) Wait(ctx context.Context, opts ...gax.CallOption) (*multimediapb.BatchCreateChaptersResponse, error) {
+	var resp multimediapb.BatchCreateChaptersResponse
+	if err := op.lro.WaitWithInterval(ctx, &resp, time.Minute, opts...); err != nil {
+		return nil, err
+	}
+	return &resp, nil
+}
+
+// Poll fetches the latest state of the long-running operation.
+//
+// Poll also fetches the latest metadata, which can be retrieved by Metadata.
+//
+// If Poll fails, the error is returned and op is unmodified. If Poll succeeds and
+// the operation has completed with failure, the error is returned and op.Done will return true.
+// If Poll succeeds and the operation has completed successfully,
+// op.Done will return true, and the response of the operation is returned.
+// If Poll succeeds and the operation has not completed, the returned response and error are both nil.
+func (op *BatchCreateChaptersOperation) Poll(ctx context.Context, opts ...gax.CallOption) (*multimediapb.BatchCreateChaptersResponse, error) {
+	var resp multimediapb.BatchCreateChaptersResponse
+	if err := op.lro.Poll(ctx, &resp, opts...); err != nil {
+		return nil, err
+	}
+	if !op.Done() {
+		return nil, nil
+	}
+	return &resp, nil
+}
+
+// Metadata returns metadata associated with the long-running operation.
+// Metadata itself does not contact the server, but Poll does.
+// To get the latest metadata, call this method after a successful call to Poll.
+// If the metadata is not available, the returned metadata and error are both nil.
+func (op *BatchCreateChaptersOperation) Metadata() (*multimediapb.OperationMetadata, error) {
+	var meta multimediapb.OperationMetadata
+	if err := op.lro.Metadata(&meta); err == longrunning.ErrNoMetadata {
+		return nil, nil
+	} else if err != nil {
+		return nil, err
+	}
+	return &meta, nil
+}
+
+// Done reports whether the long-running operation has completed.
+func (op *BatchCreateChaptersOperation) Done() bool {
+	return op.lro.Done()
+}
+
+// Name returns the name of the long-running operation.
+// The name is assigned by the server and is unique within the service from which the operation is created.
+func (op *BatchCreateChaptersOperation) Name() string {
+	return op.lro.Name()
 }
 
 // ReconcileChaptersOperation manages a long-running operation from ReconcileChapters.

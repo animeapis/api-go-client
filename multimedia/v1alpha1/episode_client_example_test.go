@@ -114,7 +114,12 @@ func ExampleEpisodeClient_BatchCreateEpisodes() {
 		// TODO: Fill request struct fields.
 		// See https://pkg.go.dev/github.com/animeapis/go-genproto/multimedia/v1alpha1#BatchCreateEpisodesRequest.
 	}
-	resp, err := c.BatchCreateEpisodes(ctx, req)
+	op, err := c.BatchCreateEpisodes(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+
+	resp, err := op.Wait(ctx)
 	if err != nil {
 		// TODO: Handle error.
 	}

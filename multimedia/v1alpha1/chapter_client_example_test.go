@@ -114,7 +114,12 @@ func ExampleChapterClient_BatchCreateChapters() {
 		// TODO: Fill request struct fields.
 		// See https://pkg.go.dev/github.com/animeapis/go-genproto/multimedia/v1alpha1#BatchCreateChaptersRequest.
 	}
-	resp, err := c.BatchCreateChapters(ctx, req)
+	op, err := c.BatchCreateChapters(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+
+	resp, err := op.Wait(ctx)
 	if err != nil {
 		// TODO: Handle error.
 	}
