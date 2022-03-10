@@ -103,6 +103,26 @@ func ExampleReferrerClient_CreateCrossRef() {
 	_ = resp
 }
 
+func ExampleReferrerClient_BatchCreateCrossRefs() {
+	ctx := context.Background()
+	c, err := crossrefs.NewReferrerClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &crossrefspb.BatchCreateCrossRefsRequest{
+		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/crossrefs/v1alpha1#BatchCreateCrossRefsRequest.
+	}
+	resp, err := c.BatchCreateCrossRefs(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
 func ExampleReferrerClient_UpdateCrossRef() {
 	ctx := context.Background()
 	c, err := crossrefs.NewReferrerClient(ctx)

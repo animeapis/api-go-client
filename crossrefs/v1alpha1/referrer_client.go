@@ -45,6 +45,7 @@ type ReferrerCallOptions struct {
 	GetCrossRef           []gax.CallOption
 	ListCrossRefs         []gax.CallOption
 	CreateCrossRef        []gax.CallOption
+	BatchCreateCrossRefs  []gax.CallOption
 	UpdateCrossRef        []gax.CallOption
 	CountCrossRefs        []gax.CallOption
 	AnalyzeCrossRefs      []gax.CallOption
@@ -77,6 +78,7 @@ func defaultReferrerCallOptions() *ReferrerCallOptions {
 		GetCrossRef:           []gax.CallOption{},
 		ListCrossRefs:         []gax.CallOption{},
 		CreateCrossRef:        []gax.CallOption{},
+		BatchCreateCrossRefs:  []gax.CallOption{},
 		UpdateCrossRef:        []gax.CallOption{},
 		CountCrossRefs:        []gax.CallOption{},
 		AnalyzeCrossRefs:      []gax.CallOption{},
@@ -101,6 +103,7 @@ type internalReferrerClient interface {
 	GetCrossRef(context.Context, *crossrefspb.GetCrossRefRequest, ...gax.CallOption) (*crossrefspb.CrossRef, error)
 	ListCrossRefs(context.Context, *crossrefspb.ListCrossRefsRequest, ...gax.CallOption) *CrossRefIterator
 	CreateCrossRef(context.Context, *crossrefspb.CreateCrossRefRequest, ...gax.CallOption) (*crossrefspb.CrossRef, error)
+	BatchCreateCrossRefs(context.Context, *crossrefspb.BatchCreateCrossRefsRequest, ...gax.CallOption) (*crossrefspb.BatchCreateCrossRefsResponse, error)
 	UpdateCrossRef(context.Context, *crossrefspb.UpdateCrossRefRequest, ...gax.CallOption) (*crossrefspb.UpdateCrossRefResponse, error)
 	CountCrossRefs(context.Context, *crossrefspb.CountCrossRefsRequest, ...gax.CallOption) (*crossrefspb.CountCrossRefsResponse, error)
 	AnalyzeCrossRefs(context.Context, *crossrefspb.AnalyzeCrossRefRequest, ...gax.CallOption) (*AnalyzeCrossRefsOperation, error)
@@ -171,6 +174,14 @@ func (c *ReferrerClient) ListCrossRefs(ctx context.Context, req *crossrefspb.Lis
 // CreateCrossRef createCrossRef creates a new crossref.
 func (c *ReferrerClient) CreateCrossRef(ctx context.Context, req *crossrefspb.CreateCrossRefRequest, opts ...gax.CallOption) (*crossrefspb.CrossRef, error) {
 	return c.internalClient.CreateCrossRef(ctx, req, opts...)
+}
+
+// BatchCreateCrossRefs batchCreateCrossRefs creates new crossrefs in batch.
+// The limit is of 10 crossreferences and it’s blocking.
+// It ensures that the crossreferences are created in the database
+// but not propagated to the other services
+func (c *ReferrerClient) BatchCreateCrossRefs(ctx context.Context, req *crossrefspb.BatchCreateCrossRefsRequest, opts ...gax.CallOption) (*crossrefspb.BatchCreateCrossRefsResponse, error) {
+	return c.internalClient.BatchCreateCrossRefs(ctx, req, opts...)
 }
 
 func (c *ReferrerClient) UpdateCrossRef(ctx context.Context, req *crossrefspb.UpdateCrossRefRequest, opts ...gax.CallOption) (*crossrefspb.UpdateCrossRefResponse, error) {
@@ -428,6 +439,21 @@ func (c *referrerGRPCClient) CreateCrossRef(ctx context.Context, req *crossrefsp
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
 		resp, err = c.referrerClient.CreateCrossRef(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *referrerGRPCClient) BatchCreateCrossRefs(ctx context.Context, req *crossrefspb.BatchCreateCrossRefsRequest, opts ...gax.CallOption) (*crossrefspb.BatchCreateCrossRefsResponse, error) {
+	ctx = insertMetadata(ctx, c.xGoogMetadata)
+	opts = append((*c.CallOptions).BatchCreateCrossRefs[0:len((*c.CallOptions).BatchCreateCrossRefs):len((*c.CallOptions).BatchCreateCrossRefs)], opts...)
+	var resp *crossrefspb.BatchCreateCrossRefsResponse
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.referrerClient.BatchCreateCrossRefs(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	if err != nil {
