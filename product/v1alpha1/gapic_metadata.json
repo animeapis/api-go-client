@@ -1,0 +1,43 @@
+{
+  "schema": "1.0",
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods.",
+  "language": "go",
+  "protoPackage": "animeshon.product.v1alpha1",
+  "libraryPackage": "github.com/animeapis/api-go-client/product/v1alpha1",
+  "services": {
+    "ChapterService": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ChapterClient",
+          "rpcs": {
+            "CreateChapter": {
+              "methods": [
+                "CreateChapter"
+              ]
+            },
+            "DeleteChapter": {
+              "methods": [
+                "DeleteChapter"
+              ]
+            },
+            "GetChapter": {
+              "methods": [
+                "GetChapter"
+              ]
+            },
+            "ListChapters": {
+              "methods": [
+                "ListChapters"
+              ]
+            },
+            "UpdateChapter": {
+              "methods": [
+                "UpdateChapter"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}
