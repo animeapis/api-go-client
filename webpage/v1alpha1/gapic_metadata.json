@@ -1,0 +1,43 @@
+{
+  "schema": "1.0",
+  "comment": "This file maps proto services/RPCs to the corresponding library clients/methods.",
+  "language": "go",
+  "protoPackage": "animeshon.webpage.v1alpha1",
+  "libraryPackage": "github.com/animeapis/api-go-client/webpage/v1alpha1",
+  "services": {
+    "Archive": {
+      "clients": {
+        "grpc": {
+          "libraryClient": "ArchiveClient",
+          "rpcs": {
+            "CreatePage": {
+              "methods": [
+                "CreatePage"
+              ]
+            },
+            "DeletePage": {
+              "methods": [
+                "DeletePage"
+              ]
+            },
+            "GetPage": {
+              "methods": [
+                "GetPage"
+              ]
+            },
+            "ImportPage": {
+              "methods": [
+                "ImportPage"
+              ]
+            },
+            "ListPages": {
+              "methods": [
+                "ListPages"
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}
