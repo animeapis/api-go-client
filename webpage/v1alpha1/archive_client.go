@@ -269,7 +269,7 @@ func (c *archiveGRPCClient) ListPages(ctx context.Context, req *webpagepb.ListPa
 }
 
 func (c *archiveGRPCClient) ImportPage(ctx context.Context, req *webpagepb.ImportPageRequest, opts ...gax.CallOption) (*webpagepb.ImportPageResponse, error) {
-	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).ImportPage[0:len((*c.CallOptions).ImportPage):len((*c.CallOptions).ImportPage)], opts...)
 	var resp *webpagepb.ImportPageResponse
