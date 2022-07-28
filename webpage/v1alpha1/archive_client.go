@@ -39,6 +39,7 @@ var newArchiveClientHook clientHook
 type ArchiveCallOptions struct {
 	GetPage    []gax.CallOption
 	ListPages  []gax.CallOption
+	QueryPage  []gax.CallOption
 	CreatePage []gax.CallOption
 	ImportPage []gax.CallOption
 	DeletePage []gax.CallOption
@@ -60,6 +61,7 @@ func defaultArchiveCallOptions() *ArchiveCallOptions {
 	return &ArchiveCallOptions{
 		GetPage:    []gax.CallOption{},
 		ListPages:  []gax.CallOption{},
+		QueryPage:  []gax.CallOption{},
 		CreatePage: []gax.CallOption{},
 		ImportPage: []gax.CallOption{},
 		DeletePage: []gax.CallOption{},
@@ -73,6 +75,7 @@ type internalArchiveClient interface {
 	Connection() *grpc.ClientConn
 	GetPage(context.Context, *webpagepb.GetPageRequest, ...gax.CallOption) (*webpagepb.Page, error)
 	ListPages(context.Context, *webpagepb.ListPagesRequest, ...gax.CallOption) *PageIterator
+	QueryPage(context.Context, *webpagepb.QueryPageRequest, ...gax.CallOption) (*webpagepb.QueryPageResponse, error)
 	CreatePage(context.Context, *webpagepb.CreatePageRequest, ...gax.CallOption) (*webpagepb.Page, error)
 	ImportPage(context.Context, *webpagepb.ImportPageRequest, ...gax.CallOption) (*webpagepb.ImportPageResponse, error)
 	DeletePage(context.Context, *webpagepb.DeletePageRequest, ...gax.CallOption) error
@@ -116,6 +119,10 @@ func (c *ArchiveClient) GetPage(ctx context.Context, req *webpagepb.GetPageReque
 
 func (c *ArchiveClient) ListPages(ctx context.Context, req *webpagepb.ListPagesRequest, opts ...gax.CallOption) *PageIterator {
 	return c.internalClient.ListPages(ctx, req, opts...)
+}
+
+func (c *ArchiveClient) QueryPage(ctx context.Context, req *webpagepb.QueryPageRequest, opts ...gax.CallOption) (*webpagepb.QueryPageResponse, error) {
+	return c.internalClient.QueryPage(ctx, req, opts...)
 }
 
 func (c *ArchiveClient) CreatePage(ctx context.Context, req *webpagepb.CreatePageRequest, opts ...gax.CallOption) (*webpagepb.Page, error) {
@@ -266,6 +273,22 @@ func (c *archiveGRPCClient) ListPages(ctx context.Context, req *webpagepb.ListPa
 	it.pageInfo.Token = req.GetPageToken()
 
 	return it
+}
+
+func (c *archiveGRPCClient) QueryPage(ctx context.Context, req *webpagepb.QueryPageRequest, opts ...gax.CallOption) (*webpagepb.QueryPageResponse, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).QueryPage[0:len((*c.CallOptions).QueryPage):len((*c.CallOptions).QueryPage)], opts...)
+	var resp *webpagepb.QueryPageResponse
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.archiveClient.QueryPage(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 func (c *archiveGRPCClient) CreatePage(ctx context.Context, req *webpagepb.CreatePageRequest, opts ...gax.CallOption) (*webpagepb.Page, error) {

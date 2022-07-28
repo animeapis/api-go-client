@@ -82,6 +82,26 @@ func ExampleArchiveClient_ListPages() {
 	}
 }
 
+func ExampleArchiveClient_QueryPage() {
+	ctx := context.Background()
+	c, err := webpage.NewArchiveClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &webpagepb.QueryPageRequest{
+		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/webpage/v1alpha1#QueryPageRequest.
+	}
+	resp, err := c.QueryPage(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
 func ExampleArchiveClient_CreatePage() {
 	ctx := context.Background()
 	c, err := webpage.NewArchiveClient(ctx)
