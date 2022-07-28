@@ -39,8 +39,8 @@ var newArchiveClientHook clientHook
 type ArchiveCallOptions struct {
 	GetPage    []gax.CallOption
 	ListPages  []gax.CallOption
-	ImportPage []gax.CallOption
 	CreatePage []gax.CallOption
+	ImportPage []gax.CallOption
 	DeletePage []gax.CallOption
 }
 
@@ -60,8 +60,8 @@ func defaultArchiveCallOptions() *ArchiveCallOptions {
 	return &ArchiveCallOptions{
 		GetPage:    []gax.CallOption{},
 		ListPages:  []gax.CallOption{},
-		ImportPage: []gax.CallOption{},
 		CreatePage: []gax.CallOption{},
+		ImportPage: []gax.CallOption{},
 		DeletePage: []gax.CallOption{},
 	}
 }
@@ -73,8 +73,8 @@ type internalArchiveClient interface {
 	Connection() *grpc.ClientConn
 	GetPage(context.Context, *webpagepb.GetPageRequest, ...gax.CallOption) (*webpagepb.Page, error)
 	ListPages(context.Context, *webpagepb.ListPagesRequest, ...gax.CallOption) *PageIterator
-	ImportPage(context.Context, *webpagepb.ImportPageRequest, ...gax.CallOption) (*webpagepb.ImportPageResponse, error)
 	CreatePage(context.Context, *webpagepb.CreatePageRequest, ...gax.CallOption) (*webpagepb.Page, error)
+	ImportPage(context.Context, *webpagepb.ImportPageRequest, ...gax.CallOption) (*webpagepb.ImportPageResponse, error)
 	DeletePage(context.Context, *webpagepb.DeletePageRequest, ...gax.CallOption) error
 }
 
@@ -118,12 +118,12 @@ func (c *ArchiveClient) ListPages(ctx context.Context, req *webpagepb.ListPagesR
 	return c.internalClient.ListPages(ctx, req, opts...)
 }
 
-func (c *ArchiveClient) ImportPage(ctx context.Context, req *webpagepb.ImportPageRequest, opts ...gax.CallOption) (*webpagepb.ImportPageResponse, error) {
-	return c.internalClient.ImportPage(ctx, req, opts...)
-}
-
 func (c *ArchiveClient) CreatePage(ctx context.Context, req *webpagepb.CreatePageRequest, opts ...gax.CallOption) (*webpagepb.Page, error) {
 	return c.internalClient.CreatePage(ctx, req, opts...)
+}
+
+func (c *ArchiveClient) ImportPage(ctx context.Context, req *webpagepb.ImportPageRequest, opts ...gax.CallOption) (*webpagepb.ImportPageResponse, error) {
+	return c.internalClient.ImportPage(ctx, req, opts...)
 }
 
 func (c *ArchiveClient) DeletePage(ctx context.Context, req *webpagepb.DeletePageRequest, opts ...gax.CallOption) error {
@@ -268,22 +268,6 @@ func (c *archiveGRPCClient) ListPages(ctx context.Context, req *webpagepb.ListPa
 	return it
 }
 
-func (c *archiveGRPCClient) ImportPage(ctx context.Context, req *webpagepb.ImportPageRequest, opts ...gax.CallOption) (*webpagepb.ImportPageResponse, error) {
-	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
-	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
-	opts = append((*c.CallOptions).ImportPage[0:len((*c.CallOptions).ImportPage):len((*c.CallOptions).ImportPage)], opts...)
-	var resp *webpagepb.ImportPageResponse
-	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
-		var err error
-		resp, err = c.archiveClient.ImportPage(ctx, req, settings.GRPC...)
-		return err
-	}, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
 func (c *archiveGRPCClient) CreatePage(ctx context.Context, req *webpagepb.CreatePageRequest, opts ...gax.CallOption) (*webpagepb.Page, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
@@ -292,6 +276,22 @@ func (c *archiveGRPCClient) CreatePage(ctx context.Context, req *webpagepb.Creat
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
 		resp, err = c.archiveClient.CreatePage(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *archiveGRPCClient) ImportPage(ctx context.Context, req *webpagepb.ImportPageRequest, opts ...gax.CallOption) (*webpagepb.ImportPageResponse, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).ImportPage[0:len((*c.CallOptions).ImportPage):len((*c.CallOptions).ImportPage)], opts...)
+	var resp *webpagepb.ImportPageResponse
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.archiveClient.ImportPage(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	if err != nil {

@@ -82,26 +82,6 @@ func ExampleArchiveClient_ListPages() {
 	}
 }
 
-func ExampleArchiveClient_ImportPage() {
-	ctx := context.Background()
-	c, err := webpage.NewArchiveClient(ctx)
-	if err != nil {
-		// TODO: Handle error.
-	}
-	defer c.Close()
-
-	req := &webpagepb.ImportPageRequest{
-		// TODO: Fill request struct fields.
-		// See https://pkg.go.dev/github.com/animeapis/go-genproto/webpage/v1alpha1#ImportPageRequest.
-	}
-	resp, err := c.ImportPage(ctx, req)
-	if err != nil {
-		// TODO: Handle error.
-	}
-	// TODO: Use resp.
-	_ = resp
-}
-
 func ExampleArchiveClient_CreatePage() {
 	ctx := context.Background()
 	c, err := webpage.NewArchiveClient(ctx)
@@ -115,6 +95,26 @@ func ExampleArchiveClient_CreatePage() {
 		// See https://pkg.go.dev/github.com/animeapis/go-genproto/webpage/v1alpha1#CreatePageRequest.
 	}
 	resp, err := c.CreatePage(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
+func ExampleArchiveClient_ImportPage() {
+	ctx := context.Background()
+	c, err := webpage.NewArchiveClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &webpagepb.ImportPageRequest{
+		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/webpage/v1alpha1#ImportPageRequest.
+	}
+	resp, err := c.ImportPage(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
 	}
