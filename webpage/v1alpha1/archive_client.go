@@ -37,6 +37,7 @@ var newArchiveClientHook clientHook
 
 // ArchiveCallOptions contains the retry settings for each method of ArchiveClient.
 type ArchiveCallOptions struct {
+	Query      []gax.CallOption
 	GetPage    []gax.CallOption
 	ListPages  []gax.CallOption
 	QueryPage  []gax.CallOption
@@ -59,6 +60,7 @@ func defaultArchiveGRPCClientOptions() []option.ClientOption {
 
 func defaultArchiveCallOptions() *ArchiveCallOptions {
 	return &ArchiveCallOptions{
+		Query:      []gax.CallOption{},
 		GetPage:    []gax.CallOption{},
 		ListPages:  []gax.CallOption{},
 		QueryPage:  []gax.CallOption{},
@@ -73,6 +75,7 @@ type internalArchiveClient interface {
 	Close() error
 	setGoogleClientInfo(...string)
 	Connection() *grpc.ClientConn
+	Query(context.Context, ...gax.CallOption) (webpagepb.Archive_QueryClient, error)
 	GetPage(context.Context, *webpagepb.GetPageRequest, ...gax.CallOption) (*webpagepb.Page, error)
 	ListPages(context.Context, *webpagepb.ListPagesRequest, ...gax.CallOption) *PageIterator
 	QueryPage(context.Context, *webpagepb.QueryPageRequest, ...gax.CallOption) (*webpagepb.QueryPageResponse, error)
@@ -111,6 +114,10 @@ func (c *ArchiveClient) setGoogleClientInfo(keyval ...string) {
 // Deprecated.
 func (c *ArchiveClient) Connection() *grpc.ClientConn {
 	return c.internalClient.Connection()
+}
+
+func (c *ArchiveClient) Query(ctx context.Context, opts ...gax.CallOption) (webpagepb.Archive_QueryClient, error) {
+	return c.internalClient.Query(ctx, opts...)
 }
 
 func (c *ArchiveClient) GetPage(ctx context.Context, req *webpagepb.GetPageRequest, opts ...gax.CallOption) (*webpagepb.Page, error) {
@@ -213,6 +220,21 @@ func (c *archiveGRPCClient) setGoogleClientInfo(keyval ...string) {
 // the client is no longer required.
 func (c *archiveGRPCClient) Close() error {
 	return c.connPool.Close()
+}
+
+func (c *archiveGRPCClient) Query(ctx context.Context, opts ...gax.CallOption) (webpagepb.Archive_QueryClient, error) {
+	ctx = insertMetadata(ctx, c.xGoogMetadata)
+	var resp webpagepb.Archive_QueryClient
+	opts = append((*c.CallOptions).Query[0:len((*c.CallOptions).Query):len((*c.CallOptions).Query)], opts...)
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.archiveClient.Query(ctx, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 func (c *archiveGRPCClient) GetPage(ctx context.Context, req *webpagepb.GetPageRequest, opts ...gax.CallOption) (*webpagepb.Page, error) {

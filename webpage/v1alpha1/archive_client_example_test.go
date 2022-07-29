@@ -18,6 +18,7 @@ package webpage_test
 
 import (
 	"context"
+	"io"
 
 	webpage "github.com/animeapis/api-go-client/webpage/v1alpha1"
 	webpagepb "github.com/animeapis/go-genproto/webpage/v1alpha1"
@@ -34,6 +35,41 @@ func ExampleNewArchiveClient() {
 
 	// TODO: Use client.
 	_ = c
+}
+
+func ExampleArchiveClient_Query() {
+	ctx := context.Background()
+	c, err := webpage.NewArchiveClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+	stream, err := c.Query(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	go func() {
+		reqs := []*webpagepb.QueryRequest{
+			// TODO: Create requests.
+		}
+		for _, req := range reqs {
+			if err := stream.Send(req); err != nil {
+				// TODO: Handle error.
+			}
+		}
+		stream.CloseSend()
+	}()
+	for {
+		resp, err := stream.Recv()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			// TODO: handle error.
+		}
+		// TODO: Use resp.
+		_ = resp
+	}
 }
 
 func ExampleArchiveClient_GetPage() {

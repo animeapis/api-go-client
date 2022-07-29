@@ -35,6 +35,11 @@
                 "ListPages"
               ]
             },
+            "Query": {
+              "methods": [
+                "Query"
+              ]
+            },
             "QueryPage": {
               "methods": [
                 "QueryPage"

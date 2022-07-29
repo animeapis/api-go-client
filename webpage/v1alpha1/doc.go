@@ -41,17 +41,32 @@
 //  	// TODO: Handle error.
 //  }
 //  defer c.Close()
-//
-//  req := &webpagepb.GetPageRequest{
-//  	// TODO: Fill request struct fields.
-//  	// See https://pkg.go.dev/github.com/animeapis/go-genproto/webpage/v1alpha1#GetPageRequest.
-//  }
-//  resp, err := c.GetPage(ctx, req)
+//  stream, err := c.Query(ctx)
 //  if err != nil {
 //  	// TODO: Handle error.
 //  }
-//  // TODO: Use resp.
-//  _ = resp
+//  go func() {
+//  	reqs := []*webpagepb.QueryRequest{
+//  		// TODO: Create requests.
+//  	}
+//  	for _, req := range reqs {
+//  		if err := stream.Send(req); err != nil {
+//  			// TODO: Handle error.
+//  		}
+//  	}
+//  	stream.CloseSend()
+//  }()
+//  for {
+//  	resp, err := stream.Recv()
+//  	if err == io.EOF {
+//  		break
+//  	}
+//  	if err != nil {
+//  		// TODO: handle error.
+//  	}
+//  	// TODO: Use resp.
+//  	_ = resp
+//  }
 //
 // Use of Context
 //
