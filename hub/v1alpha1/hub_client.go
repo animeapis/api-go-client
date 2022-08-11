@@ -62,7 +62,7 @@ func defaultCallOptions() *CallOptions {
 	}
 }
 
-// internalClient is an interface that defines the methods availaible from Hub API.
+// internalClient is an interface that defines the methods available from Hub API.
 type internalClient interface {
 	Close() error
 	setGoogleClientInfo(...string)
@@ -184,7 +184,7 @@ func (c *gRPCClient) Connection() *grpc.ClientConn {
 // use by Google-written clients.
 func (c *gRPCClient) setGoogleClientInfo(keyval ...string) {
 	kv := append([]string{"gl-go", versionGo()}, keyval...)
-	kv = append(kv, "gapic", versionClient, "gax", gax.Version, "grpc", grpc.Version)
+	kv = append(kv, "gapic", getVersionClient(), "gax", gax.Version, "grpc", grpc.Version)
 	c.xGoogMetadata = metadata.Pairs("x-goog-api-client", gax.XGoogHeader(kv...))
 }
 
@@ -196,6 +196,7 @@ func (c *gRPCClient) Close() error {
 
 func (c *gRPCClient) CreateRepository(ctx context.Context, req *hubpb.CreateRepositoryRequest, opts ...gax.CallOption) (*hubpb.Repository, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).CreateRepository[0:len((*c.CallOptions).CreateRepository):len((*c.CallOptions).CreateRepository)], opts...)
 	var resp *hubpb.Repository
@@ -212,6 +213,7 @@ func (c *gRPCClient) CreateRepository(ctx context.Context, req *hubpb.CreateRepo
 
 func (c *gRPCClient) DeleteRepository(ctx context.Context, req *hubpb.DeleteRepositoryRequest, opts ...gax.CallOption) error {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).DeleteRepository[0:len((*c.CallOptions).DeleteRepository):len((*c.CallOptions).DeleteRepository)], opts...)
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -224,6 +226,7 @@ func (c *gRPCClient) DeleteRepository(ctx context.Context, req *hubpb.DeleteRepo
 
 func (c *gRPCClient) ListRepositories(ctx context.Context, req *hubpb.ListRepositoriesRequest, opts ...gax.CallOption) *RepositoryIterator {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).ListRepositories[0:len((*c.CallOptions).ListRepositories):len((*c.CallOptions).ListRepositories)], opts...)
 	it := &RepositoryIterator{}

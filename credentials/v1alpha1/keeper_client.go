@@ -66,7 +66,7 @@ func defaultKeeperCallOptions() *KeeperCallOptions {
 	}
 }
 
-// internalKeeperClient is an interface that defines the methods availaible from Credentials API.
+// internalKeeperClient is an interface that defines the methods available from Credentials API.
 type internalKeeperClient interface {
 	Close() error
 	setGoogleClientInfo(...string)
@@ -198,7 +198,7 @@ func (c *keeperGRPCClient) Connection() *grpc.ClientConn {
 // use by Google-written clients.
 func (c *keeperGRPCClient) setGoogleClientInfo(keyval ...string) {
 	kv := append([]string{"gl-go", versionGo()}, keyval...)
-	kv = append(kv, "gapic", versionClient, "gax", gax.Version, "grpc", grpc.Version)
+	kv = append(kv, "gapic", getVersionClient(), "gax", gax.Version, "grpc", grpc.Version)
 	c.xGoogMetadata = metadata.Pairs("x-goog-api-client", gax.XGoogHeader(kv...))
 }
 
@@ -210,6 +210,7 @@ func (c *keeperGRPCClient) Close() error {
 
 func (c *keeperGRPCClient) GetCredentials(ctx context.Context, req *credentialspb.GetCredentialsRequest, opts ...gax.CallOption) (*credentialspb.Credentials, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).GetCredentials[0:len((*c.CallOptions).GetCredentials):len((*c.CallOptions).GetCredentials)], opts...)
 	var resp *credentialspb.Credentials
@@ -226,6 +227,7 @@ func (c *keeperGRPCClient) GetCredentials(ctx context.Context, req *credentialsp
 
 func (c *keeperGRPCClient) ListCredentials(ctx context.Context, req *credentialspb.ListCredentialsRequest, opts ...gax.CallOption) *CredentialsIterator {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).ListCredentials[0:len((*c.CallOptions).ListCredentials):len((*c.CallOptions).ListCredentials)], opts...)
 	it := &CredentialsIterator{}
@@ -270,6 +272,7 @@ func (c *keeperGRPCClient) ListCredentials(ctx context.Context, req *credentials
 
 func (c *keeperGRPCClient) CreateCredentials(ctx context.Context, req *credentialspb.CreateCredentialsRequest, opts ...gax.CallOption) (*credentialspb.Credentials, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "credentials.name", url.QueryEscape(req.GetCredentials().GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).CreateCredentials[0:len((*c.CallOptions).CreateCredentials):len((*c.CallOptions).CreateCredentials)], opts...)
 	var resp *credentialspb.Credentials
@@ -286,6 +289,7 @@ func (c *keeperGRPCClient) CreateCredentials(ctx context.Context, req *credentia
 
 func (c *keeperGRPCClient) DeleteCredentials(ctx context.Context, req *credentialspb.DeleteCredentialsRequest, opts ...gax.CallOption) error {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).DeleteCredentials[0:len((*c.CallOptions).DeleteCredentials):len((*c.CallOptions).DeleteCredentials)], opts...)
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -298,6 +302,7 @@ func (c *keeperGRPCClient) DeleteCredentials(ctx context.Context, req *credentia
 
 func (c *keeperGRPCClient) ActAsCredentials(ctx context.Context, req *credentialspb.ActAsCredentialsRequest, opts ...gax.CallOption) (*credentialspb.ActAsCredentialsResponse, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).ActAsCredentials[0:len((*c.CallOptions).ActAsCredentials):len((*c.CallOptions).ActAsCredentials)], opts...)
 	var resp *credentialspb.ActAsCredentialsResponse

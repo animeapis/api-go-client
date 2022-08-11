@@ -72,7 +72,7 @@ func defaultLightNovelCallOptions() *LightNovelCallOptions {
 	}
 }
 
-// internalLightNovelClient is an interface that defines the methods availaible from Multimedia API.
+// internalLightNovelClient is an interface that defines the methods available from Multimedia API.
 type internalLightNovelClient interface {
 	Close() error
 	setGoogleClientInfo(...string)
@@ -238,7 +238,7 @@ func (c *lightNovelGRPCClient) Connection() *grpc.ClientConn {
 // use by Google-written clients.
 func (c *lightNovelGRPCClient) setGoogleClientInfo(keyval ...string) {
 	kv := append([]string{"gl-go", versionGo()}, keyval...)
-	kv = append(kv, "gapic", versionClient, "gax", gax.Version, "grpc", grpc.Version)
+	kv = append(kv, "gapic", getVersionClient(), "gax", gax.Version, "grpc", grpc.Version)
 	c.xGoogMetadata = metadata.Pairs("x-goog-api-client", gax.XGoogHeader(kv...))
 }
 
@@ -250,6 +250,7 @@ func (c *lightNovelGRPCClient) Close() error {
 
 func (c *lightNovelGRPCClient) GetLightNovel(ctx context.Context, req *multimediapb.GetLightNovelRequest, opts ...gax.CallOption) (*multimediapb.LightNovel, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).GetLightNovel[0:len((*c.CallOptions).GetLightNovel):len((*c.CallOptions).GetLightNovel)], opts...)
 	var resp *multimediapb.LightNovel
@@ -324,6 +325,7 @@ func (c *lightNovelGRPCClient) CreateLightNovel(ctx context.Context, req *multim
 
 func (c *lightNovelGRPCClient) UpdateLightNovel(ctx context.Context, req *multimediapb.UpdateLightNovelRequest, opts ...gax.CallOption) (*multimediapb.LightNovel, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "light_novel.name", url.QueryEscape(req.GetLightNovel().GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).UpdateLightNovel[0:len((*c.CallOptions).UpdateLightNovel):len((*c.CallOptions).UpdateLightNovel)], opts...)
 	var resp *multimediapb.LightNovel
@@ -340,6 +342,7 @@ func (c *lightNovelGRPCClient) UpdateLightNovel(ctx context.Context, req *multim
 
 func (c *lightNovelGRPCClient) DeleteLightNovel(ctx context.Context, req *multimediapb.DeleteLightNovelRequest, opts ...gax.CallOption) error {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).DeleteLightNovel[0:len((*c.CallOptions).DeleteLightNovel):len((*c.CallOptions).DeleteLightNovel)], opts...)
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -352,6 +355,7 @@ func (c *lightNovelGRPCClient) DeleteLightNovel(ctx context.Context, req *multim
 
 func (c *lightNovelGRPCClient) ReconcileLightNovels(ctx context.Context, req *multimediapb.ReconcileLightNovelsRequest, opts ...gax.CallOption) (*ReconcileLightNovelsOperation, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).ReconcileLightNovels[0:len((*c.CallOptions).ReconcileLightNovels):len((*c.CallOptions).ReconcileLightNovels)], opts...)
 	var resp *longrunningpb.Operation

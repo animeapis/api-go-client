@@ -21,6 +21,7 @@ import (
 
 	image "github.com/animeapis/api-go-client/image/v1alpha1"
 	imagepb "github.com/animeapis/go-genproto/image/v1alpha1"
+	iampb "google.golang.org/genproto/googleapis/iam/v1"
 )
 
 func ExampleNewImageRouterClient() {
@@ -68,6 +69,66 @@ func ExampleImageRouterClient_RouteImage() {
 		// See https://pkg.go.dev/github.com/animeapis/go-genproto/image/v1alpha1#RouteImageRequest.
 	}
 	resp, err := c.RouteImage(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
+func ExampleImageRouterClient_GetIamPolicy() {
+	ctx := context.Background()
+	c, err := image.NewImageRouterClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &iampb.GetIamPolicyRequest{
+		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/google.golang.org/genproto/googleapis/iam/v1#GetIamPolicyRequest.
+	}
+	resp, err := c.GetIamPolicy(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
+func ExampleImageRouterClient_SetIamPolicy() {
+	ctx := context.Background()
+	c, err := image.NewImageRouterClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &iampb.SetIamPolicyRequest{
+		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/google.golang.org/genproto/googleapis/iam/v1#SetIamPolicyRequest.
+	}
+	resp, err := c.SetIamPolicy(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
+func ExampleImageRouterClient_TestIamPermissions() {
+	ctx := context.Background()
+	c, err := image.NewImageRouterClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &iampb.TestIamPermissionsRequest{
+		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/google.golang.org/genproto/googleapis/iam/v1#TestIamPermissionsRequest.
+	}
+	resp, err := c.TestIamPermissions(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
 	}

@@ -64,7 +64,7 @@ func defaultCallOptions() *CallOptions {
 	}
 }
 
-// internalClient is an interface that defines the methods availaible from WebCache API.
+// internalClient is an interface that defines the methods available from WebCache API.
 type internalClient interface {
 	Close() error
 	setGoogleClientInfo(...string)
@@ -192,7 +192,7 @@ func (c *gRPCClient) Connection() *grpc.ClientConn {
 // use by Google-written clients.
 func (c *gRPCClient) setGoogleClientInfo(keyval ...string) {
 	kv := append([]string{"gl-go", versionGo()}, keyval...)
-	kv = append(kv, "gapic", versionClient, "gax", gax.Version, "grpc", grpc.Version)
+	kv = append(kv, "gapic", getVersionClient(), "gax", gax.Version, "grpc", grpc.Version)
 	c.xGoogMetadata = metadata.Pairs("x-goog-api-client", gax.XGoogHeader(kv...))
 }
 
@@ -262,6 +262,7 @@ func (c *gRPCClient) ListCaches(ctx context.Context, req *webcachepb.ListCachesR
 
 func (c *gRPCClient) GetCache(ctx context.Context, req *webcachepb.GetCacheRequest, opts ...gax.CallOption) (*webcachepb.Cache, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).GetCache[0:len((*c.CallOptions).GetCache):len((*c.CallOptions).GetCache)], opts...)
 	var resp *webcachepb.Cache
@@ -278,6 +279,7 @@ func (c *gRPCClient) GetCache(ctx context.Context, req *webcachepb.GetCacheReque
 
 func (c *gRPCClient) DeleteCache(ctx context.Context, req *webcachepb.DeleteCacheRequest, opts ...gax.CallOption) error {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).DeleteCache[0:len((*c.CallOptions).DeleteCache):len((*c.CallOptions).DeleteCache)], opts...)
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {

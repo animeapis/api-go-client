@@ -30,6 +30,11 @@
                 "GetAlbumSettings"
               ]
             },
+            "GetIamPolicy": {
+              "methods": [
+                "GetIamPolicy"
+              ]
+            },
             "GetImage": {
               "methods": [
                 "GetImage"
@@ -43,6 +48,16 @@
             "ListAlbums": {
               "methods": [
                 "ListAlbums"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "SetIamPolicy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "TestIamPermissions"
               ]
             },
             "UpdateAlbumSettings": {
@@ -64,6 +79,11 @@
         "grpc": {
           "libraryClient": "ImageRouterClient",
           "rpcs": {
+            "GetIamPolicy": {
+              "methods": [
+                "GetIamPolicy"
+              ]
+            },
             "GetImageRoute": {
               "methods": [
                 "GetImageRoute"
@@ -72,6 +92,16 @@
             "RouteImage": {
               "methods": [
                 "RouteImage"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "SetIamPolicy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "TestIamPermissions"
               ]
             }
           }

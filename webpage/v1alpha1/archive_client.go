@@ -70,7 +70,7 @@ func defaultArchiveCallOptions() *ArchiveCallOptions {
 	}
 }
 
-// internalArchiveClient is an interface that defines the methods availaible from WebPage API.
+// internalArchiveClient is an interface that defines the methods available from WebPage API.
 type internalArchiveClient interface {
 	Close() error
 	setGoogleClientInfo(...string)
@@ -212,7 +212,7 @@ func (c *archiveGRPCClient) Connection() *grpc.ClientConn {
 // use by Google-written clients.
 func (c *archiveGRPCClient) setGoogleClientInfo(keyval ...string) {
 	kv := append([]string{"gl-go", versionGo()}, keyval...)
-	kv = append(kv, "gapic", versionClient, "gax", gax.Version, "grpc", grpc.Version)
+	kv = append(kv, "gapic", getVersionClient(), "gax", gax.Version, "grpc", grpc.Version)
 	c.xGoogMetadata = metadata.Pairs("x-goog-api-client", gax.XGoogHeader(kv...))
 }
 
@@ -239,6 +239,7 @@ func (c *archiveGRPCClient) Query(ctx context.Context, opts ...gax.CallOption) (
 
 func (c *archiveGRPCClient) GetPage(ctx context.Context, req *webpagepb.GetPageRequest, opts ...gax.CallOption) (*webpagepb.Page, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).GetPage[0:len((*c.CallOptions).GetPage):len((*c.CallOptions).GetPage)], opts...)
 	var resp *webpagepb.Page
@@ -255,6 +256,7 @@ func (c *archiveGRPCClient) GetPage(ctx context.Context, req *webpagepb.GetPageR
 
 func (c *archiveGRPCClient) ListPages(ctx context.Context, req *webpagepb.ListPagesRequest, opts ...gax.CallOption) *PageIterator {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).ListPages[0:len((*c.CallOptions).ListPages):len((*c.CallOptions).ListPages)], opts...)
 	it := &PageIterator{}
@@ -299,6 +301,7 @@ func (c *archiveGRPCClient) ListPages(ctx context.Context, req *webpagepb.ListPa
 
 func (c *archiveGRPCClient) QueryPage(ctx context.Context, req *webpagepb.QueryPageRequest, opts ...gax.CallOption) (*webpagepb.QueryPageResponse, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).QueryPage[0:len((*c.CallOptions).QueryPage):len((*c.CallOptions).QueryPage)], opts...)
 	var resp *webpagepb.QueryPageResponse
@@ -315,6 +318,7 @@ func (c *archiveGRPCClient) QueryPage(ctx context.Context, req *webpagepb.QueryP
 
 func (c *archiveGRPCClient) CreatePage(ctx context.Context, req *webpagepb.CreatePageRequest, opts ...gax.CallOption) (*webpagepb.Page, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).CreatePage[0:len((*c.CallOptions).CreatePage):len((*c.CallOptions).CreatePage)], opts...)
 	var resp *webpagepb.Page
@@ -331,6 +335,7 @@ func (c *archiveGRPCClient) CreatePage(ctx context.Context, req *webpagepb.Creat
 
 func (c *archiveGRPCClient) ImportPage(ctx context.Context, req *webpagepb.ImportPageRequest, opts ...gax.CallOption) (*webpagepb.ImportPageResponse, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).ImportPage[0:len((*c.CallOptions).ImportPage):len((*c.CallOptions).ImportPage)], opts...)
 	var resp *webpagepb.ImportPageResponse
@@ -347,6 +352,7 @@ func (c *archiveGRPCClient) ImportPage(ctx context.Context, req *webpagepb.Impor
 
 func (c *archiveGRPCClient) DeletePage(ctx context.Context, req *webpagepb.DeletePageRequest, opts ...gax.CallOption) error {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).DeletePage[0:len((*c.CallOptions).DeletePage):len((*c.CallOptions).DeletePage)], opts...)
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {

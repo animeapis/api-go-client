@@ -72,7 +72,7 @@ func defaultVisualNovelCallOptions() *VisualNovelCallOptions {
 	}
 }
 
-// internalVisualNovelClient is an interface that defines the methods availaible from Multimedia API.
+// internalVisualNovelClient is an interface that defines the methods available from Multimedia API.
 type internalVisualNovelClient interface {
 	Close() error
 	setGoogleClientInfo(...string)
@@ -238,7 +238,7 @@ func (c *visualNovelGRPCClient) Connection() *grpc.ClientConn {
 // use by Google-written clients.
 func (c *visualNovelGRPCClient) setGoogleClientInfo(keyval ...string) {
 	kv := append([]string{"gl-go", versionGo()}, keyval...)
-	kv = append(kv, "gapic", versionClient, "gax", gax.Version, "grpc", grpc.Version)
+	kv = append(kv, "gapic", getVersionClient(), "gax", gax.Version, "grpc", grpc.Version)
 	c.xGoogMetadata = metadata.Pairs("x-goog-api-client", gax.XGoogHeader(kv...))
 }
 
@@ -250,6 +250,7 @@ func (c *visualNovelGRPCClient) Close() error {
 
 func (c *visualNovelGRPCClient) GetVisualNovel(ctx context.Context, req *multimediapb.GetVisualNovelRequest, opts ...gax.CallOption) (*multimediapb.VisualNovel, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).GetVisualNovel[0:len((*c.CallOptions).GetVisualNovel):len((*c.CallOptions).GetVisualNovel)], opts...)
 	var resp *multimediapb.VisualNovel
@@ -324,6 +325,7 @@ func (c *visualNovelGRPCClient) CreateVisualNovel(ctx context.Context, req *mult
 
 func (c *visualNovelGRPCClient) UpdateVisualNovel(ctx context.Context, req *multimediapb.UpdateVisualNovelRequest, opts ...gax.CallOption) (*multimediapb.VisualNovel, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "visual_novel.name", url.QueryEscape(req.GetVisualNovel().GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).UpdateVisualNovel[0:len((*c.CallOptions).UpdateVisualNovel):len((*c.CallOptions).UpdateVisualNovel)], opts...)
 	var resp *multimediapb.VisualNovel
@@ -340,6 +342,7 @@ func (c *visualNovelGRPCClient) UpdateVisualNovel(ctx context.Context, req *mult
 
 func (c *visualNovelGRPCClient) DeleteVisualNovel(ctx context.Context, req *multimediapb.DeleteVisualNovelRequest, opts ...gax.CallOption) error {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).DeleteVisualNovel[0:len((*c.CallOptions).DeleteVisualNovel):len((*c.CallOptions).DeleteVisualNovel)], opts...)
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -352,6 +355,7 @@ func (c *visualNovelGRPCClient) DeleteVisualNovel(ctx context.Context, req *mult
 
 func (c *visualNovelGRPCClient) ReconcileVisualNovels(ctx context.Context, req *multimediapb.ReconcileVisualNovelsRequest, opts ...gax.CallOption) (*ReconcileVisualNovelsOperation, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).ReconcileVisualNovels[0:len((*c.CallOptions).ReconcileVisualNovels):len((*c.CallOptions).ReconcileVisualNovels)], opts...)
 	var resp *longrunningpb.Operation

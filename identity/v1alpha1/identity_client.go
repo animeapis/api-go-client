@@ -88,7 +88,7 @@ func defaultCallOptions() *CallOptions {
 	}
 }
 
-// internalClient is an interface that defines the methods availaible from Identity API.
+// internalClient is an interface that defines the methods available from Identity API.
 type internalClient interface {
 	Close() error
 	setGoogleClientInfo(...string)
@@ -275,7 +275,7 @@ func (c *gRPCClient) Connection() *grpc.ClientConn {
 // use by Google-written clients.
 func (c *gRPCClient) setGoogleClientInfo(keyval ...string) {
 	kv := append([]string{"gl-go", versionGo()}, keyval...)
-	kv = append(kv, "gapic", versionClient, "gax", gax.Version, "grpc", grpc.Version)
+	kv = append(kv, "gapic", getVersionClient(), "gax", gax.Version, "grpc", grpc.Version)
 	c.xGoogMetadata = metadata.Pairs("x-goog-api-client", gax.XGoogHeader(kv...))
 }
 
@@ -287,6 +287,7 @@ func (c *gRPCClient) Close() error {
 
 func (c *gRPCClient) GetUserProfile(ctx context.Context, req *identitypb.GetUserProfileRequest, opts ...gax.CallOption) (*identitypb.UserProfile, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).GetUserProfile[0:len((*c.CallOptions).GetUserProfile):len((*c.CallOptions).GetUserProfile)], opts...)
 	var resp *identitypb.UserProfile
@@ -303,6 +304,7 @@ func (c *gRPCClient) GetUserProfile(ctx context.Context, req *identitypb.GetUser
 
 func (c *gRPCClient) GetUser(ctx context.Context, req *identitypb.GetUserRequest, opts ...gax.CallOption) (*identitypb.User, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).GetUser[0:len((*c.CallOptions).GetUser):len((*c.CallOptions).GetUser)], opts...)
 	var resp *identitypb.User
@@ -377,6 +379,7 @@ func (c *gRPCClient) CreateUser(ctx context.Context, req *identitypb.CreateUserR
 
 func (c *gRPCClient) UpdateUser(ctx context.Context, req *identitypb.UpdateUserRequest, opts ...gax.CallOption) (*identitypb.User, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "user.name", url.QueryEscape(req.GetUser().GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).UpdateUser[0:len((*c.CallOptions).UpdateUser):len((*c.CallOptions).UpdateUser)], opts...)
 	var resp *identitypb.User
@@ -393,6 +396,7 @@ func (c *gRPCClient) UpdateUser(ctx context.Context, req *identitypb.UpdateUserR
 
 func (c *gRPCClient) DeleteUser(ctx context.Context, req *identitypb.DeleteUserRequest, opts ...gax.CallOption) error {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).DeleteUser[0:len((*c.CallOptions).DeleteUser):len((*c.CallOptions).DeleteUser)], opts...)
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -405,6 +409,7 @@ func (c *gRPCClient) DeleteUser(ctx context.Context, req *identitypb.DeleteUserR
 
 func (c *gRPCClient) GetUserSettings(ctx context.Context, req *identitypb.GetUserSettingsRequest, opts ...gax.CallOption) (*identitypb.UserSettings, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).GetUserSettings[0:len((*c.CallOptions).GetUserSettings):len((*c.CallOptions).GetUserSettings)], opts...)
 	var resp *identitypb.UserSettings
@@ -421,6 +426,7 @@ func (c *gRPCClient) GetUserSettings(ctx context.Context, req *identitypb.GetUse
 
 func (c *gRPCClient) UpdateUserSettings(ctx context.Context, req *identitypb.UpdateUserSettingsRequest, opts ...gax.CallOption) (*identitypb.UserSettings, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "settings.name", url.QueryEscape(req.GetSettings().GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).UpdateUserSettings[0:len((*c.CallOptions).UpdateUserSettings):len((*c.CallOptions).UpdateUserSettings)], opts...)
 	var resp *identitypb.UserSettings
@@ -437,6 +443,7 @@ func (c *gRPCClient) UpdateUserSettings(ctx context.Context, req *identitypb.Upd
 
 func (c *gRPCClient) GetUserNotifications(ctx context.Context, req *identitypb.GetUserNotificationsRequest, opts ...gax.CallOption) (*identitypb.UserNotifications, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).GetUserNotifications[0:len((*c.CallOptions).GetUserNotifications):len((*c.CallOptions).GetUserNotifications)], opts...)
 	var resp *identitypb.UserNotifications
@@ -453,6 +460,7 @@ func (c *gRPCClient) GetUserNotifications(ctx context.Context, req *identitypb.G
 
 func (c *gRPCClient) UpdateUserNotifications(ctx context.Context, req *identitypb.UpdateUserNotificationsRequest, opts ...gax.CallOption) (*identitypb.UserNotifications, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "notifications.name", url.QueryEscape(req.GetNotifications().GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).UpdateUserNotifications[0:len((*c.CallOptions).UpdateUserNotifications):len((*c.CallOptions).UpdateUserNotifications)], opts...)
 	var resp *identitypb.UserNotifications
@@ -469,6 +477,7 @@ func (c *gRPCClient) UpdateUserNotifications(ctx context.Context, req *identityp
 
 func (c *gRPCClient) GetUserDefaults(ctx context.Context, req *identitypb.GetUserDefaultsRequest, opts ...gax.CallOption) (*identitypb.UserDefaults, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).GetUserDefaults[0:len((*c.CallOptions).GetUserDefaults):len((*c.CallOptions).GetUserDefaults)], opts...)
 	var resp *identitypb.UserDefaults
@@ -485,6 +494,7 @@ func (c *gRPCClient) GetUserDefaults(ctx context.Context, req *identitypb.GetUse
 
 func (c *gRPCClient) GetGroup(ctx context.Context, req *identitypb.GetGroupRequest, opts ...gax.CallOption) (*identitypb.Group, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).GetGroup[0:len((*c.CallOptions).GetGroup):len((*c.CallOptions).GetGroup)], opts...)
 	var resp *identitypb.Group
@@ -559,6 +569,7 @@ func (c *gRPCClient) CreateGroup(ctx context.Context, req *identitypb.CreateGrou
 
 func (c *gRPCClient) UpdateGroup(ctx context.Context, req *identitypb.UpdateGroupRequest, opts ...gax.CallOption) (*identitypb.Group, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "group.name", url.QueryEscape(req.GetGroup().GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).UpdateGroup[0:len((*c.CallOptions).UpdateGroup):len((*c.CallOptions).UpdateGroup)], opts...)
 	var resp *identitypb.Group
@@ -575,6 +586,7 @@ func (c *gRPCClient) UpdateGroup(ctx context.Context, req *identitypb.UpdateGrou
 
 func (c *gRPCClient) DeleteGroup(ctx context.Context, req *identitypb.DeleteGroupRequest, opts ...gax.CallOption) error {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).DeleteGroup[0:len((*c.CallOptions).DeleteGroup):len((*c.CallOptions).DeleteGroup)], opts...)
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {

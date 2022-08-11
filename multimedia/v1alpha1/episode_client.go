@@ -74,7 +74,7 @@ func defaultEpisodeCallOptions() *EpisodeCallOptions {
 	}
 }
 
-// internalEpisodeClient is an interface that defines the methods availaible from Multimedia API.
+// internalEpisodeClient is an interface that defines the methods available from Multimedia API.
 type internalEpisodeClient interface {
 	Close() error
 	setGoogleClientInfo(...string)
@@ -252,7 +252,7 @@ func (c *episodeGRPCClient) Connection() *grpc.ClientConn {
 // use by Google-written clients.
 func (c *episodeGRPCClient) setGoogleClientInfo(keyval ...string) {
 	kv := append([]string{"gl-go", versionGo()}, keyval...)
-	kv = append(kv, "gapic", versionClient, "gax", gax.Version, "grpc", grpc.Version)
+	kv = append(kv, "gapic", getVersionClient(), "gax", gax.Version, "grpc", grpc.Version)
 	c.xGoogMetadata = metadata.Pairs("x-goog-api-client", gax.XGoogHeader(kv...))
 }
 
@@ -264,6 +264,7 @@ func (c *episodeGRPCClient) Close() error {
 
 func (c *episodeGRPCClient) GetEpisode(ctx context.Context, req *multimediapb.GetEpisodeRequest, opts ...gax.CallOption) (*multimediapb.Episode, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).GetEpisode[0:len((*c.CallOptions).GetEpisode):len((*c.CallOptions).GetEpisode)], opts...)
 	var resp *multimediapb.Episode
@@ -280,6 +281,7 @@ func (c *episodeGRPCClient) GetEpisode(ctx context.Context, req *multimediapb.Ge
 
 func (c *episodeGRPCClient) ListEpisodes(ctx context.Context, req *multimediapb.ListEpisodesRequest, opts ...gax.CallOption) *EpisodeIterator {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).ListEpisodes[0:len((*c.CallOptions).ListEpisodes):len((*c.CallOptions).ListEpisodes)], opts...)
 	it := &EpisodeIterator{}
@@ -324,6 +326,7 @@ func (c *episodeGRPCClient) ListEpisodes(ctx context.Context, req *multimediapb.
 
 func (c *episodeGRPCClient) CreateEpisode(ctx context.Context, req *multimediapb.CreateEpisodeRequest, opts ...gax.CallOption) (*multimediapb.Episode, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).CreateEpisode[0:len((*c.CallOptions).CreateEpisode):len((*c.CallOptions).CreateEpisode)], opts...)
 	var resp *multimediapb.Episode
@@ -340,6 +343,7 @@ func (c *episodeGRPCClient) CreateEpisode(ctx context.Context, req *multimediapb
 
 func (c *episodeGRPCClient) BatchCreateEpisodes(ctx context.Context, req *multimediapb.BatchCreateEpisodesRequest, opts ...gax.CallOption) (*BatchCreateEpisodesOperation, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).BatchCreateEpisodes[0:len((*c.CallOptions).BatchCreateEpisodes):len((*c.CallOptions).BatchCreateEpisodes)], opts...)
 	var resp *longrunningpb.Operation
@@ -358,6 +362,7 @@ func (c *episodeGRPCClient) BatchCreateEpisodes(ctx context.Context, req *multim
 
 func (c *episodeGRPCClient) UpdateEpisode(ctx context.Context, req *multimediapb.UpdateEpisodeRequest, opts ...gax.CallOption) (*multimediapb.Episode, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "episode.name", url.QueryEscape(req.GetEpisode().GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).UpdateEpisode[0:len((*c.CallOptions).UpdateEpisode):len((*c.CallOptions).UpdateEpisode)], opts...)
 	var resp *multimediapb.Episode
@@ -374,6 +379,7 @@ func (c *episodeGRPCClient) UpdateEpisode(ctx context.Context, req *multimediapb
 
 func (c *episodeGRPCClient) DeleteEpisode(ctx context.Context, req *multimediapb.DeleteEpisodeRequest, opts ...gax.CallOption) error {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).DeleteEpisode[0:len((*c.CallOptions).DeleteEpisode):len((*c.CallOptions).DeleteEpisode)], opts...)
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -386,6 +392,7 @@ func (c *episodeGRPCClient) DeleteEpisode(ctx context.Context, req *multimediapb
 
 func (c *episodeGRPCClient) ReconcileEpisodes(ctx context.Context, req *multimediapb.ReconcileEpisodesRequest, opts ...gax.CallOption) (*ReconcileEpisodesOperation, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).ReconcileEpisodes[0:len((*c.CallOptions).ReconcileEpisodes):len((*c.CallOptions).ReconcileEpisodes)], opts...)
 	var resp *longrunningpb.Operation

@@ -72,7 +72,7 @@ func defaultAnimeCallOptions() *AnimeCallOptions {
 	}
 }
 
-// internalAnimeClient is an interface that defines the methods availaible from Multimedia API.
+// internalAnimeClient is an interface that defines the methods available from Multimedia API.
 type internalAnimeClient interface {
 	Close() error
 	setGoogleClientInfo(...string)
@@ -238,7 +238,7 @@ func (c *animeGRPCClient) Connection() *grpc.ClientConn {
 // use by Google-written clients.
 func (c *animeGRPCClient) setGoogleClientInfo(keyval ...string) {
 	kv := append([]string{"gl-go", versionGo()}, keyval...)
-	kv = append(kv, "gapic", versionClient, "gax", gax.Version, "grpc", grpc.Version)
+	kv = append(kv, "gapic", getVersionClient(), "gax", gax.Version, "grpc", grpc.Version)
 	c.xGoogMetadata = metadata.Pairs("x-goog-api-client", gax.XGoogHeader(kv...))
 }
 
@@ -250,6 +250,7 @@ func (c *animeGRPCClient) Close() error {
 
 func (c *animeGRPCClient) GetAnime(ctx context.Context, req *multimediapb.GetAnimeRequest, opts ...gax.CallOption) (*multimediapb.Anime, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).GetAnime[0:len((*c.CallOptions).GetAnime):len((*c.CallOptions).GetAnime)], opts...)
 	var resp *multimediapb.Anime
@@ -324,6 +325,7 @@ func (c *animeGRPCClient) CreateAnime(ctx context.Context, req *multimediapb.Cre
 
 func (c *animeGRPCClient) UpdateAnime(ctx context.Context, req *multimediapb.UpdateAnimeRequest, opts ...gax.CallOption) (*multimediapb.Anime, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "anime.name", url.QueryEscape(req.GetAnime().GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).UpdateAnime[0:len((*c.CallOptions).UpdateAnime):len((*c.CallOptions).UpdateAnime)], opts...)
 	var resp *multimediapb.Anime
@@ -340,6 +342,7 @@ func (c *animeGRPCClient) UpdateAnime(ctx context.Context, req *multimediapb.Upd
 
 func (c *animeGRPCClient) DeleteAnime(ctx context.Context, req *multimediapb.DeleteAnimeRequest, opts ...gax.CallOption) error {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).DeleteAnime[0:len((*c.CallOptions).DeleteAnime):len((*c.CallOptions).DeleteAnime)], opts...)
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -352,6 +355,7 @@ func (c *animeGRPCClient) DeleteAnime(ctx context.Context, req *multimediapb.Del
 
 func (c *animeGRPCClient) ReconcileAnimes(ctx context.Context, req *multimediapb.ReconcileAnimesRequest, opts ...gax.CallOption) (*ReconcileAnimesOperation, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).ReconcileAnimes[0:len((*c.CallOptions).ReconcileAnimes):len((*c.CallOptions).ReconcileAnimes)], opts...)
 	var resp *longrunningpb.Operation

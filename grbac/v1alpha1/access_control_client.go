@@ -97,7 +97,7 @@ func defaultAccessControlCallOptions() *AccessControlCallOptions {
 	}
 }
 
-// internalAccessControlClient is an interface that defines the methods availaible from gRBAC API.
+// internalAccessControlClient is an interface that defines the methods available from gRBAC API.
 type internalAccessControlClient interface {
 	Close() error
 	setGoogleClientInfo(...string)
@@ -337,7 +337,7 @@ func (c *accessControlGRPCClient) Connection() *grpc.ClientConn {
 // use by Google-written clients.
 func (c *accessControlGRPCClient) setGoogleClientInfo(keyval ...string) {
 	kv := append([]string{"gl-go", versionGo()}, keyval...)
-	kv = append(kv, "gapic", versionClient, "gax", gax.Version, "grpc", grpc.Version)
+	kv = append(kv, "gapic", getVersionClient(), "gax", gax.Version, "grpc", grpc.Version)
 	c.xGoogMetadata = metadata.Pairs("x-goog-api-client", gax.XGoogHeader(kv...))
 }
 
@@ -390,6 +390,7 @@ func (c *accessControlGRPCClient) SetIamPolicy(ctx context.Context, req *iampb.S
 
 func (c *accessControlGRPCClient) GetResource(ctx context.Context, req *grbacpb.GetResourceRequest, opts ...gax.CallOption) (*grbacpb.Resource, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).GetResource[0:len((*c.CallOptions).GetResource):len((*c.CallOptions).GetResource)], opts...)
 	var resp *grbacpb.Resource
@@ -406,6 +407,7 @@ func (c *accessControlGRPCClient) GetResource(ctx context.Context, req *grbacpb.
 
 func (c *accessControlGRPCClient) CreateResource(ctx context.Context, req *grbacpb.CreateResourceRequest, opts ...gax.CallOption) (*grbacpb.Resource, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "resource.name", url.QueryEscape(req.GetResource().GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).CreateResource[0:len((*c.CallOptions).CreateResource):len((*c.CallOptions).CreateResource)], opts...)
 	var resp *grbacpb.Resource
@@ -422,6 +424,7 @@ func (c *accessControlGRPCClient) CreateResource(ctx context.Context, req *grbac
 
 func (c *accessControlGRPCClient) TransferResource(ctx context.Context, req *grbacpb.TransferResourceRequest, opts ...gax.CallOption) (*grbacpb.Resource, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).TransferResource[0:len((*c.CallOptions).TransferResource):len((*c.CallOptions).TransferResource)], opts...)
 	var resp *grbacpb.Resource
@@ -438,6 +441,7 @@ func (c *accessControlGRPCClient) TransferResource(ctx context.Context, req *grb
 
 func (c *accessControlGRPCClient) DeleteResource(ctx context.Context, req *grbacpb.DeleteResourceRequest, opts ...gax.CallOption) error {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).DeleteResource[0:len((*c.CallOptions).DeleteResource):len((*c.CallOptions).DeleteResource)], opts...)
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -450,6 +454,7 @@ func (c *accessControlGRPCClient) DeleteResource(ctx context.Context, req *grbac
 
 func (c *accessControlGRPCClient) CreateSubject(ctx context.Context, req *grbacpb.CreateSubjectRequest, opts ...gax.CallOption) (*grbacpb.Subject, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "subject.name", url.QueryEscape(req.GetSubject().GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).CreateSubject[0:len((*c.CallOptions).CreateSubject):len((*c.CallOptions).CreateSubject)], opts...)
 	var resp *grbacpb.Subject
@@ -466,6 +471,7 @@ func (c *accessControlGRPCClient) CreateSubject(ctx context.Context, req *grbacp
 
 func (c *accessControlGRPCClient) DeleteSubject(ctx context.Context, req *grbacpb.DeleteSubjectRequest, opts ...gax.CallOption) error {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).DeleteSubject[0:len((*c.CallOptions).DeleteSubject):len((*c.CallOptions).DeleteSubject)], opts...)
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -478,6 +484,7 @@ func (c *accessControlGRPCClient) DeleteSubject(ctx context.Context, req *grbacp
 
 func (c *accessControlGRPCClient) GetGroup(ctx context.Context, req *grbacpb.GetGroupRequest, opts ...gax.CallOption) (*grbacpb.Group, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).GetGroup[0:len((*c.CallOptions).GetGroup):len((*c.CallOptions).GetGroup)], opts...)
 	var resp *grbacpb.Group
@@ -494,6 +501,7 @@ func (c *accessControlGRPCClient) GetGroup(ctx context.Context, req *grbacpb.Get
 
 func (c *accessControlGRPCClient) CreateGroup(ctx context.Context, req *grbacpb.CreateGroupRequest, opts ...gax.CallOption) (*grbacpb.Group, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "group.name", url.QueryEscape(req.GetGroup().GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).CreateGroup[0:len((*c.CallOptions).CreateGroup):len((*c.CallOptions).CreateGroup)], opts...)
 	var resp *grbacpb.Group
@@ -510,6 +518,7 @@ func (c *accessControlGRPCClient) CreateGroup(ctx context.Context, req *grbacpb.
 
 func (c *accessControlGRPCClient) UpdateGroup(ctx context.Context, req *grbacpb.UpdateGroupRequest, opts ...gax.CallOption) (*grbacpb.Group, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "group.name", url.QueryEscape(req.GetGroup().GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).UpdateGroup[0:len((*c.CallOptions).UpdateGroup):len((*c.CallOptions).UpdateGroup)], opts...)
 	var resp *grbacpb.Group
@@ -526,6 +535,7 @@ func (c *accessControlGRPCClient) UpdateGroup(ctx context.Context, req *grbacpb.
 
 func (c *accessControlGRPCClient) AddGroupMember(ctx context.Context, req *grbacpb.AddGroupMemberRequest, opts ...gax.CallOption) (*grbacpb.Group, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "group", url.QueryEscape(req.GetGroup())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).AddGroupMember[0:len((*c.CallOptions).AddGroupMember):len((*c.CallOptions).AddGroupMember)], opts...)
 	var resp *grbacpb.Group
@@ -542,6 +552,7 @@ func (c *accessControlGRPCClient) AddGroupMember(ctx context.Context, req *grbac
 
 func (c *accessControlGRPCClient) RemoveGroupMember(ctx context.Context, req *grbacpb.RemoveGroupMemberRequest, opts ...gax.CallOption) (*grbacpb.Group, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "group", url.QueryEscape(req.GetGroup())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).RemoveGroupMember[0:len((*c.CallOptions).RemoveGroupMember):len((*c.CallOptions).RemoveGroupMember)], opts...)
 	var resp *grbacpb.Group
@@ -558,6 +569,7 @@ func (c *accessControlGRPCClient) RemoveGroupMember(ctx context.Context, req *gr
 
 func (c *accessControlGRPCClient) DeleteGroup(ctx context.Context, req *grbacpb.DeleteGroupRequest, opts ...gax.CallOption) error {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).DeleteGroup[0:len((*c.CallOptions).DeleteGroup):len((*c.CallOptions).DeleteGroup)], opts...)
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -570,6 +582,7 @@ func (c *accessControlGRPCClient) DeleteGroup(ctx context.Context, req *grbacpb.
 
 func (c *accessControlGRPCClient) CreatePermission(ctx context.Context, req *grbacpb.CreatePermissionRequest, opts ...gax.CallOption) (*grbacpb.Permission, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "permission.name", url.QueryEscape(req.GetPermission().GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).CreatePermission[0:len((*c.CallOptions).CreatePermission):len((*c.CallOptions).CreatePermission)], opts...)
 	var resp *grbacpb.Permission
@@ -586,6 +599,7 @@ func (c *accessControlGRPCClient) CreatePermission(ctx context.Context, req *grb
 
 func (c *accessControlGRPCClient) DeletePermission(ctx context.Context, req *grbacpb.DeletePermissionRequest, opts ...gax.CallOption) error {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).DeletePermission[0:len((*c.CallOptions).DeletePermission):len((*c.CallOptions).DeletePermission)], opts...)
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -598,6 +612,7 @@ func (c *accessControlGRPCClient) DeletePermission(ctx context.Context, req *grb
 
 func (c *accessControlGRPCClient) GetRole(ctx context.Context, req *grbacpb.GetRoleRequest, opts ...gax.CallOption) (*grbacpb.Role, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).GetRole[0:len((*c.CallOptions).GetRole):len((*c.CallOptions).GetRole)], opts...)
 	var resp *grbacpb.Role
@@ -614,6 +629,7 @@ func (c *accessControlGRPCClient) GetRole(ctx context.Context, req *grbacpb.GetR
 
 func (c *accessControlGRPCClient) CreateRole(ctx context.Context, req *grbacpb.CreateRoleRequest, opts ...gax.CallOption) (*grbacpb.Role, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "role.name", url.QueryEscape(req.GetRole().GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).CreateRole[0:len((*c.CallOptions).CreateRole):len((*c.CallOptions).CreateRole)], opts...)
 	var resp *grbacpb.Role
@@ -630,6 +646,7 @@ func (c *accessControlGRPCClient) CreateRole(ctx context.Context, req *grbacpb.C
 
 func (c *accessControlGRPCClient) UpdateRole(ctx context.Context, req *grbacpb.UpdateRoleRequest, opts ...gax.CallOption) (*grbacpb.Role, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "role.name", url.QueryEscape(req.GetRole().GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).UpdateRole[0:len((*c.CallOptions).UpdateRole):len((*c.CallOptions).UpdateRole)], opts...)
 	var resp *grbacpb.Role
@@ -646,6 +663,7 @@ func (c *accessControlGRPCClient) UpdateRole(ctx context.Context, req *grbacpb.U
 
 func (c *accessControlGRPCClient) DeleteRole(ctx context.Context, req *grbacpb.DeleteRoleRequest, opts ...gax.CallOption) error {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).DeleteRole[0:len((*c.CallOptions).DeleteRole):len((*c.CallOptions).DeleteRole)], opts...)
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {

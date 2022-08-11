@@ -95,7 +95,7 @@ func defaultReferrerCallOptions() *ReferrerCallOptions {
 	}
 }
 
-// internalReferrerClient is an interface that defines the methods availaible from CrossRefs API.
+// internalReferrerClient is an interface that defines the methods available from CrossRefs API.
 type internalReferrerClient interface {
 	Close() error
 	setGoogleClientInfo(...string)
@@ -363,7 +363,7 @@ func (c *referrerGRPCClient) Connection() *grpc.ClientConn {
 // use by Google-written clients.
 func (c *referrerGRPCClient) setGoogleClientInfo(keyval ...string) {
 	kv := append([]string{"gl-go", versionGo()}, keyval...)
-	kv = append(kv, "gapic", versionClient, "gax", gax.Version, "grpc", grpc.Version)
+	kv = append(kv, "gapic", getVersionClient(), "gax", gax.Version, "grpc", grpc.Version)
 	c.xGoogMetadata = metadata.Pairs("x-goog-api-client", gax.XGoogHeader(kv...))
 }
 
@@ -375,6 +375,7 @@ func (c *referrerGRPCClient) Close() error {
 
 func (c *referrerGRPCClient) GetCrossRef(ctx context.Context, req *crossrefspb.GetCrossRefRequest, opts ...gax.CallOption) (*crossrefspb.CrossRef, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).GetCrossRef[0:len((*c.CallOptions).GetCrossRef):len((*c.CallOptions).GetCrossRef)], opts...)
 	var resp *crossrefspb.CrossRef
@@ -464,6 +465,7 @@ func (c *referrerGRPCClient) BatchCreateCrossRefs(ctx context.Context, req *cros
 
 func (c *referrerGRPCClient) UpdateCrossRef(ctx context.Context, req *crossrefspb.UpdateCrossRefRequest, opts ...gax.CallOption) (*crossrefspb.UpdateCrossRefResponse, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "crossref.name", url.QueryEscape(req.GetCrossref().GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).UpdateCrossRef[0:len((*c.CallOptions).UpdateCrossRef):len((*c.CallOptions).UpdateCrossRef)], opts...)
 	var resp *crossrefspb.UpdateCrossRefResponse
@@ -597,6 +599,7 @@ func (c *referrerGRPCClient) ExportParodies(ctx context.Context, req *emptypb.Em
 
 func (c *referrerGRPCClient) GetUniverse(ctx context.Context, req *crossrefspb.GetUniverseRequest, opts ...gax.CallOption) (*crossrefspb.Universe, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).GetUniverse[0:len((*c.CallOptions).GetUniverse):len((*c.CallOptions).GetUniverse)], opts...)
 	var resp *crossrefspb.Universe
@@ -613,6 +616,7 @@ func (c *referrerGRPCClient) GetUniverse(ctx context.Context, req *crossrefspb.G
 
 func (c *referrerGRPCClient) UpdateUniverse(ctx context.Context, req *crossrefspb.UpdateUniverseRequest, opts ...gax.CallOption) (*crossrefspb.Universe, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "universe.name", url.QueryEscape(req.GetUniverse().GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).UpdateUniverse[0:len((*c.CallOptions).UpdateUniverse):len((*c.CallOptions).UpdateUniverse)], opts...)
 	var resp *crossrefspb.Universe
@@ -629,6 +633,7 @@ func (c *referrerGRPCClient) UpdateUniverse(ctx context.Context, req *crossrefsp
 
 func (c *referrerGRPCClient) ExpandUniverse(ctx context.Context, req *crossrefspb.ExpandUniverseRequest, opts ...gax.CallOption) (*crossrefspb.ExpandUniverseResponse, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).ExpandUniverse[0:len((*c.CallOptions).ExpandUniverse):len((*c.CallOptions).ExpandUniverse)], opts...)
 	var resp *crossrefspb.ExpandUniverseResponse
@@ -645,6 +650,7 @@ func (c *referrerGRPCClient) ExpandUniverse(ctx context.Context, req *crossrefsp
 
 func (c *referrerGRPCClient) GetWormhole(ctx context.Context, req *crossrefspb.GetWormholeRequest, opts ...gax.CallOption) (*crossrefspb.Wormhole, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).GetWormhole[0:len((*c.CallOptions).GetWormhole):len((*c.CallOptions).GetWormhole)], opts...)
 	var resp *crossrefspb.Wormhole
@@ -661,6 +667,7 @@ func (c *referrerGRPCClient) GetWormhole(ctx context.Context, req *crossrefspb.G
 
 func (c *referrerGRPCClient) ListWormholeCrossRefs(ctx context.Context, req *crossrefspb.ListWormholeCrossRefsRequest, opts ...gax.CallOption) (*crossrefspb.ListWormholeCrossRefsResponse, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).ListWormholeCrossRefs[0:len((*c.CallOptions).ListWormholeCrossRefs):len((*c.CallOptions).ListWormholeCrossRefs)], opts...)
 	var resp *crossrefspb.ListWormholeCrossRefsResponse

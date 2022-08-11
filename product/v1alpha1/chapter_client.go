@@ -66,7 +66,7 @@ func defaultChapterCallOptions() *ChapterCallOptions {
 	}
 }
 
-// internalChapterClient is an interface that defines the methods availaible from Product API.
+// internalChapterClient is an interface that defines the methods available from Product API.
 type internalChapterClient interface {
 	Close() error
 	setGoogleClientInfo(...string)
@@ -198,7 +198,7 @@ func (c *chapterGRPCClient) Connection() *grpc.ClientConn {
 // use by Google-written clients.
 func (c *chapterGRPCClient) setGoogleClientInfo(keyval ...string) {
 	kv := append([]string{"gl-go", versionGo()}, keyval...)
-	kv = append(kv, "gapic", versionClient, "gax", gax.Version, "grpc", grpc.Version)
+	kv = append(kv, "gapic", getVersionClient(), "gax", gax.Version, "grpc", grpc.Version)
 	c.xGoogMetadata = metadata.Pairs("x-goog-api-client", gax.XGoogHeader(kv...))
 }
 
@@ -210,6 +210,7 @@ func (c *chapterGRPCClient) Close() error {
 
 func (c *chapterGRPCClient) GetChapter(ctx context.Context, req *productpb.GetChapterRequest, opts ...gax.CallOption) (*productpb.Chapter, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).GetChapter[0:len((*c.CallOptions).GetChapter):len((*c.CallOptions).GetChapter)], opts...)
 	var resp *productpb.Chapter
@@ -226,6 +227,7 @@ func (c *chapterGRPCClient) GetChapter(ctx context.Context, req *productpb.GetCh
 
 func (c *chapterGRPCClient) ListChapters(ctx context.Context, req *productpb.ListChaptersRequest, opts ...gax.CallOption) *ChapterIterator {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).ListChapters[0:len((*c.CallOptions).ListChapters):len((*c.CallOptions).ListChapters)], opts...)
 	it := &ChapterIterator{}
@@ -270,6 +272,7 @@ func (c *chapterGRPCClient) ListChapters(ctx context.Context, req *productpb.Lis
 
 func (c *chapterGRPCClient) CreateChapter(ctx context.Context, req *productpb.CreateChapterRequest, opts ...gax.CallOption) (*productpb.Chapter, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).CreateChapter[0:len((*c.CallOptions).CreateChapter):len((*c.CallOptions).CreateChapter)], opts...)
 	var resp *productpb.Chapter
@@ -286,6 +289,7 @@ func (c *chapterGRPCClient) CreateChapter(ctx context.Context, req *productpb.Cr
 
 func (c *chapterGRPCClient) UpdateChapter(ctx context.Context, req *productpb.UpdateChapterRequest, opts ...gax.CallOption) (*productpb.Chapter, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "chapter.name", url.QueryEscape(req.GetChapter().GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).UpdateChapter[0:len((*c.CallOptions).UpdateChapter):len((*c.CallOptions).UpdateChapter)], opts...)
 	var resp *productpb.Chapter
@@ -302,6 +306,7 @@ func (c *chapterGRPCClient) UpdateChapter(ctx context.Context, req *productpb.Up
 
 func (c *chapterGRPCClient) DeleteChapter(ctx context.Context, req *productpb.DeleteChapterRequest, opts ...gax.CallOption) error {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).DeleteChapter[0:len((*c.CallOptions).DeleteChapter):len((*c.CallOptions).DeleteChapter)], opts...)
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {

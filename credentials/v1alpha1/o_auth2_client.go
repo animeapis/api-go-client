@@ -58,7 +58,7 @@ func defaultOAuth2CallOptions() *OAuth2CallOptions {
 	}
 }
 
-// internalOAuth2Client is an interface that defines the methods availaible from Credentials API.
+// internalOAuth2Client is an interface that defines the methods available from Credentials API.
 type internalOAuth2Client interface {
 	Close() error
 	setGoogleClientInfo(...string)
@@ -175,7 +175,7 @@ func (c *oAuth2GRPCClient) Connection() *grpc.ClientConn {
 // use by Google-written clients.
 func (c *oAuth2GRPCClient) setGoogleClientInfo(keyval ...string) {
 	kv := append([]string{"gl-go", versionGo()}, keyval...)
-	kv = append(kv, "gapic", versionClient, "gax", gax.Version, "grpc", grpc.Version)
+	kv = append(kv, "gapic", getVersionClient(), "gax", gax.Version, "grpc", grpc.Version)
 	c.xGoogMetadata = metadata.Pairs("x-goog-api-client", gax.XGoogHeader(kv...))
 }
 
@@ -187,6 +187,7 @@ func (c *oAuth2GRPCClient) Close() error {
 
 func (c *oAuth2GRPCClient) SignIn(ctx context.Context, req *credentialspb.SignInRequest, opts ...gax.CallOption) (*credentialspb.SignInResponse, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).SignIn[0:len((*c.CallOptions).SignIn):len((*c.CallOptions).SignIn)], opts...)
 	var resp *credentialspb.SignInResponse
@@ -203,6 +204,7 @@ func (c *oAuth2GRPCClient) SignIn(ctx context.Context, req *credentialspb.SignIn
 
 func (c *oAuth2GRPCClient) Exchange(ctx context.Context, req *credentialspb.ExchangeRequest, opts ...gax.CallOption) (*credentialspb.ExchangeResponse, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).Exchange[0:len((*c.CallOptions).Exchange):len((*c.CallOptions).Exchange)], opts...)
 	var resp *credentialspb.ExchangeResponse

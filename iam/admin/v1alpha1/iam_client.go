@@ -86,7 +86,7 @@ func defaultIamCallOptions() *IamCallOptions {
 	}
 }
 
-// internalIamClient is an interface that defines the methods availaible from Identity and Access Management API.
+// internalIamClient is an interface that defines the methods available from Identity and Access Management API.
 type internalIamClient interface {
 	Close() error
 	setGoogleClientInfo(...string)
@@ -268,7 +268,7 @@ func (c *iamGRPCClient) Connection() *grpc.ClientConn {
 // use by Google-written clients.
 func (c *iamGRPCClient) setGoogleClientInfo(keyval ...string) {
 	kv := append([]string{"gl-go", versionGo()}, keyval...)
-	kv = append(kv, "gapic", versionClient, "gax", gax.Version, "grpc", grpc.Version)
+	kv = append(kv, "gapic", getVersionClient(), "gax", gax.Version, "grpc", grpc.Version)
 	c.xGoogMetadata = metadata.Pairs("x-goog-api-client", gax.XGoogHeader(kv...))
 }
 
@@ -280,6 +280,7 @@ func (c *iamGRPCClient) Close() error {
 
 func (c *iamGRPCClient) GetServiceAccount(ctx context.Context, req *adminpb.GetServiceAccountRequest, opts ...gax.CallOption) (*adminpb.ServiceAccount, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).GetServiceAccount[0:len((*c.CallOptions).GetServiceAccount):len((*c.CallOptions).GetServiceAccount)], opts...)
 	var resp *adminpb.ServiceAccount
@@ -296,6 +297,7 @@ func (c *iamGRPCClient) GetServiceAccount(ctx context.Context, req *adminpb.GetS
 
 func (c *iamGRPCClient) ListServiceAccounts(ctx context.Context, req *adminpb.ListServiceAccountsRequest, opts ...gax.CallOption) *ServiceAccountIterator {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).ListServiceAccounts[0:len((*c.CallOptions).ListServiceAccounts):len((*c.CallOptions).ListServiceAccounts)], opts...)
 	it := &ServiceAccountIterator{}
@@ -340,6 +342,7 @@ func (c *iamGRPCClient) ListServiceAccounts(ctx context.Context, req *adminpb.Li
 
 func (c *iamGRPCClient) CreateServiceAccount(ctx context.Context, req *adminpb.CreateServiceAccountRequest, opts ...gax.CallOption) (*adminpb.ServiceAccount, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "service_account.name", url.QueryEscape(req.GetServiceAccount().GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).CreateServiceAccount[0:len((*c.CallOptions).CreateServiceAccount):len((*c.CallOptions).CreateServiceAccount)], opts...)
 	var resp *adminpb.ServiceAccount
@@ -356,6 +359,7 @@ func (c *iamGRPCClient) CreateServiceAccount(ctx context.Context, req *adminpb.C
 
 func (c *iamGRPCClient) UpdateServiceAccount(ctx context.Context, req *adminpb.UpdateServiceAccountRequest, opts ...gax.CallOption) (*adminpb.ServiceAccount, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "service_account.name", url.QueryEscape(req.GetServiceAccount().GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).UpdateServiceAccount[0:len((*c.CallOptions).UpdateServiceAccount):len((*c.CallOptions).UpdateServiceAccount)], opts...)
 	var resp *adminpb.ServiceAccount
@@ -372,6 +376,7 @@ func (c *iamGRPCClient) UpdateServiceAccount(ctx context.Context, req *adminpb.U
 
 func (c *iamGRPCClient) DeleteServiceAccount(ctx context.Context, req *adminpb.DeleteServiceAccountRequest, opts ...gax.CallOption) error {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).DeleteServiceAccount[0:len((*c.CallOptions).DeleteServiceAccount):len((*c.CallOptions).DeleteServiceAccount)], opts...)
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -384,6 +389,7 @@ func (c *iamGRPCClient) DeleteServiceAccount(ctx context.Context, req *adminpb.D
 
 func (c *iamGRPCClient) GetRole(ctx context.Context, req *adminpb.GetRoleRequest, opts ...gax.CallOption) (*adminpb.Role, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).GetRole[0:len((*c.CallOptions).GetRole):len((*c.CallOptions).GetRole)], opts...)
 	var resp *adminpb.Role
@@ -443,6 +449,7 @@ func (c *iamGRPCClient) ListRoles(ctx context.Context, req *adminpb.ListRolesReq
 
 func (c *iamGRPCClient) CreateRole(ctx context.Context, req *adminpb.CreateRoleRequest, opts ...gax.CallOption) (*adminpb.Role, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "role.name", url.QueryEscape(req.GetRole().GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).CreateRole[0:len((*c.CallOptions).CreateRole):len((*c.CallOptions).CreateRole)], opts...)
 	var resp *adminpb.Role
@@ -459,6 +466,7 @@ func (c *iamGRPCClient) CreateRole(ctx context.Context, req *adminpb.CreateRoleR
 
 func (c *iamGRPCClient) UpdateRole(ctx context.Context, req *adminpb.UpdateRoleRequest, opts ...gax.CallOption) (*adminpb.Role, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "role.name", url.QueryEscape(req.GetRole().GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).UpdateRole[0:len((*c.CallOptions).UpdateRole):len((*c.CallOptions).UpdateRole)], opts...)
 	var resp *adminpb.Role
@@ -475,6 +483,7 @@ func (c *iamGRPCClient) UpdateRole(ctx context.Context, req *adminpb.UpdateRoleR
 
 func (c *iamGRPCClient) DeleteRole(ctx context.Context, req *adminpb.DeleteRoleRequest, opts ...gax.CallOption) error {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).DeleteRole[0:len((*c.CallOptions).DeleteRole):len((*c.CallOptions).DeleteRole)], opts...)
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -487,6 +496,7 @@ func (c *iamGRPCClient) DeleteRole(ctx context.Context, req *adminpb.DeleteRoleR
 
 func (c *iamGRPCClient) GetPermission(ctx context.Context, req *adminpb.GetPermissionRequest, opts ...gax.CallOption) (*adminpb.Permission, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).GetPermission[0:len((*c.CallOptions).GetPermission):len((*c.CallOptions).GetPermission)], opts...)
 	var resp *adminpb.Permission
@@ -546,6 +556,7 @@ func (c *iamGRPCClient) ListPermissions(ctx context.Context, req *adminpb.ListPe
 
 func (c *iamGRPCClient) CreatePermission(ctx context.Context, req *adminpb.CreatePermissionRequest, opts ...gax.CallOption) (*adminpb.Permission, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "permission.name", url.QueryEscape(req.GetPermission().GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).CreatePermission[0:len((*c.CallOptions).CreatePermission):len((*c.CallOptions).CreatePermission)], opts...)
 	var resp *adminpb.Permission
@@ -562,6 +573,7 @@ func (c *iamGRPCClient) CreatePermission(ctx context.Context, req *adminpb.Creat
 
 func (c *iamGRPCClient) UpdatePermission(ctx context.Context, req *adminpb.UpdatePermissionRequest, opts ...gax.CallOption) (*adminpb.Permission, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "permission.name", url.QueryEscape(req.GetPermission().GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).UpdatePermission[0:len((*c.CallOptions).UpdatePermission):len((*c.CallOptions).UpdatePermission)], opts...)
 	var resp *adminpb.Permission
@@ -578,6 +590,7 @@ func (c *iamGRPCClient) UpdatePermission(ctx context.Context, req *adminpb.Updat
 
 func (c *iamGRPCClient) DeletePermission(ctx context.Context, req *adminpb.DeletePermissionRequest, opts ...gax.CallOption) error {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).DeletePermission[0:len((*c.CallOptions).DeletePermission):len((*c.CallOptions).DeletePermission)], opts...)
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {

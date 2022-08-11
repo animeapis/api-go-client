@@ -28,6 +28,7 @@ import (
 	"google.golang.org/api/option/internaloption"
 	gtransport "google.golang.org/api/transport/grpc"
 	httpbodypb "google.golang.org/genproto/googleapis/api/httpbody"
+	iampb "google.golang.org/genproto/googleapis/iam/v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 )
@@ -36,8 +37,11 @@ var newImageRouterClientHook clientHook
 
 // ImageRouterCallOptions contains the retry settings for each method of ImageRouterClient.
 type ImageRouterCallOptions struct {
-	GetImageRoute []gax.CallOption
-	RouteImage    []gax.CallOption
+	GetImageRoute      []gax.CallOption
+	RouteImage         []gax.CallOption
+	GetIamPolicy       []gax.CallOption
+	SetIamPolicy       []gax.CallOption
+	TestIamPermissions []gax.CallOption
 }
 
 func defaultImageRouterGRPCClientOptions() []option.ClientOption {
@@ -54,18 +58,24 @@ func defaultImageRouterGRPCClientOptions() []option.ClientOption {
 
 func defaultImageRouterCallOptions() *ImageRouterCallOptions {
 	return &ImageRouterCallOptions{
-		GetImageRoute: []gax.CallOption{},
-		RouteImage:    []gax.CallOption{},
+		GetImageRoute:      []gax.CallOption{},
+		RouteImage:         []gax.CallOption{},
+		GetIamPolicy:       []gax.CallOption{},
+		SetIamPolicy:       []gax.CallOption{},
+		TestIamPermissions: []gax.CallOption{},
 	}
 }
 
-// internalImageRouterClient is an interface that defines the methods availaible from Image API.
+// internalImageRouterClient is an interface that defines the methods available from Image API.
 type internalImageRouterClient interface {
 	Close() error
 	setGoogleClientInfo(...string)
 	Connection() *grpc.ClientConn
 	GetImageRoute(context.Context, *imagepb.GetImageRouteRequest, ...gax.CallOption) (*imagepb.GetImageRouteResponse, error)
 	RouteImage(context.Context, *imagepb.RouteImageRequest, ...gax.CallOption) (*httpbodypb.HttpBody, error)
+	GetIamPolicy(context.Context, *iampb.GetIamPolicyRequest, ...gax.CallOption) (*iampb.Policy, error)
+	SetIamPolicy(context.Context, *iampb.SetIamPolicyRequest, ...gax.CallOption) (*iampb.Policy, error)
+	TestIamPermissions(context.Context, *iampb.TestIamPermissionsRequest, ...gax.CallOption) (*iampb.TestIamPermissionsResponse, error)
 }
 
 // ImageRouterClient is a client for interacting with Image API.
@@ -114,6 +124,21 @@ func (c *ImageRouterClient) RouteImage(ctx context.Context, req *imagepb.RouteIm
 	return c.internalClient.RouteImage(ctx, req, opts...)
 }
 
+// GetIamPolicy is a utility method from google.iam.v1.IAMPolicy.
+func (c *ImageRouterClient) GetIamPolicy(ctx context.Context, req *iampb.GetIamPolicyRequest, opts ...gax.CallOption) (*iampb.Policy, error) {
+	return c.internalClient.GetIamPolicy(ctx, req, opts...)
+}
+
+// SetIamPolicy is a utility method from google.iam.v1.IAMPolicy.
+func (c *ImageRouterClient) SetIamPolicy(ctx context.Context, req *iampb.SetIamPolicyRequest, opts ...gax.CallOption) (*iampb.Policy, error) {
+	return c.internalClient.SetIamPolicy(ctx, req, opts...)
+}
+
+// TestIamPermissions is a utility method from google.iam.v1.IAMPolicy.
+func (c *ImageRouterClient) TestIamPermissions(ctx context.Context, req *iampb.TestIamPermissionsRequest, opts ...gax.CallOption) (*iampb.TestIamPermissionsResponse, error) {
+	return c.internalClient.TestIamPermissions(ctx, req, opts...)
+}
+
 // imageRouterGRPCClient is a client for interacting with Image API over gRPC transport.
 //
 // Methods, except Close, may be called concurrently. However, fields must not be modified concurrently with method calls.
@@ -129,6 +154,8 @@ type imageRouterGRPCClient struct {
 
 	// The gRPC API client.
 	imageRouterClient imagepb.ImageRouterClient
+
+	iamPolicyClient iampb.IAMPolicyClient
 
 	// The x-goog-* metadata to be sent with each request.
 	xGoogMetadata metadata.MD
@@ -166,6 +193,7 @@ func NewImageRouterClient(ctx context.Context, opts ...option.ClientOption) (*Im
 		disableDeadlines:  disableDeadlines,
 		imageRouterClient: imagepb.NewImageRouterClient(connPool),
 		CallOptions:       &client.CallOptions,
+		iamPolicyClient:   iampb.NewIAMPolicyClient(connPool),
 	}
 	c.setGoogleClientInfo()
 
@@ -186,7 +214,7 @@ func (c *imageRouterGRPCClient) Connection() *grpc.ClientConn {
 // use by Google-written clients.
 func (c *imageRouterGRPCClient) setGoogleClientInfo(keyval ...string) {
 	kv := append([]string{"gl-go", versionGo()}, keyval...)
-	kv = append(kv, "gapic", versionClient, "gax", gax.Version, "grpc", grpc.Version)
+	kv = append(kv, "gapic", getVersionClient(), "gax", gax.Version, "grpc", grpc.Version)
 	c.xGoogMetadata = metadata.Pairs("x-goog-api-client", gax.XGoogHeader(kv...))
 }
 
@@ -198,6 +226,7 @@ func (c *imageRouterGRPCClient) Close() error {
 
 func (c *imageRouterGRPCClient) GetImageRoute(ctx context.Context, req *imagepb.GetImageRouteRequest, opts ...gax.CallOption) (*imagepb.GetImageRouteResponse, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).GetImageRoute[0:len((*c.CallOptions).GetImageRoute):len((*c.CallOptions).GetImageRoute)], opts...)
 	var resp *imagepb.GetImageRouteResponse
@@ -214,12 +243,64 @@ func (c *imageRouterGRPCClient) GetImageRoute(ctx context.Context, req *imagepb.
 
 func (c *imageRouterGRPCClient) RouteImage(ctx context.Context, req *imagepb.RouteImageRequest, opts ...gax.CallOption) (*httpbodypb.HttpBody, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v&%s=%v", "host", url.QueryEscape(req.GetHost()), "path", url.QueryEscape(req.GetPath())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).RouteImage[0:len((*c.CallOptions).RouteImage):len((*c.CallOptions).RouteImage)], opts...)
 	var resp *httpbodypb.HttpBody
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
 		resp, err = c.imageRouterClient.RouteImage(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *imageRouterGRPCClient) GetIamPolicy(ctx context.Context, req *iampb.GetIamPolicyRequest, opts ...gax.CallOption) (*iampb.Policy, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "resource", url.QueryEscape(req.GetResource())))
+
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).GetIamPolicy[0:len((*c.CallOptions).GetIamPolicy):len((*c.CallOptions).GetIamPolicy)], opts...)
+	var resp *iampb.Policy
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.iamPolicyClient.GetIamPolicy(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *imageRouterGRPCClient) SetIamPolicy(ctx context.Context, req *iampb.SetIamPolicyRequest, opts ...gax.CallOption) (*iampb.Policy, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "resource", url.QueryEscape(req.GetResource())))
+
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).SetIamPolicy[0:len((*c.CallOptions).SetIamPolicy):len((*c.CallOptions).SetIamPolicy)], opts...)
+	var resp *iampb.Policy
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.iamPolicyClient.SetIamPolicy(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *imageRouterGRPCClient) TestIamPermissions(ctx context.Context, req *iampb.TestIamPermissionsRequest, opts ...gax.CallOption) (*iampb.TestIamPermissionsResponse, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "resource", url.QueryEscape(req.GetResource())))
+
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).TestIamPermissions[0:len((*c.CallOptions).TestIamPermissions):len((*c.CallOptions).TestIamPermissions)], opts...)
+	var resp *iampb.TestIamPermissionsResponse
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.iamPolicyClient.TestIamPermissions(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	if err != nil {

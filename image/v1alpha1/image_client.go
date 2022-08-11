@@ -29,6 +29,7 @@ import (
 	"google.golang.org/api/option/internaloption"
 	gtransport "google.golang.org/api/transport/grpc"
 	httpbodypb "google.golang.org/genproto/googleapis/api/httpbody"
+	iampb "google.golang.org/genproto/googleapis/iam/v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/protobuf/proto"
@@ -47,6 +48,9 @@ type CallOptions struct {
 	DeleteAlbum         []gax.CallOption
 	GetAlbumSettings    []gax.CallOption
 	UpdateAlbumSettings []gax.CallOption
+	GetIamPolicy        []gax.CallOption
+	SetIamPolicy        []gax.CallOption
+	TestIamPermissions  []gax.CallOption
 }
 
 func defaultGRPCClientOptions() []option.ClientOption {
@@ -72,10 +76,13 @@ func defaultCallOptions() *CallOptions {
 		DeleteAlbum:         []gax.CallOption{},
 		GetAlbumSettings:    []gax.CallOption{},
 		UpdateAlbumSettings: []gax.CallOption{},
+		GetIamPolicy:        []gax.CallOption{},
+		SetIamPolicy:        []gax.CallOption{},
+		TestIamPermissions:  []gax.CallOption{},
 	}
 }
 
-// internalClient is an interface that defines the methods availaible from Image API.
+// internalClient is an interface that defines the methods available from Image API.
 type internalClient interface {
 	Close() error
 	setGoogleClientInfo(...string)
@@ -89,6 +96,9 @@ type internalClient interface {
 	DeleteAlbum(context.Context, *imagepb.DeleteAlbumRequest, ...gax.CallOption) error
 	GetAlbumSettings(context.Context, *imagepb.GetAlbumSettingsRequest, ...gax.CallOption) (*imagepb.AlbumSettings, error)
 	UpdateAlbumSettings(context.Context, *imagepb.UpdateAlbumSettingsRequest, ...gax.CallOption) (*imagepb.AlbumSettings, error)
+	GetIamPolicy(context.Context, *iampb.GetIamPolicyRequest, ...gax.CallOption) (*iampb.Policy, error)
+	SetIamPolicy(context.Context, *iampb.SetIamPolicyRequest, ...gax.CallOption) (*iampb.Policy, error)
+	TestIamPermissions(context.Context, *iampb.TestIamPermissionsRequest, ...gax.CallOption) (*iampb.TestIamPermissionsResponse, error)
 }
 
 // Client is a client for interacting with Image API.
@@ -168,6 +178,21 @@ func (c *Client) UpdateAlbumSettings(ctx context.Context, req *imagepb.UpdateAlb
 	return c.internalClient.UpdateAlbumSettings(ctx, req, opts...)
 }
 
+// GetIamPolicy is a utility method from google.iam.v1.IAMPolicy.
+func (c *Client) GetIamPolicy(ctx context.Context, req *iampb.GetIamPolicyRequest, opts ...gax.CallOption) (*iampb.Policy, error) {
+	return c.internalClient.GetIamPolicy(ctx, req, opts...)
+}
+
+// SetIamPolicy is a utility method from google.iam.v1.IAMPolicy.
+func (c *Client) SetIamPolicy(ctx context.Context, req *iampb.SetIamPolicyRequest, opts ...gax.CallOption) (*iampb.Policy, error) {
+	return c.internalClient.SetIamPolicy(ctx, req, opts...)
+}
+
+// TestIamPermissions is a utility method from google.iam.v1.IAMPolicy.
+func (c *Client) TestIamPermissions(ctx context.Context, req *iampb.TestIamPermissionsRequest, opts ...gax.CallOption) (*iampb.TestIamPermissionsResponse, error) {
+	return c.internalClient.TestIamPermissions(ctx, req, opts...)
+}
+
 // gRPCClient is a client for interacting with Image API over gRPC transport.
 //
 // Methods, except Close, may be called concurrently. However, fields must not be modified concurrently with method calls.
@@ -183,6 +208,8 @@ type gRPCClient struct {
 
 	// The gRPC API client.
 	client imagepb.ImageClient
+
+	iamPolicyClient iampb.IAMPolicyClient
 
 	// The x-goog-* metadata to be sent with each request.
 	xGoogMetadata metadata.MD
@@ -216,6 +243,7 @@ func NewClient(ctx context.Context, opts ...option.ClientOption) (*Client, error
 		disableDeadlines: disableDeadlines,
 		client:           imagepb.NewImageClient(connPool),
 		CallOptions:      &client.CallOptions,
+		iamPolicyClient:  iampb.NewIAMPolicyClient(connPool),
 	}
 	c.setGoogleClientInfo()
 
@@ -236,7 +264,7 @@ func (c *gRPCClient) Connection() *grpc.ClientConn {
 // use by Google-written clients.
 func (c *gRPCClient) setGoogleClientInfo(keyval ...string) {
 	kv := append([]string{"gl-go", versionGo()}, keyval...)
-	kv = append(kv, "gapic", versionClient, "gax", gax.Version, "grpc", grpc.Version)
+	kv = append(kv, "gapic", getVersionClient(), "gax", gax.Version, "grpc", grpc.Version)
 	c.xGoogMetadata = metadata.Pairs("x-goog-api-client", gax.XGoogHeader(kv...))
 }
 
@@ -248,6 +276,7 @@ func (c *gRPCClient) Close() error {
 
 func (c *gRPCClient) UploadImage(ctx context.Context, req *imagepb.UploadImageRequest, opts ...gax.CallOption) (*imagepb.UploadImageResponse, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).UploadImage[0:len((*c.CallOptions).UploadImage):len((*c.CallOptions).UploadImage)], opts...)
 	var resp *imagepb.UploadImageResponse
@@ -264,6 +293,7 @@ func (c *gRPCClient) UploadImage(ctx context.Context, req *imagepb.UploadImageRe
 
 func (c *gRPCClient) ImportImage(ctx context.Context, req *imagepb.ImportImageRequest, opts ...gax.CallOption) (*imagepb.ImportImageResponse, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).ImportImage[0:len((*c.CallOptions).ImportImage):len((*c.CallOptions).ImportImage)], opts...)
 	var resp *imagepb.ImportImageResponse
@@ -280,6 +310,7 @@ func (c *gRPCClient) ImportImage(ctx context.Context, req *imagepb.ImportImageRe
 
 func (c *gRPCClient) GetImage(ctx context.Context, req *imagepb.GetImageRequest, opts ...gax.CallOption) (*httpbodypb.HttpBody, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).GetImage[0:len((*c.CallOptions).GetImage):len((*c.CallOptions).GetImage)], opts...)
 	var resp *httpbodypb.HttpBody
@@ -296,6 +327,7 @@ func (c *gRPCClient) GetImage(ctx context.Context, req *imagepb.GetImageRequest,
 
 func (c *gRPCClient) GetAlbum(ctx context.Context, req *imagepb.GetAlbumRequest, opts ...gax.CallOption) (*imagepb.Album, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).GetAlbum[0:len((*c.CallOptions).GetAlbum):len((*c.CallOptions).GetAlbum)], opts...)
 	var resp *imagepb.Album
@@ -312,6 +344,7 @@ func (c *gRPCClient) GetAlbum(ctx context.Context, req *imagepb.GetAlbumRequest,
 
 func (c *gRPCClient) ListAlbums(ctx context.Context, req *imagepb.ListAlbumsRequest, opts ...gax.CallOption) *AlbumIterator {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).ListAlbums[0:len((*c.CallOptions).ListAlbums):len((*c.CallOptions).ListAlbums)], opts...)
 	it := &AlbumIterator{}
@@ -356,6 +389,7 @@ func (c *gRPCClient) ListAlbums(ctx context.Context, req *imagepb.ListAlbumsRequ
 
 func (c *gRPCClient) CreateAlbum(ctx context.Context, req *imagepb.CreateAlbumRequest, opts ...gax.CallOption) (*imagepb.Album, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).CreateAlbum[0:len((*c.CallOptions).CreateAlbum):len((*c.CallOptions).CreateAlbum)], opts...)
 	var resp *imagepb.Album
@@ -372,6 +406,7 @@ func (c *gRPCClient) CreateAlbum(ctx context.Context, req *imagepb.CreateAlbumRe
 
 func (c *gRPCClient) DeleteAlbum(ctx context.Context, req *imagepb.DeleteAlbumRequest, opts ...gax.CallOption) error {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).DeleteAlbum[0:len((*c.CallOptions).DeleteAlbum):len((*c.CallOptions).DeleteAlbum)], opts...)
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -384,6 +419,7 @@ func (c *gRPCClient) DeleteAlbum(ctx context.Context, req *imagepb.DeleteAlbumRe
 
 func (c *gRPCClient) GetAlbumSettings(ctx context.Context, req *imagepb.GetAlbumSettingsRequest, opts ...gax.CallOption) (*imagepb.AlbumSettings, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).GetAlbumSettings[0:len((*c.CallOptions).GetAlbumSettings):len((*c.CallOptions).GetAlbumSettings)], opts...)
 	var resp *imagepb.AlbumSettings
@@ -400,12 +436,64 @@ func (c *gRPCClient) GetAlbumSettings(ctx context.Context, req *imagepb.GetAlbum
 
 func (c *gRPCClient) UpdateAlbumSettings(ctx context.Context, req *imagepb.UpdateAlbumSettingsRequest, opts ...gax.CallOption) (*imagepb.AlbumSettings, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "settings.name", url.QueryEscape(req.GetSettings().GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).UpdateAlbumSettings[0:len((*c.CallOptions).UpdateAlbumSettings):len((*c.CallOptions).UpdateAlbumSettings)], opts...)
 	var resp *imagepb.AlbumSettings
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
 		resp, err = c.client.UpdateAlbumSettings(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *gRPCClient) GetIamPolicy(ctx context.Context, req *iampb.GetIamPolicyRequest, opts ...gax.CallOption) (*iampb.Policy, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "resource", url.QueryEscape(req.GetResource())))
+
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).GetIamPolicy[0:len((*c.CallOptions).GetIamPolicy):len((*c.CallOptions).GetIamPolicy)], opts...)
+	var resp *iampb.Policy
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.iamPolicyClient.GetIamPolicy(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *gRPCClient) SetIamPolicy(ctx context.Context, req *iampb.SetIamPolicyRequest, opts ...gax.CallOption) (*iampb.Policy, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "resource", url.QueryEscape(req.GetResource())))
+
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).SetIamPolicy[0:len((*c.CallOptions).SetIamPolicy):len((*c.CallOptions).SetIamPolicy)], opts...)
+	var resp *iampb.Policy
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.iamPolicyClient.SetIamPolicy(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *gRPCClient) TestIamPermissions(ctx context.Context, req *iampb.TestIamPermissionsRequest, opts ...gax.CallOption) (*iampb.TestIamPermissionsResponse, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "resource", url.QueryEscape(req.GetResource())))
+
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).TestIamPermissions[0:len((*c.CallOptions).TestIamPermissions):len((*c.CallOptions).TestIamPermissions)], opts...)
+	var resp *iampb.TestIamPermissionsResponse
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.iamPolicyClient.TestIamPermissions(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	if err != nil {

@@ -72,7 +72,7 @@ func defaultGraphicNovelCallOptions() *GraphicNovelCallOptions {
 	}
 }
 
-// internalGraphicNovelClient is an interface that defines the methods availaible from Multimedia API.
+// internalGraphicNovelClient is an interface that defines the methods available from Multimedia API.
 type internalGraphicNovelClient interface {
 	Close() error
 	setGoogleClientInfo(...string)
@@ -238,7 +238,7 @@ func (c *graphicNovelGRPCClient) Connection() *grpc.ClientConn {
 // use by Google-written clients.
 func (c *graphicNovelGRPCClient) setGoogleClientInfo(keyval ...string) {
 	kv := append([]string{"gl-go", versionGo()}, keyval...)
-	kv = append(kv, "gapic", versionClient, "gax", gax.Version, "grpc", grpc.Version)
+	kv = append(kv, "gapic", getVersionClient(), "gax", gax.Version, "grpc", grpc.Version)
 	c.xGoogMetadata = metadata.Pairs("x-goog-api-client", gax.XGoogHeader(kv...))
 }
 
@@ -250,6 +250,7 @@ func (c *graphicNovelGRPCClient) Close() error {
 
 func (c *graphicNovelGRPCClient) GetGraphicNovel(ctx context.Context, req *multimediapb.GetGraphicNovelRequest, opts ...gax.CallOption) (*multimediapb.GraphicNovel, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).GetGraphicNovel[0:len((*c.CallOptions).GetGraphicNovel):len((*c.CallOptions).GetGraphicNovel)], opts...)
 	var resp *multimediapb.GraphicNovel
@@ -324,6 +325,7 @@ func (c *graphicNovelGRPCClient) CreateGraphicNovel(ctx context.Context, req *mu
 
 func (c *graphicNovelGRPCClient) UpdateGraphicNovel(ctx context.Context, req *multimediapb.UpdateGraphicNovelRequest, opts ...gax.CallOption) (*multimediapb.GraphicNovel, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "graphic_novel.name", url.QueryEscape(req.GetGraphicNovel().GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).UpdateGraphicNovel[0:len((*c.CallOptions).UpdateGraphicNovel):len((*c.CallOptions).UpdateGraphicNovel)], opts...)
 	var resp *multimediapb.GraphicNovel
@@ -340,6 +342,7 @@ func (c *graphicNovelGRPCClient) UpdateGraphicNovel(ctx context.Context, req *mu
 
 func (c *graphicNovelGRPCClient) DeleteGraphicNovel(ctx context.Context, req *multimediapb.DeleteGraphicNovelRequest, opts ...gax.CallOption) error {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).DeleteGraphicNovel[0:len((*c.CallOptions).DeleteGraphicNovel):len((*c.CallOptions).DeleteGraphicNovel)], opts...)
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -352,6 +355,7 @@ func (c *graphicNovelGRPCClient) DeleteGraphicNovel(ctx context.Context, req *mu
 
 func (c *graphicNovelGRPCClient) ReconcileGraphicNovels(ctx context.Context, req *multimediapb.ReconcileGraphicNovelsRequest, opts ...gax.CallOption) (*ReconcileGraphicNovelsOperation, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).ReconcileGraphicNovels[0:len((*c.CallOptions).ReconcileGraphicNovels):len((*c.CallOptions).ReconcileGraphicNovels)], opts...)
 	var resp *longrunningpb.Operation

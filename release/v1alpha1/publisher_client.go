@@ -78,7 +78,7 @@ func defaultPublisherCallOptions() *PublisherCallOptions {
 	}
 }
 
-// internalPublisherClient is an interface that defines the methods availaible from Release API.
+// internalPublisherClient is an interface that defines the methods available from Release API.
 type internalPublisherClient interface {
 	Close() error
 	setGoogleClientInfo(...string)
@@ -253,7 +253,7 @@ func (c *publisherGRPCClient) Connection() *grpc.ClientConn {
 // use by Google-written clients.
 func (c *publisherGRPCClient) setGoogleClientInfo(keyval ...string) {
 	kv := append([]string{"gl-go", versionGo()}, keyval...)
-	kv = append(kv, "gapic", versionClient, "gax", gax.Version, "grpc", grpc.Version)
+	kv = append(kv, "gapic", getVersionClient(), "gax", gax.Version, "grpc", grpc.Version)
 	c.xGoogMetadata = metadata.Pairs("x-goog-api-client", gax.XGoogHeader(kv...))
 }
 
@@ -265,6 +265,7 @@ func (c *publisherGRPCClient) Close() error {
 
 func (c *publisherGRPCClient) GetRelease(ctx context.Context, req *releasepb.GetReleaseRequest, opts ...gax.CallOption) (*releasepb.Release, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).GetRelease[0:len((*c.CallOptions).GetRelease):len((*c.CallOptions).GetRelease)], opts...)
 	var resp *releasepb.Release
@@ -281,6 +282,7 @@ func (c *publisherGRPCClient) GetRelease(ctx context.Context, req *releasepb.Get
 
 func (c *publisherGRPCClient) ListReleases(ctx context.Context, req *releasepb.ListReleasesRequest, opts ...gax.CallOption) *ReleaseIterator {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).ListReleases[0:len((*c.CallOptions).ListReleases):len((*c.CallOptions).ListReleases)], opts...)
 	it := &ReleaseIterator{}
@@ -325,6 +327,7 @@ func (c *publisherGRPCClient) ListReleases(ctx context.Context, req *releasepb.L
 
 func (c *publisherGRPCClient) CreateRelease(ctx context.Context, req *releasepb.CreateReleaseRequest, opts ...gax.CallOption) (*releasepb.Release, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).CreateRelease[0:len((*c.CallOptions).CreateRelease):len((*c.CallOptions).CreateRelease)], opts...)
 	var resp *releasepb.Release
@@ -341,6 +344,7 @@ func (c *publisherGRPCClient) CreateRelease(ctx context.Context, req *releasepb.
 
 func (c *publisherGRPCClient) UpdateRelease(ctx context.Context, req *releasepb.UpdateReleaseRequest, opts ...gax.CallOption) (*releasepb.Release, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "release.name", url.QueryEscape(req.GetRelease().GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).UpdateRelease[0:len((*c.CallOptions).UpdateRelease):len((*c.CallOptions).UpdateRelease)], opts...)
 	var resp *releasepb.Release
@@ -357,6 +361,7 @@ func (c *publisherGRPCClient) UpdateRelease(ctx context.Context, req *releasepb.
 
 func (c *publisherGRPCClient) DeleteRelease(ctx context.Context, req *releasepb.DeleteReleaseRequest, opts ...gax.CallOption) error {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).DeleteRelease[0:len((*c.CallOptions).DeleteRelease):len((*c.CallOptions).DeleteRelease)], opts...)
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -369,6 +374,7 @@ func (c *publisherGRPCClient) DeleteRelease(ctx context.Context, req *releasepb.
 
 func (c *publisherGRPCClient) UndeleteRelease(ctx context.Context, req *releasepb.UndeleteReleaseRequest, opts ...gax.CallOption) (*releasepb.Release, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).UndeleteRelease[0:len((*c.CallOptions).UndeleteRelease):len((*c.CallOptions).UndeleteRelease)], opts...)
 	var resp *releasepb.Release
@@ -385,6 +391,7 @@ func (c *publisherGRPCClient) UndeleteRelease(ctx context.Context, req *releasep
 
 func (c *publisherGRPCClient) PublishRelease(ctx context.Context, req *releasepb.PublishReleaseRequest, opts ...gax.CallOption) (*releasepb.PublishReleaseResponse, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).PublishRelease[0:len((*c.CallOptions).PublishRelease):len((*c.CallOptions).PublishRelease)], opts...)
 	var resp *releasepb.PublishReleaseResponse
@@ -401,6 +408,7 @@ func (c *publisherGRPCClient) PublishRelease(ctx context.Context, req *releasepb
 
 func (c *publisherGRPCClient) UnpublishRelease(ctx context.Context, req *releasepb.UnpublishReleaseRequest, opts ...gax.CallOption) (*releasepb.UnpublishReleaseResponse, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).UnpublishRelease[0:len((*c.CallOptions).UnpublishRelease):len((*c.CallOptions).UnpublishRelease)], opts...)
 	var resp *releasepb.UnpublishReleaseResponse
@@ -417,6 +425,7 @@ func (c *publisherGRPCClient) UnpublishRelease(ctx context.Context, req *release
 
 func (c *publisherGRPCClient) ScheduleRelease(ctx context.Context, req *releasepb.ScheduleReleaseRequest, opts ...gax.CallOption) (*releasepb.ScheduleReleaseResponse, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).ScheduleRelease[0:len((*c.CallOptions).ScheduleRelease):len((*c.CallOptions).ScheduleRelease)], opts...)
 	var resp *releasepb.ScheduleReleaseResponse
@@ -433,6 +442,7 @@ func (c *publisherGRPCClient) ScheduleRelease(ctx context.Context, req *releasep
 
 func (c *publisherGRPCClient) CancelRelease(ctx context.Context, req *releasepb.CancelReleaseRequest, opts ...gax.CallOption) (*releasepb.CancelReleaseResponse, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).CancelRelease[0:len((*c.CallOptions).CancelRelease):len((*c.CallOptions).CancelRelease)], opts...)
 	var resp *releasepb.CancelReleaseResponse
@@ -449,6 +459,7 @@ func (c *publisherGRPCClient) CancelRelease(ctx context.Context, req *releasepb.
 
 func (c *publisherGRPCClient) SuspendRelease(ctx context.Context, req *releasepb.SuspendReleaseRequest, opts ...gax.CallOption) (*releasepb.SuspendReleaseResponse, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).SuspendRelease[0:len((*c.CallOptions).SuspendRelease):len((*c.CallOptions).SuspendRelease)], opts...)
 	var resp *releasepb.SuspendReleaseResponse

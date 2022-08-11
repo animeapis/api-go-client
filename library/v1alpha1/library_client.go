@@ -74,7 +74,7 @@ func defaultCallOptions() *CallOptions {
 	}
 }
 
-// internalClient is an interface that defines the methods availaible from Library API.
+// internalClient is an interface that defines the methods available from Library API.
 type internalClient interface {
 	Close() error
 	setGoogleClientInfo(...string)
@@ -226,7 +226,7 @@ func (c *gRPCClient) Connection() *grpc.ClientConn {
 // use by Google-written clients.
 func (c *gRPCClient) setGoogleClientInfo(keyval ...string) {
 	kv := append([]string{"gl-go", versionGo()}, keyval...)
-	kv = append(kv, "gapic", versionClient, "gax", gax.Version, "grpc", grpc.Version)
+	kv = append(kv, "gapic", getVersionClient(), "gax", gax.Version, "grpc", grpc.Version)
 	c.xGoogMetadata = metadata.Pairs("x-goog-api-client", gax.XGoogHeader(kv...))
 }
 
@@ -238,6 +238,7 @@ func (c *gRPCClient) Close() error {
 
 func (c *gRPCClient) GetPlaylist(ctx context.Context, req *librarypb.GetPlaylistRequest, opts ...gax.CallOption) (*librarypb.Playlist, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).GetPlaylist[0:len((*c.CallOptions).GetPlaylist):len((*c.CallOptions).GetPlaylist)], opts...)
 	var resp *librarypb.Playlist
@@ -254,6 +255,7 @@ func (c *gRPCClient) GetPlaylist(ctx context.Context, req *librarypb.GetPlaylist
 
 func (c *gRPCClient) ListPlaylists(ctx context.Context, req *librarypb.ListPlaylistsRequest, opts ...gax.CallOption) *PlaylistIterator {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).ListPlaylists[0:len((*c.CallOptions).ListPlaylists):len((*c.CallOptions).ListPlaylists)], opts...)
 	it := &PlaylistIterator{}
@@ -298,6 +300,7 @@ func (c *gRPCClient) ListPlaylists(ctx context.Context, req *librarypb.ListPlayl
 
 func (c *gRPCClient) CreatePlaylist(ctx context.Context, req *librarypb.CreatePlaylistRequest, opts ...gax.CallOption) (*librarypb.Playlist, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).CreatePlaylist[0:len((*c.CallOptions).CreatePlaylist):len((*c.CallOptions).CreatePlaylist)], opts...)
 	var resp *librarypb.Playlist
@@ -314,6 +317,7 @@ func (c *gRPCClient) CreatePlaylist(ctx context.Context, req *librarypb.CreatePl
 
 func (c *gRPCClient) UpdatePlaylist(ctx context.Context, req *librarypb.UpdatePlaylistRequest, opts ...gax.CallOption) (*librarypb.Playlist, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "playlist.name", url.QueryEscape(req.GetPlaylist().GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).UpdatePlaylist[0:len((*c.CallOptions).UpdatePlaylist):len((*c.CallOptions).UpdatePlaylist)], opts...)
 	var resp *librarypb.Playlist
@@ -330,6 +334,7 @@ func (c *gRPCClient) UpdatePlaylist(ctx context.Context, req *librarypb.UpdatePl
 
 func (c *gRPCClient) DeletePlaylist(ctx context.Context, req *librarypb.DeletePlaylistRequest, opts ...gax.CallOption) error {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).DeletePlaylist[0:len((*c.CallOptions).DeletePlaylist):len((*c.CallOptions).DeletePlaylist)], opts...)
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -342,6 +347,7 @@ func (c *gRPCClient) DeletePlaylist(ctx context.Context, req *librarypb.DeletePl
 
 func (c *gRPCClient) ListPlaylistItems(ctx context.Context, req *librarypb.ListPlaylistItemsRequest, opts ...gax.CallOption) *PlaylistItemIterator {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).ListPlaylistItems[0:len((*c.CallOptions).ListPlaylistItems):len((*c.CallOptions).ListPlaylistItems)], opts...)
 	it := &PlaylistItemIterator{}
@@ -386,6 +392,7 @@ func (c *gRPCClient) ListPlaylistItems(ctx context.Context, req *librarypb.ListP
 
 func (c *gRPCClient) CreatePlaylistItem(ctx context.Context, req *librarypb.CreatePlaylistItemRequest, opts ...gax.CallOption) (*librarypb.PlaylistItem, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).CreatePlaylistItem[0:len((*c.CallOptions).CreatePlaylistItem):len((*c.CallOptions).CreatePlaylistItem)], opts...)
 	var resp *librarypb.PlaylistItem
@@ -402,6 +409,7 @@ func (c *gRPCClient) CreatePlaylistItem(ctx context.Context, req *librarypb.Crea
 
 func (c *gRPCClient) BatchCreatePlaylistItems(ctx context.Context, req *librarypb.BatchCreatePlaylistItemsRequest, opts ...gax.CallOption) (*librarypb.BatchCreatePlaylistItemsResponse, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).BatchCreatePlaylistItems[0:len((*c.CallOptions).BatchCreatePlaylistItems):len((*c.CallOptions).BatchCreatePlaylistItems)], opts...)
 	var resp *librarypb.BatchCreatePlaylistItemsResponse
@@ -418,6 +426,7 @@ func (c *gRPCClient) BatchCreatePlaylistItems(ctx context.Context, req *libraryp
 
 func (c *gRPCClient) DeletePlaylistItem(ctx context.Context, req *librarypb.DeletePlaylistItemRequest, opts ...gax.CallOption) error {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).DeletePlaylistItem[0:len((*c.CallOptions).DeletePlaylistItem):len((*c.CallOptions).DeletePlaylistItem)], opts...)
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {

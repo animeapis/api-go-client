@@ -76,7 +76,7 @@ func defaultCallOptions() *CallOptions {
 	}
 }
 
-// internalClient is an interface that defines the methods availaible from Resource Manager API.
+// internalClient is an interface that defines the methods available from Resource Manager API.
 type internalClient interface {
 	Close() error
 	setGoogleClientInfo(...string)
@@ -233,7 +233,7 @@ func (c *gRPCClient) Connection() *grpc.ClientConn {
 // use by Google-written clients.
 func (c *gRPCClient) setGoogleClientInfo(keyval ...string) {
 	kv := append([]string{"gl-go", versionGo()}, keyval...)
-	kv = append(kv, "gapic", versionClient, "gax", gax.Version, "grpc", grpc.Version)
+	kv = append(kv, "gapic", getVersionClient(), "gax", gax.Version, "grpc", grpc.Version)
 	c.xGoogMetadata = metadata.Pairs("x-goog-api-client", gax.XGoogHeader(kv...))
 }
 
@@ -245,6 +245,7 @@ func (c *gRPCClient) Close() error {
 
 func (c *gRPCClient) GetOrganization(ctx context.Context, req *resourcemanagerpb.GetOrganizationRequest, opts ...gax.CallOption) (*resourcemanagerpb.Organization, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).GetOrganization[0:len((*c.CallOptions).GetOrganization):len((*c.CallOptions).GetOrganization)], opts...)
 	var resp *resourcemanagerpb.Organization
@@ -319,6 +320,7 @@ func (c *gRPCClient) CreateOrganization(ctx context.Context, req *resourcemanage
 
 func (c *gRPCClient) UpdateOrganization(ctx context.Context, req *resourcemanagerpb.UpdateOrganizationRequest, opts ...gax.CallOption) (*resourcemanagerpb.Organization, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "organization.name", url.QueryEscape(req.GetOrganization().GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).UpdateOrganization[0:len((*c.CallOptions).UpdateOrganization):len((*c.CallOptions).UpdateOrganization)], opts...)
 	var resp *resourcemanagerpb.Organization
@@ -335,6 +337,7 @@ func (c *gRPCClient) UpdateOrganization(ctx context.Context, req *resourcemanage
 
 func (c *gRPCClient) DeleteOrganization(ctx context.Context, req *resourcemanagerpb.DeleteOrganizationRequest, opts ...gax.CallOption) error {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).DeleteOrganization[0:len((*c.CallOptions).DeleteOrganization):len((*c.CallOptions).DeleteOrganization)], opts...)
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
@@ -347,6 +350,7 @@ func (c *gRPCClient) DeleteOrganization(ctx context.Context, req *resourcemanage
 
 func (c *gRPCClient) GetTeam(ctx context.Context, req *resourcemanagerpb.GetTeamRequest, opts ...gax.CallOption) (*resourcemanagerpb.Team, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).GetTeam[0:len((*c.CallOptions).GetTeam):len((*c.CallOptions).GetTeam)], opts...)
 	var resp *resourcemanagerpb.Team
@@ -421,6 +425,7 @@ func (c *gRPCClient) CreateTeam(ctx context.Context, req *resourcemanagerpb.Crea
 
 func (c *gRPCClient) UpdateTeam(ctx context.Context, req *resourcemanagerpb.UpdateTeamRequest, opts ...gax.CallOption) (*resourcemanagerpb.Team, error) {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "team.name", url.QueryEscape(req.GetTeam().GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).UpdateTeam[0:len((*c.CallOptions).UpdateTeam):len((*c.CallOptions).UpdateTeam)], opts...)
 	var resp *resourcemanagerpb.Team
@@ -437,6 +442,7 @@ func (c *gRPCClient) UpdateTeam(ctx context.Context, req *resourcemanagerpb.Upda
 
 func (c *gRPCClient) DeleteTeam(ctx context.Context, req *resourcemanagerpb.DeleteTeamRequest, opts ...gax.CallOption) error {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
 	opts = append((*c.CallOptions).DeleteTeam[0:len((*c.CallOptions).DeleteTeam):len((*c.CallOptions).DeleteTeam)], opts...)
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
