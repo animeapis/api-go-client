@@ -66,6 +66,66 @@
               ]
             }
           }
+        },
+        "rest": {
+          "libraryClient": "PublisherClient",
+          "rpcs": {
+            "CancelRelease": {
+              "methods": [
+                "CancelRelease"
+              ]
+            },
+            "CreateRelease": {
+              "methods": [
+                "CreateRelease"
+              ]
+            },
+            "DeleteRelease": {
+              "methods": [
+                "DeleteRelease"
+              ]
+            },
+            "GetRelease": {
+              "methods": [
+                "GetRelease"
+              ]
+            },
+            "ListReleases": {
+              "methods": [
+                "ListReleases"
+              ]
+            },
+            "PublishRelease": {
+              "methods": [
+                "PublishRelease"
+              ]
+            },
+            "ScheduleRelease": {
+              "methods": [
+                "ScheduleRelease"
+              ]
+            },
+            "SuspendRelease": {
+              "methods": [
+                "SuspendRelease"
+              ]
+            },
+            "UndeleteRelease": {
+              "methods": [
+                "UndeleteRelease"
+              ]
+            },
+            "UnpublishRelease": {
+              "methods": [
+                "UnpublishRelease"
+              ]
+            },
+            "UpdateRelease": {
+              "methods": [
+                "UpdateRelease"
+              ]
+            }
+          }
         }
       }
     }

@@ -56,6 +56,56 @@
               ]
             }
           }
+        },
+        "rest": {
+          "libraryClient": "ImageAnnotatorClient",
+          "rpcs": {
+            "AnalyzeImage": {
+              "methods": [
+                "AnalyzeImage"
+              ]
+            },
+            "CreateImageAnnotation": {
+              "methods": [
+                "CreateImageAnnotation"
+              ]
+            },
+            "DeleteImageAnalysis": {
+              "methods": [
+                "DeleteImageAnalysis"
+              ]
+            },
+            "DeleteImageAnnotation": {
+              "methods": [
+                "DeleteImageAnnotation"
+              ]
+            },
+            "GetImageAnalysis": {
+              "methods": [
+                "GetImageAnalysis"
+              ]
+            },
+            "GetImageAnnotation": {
+              "methods": [
+                "GetImageAnnotation"
+              ]
+            },
+            "ListImageAnalyses": {
+              "methods": [
+                "ListImageAnalyses"
+              ]
+            },
+            "ListImageAnnotations": {
+              "methods": [
+                "ListImageAnnotations"
+              ]
+            },
+            "UpdateImageAnnotation": {
+              "methods": [
+                "UpdateImageAnnotation"
+              ]
+            }
+          }
         }
       }
     }

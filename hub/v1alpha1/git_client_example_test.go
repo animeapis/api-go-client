@@ -35,6 +35,18 @@ func ExampleNewGitClient() {
 	_ = c
 }
 
+func ExampleNewGitRESTClient() {
+	ctx := context.Background()
+	c, err := hub.NewGitRESTClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	// TODO: Use client.
+	_ = c
+}
+
 func ExampleGitClient_AdvertiseReferences() {
 	ctx := context.Background()
 	c, err := hub.NewGitClient(ctx)

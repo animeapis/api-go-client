@@ -56,6 +56,56 @@
               ]
             }
           }
+        },
+        "rest": {
+          "libraryClient": "Client",
+          "rpcs": {
+            "BatchCreatePlaylistItems": {
+              "methods": [
+                "BatchCreatePlaylistItems"
+              ]
+            },
+            "CreatePlaylist": {
+              "methods": [
+                "CreatePlaylist"
+              ]
+            },
+            "CreatePlaylistItem": {
+              "methods": [
+                "CreatePlaylistItem"
+              ]
+            },
+            "DeletePlaylist": {
+              "methods": [
+                "DeletePlaylist"
+              ]
+            },
+            "DeletePlaylistItem": {
+              "methods": [
+                "DeletePlaylistItem"
+              ]
+            },
+            "GetPlaylist": {
+              "methods": [
+                "GetPlaylist"
+              ]
+            },
+            "ListPlaylistItems": {
+              "methods": [
+                "ListPlaylistItems"
+              ]
+            },
+            "ListPlaylists": {
+              "methods": [
+                "ListPlaylists"
+              ]
+            },
+            "UpdatePlaylist": {
+              "methods": [
+                "UpdatePlaylist"
+              ]
+            }
+          }
         }
       }
     }

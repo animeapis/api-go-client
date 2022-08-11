@@ -116,6 +116,116 @@
               ]
             }
           }
+        },
+        "rest": {
+          "libraryClient": "AccessControlClient",
+          "rpcs": {
+            "AddGroupMember": {
+              "methods": [
+                "AddGroupMember"
+              ]
+            },
+            "CreateGroup": {
+              "methods": [
+                "CreateGroup"
+              ]
+            },
+            "CreatePermission": {
+              "methods": [
+                "CreatePermission"
+              ]
+            },
+            "CreateResource": {
+              "methods": [
+                "CreateResource"
+              ]
+            },
+            "CreateRole": {
+              "methods": [
+                "CreateRole"
+              ]
+            },
+            "CreateSubject": {
+              "methods": [
+                "CreateSubject"
+              ]
+            },
+            "DeleteGroup": {
+              "methods": [
+                "DeleteGroup"
+              ]
+            },
+            "DeletePermission": {
+              "methods": [
+                "DeletePermission"
+              ]
+            },
+            "DeleteResource": {
+              "methods": [
+                "DeleteResource"
+              ]
+            },
+            "DeleteRole": {
+              "methods": [
+                "DeleteRole"
+              ]
+            },
+            "DeleteSubject": {
+              "methods": [
+                "DeleteSubject"
+              ]
+            },
+            "GetGroup": {
+              "methods": [
+                "GetGroup"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "GetIamPolicy"
+              ]
+            },
+            "GetResource": {
+              "methods": [
+                "GetResource"
+              ]
+            },
+            "GetRole": {
+              "methods": [
+                "GetRole"
+              ]
+            },
+            "RemoveGroupMember": {
+              "methods": [
+                "RemoveGroupMember"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "SetIamPolicy"
+              ]
+            },
+            "TestIamPolicy": {
+              "methods": [
+                "TestIamPolicy"
+              ]
+            },
+            "TransferResource": {
+              "methods": [
+                "TransferResource"
+              ]
+            },
+            "UpdateGroup": {
+              "methods": [
+                "UpdateGroup"
+              ]
+            },
+            "UpdateRole": {
+              "methods": [
+                "UpdateRole"
+              ]
+            }
+          }
         }
       }
     }

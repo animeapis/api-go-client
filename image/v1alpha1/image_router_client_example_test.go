@@ -36,6 +36,18 @@ func ExampleNewImageRouterClient() {
 	_ = c
 }
 
+func ExampleNewImageRouterRESTClient() {
+	ctx := context.Background()
+	c, err := image.NewImageRouterRESTClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	// TODO: Use client.
+	_ = c
+}
+
 func ExampleImageRouterClient_GetImageRoute() {
 	ctx := context.Background()
 	c, err := image.NewImageRouterClient(ctx)

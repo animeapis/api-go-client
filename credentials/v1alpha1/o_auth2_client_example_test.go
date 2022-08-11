@@ -35,6 +35,18 @@ func ExampleNewOAuth2Client() {
 	_ = c
 }
 
+func ExampleNewOAuth2RESTClient() {
+	ctx := context.Background()
+	c, err := credentials.NewOAuth2RESTClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	// TODO: Use client.
+	_ = c
+}
+
 func ExampleOAuth2Client_SignIn() {
 	ctx := context.Background()
 	c, err := credentials.NewOAuth2Client(ctx)

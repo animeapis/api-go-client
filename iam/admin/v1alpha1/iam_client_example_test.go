@@ -36,6 +36,18 @@ func ExampleNewIamClient() {
 	_ = c
 }
 
+func ExampleNewIamRESTClient() {
+	ctx := context.Background()
+	c, err := admin.NewIamRESTClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	// TODO: Use client.
+	_ = c
+}
+
 func ExampleIamClient_GetServiceAccount() {
 	ctx := context.Background()
 	c, err := admin.NewIamClient(ctx)

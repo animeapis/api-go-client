@@ -41,12 +41,87 @@
               ]
             }
           }
+        },
+        "rest": {
+          "libraryClient": "AnimeClient",
+          "rpcs": {
+            "CreateAnime": {
+              "methods": [
+                "CreateAnime"
+              ]
+            },
+            "DeleteAnime": {
+              "methods": [
+                "DeleteAnime"
+              ]
+            },
+            "GetAnime": {
+              "methods": [
+                "GetAnime"
+              ]
+            },
+            "ListAnimes": {
+              "methods": [
+                "ListAnimes"
+              ]
+            },
+            "ReconcileAnimes": {
+              "methods": [
+                "ReconcileAnimes"
+              ]
+            },
+            "UpdateAnime": {
+              "methods": [
+                "UpdateAnime"
+              ]
+            }
+          }
         }
       }
     },
     "ChapterService": {
       "clients": {
         "grpc": {
+          "libraryClient": "ChapterClient",
+          "rpcs": {
+            "BatchCreateChapters": {
+              "methods": [
+                "BatchCreateChapters"
+              ]
+            },
+            "CreateChapter": {
+              "methods": [
+                "CreateChapter"
+              ]
+            },
+            "DeleteChapter": {
+              "methods": [
+                "DeleteChapter"
+              ]
+            },
+            "GetChapter": {
+              "methods": [
+                "GetChapter"
+              ]
+            },
+            "ListChapters": {
+              "methods": [
+                "ListChapters"
+              ]
+            },
+            "ReconcileChapters": {
+              "methods": [
+                "ReconcileChapters"
+              ]
+            },
+            "UpdateChapter": {
+              "methods": [
+                "UpdateChapter"
+              ]
+            }
+          }
+        },
+        "rest": {
           "libraryClient": "ChapterClient",
           "rpcs": {
             "BatchCreateChapters": {
@@ -129,12 +204,87 @@
               ]
             }
           }
+        },
+        "rest": {
+          "libraryClient": "EpisodeClient",
+          "rpcs": {
+            "BatchCreateEpisodes": {
+              "methods": [
+                "BatchCreateEpisodes"
+              ]
+            },
+            "CreateEpisode": {
+              "methods": [
+                "CreateEpisode"
+              ]
+            },
+            "DeleteEpisode": {
+              "methods": [
+                "DeleteEpisode"
+              ]
+            },
+            "GetEpisode": {
+              "methods": [
+                "GetEpisode"
+              ]
+            },
+            "ListEpisodes": {
+              "methods": [
+                "ListEpisodes"
+              ]
+            },
+            "ReconcileEpisodes": {
+              "methods": [
+                "ReconcileEpisodes"
+              ]
+            },
+            "UpdateEpisode": {
+              "methods": [
+                "UpdateEpisode"
+              ]
+            }
+          }
         }
       }
     },
     "GraphicNovelService": {
       "clients": {
         "grpc": {
+          "libraryClient": "GraphicNovelClient",
+          "rpcs": {
+            "CreateGraphicNovel": {
+              "methods": [
+                "CreateGraphicNovel"
+              ]
+            },
+            "DeleteGraphicNovel": {
+              "methods": [
+                "DeleteGraphicNovel"
+              ]
+            },
+            "GetGraphicNovel": {
+              "methods": [
+                "GetGraphicNovel"
+              ]
+            },
+            "ListGraphicNovels": {
+              "methods": [
+                "ListGraphicNovels"
+              ]
+            },
+            "ReconcileGraphicNovels": {
+              "methods": [
+                "ReconcileGraphicNovels"
+              ]
+            },
+            "UpdateGraphicNovel": {
+              "methods": [
+                "UpdateGraphicNovel"
+              ]
+            }
+          }
+        },
+        "rest": {
           "libraryClient": "GraphicNovelClient",
           "rpcs": {
             "CreateGraphicNovel": {
@@ -207,12 +357,82 @@
               ]
             }
           }
+        },
+        "rest": {
+          "libraryClient": "LightNovelClient",
+          "rpcs": {
+            "CreateLightNovel": {
+              "methods": [
+                "CreateLightNovel"
+              ]
+            },
+            "DeleteLightNovel": {
+              "methods": [
+                "DeleteLightNovel"
+              ]
+            },
+            "GetLightNovel": {
+              "methods": [
+                "GetLightNovel"
+              ]
+            },
+            "ListLightNovels": {
+              "methods": [
+                "ListLightNovels"
+              ]
+            },
+            "ReconcileLightNovels": {
+              "methods": [
+                "ReconcileLightNovels"
+              ]
+            },
+            "UpdateLightNovel": {
+              "methods": [
+                "UpdateLightNovel"
+              ]
+            }
+          }
         }
       }
     },
     "VisualNovelService": {
       "clients": {
         "grpc": {
+          "libraryClient": "VisualNovelClient",
+          "rpcs": {
+            "CreateVisualNovel": {
+              "methods": [
+                "CreateVisualNovel"
+              ]
+            },
+            "DeleteVisualNovel": {
+              "methods": [
+                "DeleteVisualNovel"
+              ]
+            },
+            "GetVisualNovel": {
+              "methods": [
+                "GetVisualNovel"
+              ]
+            },
+            "ListVisualNovels": {
+              "methods": [
+                "ListVisualNovels"
+              ]
+            },
+            "ReconcileVisualNovels": {
+              "methods": [
+                "ReconcileVisualNovels"
+              ]
+            },
+            "UpdateVisualNovel": {
+              "methods": [
+                "UpdateVisualNovel"
+              ]
+            }
+          }
+        },
+        "rest": {
           "libraryClient": "VisualNovelClient",
           "rpcs": {
             "CreateVisualNovel": {

@@ -36,6 +36,18 @@ func ExampleNewLightNovelClient() {
 	_ = c
 }
 
+func ExampleNewLightNovelRESTClient() {
+	ctx := context.Background()
+	c, err := multimedia.NewLightNovelRESTClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	// TODO: Use client.
+	_ = c
+}
+
 func ExampleLightNovelClient_GetLightNovel() {
 	ctx := context.Background()
 	c, err := multimedia.NewLightNovelClient(ctx)

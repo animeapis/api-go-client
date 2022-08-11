@@ -31,6 +31,31 @@
               ]
             }
           }
+        },
+        "rest": {
+          "libraryClient": "Client",
+          "rpcs": {
+            "CreateCache": {
+              "methods": [
+                "CreateCache"
+              ]
+            },
+            "DeleteCache": {
+              "methods": [
+                "DeleteCache"
+              ]
+            },
+            "GetCache": {
+              "methods": [
+                "GetCache"
+              ]
+            },
+            "ListCaches": {
+              "methods": [
+                "ListCaches"
+              ]
+            }
+          }
         }
       }
     }

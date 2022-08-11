@@ -36,6 +36,18 @@ func ExampleNewChapterClient() {
 	_ = c
 }
 
+func ExampleNewChapterRESTClient() {
+	ctx := context.Background()
+	c, err := multimedia.NewChapterRESTClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	// TODO: Use client.
+	_ = c
+}
+
 func ExampleChapterClient_GetChapter() {
 	ctx := context.Background()
 	c, err := multimedia.NewChapterClient(ctx)

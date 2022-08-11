@@ -36,6 +36,18 @@ func ExampleNewVisualNovelClient() {
 	_ = c
 }
 
+func ExampleNewVisualNovelRESTClient() {
+	ctx := context.Background()
+	c, err := multimedia.NewVisualNovelRESTClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	// TODO: Use client.
+	_ = c
+}
+
 func ExampleVisualNovelClient_GetVisualNovel() {
 	ctx := context.Background()
 	c, err := multimedia.NewVisualNovelClient(ctx)

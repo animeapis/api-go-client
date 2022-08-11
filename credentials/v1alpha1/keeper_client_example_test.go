@@ -36,6 +36,18 @@ func ExampleNewKeeperClient() {
 	_ = c
 }
 
+func ExampleNewKeeperRESTClient() {
+	ctx := context.Background()
+	c, err := credentials.NewKeeperRESTClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	// TODO: Use client.
+	_ = c
+}
+
 func ExampleKeeperClient_GetCredentials() {
 	ctx := context.Background()
 	c, err := credentials.NewKeeperClient(ctx)

@@ -61,6 +61,61 @@
               ]
             }
           }
+        },
+        "rest": {
+          "libraryClient": "Client",
+          "rpcs": {
+            "CreateOrganization": {
+              "methods": [
+                "CreateOrganization"
+              ]
+            },
+            "CreateTeam": {
+              "methods": [
+                "CreateTeam"
+              ]
+            },
+            "DeleteOrganization": {
+              "methods": [
+                "DeleteOrganization"
+              ]
+            },
+            "DeleteTeam": {
+              "methods": [
+                "DeleteTeam"
+              ]
+            },
+            "GetOrganization": {
+              "methods": [
+                "GetOrganization"
+              ]
+            },
+            "GetTeam": {
+              "methods": [
+                "GetTeam"
+              ]
+            },
+            "ListOrganizations": {
+              "methods": [
+                "ListOrganizations"
+              ]
+            },
+            "ListTeams": {
+              "methods": [
+                "ListTeams"
+              ]
+            },
+            "UpdateOrganization": {
+              "methods": [
+                "UpdateOrganization"
+              ]
+            },
+            "UpdateTeam": {
+              "methods": [
+                "UpdateTeam"
+              ]
+            }
+          }
         }
       }
     }

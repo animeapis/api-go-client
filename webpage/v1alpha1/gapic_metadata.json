@@ -46,6 +46,46 @@
               ]
             }
           }
+        },
+        "rest": {
+          "libraryClient": "ArchiveClient",
+          "rpcs": {
+            "CreatePage": {
+              "methods": [
+                "CreatePage"
+              ]
+            },
+            "DeletePage": {
+              "methods": [
+                "DeletePage"
+              ]
+            },
+            "GetPage": {
+              "methods": [
+                "GetPage"
+              ]
+            },
+            "ImportPage": {
+              "methods": [
+                "ImportPage"
+              ]
+            },
+            "ListPages": {
+              "methods": [
+                "ListPages"
+              ]
+            },
+            "Query": {
+              "methods": [
+                "Query"
+              ]
+            },
+            "QueryPage": {
+              "methods": [
+                "QueryPage"
+              ]
+            }
+          }
         }
       }
     }

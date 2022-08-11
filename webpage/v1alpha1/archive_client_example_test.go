@@ -37,6 +37,18 @@ func ExampleNewArchiveClient() {
 	_ = c
 }
 
+func ExampleNewArchiveRESTClient() {
+	ctx := context.Background()
+	c, err := webpage.NewArchiveRESTClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	// TODO: Use client.
+	_ = c
+}
+
 func ExampleArchiveClient_Query() {
 	ctx := context.Background()
 	c, err := webpage.NewArchiveClient(ctx)

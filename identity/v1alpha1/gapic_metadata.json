@@ -91,6 +91,91 @@
               ]
             }
           }
+        },
+        "rest": {
+          "libraryClient": "Client",
+          "rpcs": {
+            "CreateGroup": {
+              "methods": [
+                "CreateGroup"
+              ]
+            },
+            "CreateUser": {
+              "methods": [
+                "CreateUser"
+              ]
+            },
+            "DeleteGroup": {
+              "methods": [
+                "DeleteGroup"
+              ]
+            },
+            "DeleteUser": {
+              "methods": [
+                "DeleteUser"
+              ]
+            },
+            "GetGroup": {
+              "methods": [
+                "GetGroup"
+              ]
+            },
+            "GetUser": {
+              "methods": [
+                "GetUser"
+              ]
+            },
+            "GetUserDefaults": {
+              "methods": [
+                "GetUserDefaults"
+              ]
+            },
+            "GetUserNotifications": {
+              "methods": [
+                "GetUserNotifications"
+              ]
+            },
+            "GetUserProfile": {
+              "methods": [
+                "GetUserProfile"
+              ]
+            },
+            "GetUserSettings": {
+              "methods": [
+                "GetUserSettings"
+              ]
+            },
+            "ListGroups": {
+              "methods": [
+                "ListGroups"
+              ]
+            },
+            "ListUsers": {
+              "methods": [
+                "ListUsers"
+              ]
+            },
+            "UpdateGroup": {
+              "methods": [
+                "UpdateGroup"
+              ]
+            },
+            "UpdateUser": {
+              "methods": [
+                "UpdateUser"
+              ]
+            },
+            "UpdateUserNotifications": {
+              "methods": [
+                "UpdateUserNotifications"
+              ]
+            },
+            "UpdateUserSettings": {
+              "methods": [
+                "UpdateUserSettings"
+              ]
+            }
+          }
         }
       }
     }

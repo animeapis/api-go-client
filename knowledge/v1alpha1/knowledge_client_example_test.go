@@ -36,6 +36,18 @@ func ExampleNewClient() {
 	_ = c
 }
 
+func ExampleNewRESTClient() {
+	ctx := context.Background()
+	c, err := knowledge.NewRESTClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	// TODO: Use client.
+	_ = c
+}
+
 func ExampleClient_GetContribution() {
 	ctx := context.Background()
 	c, err := knowledge.NewClient(ctx)

@@ -56,6 +56,56 @@
               ]
             }
           }
+        },
+        "rest": {
+          "libraryClient": "Client",
+          "rpcs": {
+            "CreateActivity": {
+              "methods": [
+                "CreateActivity"
+              ]
+            },
+            "CreateTracker": {
+              "methods": [
+                "CreateTracker"
+              ]
+            },
+            "DeleteActivity": {
+              "methods": [
+                "DeleteActivity"
+              ]
+            },
+            "DeleteTracker": {
+              "methods": [
+                "DeleteTracker"
+              ]
+            },
+            "ExportTrackers": {
+              "methods": [
+                "ExportTrackers"
+              ]
+            },
+            "GetTracker": {
+              "methods": [
+                "GetTracker"
+              ]
+            },
+            "ImportTrackers": {
+              "methods": [
+                "ImportTrackers"
+              ]
+            },
+            "ListTrackers": {
+              "methods": [
+                "ListTrackers"
+              ]
+            },
+            "UpdateTracker": {
+              "methods": [
+                "UpdateTracker"
+              ]
+            }
+          }
         }
       }
     }

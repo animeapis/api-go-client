@@ -51,6 +51,51 @@
               ]
             }
           }
+        },
+        "rest": {
+          "libraryClient": "Client",
+          "rpcs": {
+            "AllocateResourceName": {
+              "methods": [
+                "AllocateResourceName"
+              ]
+            },
+            "ApproveContribution": {
+              "methods": [
+                "ApproveContribution"
+              ]
+            },
+            "CreateContribution": {
+              "methods": [
+                "CreateContribution"
+              ]
+            },
+            "GetContribution": {
+              "methods": [
+                "GetContribution"
+              ]
+            },
+            "GetContributionChanges": {
+              "methods": [
+                "GetContributionChanges"
+              ]
+            },
+            "ListContributions": {
+              "methods": [
+                "ListContributions"
+              ]
+            },
+            "RejectContribution": {
+              "methods": [
+                "RejectContribution"
+              ]
+            },
+            "ReviewContribution": {
+              "methods": [
+                "ReviewContribution"
+              ]
+            }
+          }
         }
       }
     }

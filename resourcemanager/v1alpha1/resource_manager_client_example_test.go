@@ -36,6 +36,18 @@ func ExampleNewClient() {
 	_ = c
 }
 
+func ExampleNewRESTClient() {
+	ctx := context.Background()
+	c, err := resourcemanager.NewRESTClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	// TODO: Use client.
+	_ = c
+}
+
 func ExampleClient_GetOrganization() {
 	ctx := context.Background()
 	c, err := resourcemanager.NewClient(ctx)

@@ -36,6 +36,18 @@ func ExampleNewImageAnnotatorClient() {
 	_ = c
 }
 
+func ExampleNewImageAnnotatorRESTClient() {
+	ctx := context.Background()
+	c, err := vision.NewImageAnnotatorRESTClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	// TODO: Use client.
+	_ = c
+}
+
 func ExampleImageAnnotatorClient_AnalyzeImage() {
 	ctx := context.Background()
 	c, err := vision.NewImageAnnotatorClient(ctx)

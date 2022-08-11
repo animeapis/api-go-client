@@ -26,12 +26,52 @@
               ]
             }
           }
+        },
+        "rest": {
+          "libraryClient": "GitClient",
+          "rpcs": {
+            "AdvertiseReferences": {
+              "methods": [
+                "AdvertiseReferences"
+              ]
+            },
+            "ReceivePack": {
+              "methods": [
+                "ReceivePack"
+              ]
+            },
+            "UploadPack": {
+              "methods": [
+                "UploadPack"
+              ]
+            }
+          }
         }
       }
     },
     "Hub": {
       "clients": {
         "grpc": {
+          "libraryClient": "Client",
+          "rpcs": {
+            "CreateRepository": {
+              "methods": [
+                "CreateRepository"
+              ]
+            },
+            "DeleteRepository": {
+              "methods": [
+                "DeleteRepository"
+              ]
+            },
+            "ListRepositories": {
+              "methods": [
+                "ListRepositories"
+              ]
+            }
+          }
+        },
+        "rest": {
           "libraryClient": "Client",
           "rpcs": {
             "CreateRepository": {

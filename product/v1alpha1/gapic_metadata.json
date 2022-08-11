@@ -36,6 +36,36 @@
               ]
             }
           }
+        },
+        "rest": {
+          "libraryClient": "ChapterClient",
+          "rpcs": {
+            "CreateChapter": {
+              "methods": [
+                "CreateChapter"
+              ]
+            },
+            "DeleteChapter": {
+              "methods": [
+                "DeleteChapter"
+              ]
+            },
+            "GetChapter": {
+              "methods": [
+                "GetChapter"
+              ]
+            },
+            "ListChapters": {
+              "methods": [
+                "ListChapters"
+              ]
+            },
+            "UpdateChapter": {
+              "methods": [
+                "UpdateChapter"
+              ]
+            }
+          }
         }
       }
     }

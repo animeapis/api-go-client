@@ -36,6 +36,18 @@ func ExampleNewAnimeClient() {
 	_ = c
 }
 
+func ExampleNewAnimeRESTClient() {
+	ctx := context.Background()
+	c, err := multimedia.NewAnimeRESTClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	// TODO: Use client.
+	_ = c
+}
+
 func ExampleAnimeClient_GetAnime() {
 	ctx := context.Background()
 	c, err := multimedia.NewAnimeClient(ctx)

@@ -36,6 +36,18 @@ func ExampleNewAccessControlClient() {
 	_ = c
 }
 
+func ExampleNewAccessControlRESTClient() {
+	ctx := context.Background()
+	c, err := grbac.NewAccessControlRESTClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	// TODO: Use client.
+	_ = c
+}
+
 func ExampleAccessControlClient_TestIamPolicy() {
 	ctx := context.Background()
 	c, err := grbac.NewAccessControlClient(ctx)

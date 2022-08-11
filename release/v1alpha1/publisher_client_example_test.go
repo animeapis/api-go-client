@@ -36,6 +36,18 @@ func ExampleNewPublisherClient() {
 	_ = c
 }
 
+func ExampleNewPublisherRESTClient() {
+	ctx := context.Background()
+	c, err := release.NewPublisherRESTClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	// TODO: Use client.
+	_ = c
+}
+
 func ExamplePublisherClient_GetRelease() {
 	ctx := context.Background()
 	c, err := release.NewPublisherClient(ctx)

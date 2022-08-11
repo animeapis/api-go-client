@@ -36,6 +36,18 @@ func ExampleNewGraphicNovelClient() {
 	_ = c
 }
 
+func ExampleNewGraphicNovelRESTClient() {
+	ctx := context.Background()
+	c, err := multimedia.NewGraphicNovelRESTClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	// TODO: Use client.
+	_ = c
+}
+
 func ExampleGraphicNovelClient_GetGraphicNovel() {
 	ctx := context.Background()
 	c, err := multimedia.NewGraphicNovelClient(ctx)

@@ -71,12 +71,107 @@
               ]
             }
           }
+        },
+        "rest": {
+          "libraryClient": "Client",
+          "rpcs": {
+            "CreateAlbum": {
+              "methods": [
+                "CreateAlbum"
+              ]
+            },
+            "DeleteAlbum": {
+              "methods": [
+                "DeleteAlbum"
+              ]
+            },
+            "GetAlbum": {
+              "methods": [
+                "GetAlbum"
+              ]
+            },
+            "GetAlbumSettings": {
+              "methods": [
+                "GetAlbumSettings"
+              ]
+            },
+            "GetIamPolicy": {
+              "methods": [
+                "GetIamPolicy"
+              ]
+            },
+            "GetImage": {
+              "methods": [
+                "GetImage"
+              ]
+            },
+            "ImportImage": {
+              "methods": [
+                "ImportImage"
+              ]
+            },
+            "ListAlbums": {
+              "methods": [
+                "ListAlbums"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "SetIamPolicy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "TestIamPermissions"
+              ]
+            },
+            "UpdateAlbumSettings": {
+              "methods": [
+                "UpdateAlbumSettings"
+              ]
+            },
+            "UploadImage": {
+              "methods": [
+                "UploadImage"
+              ]
+            }
+          }
         }
       }
     },
     "ImageRouter": {
       "clients": {
         "grpc": {
+          "libraryClient": "ImageRouterClient",
+          "rpcs": {
+            "GetIamPolicy": {
+              "methods": [
+                "GetIamPolicy"
+              ]
+            },
+            "GetImageRoute": {
+              "methods": [
+                "GetImageRoute"
+              ]
+            },
+            "RouteImage": {
+              "methods": [
+                "RouteImage"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "SetIamPolicy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "TestIamPermissions"
+              ]
+            }
+          }
+        },
+        "rest": {
           "libraryClient": "ImageRouterClient",
           "rpcs": {
             "GetIamPolicy": {

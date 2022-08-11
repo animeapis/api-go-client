@@ -21,6 +21,21 @@
               ]
             }
           }
+        },
+        "rest": {
+          "libraryClient": "Client",
+          "rpcs": {
+            "DeleteGraph": {
+              "methods": [
+                "DeleteGraph"
+              ]
+            },
+            "MigrateGraph": {
+              "methods": [
+                "MigrateGraph"
+              ]
+            }
+          }
         }
       }
     }

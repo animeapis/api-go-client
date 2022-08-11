@@ -86,6 +86,86 @@
               ]
             }
           }
+        },
+        "rest": {
+          "libraryClient": "IamClient",
+          "rpcs": {
+            "CreatePermission": {
+              "methods": [
+                "CreatePermission"
+              ]
+            },
+            "CreateRole": {
+              "methods": [
+                "CreateRole"
+              ]
+            },
+            "CreateServiceAccount": {
+              "methods": [
+                "CreateServiceAccount"
+              ]
+            },
+            "DeletePermission": {
+              "methods": [
+                "DeletePermission"
+              ]
+            },
+            "DeleteRole": {
+              "methods": [
+                "DeleteRole"
+              ]
+            },
+            "DeleteServiceAccount": {
+              "methods": [
+                "DeleteServiceAccount"
+              ]
+            },
+            "GetPermission": {
+              "methods": [
+                "GetPermission"
+              ]
+            },
+            "GetRole": {
+              "methods": [
+                "GetRole"
+              ]
+            },
+            "GetServiceAccount": {
+              "methods": [
+                "GetServiceAccount"
+              ]
+            },
+            "ListPermissions": {
+              "methods": [
+                "ListPermissions"
+              ]
+            },
+            "ListRoles": {
+              "methods": [
+                "ListRoles"
+              ]
+            },
+            "ListServiceAccounts": {
+              "methods": [
+                "ListServiceAccounts"
+              ]
+            },
+            "UpdatePermission": {
+              "methods": [
+                "UpdatePermission"
+              ]
+            },
+            "UpdateRole": {
+              "methods": [
+                "UpdateRole"
+              ]
+            },
+            "UpdateServiceAccount": {
+              "methods": [
+                "UpdateServiceAccount"
+              ]
+            }
+          }
         }
       }
     }

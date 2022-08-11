@@ -36,6 +36,18 @@ func ExampleNewEpisodeClient() {
 	_ = c
 }
 
+func ExampleNewEpisodeRESTClient() {
+	ctx := context.Background()
+	c, err := multimedia.NewEpisodeRESTClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	// TODO: Use client.
+	_ = c
+}
+
 func ExampleEpisodeClient_GetEpisode() {
 	ctx := context.Background()
 	c, err := multimedia.NewEpisodeClient(ctx)
