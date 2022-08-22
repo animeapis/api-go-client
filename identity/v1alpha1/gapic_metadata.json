@@ -35,6 +35,11 @@
                 "GetGroup"
               ]
             },
+            "GetIamPolicy": {
+              "methods": [
+                "GetIamPolicy"
+              ]
+            },
             "GetUser": {
               "methods": [
                 "GetUser"
@@ -68,6 +73,16 @@
             "ListUsers": {
               "methods": [
                 "ListUsers"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "SetIamPolicy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "TestIamPermissions"
               ]
             },
             "UpdateGroup": {
@@ -120,6 +135,11 @@
                 "GetGroup"
               ]
             },
+            "GetIamPolicy": {
+              "methods": [
+                "GetIamPolicy"
+              ]
+            },
             "GetUser": {
               "methods": [
                 "GetUser"
@@ -153,6 +173,16 @@
             "ListUsers": {
               "methods": [
                 "ListUsers"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "SetIamPolicy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "TestIamPermissions"
               ]
             },
             "UpdateGroup": {
