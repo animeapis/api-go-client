@@ -21,6 +21,7 @@ import (
 
 	credentials "github.com/animeapis/api-go-client/credentials/v1alpha1"
 	credentialspb "github.com/animeapis/go-genproto/credentials/v1alpha1"
+	iampb "google.golang.org/genproto/googleapis/iam/v1"
 )
 
 func ExampleNewOAuth2Client() {
@@ -80,6 +81,66 @@ func ExampleOAuth2Client_Exchange() {
 		// See https://pkg.go.dev/github.com/animeapis/go-genproto/credentials/v1alpha1#ExchangeRequest.
 	}
 	resp, err := c.Exchange(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
+func ExampleOAuth2Client_GetIamPolicy() {
+	ctx := context.Background()
+	c, err := credentials.NewOAuth2Client(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &iampb.GetIamPolicyRequest{
+		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/google.golang.org/genproto/googleapis/iam/v1#GetIamPolicyRequest.
+	}
+	resp, err := c.GetIamPolicy(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
+func ExampleOAuth2Client_SetIamPolicy() {
+	ctx := context.Background()
+	c, err := credentials.NewOAuth2Client(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &iampb.SetIamPolicyRequest{
+		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/google.golang.org/genproto/googleapis/iam/v1#SetIamPolicyRequest.
+	}
+	resp, err := c.SetIamPolicy(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
+func ExampleOAuth2Client_TestIamPermissions() {
+	ctx := context.Background()
+	c, err := credentials.NewOAuth2Client(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &iampb.TestIamPermissionsRequest{
+		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/google.golang.org/genproto/googleapis/iam/v1#TestIamPermissionsRequest.
+	}
+	resp, err := c.TestIamPermissions(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
 	}

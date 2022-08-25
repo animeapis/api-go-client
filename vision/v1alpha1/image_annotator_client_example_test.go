@@ -22,6 +22,7 @@ import (
 	vision "github.com/animeapis/api-go-client/vision/v1alpha1"
 	visionpb "github.com/animeapis/go-genproto/vision/v1alpha1"
 	"google.golang.org/api/iterator"
+	iampb "google.golang.org/genproto/googleapis/iam/v1"
 )
 
 func ExampleNewImageAnnotatorClient() {
@@ -68,6 +69,26 @@ func ExampleImageAnnotatorClient_AnalyzeImage() {
 	_ = resp
 }
 
+func ExampleImageAnnotatorClient_GetImageAnalysis() {
+	ctx := context.Background()
+	c, err := vision.NewImageAnnotatorClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &visionpb.GetImageAnalysisRequest{
+		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/vision/v1alpha1#GetImageAnalysisRequest.
+	}
+	resp, err := c.GetImageAnalysis(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
 func ExampleImageAnnotatorClient_ListImageAnalyses() {
 	ctx := context.Background()
 	c, err := vision.NewImageAnnotatorClient(ctx)
@@ -94,26 +115,6 @@ func ExampleImageAnnotatorClient_ListImageAnalyses() {
 	}
 }
 
-func ExampleImageAnnotatorClient_GetImageAnalysis() {
-	ctx := context.Background()
-	c, err := vision.NewImageAnnotatorClient(ctx)
-	if err != nil {
-		// TODO: Handle error.
-	}
-	defer c.Close()
-
-	req := &visionpb.GetImageAnalysisRequest{
-		// TODO: Fill request struct fields.
-		// See https://pkg.go.dev/github.com/animeapis/go-genproto/vision/v1alpha1#GetImageAnalysisRequest.
-	}
-	resp, err := c.GetImageAnalysis(ctx, req)
-	if err != nil {
-		// TODO: Handle error.
-	}
-	// TODO: Use resp.
-	_ = resp
-}
-
 func ExampleImageAnnotatorClient_DeleteImageAnalysis() {
 	ctx := context.Background()
 	c, err := vision.NewImageAnnotatorClient(ctx)
@@ -132,7 +133,7 @@ func ExampleImageAnnotatorClient_DeleteImageAnalysis() {
 	}
 }
 
-func ExampleImageAnnotatorClient_CreateImageAnnotation() {
+func ExampleImageAnnotatorClient_GetImageAnnotation() {
 	ctx := context.Background()
 	c, err := vision.NewImageAnnotatorClient(ctx)
 	if err != nil {
@@ -140,11 +141,11 @@ func ExampleImageAnnotatorClient_CreateImageAnnotation() {
 	}
 	defer c.Close()
 
-	req := &visionpb.CreateImageAnnotationRequest{
+	req := &visionpb.GetImageAnnotationRequest{
 		// TODO: Fill request struct fields.
-		// See https://pkg.go.dev/github.com/animeapis/go-genproto/vision/v1alpha1#CreateImageAnnotationRequest.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/vision/v1alpha1#GetImageAnnotationRequest.
 	}
-	resp, err := c.CreateImageAnnotation(ctx, req)
+	resp, err := c.GetImageAnnotation(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -178,7 +179,7 @@ func ExampleImageAnnotatorClient_ListImageAnnotations() {
 	}
 }
 
-func ExampleImageAnnotatorClient_GetImageAnnotation() {
+func ExampleImageAnnotatorClient_CreateImageAnnotation() {
 	ctx := context.Background()
 	c, err := vision.NewImageAnnotatorClient(ctx)
 	if err != nil {
@@ -186,11 +187,11 @@ func ExampleImageAnnotatorClient_GetImageAnnotation() {
 	}
 	defer c.Close()
 
-	req := &visionpb.GetImageAnnotationRequest{
+	req := &visionpb.CreateImageAnnotationRequest{
 		// TODO: Fill request struct fields.
-		// See https://pkg.go.dev/github.com/animeapis/go-genproto/vision/v1alpha1#GetImageAnnotationRequest.
+		// See https://pkg.go.dev/github.com/animeapis/go-genproto/vision/v1alpha1#CreateImageAnnotationRequest.
 	}
-	resp, err := c.GetImageAnnotation(ctx, req)
+	resp, err := c.CreateImageAnnotation(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
 	}
@@ -234,4 +235,64 @@ func ExampleImageAnnotatorClient_DeleteImageAnnotation() {
 	if err != nil {
 		// TODO: Handle error.
 	}
+}
+
+func ExampleImageAnnotatorClient_GetIamPolicy() {
+	ctx := context.Background()
+	c, err := vision.NewImageAnnotatorClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &iampb.GetIamPolicyRequest{
+		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/google.golang.org/genproto/googleapis/iam/v1#GetIamPolicyRequest.
+	}
+	resp, err := c.GetIamPolicy(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
+func ExampleImageAnnotatorClient_SetIamPolicy() {
+	ctx := context.Background()
+	c, err := vision.NewImageAnnotatorClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &iampb.SetIamPolicyRequest{
+		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/google.golang.org/genproto/googleapis/iam/v1#SetIamPolicyRequest.
+	}
+	resp, err := c.SetIamPolicy(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
+func ExampleImageAnnotatorClient_TestIamPermissions() {
+	ctx := context.Background()
+	c, err := vision.NewImageAnnotatorClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &iampb.TestIamPermissionsRequest{
+		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/google.golang.org/genproto/googleapis/iam/v1#TestIamPermissionsRequest.
+	}
+	resp, err := c.TestIamPermissions(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
 }

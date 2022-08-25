@@ -30,6 +30,11 @@
                 "DeleteImageAnnotation"
               ]
             },
+            "GetIamPolicy": {
+              "methods": [
+                "GetIamPolicy"
+              ]
+            },
             "GetImageAnalysis": {
               "methods": [
                 "GetImageAnalysis"
@@ -48,6 +53,16 @@
             "ListImageAnnotations": {
               "methods": [
                 "ListImageAnnotations"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "SetIamPolicy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "TestIamPermissions"
               ]
             },
             "UpdateImageAnnotation": {
@@ -80,6 +95,11 @@
                 "DeleteImageAnnotation"
               ]
             },
+            "GetIamPolicy": {
+              "methods": [
+                "GetIamPolicy"
+              ]
+            },
             "GetImageAnalysis": {
               "methods": [
                 "GetImageAnalysis"
@@ -98,6 +118,16 @@
             "ListImageAnnotations": {
               "methods": [
                 "ListImageAnnotations"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "SetIamPolicy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "TestIamPermissions"
               ]
             },
             "UpdateImageAnnotation": {

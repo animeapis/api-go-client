@@ -35,6 +35,11 @@
                 "DeletePlaylistItem"
               ]
             },
+            "GetIamPolicy": {
+              "methods": [
+                "GetIamPolicy"
+              ]
+            },
             "GetPlaylist": {
               "methods": [
                 "GetPlaylist"
@@ -48,6 +53,16 @@
             "ListPlaylists": {
               "methods": [
                 "ListPlaylists"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "SetIamPolicy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "TestIamPermissions"
               ]
             },
             "UpdatePlaylist": {
@@ -85,6 +100,11 @@
                 "DeletePlaylistItem"
               ]
             },
+            "GetIamPolicy": {
+              "methods": [
+                "GetIamPolicy"
+              ]
+            },
             "GetPlaylist": {
               "methods": [
                 "GetPlaylist"
@@ -98,6 +118,16 @@
             "ListPlaylists": {
               "methods": [
                 "ListPlaylists"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "SetIamPolicy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "TestIamPermissions"
               ]
             },
             "UpdatePlaylist": {

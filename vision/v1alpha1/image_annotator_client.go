@@ -33,6 +33,7 @@ import (
 	"google.golang.org/api/option/internaloption"
 	gtransport "google.golang.org/api/transport/grpc"
 	httptransport "google.golang.org/api/transport/http"
+	iampb "google.golang.org/genproto/googleapis/iam/v1"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/protobuf/encoding/protojson"
@@ -44,14 +45,17 @@ var newImageAnnotatorClientHook clientHook
 // ImageAnnotatorCallOptions contains the retry settings for each method of ImageAnnotatorClient.
 type ImageAnnotatorCallOptions struct {
 	AnalyzeImage          []gax.CallOption
-	ListImageAnalyses     []gax.CallOption
 	GetImageAnalysis      []gax.CallOption
+	ListImageAnalyses     []gax.CallOption
 	DeleteImageAnalysis   []gax.CallOption
-	CreateImageAnnotation []gax.CallOption
-	ListImageAnnotations  []gax.CallOption
 	GetImageAnnotation    []gax.CallOption
+	ListImageAnnotations  []gax.CallOption
+	CreateImageAnnotation []gax.CallOption
 	UpdateImageAnnotation []gax.CallOption
 	DeleteImageAnnotation []gax.CallOption
+	GetIamPolicy          []gax.CallOption
+	SetIamPolicy          []gax.CallOption
+	TestIamPermissions    []gax.CallOption
 }
 
 func defaultImageAnnotatorGRPCClientOptions() []option.ClientOption {
@@ -69,28 +73,34 @@ func defaultImageAnnotatorGRPCClientOptions() []option.ClientOption {
 func defaultImageAnnotatorCallOptions() *ImageAnnotatorCallOptions {
 	return &ImageAnnotatorCallOptions{
 		AnalyzeImage:          []gax.CallOption{},
-		ListImageAnalyses:     []gax.CallOption{},
 		GetImageAnalysis:      []gax.CallOption{},
+		ListImageAnalyses:     []gax.CallOption{},
 		DeleteImageAnalysis:   []gax.CallOption{},
-		CreateImageAnnotation: []gax.CallOption{},
-		ListImageAnnotations:  []gax.CallOption{},
 		GetImageAnnotation:    []gax.CallOption{},
+		ListImageAnnotations:  []gax.CallOption{},
+		CreateImageAnnotation: []gax.CallOption{},
 		UpdateImageAnnotation: []gax.CallOption{},
 		DeleteImageAnnotation: []gax.CallOption{},
+		GetIamPolicy:          []gax.CallOption{},
+		SetIamPolicy:          []gax.CallOption{},
+		TestIamPermissions:    []gax.CallOption{},
 	}
 }
 
 func defaultImageAnnotatorRESTCallOptions() *ImageAnnotatorCallOptions {
 	return &ImageAnnotatorCallOptions{
 		AnalyzeImage:          []gax.CallOption{},
-		ListImageAnalyses:     []gax.CallOption{},
 		GetImageAnalysis:      []gax.CallOption{},
+		ListImageAnalyses:     []gax.CallOption{},
 		DeleteImageAnalysis:   []gax.CallOption{},
-		CreateImageAnnotation: []gax.CallOption{},
-		ListImageAnnotations:  []gax.CallOption{},
 		GetImageAnnotation:    []gax.CallOption{},
+		ListImageAnnotations:  []gax.CallOption{},
+		CreateImageAnnotation: []gax.CallOption{},
 		UpdateImageAnnotation: []gax.CallOption{},
 		DeleteImageAnnotation: []gax.CallOption{},
+		GetIamPolicy:          []gax.CallOption{},
+		SetIamPolicy:          []gax.CallOption{},
+		TestIamPermissions:    []gax.CallOption{},
 	}
 }
 
@@ -100,14 +110,17 @@ type internalImageAnnotatorClient interface {
 	setGoogleClientInfo(...string)
 	Connection() *grpc.ClientConn
 	AnalyzeImage(context.Context, *visionpb.AnalyzeImageRequest, ...gax.CallOption) (*visionpb.AnalyzeImageResponse, error)
-	ListImageAnalyses(context.Context, *visionpb.ListImageAnalysesRequest, ...gax.CallOption) *ImageAnalysisIterator
 	GetImageAnalysis(context.Context, *visionpb.GetImageAnalysisRequest, ...gax.CallOption) (*visionpb.ImageAnalysis, error)
+	ListImageAnalyses(context.Context, *visionpb.ListImageAnalysesRequest, ...gax.CallOption) *ImageAnalysisIterator
 	DeleteImageAnalysis(context.Context, *visionpb.DeleteImageAnalysisRequest, ...gax.CallOption) error
-	CreateImageAnnotation(context.Context, *visionpb.CreateImageAnnotationRequest, ...gax.CallOption) (*visionpb.ImageAnnotation, error)
-	ListImageAnnotations(context.Context, *visionpb.ListImageAnnotationsRequest, ...gax.CallOption) *ImageAnnotationIterator
 	GetImageAnnotation(context.Context, *visionpb.GetImageAnnotationRequest, ...gax.CallOption) (*visionpb.ImageAnnotation, error)
+	ListImageAnnotations(context.Context, *visionpb.ListImageAnnotationsRequest, ...gax.CallOption) *ImageAnnotationIterator
+	CreateImageAnnotation(context.Context, *visionpb.CreateImageAnnotationRequest, ...gax.CallOption) (*visionpb.ImageAnnotation, error)
 	UpdateImageAnnotation(context.Context, *visionpb.UpdateImageAnnotationRequest, ...gax.CallOption) (*visionpb.ImageAnnotation, error)
 	DeleteImageAnnotation(context.Context, *visionpb.DeleteImageAnnotationRequest, ...gax.CallOption) error
+	GetIamPolicy(context.Context, *iampb.GetIamPolicyRequest, ...gax.CallOption) (*iampb.Policy, error)
+	SetIamPolicy(context.Context, *iampb.SetIamPolicyRequest, ...gax.CallOption) (*iampb.Policy, error)
+	TestIamPermissions(context.Context, *iampb.TestIamPermissionsRequest, ...gax.CallOption) (*iampb.TestIamPermissionsResponse, error)
 }
 
 // ImageAnnotatorClient is a client for interacting with Vision API.
@@ -146,29 +159,29 @@ func (c *ImageAnnotatorClient) AnalyzeImage(ctx context.Context, req *visionpb.A
 	return c.internalClient.AnalyzeImage(ctx, req, opts...)
 }
 
-func (c *ImageAnnotatorClient) ListImageAnalyses(ctx context.Context, req *visionpb.ListImageAnalysesRequest, opts ...gax.CallOption) *ImageAnalysisIterator {
-	return c.internalClient.ListImageAnalyses(ctx, req, opts...)
-}
-
 // GetImageAnalysis note: to fetch the latest available report use “latest” as report id.
 func (c *ImageAnnotatorClient) GetImageAnalysis(ctx context.Context, req *visionpb.GetImageAnalysisRequest, opts ...gax.CallOption) (*visionpb.ImageAnalysis, error) {
 	return c.internalClient.GetImageAnalysis(ctx, req, opts...)
+}
+
+func (c *ImageAnnotatorClient) ListImageAnalyses(ctx context.Context, req *visionpb.ListImageAnalysesRequest, opts ...gax.CallOption) *ImageAnalysisIterator {
+	return c.internalClient.ListImageAnalyses(ctx, req, opts...)
 }
 
 func (c *ImageAnnotatorClient) DeleteImageAnalysis(ctx context.Context, req *visionpb.DeleteImageAnalysisRequest, opts ...gax.CallOption) error {
 	return c.internalClient.DeleteImageAnalysis(ctx, req, opts...)
 }
 
-func (c *ImageAnnotatorClient) CreateImageAnnotation(ctx context.Context, req *visionpb.CreateImageAnnotationRequest, opts ...gax.CallOption) (*visionpb.ImageAnnotation, error) {
-	return c.internalClient.CreateImageAnnotation(ctx, req, opts...)
+func (c *ImageAnnotatorClient) GetImageAnnotation(ctx context.Context, req *visionpb.GetImageAnnotationRequest, opts ...gax.CallOption) (*visionpb.ImageAnnotation, error) {
+	return c.internalClient.GetImageAnnotation(ctx, req, opts...)
 }
 
 func (c *ImageAnnotatorClient) ListImageAnnotations(ctx context.Context, req *visionpb.ListImageAnnotationsRequest, opts ...gax.CallOption) *ImageAnnotationIterator {
 	return c.internalClient.ListImageAnnotations(ctx, req, opts...)
 }
 
-func (c *ImageAnnotatorClient) GetImageAnnotation(ctx context.Context, req *visionpb.GetImageAnnotationRequest, opts ...gax.CallOption) (*visionpb.ImageAnnotation, error) {
-	return c.internalClient.GetImageAnnotation(ctx, req, opts...)
+func (c *ImageAnnotatorClient) CreateImageAnnotation(ctx context.Context, req *visionpb.CreateImageAnnotationRequest, opts ...gax.CallOption) (*visionpb.ImageAnnotation, error) {
+	return c.internalClient.CreateImageAnnotation(ctx, req, opts...)
 }
 
 func (c *ImageAnnotatorClient) UpdateImageAnnotation(ctx context.Context, req *visionpb.UpdateImageAnnotationRequest, opts ...gax.CallOption) (*visionpb.ImageAnnotation, error) {
@@ -177,6 +190,21 @@ func (c *ImageAnnotatorClient) UpdateImageAnnotation(ctx context.Context, req *v
 
 func (c *ImageAnnotatorClient) DeleteImageAnnotation(ctx context.Context, req *visionpb.DeleteImageAnnotationRequest, opts ...gax.CallOption) error {
 	return c.internalClient.DeleteImageAnnotation(ctx, req, opts...)
+}
+
+// GetIamPolicy is a utility method from google.iam.v1.IAMPolicy.
+func (c *ImageAnnotatorClient) GetIamPolicy(ctx context.Context, req *iampb.GetIamPolicyRequest, opts ...gax.CallOption) (*iampb.Policy, error) {
+	return c.internalClient.GetIamPolicy(ctx, req, opts...)
+}
+
+// SetIamPolicy is a utility method from google.iam.v1.IAMPolicy.
+func (c *ImageAnnotatorClient) SetIamPolicy(ctx context.Context, req *iampb.SetIamPolicyRequest, opts ...gax.CallOption) (*iampb.Policy, error) {
+	return c.internalClient.SetIamPolicy(ctx, req, opts...)
+}
+
+// TestIamPermissions is a utility method from google.iam.v1.IAMPolicy.
+func (c *ImageAnnotatorClient) TestIamPermissions(ctx context.Context, req *iampb.TestIamPermissionsRequest, opts ...gax.CallOption) (*iampb.TestIamPermissionsResponse, error) {
+	return c.internalClient.TestIamPermissions(ctx, req, opts...)
 }
 
 // imageAnnotatorGRPCClient is a client for interacting with Vision API over gRPC transport.
@@ -194,6 +222,8 @@ type imageAnnotatorGRPCClient struct {
 
 	// The gRPC API client.
 	imageAnnotatorClient visionpb.ImageAnnotatorClient
+
+	iamPolicyClient iampb.IAMPolicyClient
 
 	// The x-goog-* metadata to be sent with each request.
 	xGoogMetadata metadata.MD
@@ -227,6 +257,7 @@ func NewImageAnnotatorClient(ctx context.Context, opts ...option.ClientOption) (
 		disableDeadlines:     disableDeadlines,
 		imageAnnotatorClient: visionpb.NewImageAnnotatorClient(connPool),
 		CallOptions:          &client.CallOptions,
+		iamPolicyClient:      iampb.NewIAMPolicyClient(connPool),
 	}
 	c.setGoogleClientInfo()
 
@@ -340,6 +371,23 @@ func (c *imageAnnotatorGRPCClient) AnalyzeImage(ctx context.Context, req *vision
 	return resp, nil
 }
 
+func (c *imageAnnotatorGRPCClient) GetImageAnalysis(ctx context.Context, req *visionpb.GetImageAnalysisRequest, opts ...gax.CallOption) (*visionpb.ImageAnalysis, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).GetImageAnalysis[0:len((*c.CallOptions).GetImageAnalysis):len((*c.CallOptions).GetImageAnalysis)], opts...)
+	var resp *visionpb.ImageAnalysis
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.imageAnnotatorClient.GetImageAnalysis(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
 func (c *imageAnnotatorGRPCClient) ListImageAnalyses(ctx context.Context, req *visionpb.ListImageAnalysesRequest, opts ...gax.CallOption) *ImageAnalysisIterator {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
 
@@ -385,23 +433,6 @@ func (c *imageAnnotatorGRPCClient) ListImageAnalyses(ctx context.Context, req *v
 	return it
 }
 
-func (c *imageAnnotatorGRPCClient) GetImageAnalysis(ctx context.Context, req *visionpb.GetImageAnalysisRequest, opts ...gax.CallOption) (*visionpb.ImageAnalysis, error) {
-	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
-
-	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
-	opts = append((*c.CallOptions).GetImageAnalysis[0:len((*c.CallOptions).GetImageAnalysis):len((*c.CallOptions).GetImageAnalysis)], opts...)
-	var resp *visionpb.ImageAnalysis
-	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
-		var err error
-		resp, err = c.imageAnnotatorClient.GetImageAnalysis(ctx, req, settings.GRPC...)
-		return err
-	}, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return resp, nil
-}
-
 func (c *imageAnnotatorGRPCClient) DeleteImageAnalysis(ctx context.Context, req *visionpb.DeleteImageAnalysisRequest, opts ...gax.CallOption) error {
 	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
 
@@ -415,15 +446,15 @@ func (c *imageAnnotatorGRPCClient) DeleteImageAnalysis(ctx context.Context, req 
 	return err
 }
 
-func (c *imageAnnotatorGRPCClient) CreateImageAnnotation(ctx context.Context, req *visionpb.CreateImageAnnotationRequest, opts ...gax.CallOption) (*visionpb.ImageAnnotation, error) {
-	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+func (c *imageAnnotatorGRPCClient) GetImageAnnotation(ctx context.Context, req *visionpb.GetImageAnnotationRequest, opts ...gax.CallOption) (*visionpb.ImageAnnotation, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
 
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
-	opts = append((*c.CallOptions).CreateImageAnnotation[0:len((*c.CallOptions).CreateImageAnnotation):len((*c.CallOptions).CreateImageAnnotation)], opts...)
+	opts = append((*c.CallOptions).GetImageAnnotation[0:len((*c.CallOptions).GetImageAnnotation):len((*c.CallOptions).GetImageAnnotation)], opts...)
 	var resp *visionpb.ImageAnnotation
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
-		resp, err = c.imageAnnotatorClient.CreateImageAnnotation(ctx, req, settings.GRPC...)
+		resp, err = c.imageAnnotatorClient.GetImageAnnotation(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	if err != nil {
@@ -477,15 +508,15 @@ func (c *imageAnnotatorGRPCClient) ListImageAnnotations(ctx context.Context, req
 	return it
 }
 
-func (c *imageAnnotatorGRPCClient) GetImageAnnotation(ctx context.Context, req *visionpb.GetImageAnnotationRequest, opts ...gax.CallOption) (*visionpb.ImageAnnotation, error) {
-	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+func (c *imageAnnotatorGRPCClient) CreateImageAnnotation(ctx context.Context, req *visionpb.CreateImageAnnotationRequest, opts ...gax.CallOption) (*visionpb.ImageAnnotation, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
 
 	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
-	opts = append((*c.CallOptions).GetImageAnnotation[0:len((*c.CallOptions).GetImageAnnotation):len((*c.CallOptions).GetImageAnnotation)], opts...)
+	opts = append((*c.CallOptions).CreateImageAnnotation[0:len((*c.CallOptions).CreateImageAnnotation):len((*c.CallOptions).CreateImageAnnotation)], opts...)
 	var resp *visionpb.ImageAnnotation
 	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		var err error
-		resp, err = c.imageAnnotatorClient.GetImageAnnotation(ctx, req, settings.GRPC...)
+		resp, err = c.imageAnnotatorClient.CreateImageAnnotation(ctx, req, settings.GRPC...)
 		return err
 	}, opts...)
 	if err != nil {
@@ -524,6 +555,57 @@ func (c *imageAnnotatorGRPCClient) DeleteImageAnnotation(ctx context.Context, re
 	return err
 }
 
+func (c *imageAnnotatorGRPCClient) GetIamPolicy(ctx context.Context, req *iampb.GetIamPolicyRequest, opts ...gax.CallOption) (*iampb.Policy, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "resource", url.QueryEscape(req.GetResource())))
+
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).GetIamPolicy[0:len((*c.CallOptions).GetIamPolicy):len((*c.CallOptions).GetIamPolicy)], opts...)
+	var resp *iampb.Policy
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.iamPolicyClient.GetIamPolicy(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *imageAnnotatorGRPCClient) SetIamPolicy(ctx context.Context, req *iampb.SetIamPolicyRequest, opts ...gax.CallOption) (*iampb.Policy, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "resource", url.QueryEscape(req.GetResource())))
+
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).SetIamPolicy[0:len((*c.CallOptions).SetIamPolicy):len((*c.CallOptions).SetIamPolicy)], opts...)
+	var resp *iampb.Policy
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.iamPolicyClient.SetIamPolicy(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
+func (c *imageAnnotatorGRPCClient) TestIamPermissions(ctx context.Context, req *iampb.TestIamPermissionsRequest, opts ...gax.CallOption) (*iampb.TestIamPermissionsResponse, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "resource", url.QueryEscape(req.GetResource())))
+
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).TestIamPermissions[0:len((*c.CallOptions).TestIamPermissions):len((*c.CallOptions).TestIamPermissions)], opts...)
+	var resp *iampb.TestIamPermissionsResponse
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.iamPolicyClient.TestIamPermissions(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
+}
+
 func (c *imageAnnotatorRESTClient) AnalyzeImage(ctx context.Context, req *visionpb.AnalyzeImageRequest, opts ...gax.CallOption) (*visionpb.AnalyzeImageResponse, error) {
 	m := protojson.MarshalOptions{AllowPartial: true, UseEnumNumbers: true}
 	jsonReq, err := m.Marshal(req)
@@ -549,6 +631,66 @@ func (c *imageAnnotatorRESTClient) AnalyzeImage(ctx context.Context, req *vision
 			baseUrl.Path = settings.Path
 		}
 		httpReq, err := http.NewRequest("POST", baseUrl.String(), bytes.NewReader(jsonReq))
+		if err != nil {
+			return err
+		}
+		httpReq = httpReq.WithContext(ctx)
+		httpReq.Header = headers
+
+		httpRsp, err := c.httpClient.Do(httpReq)
+		if err != nil {
+			return err
+		}
+		defer httpRsp.Body.Close()
+
+		if err = googleapi.CheckResponse(httpRsp); err != nil {
+			return err
+		}
+
+		buf, err := ioutil.ReadAll(httpRsp.Body)
+		if err != nil {
+			return err
+		}
+
+		if err := unm.Unmarshal(buf, resp); err != nil {
+			return maybeUnknownEnum(err)
+		}
+
+		return nil
+	}, opts...)
+	if e != nil {
+		return nil, e
+	}
+	return resp, nil
+}
+
+// GetImageAnalysis note: to fetch the latest available report use “latest” as report id.
+func (c *imageAnnotatorRESTClient) GetImageAnalysis(ctx context.Context, req *visionpb.GetImageAnalysisRequest, opts ...gax.CallOption) (*visionpb.ImageAnalysis, error) {
+	baseUrl, err := url.Parse(c.endpoint)
+	if err != nil {
+		return nil, err
+	}
+	baseUrl.Path += fmt.Sprintf("/v1alpha1/%v", req.GetName())
+
+	params := url.Values{}
+	if req.GetFieldMask().GetPaths() != nil {
+		params.Add("fieldMask.paths", fmt.Sprintf("%v", req.GetFieldMask().GetPaths()))
+	}
+
+	baseUrl.RawQuery = params.Encode()
+
+	// Build HTTP headers from client and context metadata.
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
+	headers := buildHeaders(ctx, c.xGoogMetadata, md, metadata.Pairs("Content-Type", "application/json"))
+	opts = append((*c.CallOptions).GetImageAnalysis[0:len((*c.CallOptions).GetImageAnalysis):len((*c.CallOptions).GetImageAnalysis)], opts...)
+	unm := protojson.UnmarshalOptions{AllowPartial: true, DiscardUnknown: true}
+	resp := &visionpb.ImageAnalysis{}
+	e := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		if settings.Path != "" {
+			baseUrl.Path = settings.Path
+		}
+		httpReq, err := http.NewRequest("GET", baseUrl.String(), nil)
 		if err != nil {
 			return err
 		}
@@ -666,66 +808,6 @@ func (c *imageAnnotatorRESTClient) ListImageAnalyses(ctx context.Context, req *v
 
 	return it
 }
-
-// GetImageAnalysis note: to fetch the latest available report use “latest” as report id.
-func (c *imageAnnotatorRESTClient) GetImageAnalysis(ctx context.Context, req *visionpb.GetImageAnalysisRequest, opts ...gax.CallOption) (*visionpb.ImageAnalysis, error) {
-	baseUrl, err := url.Parse(c.endpoint)
-	if err != nil {
-		return nil, err
-	}
-	baseUrl.Path += fmt.Sprintf("/v1alpha1/%v", req.GetName())
-
-	params := url.Values{}
-	if req.GetFieldMask().GetPaths() != nil {
-		params.Add("fieldMask.paths", fmt.Sprintf("%v", req.GetFieldMask().GetPaths()))
-	}
-
-	baseUrl.RawQuery = params.Encode()
-
-	// Build HTTP headers from client and context metadata.
-	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
-
-	headers := buildHeaders(ctx, c.xGoogMetadata, md, metadata.Pairs("Content-Type", "application/json"))
-	opts = append((*c.CallOptions).GetImageAnalysis[0:len((*c.CallOptions).GetImageAnalysis):len((*c.CallOptions).GetImageAnalysis)], opts...)
-	unm := protojson.UnmarshalOptions{AllowPartial: true, DiscardUnknown: true}
-	resp := &visionpb.ImageAnalysis{}
-	e := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
-		if settings.Path != "" {
-			baseUrl.Path = settings.Path
-		}
-		httpReq, err := http.NewRequest("GET", baseUrl.String(), nil)
-		if err != nil {
-			return err
-		}
-		httpReq = httpReq.WithContext(ctx)
-		httpReq.Header = headers
-
-		httpRsp, err := c.httpClient.Do(httpReq)
-		if err != nil {
-			return err
-		}
-		defer httpRsp.Body.Close()
-
-		if err = googleapi.CheckResponse(httpRsp); err != nil {
-			return err
-		}
-
-		buf, err := ioutil.ReadAll(httpRsp.Body)
-		if err != nil {
-			return err
-		}
-
-		if err := unm.Unmarshal(buf, resp); err != nil {
-			return maybeUnknownEnum(err)
-		}
-
-		return nil
-	}, opts...)
-	if e != nil {
-		return nil, e
-	}
-	return resp, nil
-}
 func (c *imageAnnotatorRESTClient) DeleteImageAnalysis(ctx context.Context, req *visionpb.DeleteImageAnalysisRequest, opts ...gax.CallOption) error {
 	baseUrl, err := url.Parse(c.endpoint)
 	if err != nil {
@@ -759,31 +841,25 @@ func (c *imageAnnotatorRESTClient) DeleteImageAnalysis(ctx context.Context, req 
 		return googleapi.CheckResponse(httpRsp)
 	}, opts...)
 }
-func (c *imageAnnotatorRESTClient) CreateImageAnnotation(ctx context.Context, req *visionpb.CreateImageAnnotationRequest, opts ...gax.CallOption) (*visionpb.ImageAnnotation, error) {
-	m := protojson.MarshalOptions{AllowPartial: true, UseEnumNumbers: true}
-	jsonReq, err := m.Marshal(req)
-	if err != nil {
-		return nil, err
-	}
-
+func (c *imageAnnotatorRESTClient) GetImageAnnotation(ctx context.Context, req *visionpb.GetImageAnnotationRequest, opts ...gax.CallOption) (*visionpb.ImageAnnotation, error) {
 	baseUrl, err := url.Parse(c.endpoint)
 	if err != nil {
 		return nil, err
 	}
-	baseUrl.Path += fmt.Sprintf("/v1alpha1/%v/imageAnnotations", req.GetParent())
+	baseUrl.Path += fmt.Sprintf("/v1alpha1/%v", req.GetName())
 
 	// Build HTTP headers from client and context metadata.
-	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
 
 	headers := buildHeaders(ctx, c.xGoogMetadata, md, metadata.Pairs("Content-Type", "application/json"))
-	opts = append((*c.CallOptions).CreateImageAnnotation[0:len((*c.CallOptions).CreateImageAnnotation):len((*c.CallOptions).CreateImageAnnotation)], opts...)
+	opts = append((*c.CallOptions).GetImageAnnotation[0:len((*c.CallOptions).GetImageAnnotation):len((*c.CallOptions).GetImageAnnotation)], opts...)
 	unm := protojson.UnmarshalOptions{AllowPartial: true, DiscardUnknown: true}
 	resp := &visionpb.ImageAnnotation{}
 	e := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		if settings.Path != "" {
 			baseUrl.Path = settings.Path
 		}
-		httpReq, err := http.NewRequest("POST", baseUrl.String(), bytes.NewReader(jsonReq))
+		httpReq, err := http.NewRequest("GET", baseUrl.String(), nil)
 		if err != nil {
 			return err
 		}
@@ -904,25 +980,31 @@ func (c *imageAnnotatorRESTClient) ListImageAnnotations(ctx context.Context, req
 
 	return it
 }
-func (c *imageAnnotatorRESTClient) GetImageAnnotation(ctx context.Context, req *visionpb.GetImageAnnotationRequest, opts ...gax.CallOption) (*visionpb.ImageAnnotation, error) {
+func (c *imageAnnotatorRESTClient) CreateImageAnnotation(ctx context.Context, req *visionpb.CreateImageAnnotationRequest, opts ...gax.CallOption) (*visionpb.ImageAnnotation, error) {
+	m := protojson.MarshalOptions{AllowPartial: true, UseEnumNumbers: true}
+	jsonReq, err := m.Marshal(req)
+	if err != nil {
+		return nil, err
+	}
+
 	baseUrl, err := url.Parse(c.endpoint)
 	if err != nil {
 		return nil, err
 	}
-	baseUrl.Path += fmt.Sprintf("/v1alpha1/%v", req.GetName())
+	baseUrl.Path += fmt.Sprintf("/v1alpha1/%v/imageAnnotations", req.GetParent())
 
 	// Build HTTP headers from client and context metadata.
-	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "parent", url.QueryEscape(req.GetParent())))
 
 	headers := buildHeaders(ctx, c.xGoogMetadata, md, metadata.Pairs("Content-Type", "application/json"))
-	opts = append((*c.CallOptions).GetImageAnnotation[0:len((*c.CallOptions).GetImageAnnotation):len((*c.CallOptions).GetImageAnnotation)], opts...)
+	opts = append((*c.CallOptions).CreateImageAnnotation[0:len((*c.CallOptions).CreateImageAnnotation):len((*c.CallOptions).CreateImageAnnotation)], opts...)
 	unm := protojson.UnmarshalOptions{AllowPartial: true, DiscardUnknown: true}
 	resp := &visionpb.ImageAnnotation{}
 	e := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
 		if settings.Path != "" {
 			baseUrl.Path = settings.Path
 		}
-		httpReq, err := http.NewRequest("GET", baseUrl.String(), nil)
+		httpReq, err := http.NewRequest("POST", baseUrl.String(), bytes.NewReader(jsonReq))
 		if err != nil {
 			return err
 		}
@@ -1044,6 +1126,184 @@ func (c *imageAnnotatorRESTClient) DeleteImageAnnotation(ctx context.Context, re
 		// the response code and body into a non-nil error
 		return googleapi.CheckResponse(httpRsp)
 	}, opts...)
+}
+
+// GetIamPolicy is a utility method from google.iam.v1.IAMPolicy.
+func (c *imageAnnotatorRESTClient) GetIamPolicy(ctx context.Context, req *iampb.GetIamPolicyRequest, opts ...gax.CallOption) (*iampb.Policy, error) {
+	baseUrl, err := url.Parse(c.endpoint)
+	if err != nil {
+		return nil, err
+	}
+	baseUrl.Path += fmt.Sprintf("/v1/%v:getIamPolicy", req.GetResource())
+
+	params := url.Values{}
+	if req.GetOptions().GetRequestedPolicyVersion() != 0 {
+		params.Add("options.requestedPolicyVersion", fmt.Sprintf("%v", req.GetOptions().GetRequestedPolicyVersion()))
+	}
+
+	baseUrl.RawQuery = params.Encode()
+
+	// Build HTTP headers from client and context metadata.
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "resource", url.QueryEscape(req.GetResource())))
+
+	headers := buildHeaders(ctx, c.xGoogMetadata, md, metadata.Pairs("Content-Type", "application/json"))
+	opts = append((*c.CallOptions).GetIamPolicy[0:len((*c.CallOptions).GetIamPolicy):len((*c.CallOptions).GetIamPolicy)], opts...)
+	unm := protojson.UnmarshalOptions{AllowPartial: true, DiscardUnknown: true}
+	resp := &iampb.Policy{}
+	e := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		if settings.Path != "" {
+			baseUrl.Path = settings.Path
+		}
+		httpReq, err := http.NewRequest("GET", baseUrl.String(), nil)
+		if err != nil {
+			return err
+		}
+		httpReq = httpReq.WithContext(ctx)
+		httpReq.Header = headers
+
+		httpRsp, err := c.httpClient.Do(httpReq)
+		if err != nil {
+			return err
+		}
+		defer httpRsp.Body.Close()
+
+		if err = googleapi.CheckResponse(httpRsp); err != nil {
+			return err
+		}
+
+		buf, err := ioutil.ReadAll(httpRsp.Body)
+		if err != nil {
+			return err
+		}
+
+		if err := unm.Unmarshal(buf, resp); err != nil {
+			return maybeUnknownEnum(err)
+		}
+
+		return nil
+	}, opts...)
+	if e != nil {
+		return nil, e
+	}
+	return resp, nil
+}
+
+// SetIamPolicy is a utility method from google.iam.v1.IAMPolicy.
+func (c *imageAnnotatorRESTClient) SetIamPolicy(ctx context.Context, req *iampb.SetIamPolicyRequest, opts ...gax.CallOption) (*iampb.Policy, error) {
+	m := protojson.MarshalOptions{AllowPartial: true, UseEnumNumbers: true}
+	jsonReq, err := m.Marshal(req)
+	if err != nil {
+		return nil, err
+	}
+
+	baseUrl, err := url.Parse(c.endpoint)
+	if err != nil {
+		return nil, err
+	}
+	baseUrl.Path += fmt.Sprintf("/v1/%v:setIamPolicy", req.GetResource())
+
+	// Build HTTP headers from client and context metadata.
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "resource", url.QueryEscape(req.GetResource())))
+
+	headers := buildHeaders(ctx, c.xGoogMetadata, md, metadata.Pairs("Content-Type", "application/json"))
+	opts = append((*c.CallOptions).SetIamPolicy[0:len((*c.CallOptions).SetIamPolicy):len((*c.CallOptions).SetIamPolicy)], opts...)
+	unm := protojson.UnmarshalOptions{AllowPartial: true, DiscardUnknown: true}
+	resp := &iampb.Policy{}
+	e := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		if settings.Path != "" {
+			baseUrl.Path = settings.Path
+		}
+		httpReq, err := http.NewRequest("POST", baseUrl.String(), bytes.NewReader(jsonReq))
+		if err != nil {
+			return err
+		}
+		httpReq = httpReq.WithContext(ctx)
+		httpReq.Header = headers
+
+		httpRsp, err := c.httpClient.Do(httpReq)
+		if err != nil {
+			return err
+		}
+		defer httpRsp.Body.Close()
+
+		if err = googleapi.CheckResponse(httpRsp); err != nil {
+			return err
+		}
+
+		buf, err := ioutil.ReadAll(httpRsp.Body)
+		if err != nil {
+			return err
+		}
+
+		if err := unm.Unmarshal(buf, resp); err != nil {
+			return maybeUnknownEnum(err)
+		}
+
+		return nil
+	}, opts...)
+	if e != nil {
+		return nil, e
+	}
+	return resp, nil
+}
+
+// TestIamPermissions is a utility method from google.iam.v1.IAMPolicy.
+func (c *imageAnnotatorRESTClient) TestIamPermissions(ctx context.Context, req *iampb.TestIamPermissionsRequest, opts ...gax.CallOption) (*iampb.TestIamPermissionsResponse, error) {
+	m := protojson.MarshalOptions{AllowPartial: true, UseEnumNumbers: true}
+	jsonReq, err := m.Marshal(req)
+	if err != nil {
+		return nil, err
+	}
+
+	baseUrl, err := url.Parse(c.endpoint)
+	if err != nil {
+		return nil, err
+	}
+	baseUrl.Path += fmt.Sprintf("/v1/%v:testIamPermissions", req.GetResource())
+
+	// Build HTTP headers from client and context metadata.
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "resource", url.QueryEscape(req.GetResource())))
+
+	headers := buildHeaders(ctx, c.xGoogMetadata, md, metadata.Pairs("Content-Type", "application/json"))
+	opts = append((*c.CallOptions).TestIamPermissions[0:len((*c.CallOptions).TestIamPermissions):len((*c.CallOptions).TestIamPermissions)], opts...)
+	unm := protojson.UnmarshalOptions{AllowPartial: true, DiscardUnknown: true}
+	resp := &iampb.TestIamPermissionsResponse{}
+	e := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		if settings.Path != "" {
+			baseUrl.Path = settings.Path
+		}
+		httpReq, err := http.NewRequest("POST", baseUrl.String(), bytes.NewReader(jsonReq))
+		if err != nil {
+			return err
+		}
+		httpReq = httpReq.WithContext(ctx)
+		httpReq.Header = headers
+
+		httpRsp, err := c.httpClient.Do(httpReq)
+		if err != nil {
+			return err
+		}
+		defer httpRsp.Body.Close()
+
+		if err = googleapi.CheckResponse(httpRsp); err != nil {
+			return err
+		}
+
+		buf, err := ioutil.ReadAll(httpRsp.Body)
+		if err != nil {
+			return err
+		}
+
+		if err := unm.Unmarshal(buf, resp); err != nil {
+			return maybeUnknownEnum(err)
+		}
+
+		return nil
+	}, opts...)
+	if e != nil {
+		return nil, e
+	}
+	return resp, nil
 }
 
 // ImageAnalysisIterator manages a stream of *visionpb.ImageAnalysis.

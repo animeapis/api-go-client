@@ -22,6 +22,7 @@ import (
 	credentials "github.com/animeapis/api-go-client/credentials/v1alpha1"
 	credentialspb "github.com/animeapis/go-genproto/credentials/v1alpha1"
 	"google.golang.org/api/iterator"
+	iampb "google.golang.org/genproto/googleapis/iam/v1"
 )
 
 func ExampleNewKeeperClient() {
@@ -145,6 +146,66 @@ func ExampleKeeperClient_ActAsCredentials() {
 		// See https://pkg.go.dev/github.com/animeapis/go-genproto/credentials/v1alpha1#ActAsCredentialsRequest.
 	}
 	resp, err := c.ActAsCredentials(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
+func ExampleKeeperClient_GetIamPolicy() {
+	ctx := context.Background()
+	c, err := credentials.NewKeeperClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &iampb.GetIamPolicyRequest{
+		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/google.golang.org/genproto/googleapis/iam/v1#GetIamPolicyRequest.
+	}
+	resp, err := c.GetIamPolicy(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
+func ExampleKeeperClient_SetIamPolicy() {
+	ctx := context.Background()
+	c, err := credentials.NewKeeperClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &iampb.SetIamPolicyRequest{
+		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/google.golang.org/genproto/googleapis/iam/v1#SetIamPolicyRequest.
+	}
+	resp, err := c.SetIamPolicy(ctx, req)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	// TODO: Use resp.
+	_ = resp
+}
+
+func ExampleKeeperClient_TestIamPermissions() {
+	ctx := context.Background()
+	c, err := credentials.NewKeeperClient(ctx)
+	if err != nil {
+		// TODO: Handle error.
+	}
+	defer c.Close()
+
+	req := &iampb.TestIamPermissionsRequest{
+		// TODO: Fill request struct fields.
+		// See https://pkg.go.dev/google.golang.org/genproto/googleapis/iam/v1#TestIamPermissionsRequest.
+	}
+	resp, err := c.TestIamPermissions(ctx, req)
 	if err != nil {
 		// TODO: Handle error.
 	}

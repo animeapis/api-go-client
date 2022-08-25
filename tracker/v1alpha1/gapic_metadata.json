@@ -35,6 +35,11 @@
                 "ExportTrackers"
               ]
             },
+            "GetIamPolicy": {
+              "methods": [
+                "GetIamPolicy"
+              ]
+            },
             "GetTracker": {
               "methods": [
                 "GetTracker"
@@ -48,6 +53,16 @@
             "ListTrackers": {
               "methods": [
                 "ListTrackers"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "SetIamPolicy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "TestIamPermissions"
               ]
             },
             "UpdateTracker": {
@@ -85,6 +100,11 @@
                 "ExportTrackers"
               ]
             },
+            "GetIamPolicy": {
+              "methods": [
+                "GetIamPolicy"
+              ]
+            },
             "GetTracker": {
               "methods": [
                 "GetTracker"
@@ -98,6 +118,16 @@
             "ListTrackers": {
               "methods": [
                 "ListTrackers"
+              ]
+            },
+            "SetIamPolicy": {
+              "methods": [
+                "SetIamPolicy"
+              ]
+            },
+            "TestIamPermissions": {
+              "methods": [
+                "TestIamPermissions"
               ]
             },
             "UpdateTracker": {
