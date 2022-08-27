@@ -22,7 +22,6 @@ import (
 	vision "github.com/animeapis/api-go-client/vision/v1alpha1"
 	visionpb "github.com/animeapis/go-genproto/vision/v1alpha1"
 	"google.golang.org/api/iterator"
-	iampb "google.golang.org/genproto/googleapis/iam/v1"
 )
 
 func ExampleNewImageAnnotatorClient() {
@@ -235,64 +234,4 @@ func ExampleImageAnnotatorClient_DeleteImageAnnotation() {
 	if err != nil {
 		// TODO: Handle error.
 	}
-}
-
-func ExampleImageAnnotatorClient_GetIamPolicy() {
-	ctx := context.Background()
-	c, err := vision.NewImageAnnotatorClient(ctx)
-	if err != nil {
-		// TODO: Handle error.
-	}
-	defer c.Close()
-
-	req := &iampb.GetIamPolicyRequest{
-		// TODO: Fill request struct fields.
-		// See https://pkg.go.dev/google.golang.org/genproto/googleapis/iam/v1#GetIamPolicyRequest.
-	}
-	resp, err := c.GetIamPolicy(ctx, req)
-	if err != nil {
-		// TODO: Handle error.
-	}
-	// TODO: Use resp.
-	_ = resp
-}
-
-func ExampleImageAnnotatorClient_SetIamPolicy() {
-	ctx := context.Background()
-	c, err := vision.NewImageAnnotatorClient(ctx)
-	if err != nil {
-		// TODO: Handle error.
-	}
-	defer c.Close()
-
-	req := &iampb.SetIamPolicyRequest{
-		// TODO: Fill request struct fields.
-		// See https://pkg.go.dev/google.golang.org/genproto/googleapis/iam/v1#SetIamPolicyRequest.
-	}
-	resp, err := c.SetIamPolicy(ctx, req)
-	if err != nil {
-		// TODO: Handle error.
-	}
-	// TODO: Use resp.
-	_ = resp
-}
-
-func ExampleImageAnnotatorClient_TestIamPermissions() {
-	ctx := context.Background()
-	c, err := vision.NewImageAnnotatorClient(ctx)
-	if err != nil {
-		// TODO: Handle error.
-	}
-	defer c.Close()
-
-	req := &iampb.TestIamPermissionsRequest{
-		// TODO: Fill request struct fields.
-		// See https://pkg.go.dev/google.golang.org/genproto/googleapis/iam/v1#TestIamPermissionsRequest.
-	}
-	resp, err := c.TestIamPermissions(ctx, req)
-	if err != nil {
-		// TODO: Handle error.
-	}
-	// TODO: Use resp.
-	_ = resp
 }
