@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC
+// Copyright 2023 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -140,7 +140,8 @@ func (c *ChapterClient) setGoogleClientInfo(keyval ...string) {
 
 // Connection returns a connection to the API service.
 //
-// Deprecated.
+// Deprecated: Connections are now pooled so this method does not always
+// return the same resource.
 func (c *ChapterClient) Connection() *grpc.ClientConn {
 	return c.internalClient.Connection()
 }
@@ -260,7 +261,8 @@ func NewChapterClient(ctx context.Context, opts ...option.ClientOption) (*Chapte
 
 // Connection returns a connection to the API service.
 //
-// Deprecated.
+// Deprecated: Connections are now pooled so this method does not always
+// return the same resource.
 func (c *chapterGRPCClient) Connection() *grpc.ClientConn {
 	return c.connPool.Conn()
 }
@@ -357,7 +359,7 @@ func (c *chapterRESTClient) Close() error {
 
 // Connection returns a connection to the API service.
 //
-// Deprecated.
+// Deprecated: This method always returns nil.
 func (c *chapterRESTClient) Connection() *grpc.ClientConn {
 	return nil
 }

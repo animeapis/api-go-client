@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC
+// Copyright 2023 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -135,7 +135,8 @@ func (c *GraphicNovelClient) setGoogleClientInfo(keyval ...string) {
 
 // Connection returns a connection to the API service.
 //
-// Deprecated.
+// Deprecated: Connections are now pooled so this method does not always
+// return the same resource.
 func (c *GraphicNovelClient) Connection() *grpc.ClientConn {
 	return c.internalClient.Connection()
 }
@@ -245,7 +246,8 @@ func NewGraphicNovelClient(ctx context.Context, opts ...option.ClientOption) (*G
 
 // Connection returns a connection to the API service.
 //
-// Deprecated.
+// Deprecated: Connections are now pooled so this method does not always
+// return the same resource.
 func (c *graphicNovelGRPCClient) Connection() *grpc.ClientConn {
 	return c.connPool.Conn()
 }
@@ -342,7 +344,7 @@ func (c *graphicNovelRESTClient) Close() error {
 
 // Connection returns a connection to the API service.
 //
-// Deprecated.
+// Deprecated: This method always returns nil.
 func (c *graphicNovelRESTClient) Connection() *grpc.ClientConn {
 	return nil
 }

@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC
+// Copyright 2023 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,6 +27,11 @@ import (
 
 func ExampleNewIamClient() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := admin.NewIamClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -39,6 +44,11 @@ func ExampleNewIamClient() {
 
 func ExampleNewIamRESTClient() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := admin.NewIamRESTClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -51,6 +61,11 @@ func ExampleNewIamRESTClient() {
 
 func ExampleIamClient_GetServiceAccount() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := admin.NewIamClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -71,6 +86,11 @@ func ExampleIamClient_GetServiceAccount() {
 
 func ExampleIamClient_ListServiceAccounts() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := admin.NewIamClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -97,6 +117,11 @@ func ExampleIamClient_ListServiceAccounts() {
 
 func ExampleIamClient_CreateServiceAccount() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := admin.NewIamClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -117,6 +142,11 @@ func ExampleIamClient_CreateServiceAccount() {
 
 func ExampleIamClient_UpdateServiceAccount() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := admin.NewIamClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -137,6 +167,11 @@ func ExampleIamClient_UpdateServiceAccount() {
 
 func ExampleIamClient_DeleteServiceAccount() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := admin.NewIamClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -155,6 +190,11 @@ func ExampleIamClient_DeleteServiceAccount() {
 
 func ExampleIamClient_GetRole() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := admin.NewIamClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -175,6 +215,11 @@ func ExampleIamClient_GetRole() {
 
 func ExampleIamClient_ListRoles() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := admin.NewIamClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -201,6 +246,11 @@ func ExampleIamClient_ListRoles() {
 
 func ExampleIamClient_CreateRole() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := admin.NewIamClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -221,6 +271,11 @@ func ExampleIamClient_CreateRole() {
 
 func ExampleIamClient_UpdateRole() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := admin.NewIamClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -241,6 +296,11 @@ func ExampleIamClient_UpdateRole() {
 
 func ExampleIamClient_DeleteRole() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := admin.NewIamClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -259,6 +319,11 @@ func ExampleIamClient_DeleteRole() {
 
 func ExampleIamClient_GetPermission() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := admin.NewIamClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -279,6 +344,11 @@ func ExampleIamClient_GetPermission() {
 
 func ExampleIamClient_ListPermissions() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := admin.NewIamClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -305,6 +375,11 @@ func ExampleIamClient_ListPermissions() {
 
 func ExampleIamClient_CreatePermission() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := admin.NewIamClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -325,6 +400,11 @@ func ExampleIamClient_CreatePermission() {
 
 func ExampleIamClient_UpdatePermission() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := admin.NewIamClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -345,6 +425,11 @@ func ExampleIamClient_UpdatePermission() {
 
 func ExampleIamClient_DeletePermission() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := admin.NewIamClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -363,6 +448,11 @@ func ExampleIamClient_DeletePermission() {
 
 func ExampleIamClient_GetIamPolicy() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := admin.NewIamClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -383,6 +473,11 @@ func ExampleIamClient_GetIamPolicy() {
 
 func ExampleIamClient_SetIamPolicy() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := admin.NewIamClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -403,6 +498,11 @@ func ExampleIamClient_SetIamPolicy() {
 
 func ExampleIamClient_TestIamPermissions() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := admin.NewIamClient(ctx)
 	if err != nil {
 		// TODO: Handle error.

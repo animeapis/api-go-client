@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC
+// Copyright 2023 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -26,6 +26,11 @@ import (
 
 func ExampleNewAccessControlClient() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := grbac.NewAccessControlClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -38,6 +43,11 @@ func ExampleNewAccessControlClient() {
 
 func ExampleNewAccessControlRESTClient() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := grbac.NewAccessControlRESTClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -50,6 +60,11 @@ func ExampleNewAccessControlRESTClient() {
 
 func ExampleAccessControlClient_TestIamPolicy() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := grbac.NewAccessControlClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -68,6 +83,11 @@ func ExampleAccessControlClient_TestIamPolicy() {
 
 func ExampleAccessControlClient_GetIamPolicy() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := grbac.NewAccessControlClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -88,6 +108,11 @@ func ExampleAccessControlClient_GetIamPolicy() {
 
 func ExampleAccessControlClient_SetIamPolicy() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := grbac.NewAccessControlClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -108,6 +133,11 @@ func ExampleAccessControlClient_SetIamPolicy() {
 
 func ExampleAccessControlClient_GetResource() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := grbac.NewAccessControlClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -128,6 +158,11 @@ func ExampleAccessControlClient_GetResource() {
 
 func ExampleAccessControlClient_CreateResource() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := grbac.NewAccessControlClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -148,6 +183,11 @@ func ExampleAccessControlClient_CreateResource() {
 
 func ExampleAccessControlClient_TransferResource() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := grbac.NewAccessControlClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -168,6 +208,11 @@ func ExampleAccessControlClient_TransferResource() {
 
 func ExampleAccessControlClient_DeleteResource() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := grbac.NewAccessControlClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -186,6 +231,11 @@ func ExampleAccessControlClient_DeleteResource() {
 
 func ExampleAccessControlClient_CreateSubject() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := grbac.NewAccessControlClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -206,6 +256,11 @@ func ExampleAccessControlClient_CreateSubject() {
 
 func ExampleAccessControlClient_DeleteSubject() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := grbac.NewAccessControlClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -224,6 +279,11 @@ func ExampleAccessControlClient_DeleteSubject() {
 
 func ExampleAccessControlClient_GetGroup() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := grbac.NewAccessControlClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -244,6 +304,11 @@ func ExampleAccessControlClient_GetGroup() {
 
 func ExampleAccessControlClient_CreateGroup() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := grbac.NewAccessControlClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -264,6 +329,11 @@ func ExampleAccessControlClient_CreateGroup() {
 
 func ExampleAccessControlClient_UpdateGroup() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := grbac.NewAccessControlClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -284,6 +354,11 @@ func ExampleAccessControlClient_UpdateGroup() {
 
 func ExampleAccessControlClient_AddGroupMember() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := grbac.NewAccessControlClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -304,6 +379,11 @@ func ExampleAccessControlClient_AddGroupMember() {
 
 func ExampleAccessControlClient_RemoveGroupMember() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := grbac.NewAccessControlClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -324,6 +404,11 @@ func ExampleAccessControlClient_RemoveGroupMember() {
 
 func ExampleAccessControlClient_DeleteGroup() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := grbac.NewAccessControlClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -342,6 +427,11 @@ func ExampleAccessControlClient_DeleteGroup() {
 
 func ExampleAccessControlClient_CreatePermission() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := grbac.NewAccessControlClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -362,6 +452,11 @@ func ExampleAccessControlClient_CreatePermission() {
 
 func ExampleAccessControlClient_DeletePermission() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := grbac.NewAccessControlClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -380,6 +475,11 @@ func ExampleAccessControlClient_DeletePermission() {
 
 func ExampleAccessControlClient_GetRole() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := grbac.NewAccessControlClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -400,6 +500,11 @@ func ExampleAccessControlClient_GetRole() {
 
 func ExampleAccessControlClient_CreateRole() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := grbac.NewAccessControlClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -420,6 +525,11 @@ func ExampleAccessControlClient_CreateRole() {
 
 func ExampleAccessControlClient_UpdateRole() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := grbac.NewAccessControlClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -440,6 +550,11 @@ func ExampleAccessControlClient_UpdateRole() {
 
 func ExampleAccessControlClient_DeleteRole() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := grbac.NewAccessControlClient(ctx)
 	if err != nil {
 		// TODO: Handle error.

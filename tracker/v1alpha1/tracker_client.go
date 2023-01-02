@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC
+// Copyright 2023 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -52,6 +52,7 @@ type CallOptions struct {
 	CreateTracker  []gax.CallOption
 	UpdateTracker  []gax.CallOption
 	DeleteTracker  []gax.CallOption
+	ComputeTracker []gax.CallOption
 	ImportTrackers []gax.CallOption
 	ExportTrackers []gax.CallOption
 	CreateActivity []gax.CallOption
@@ -77,6 +78,7 @@ func defaultCallOptions() *CallOptions {
 		CreateTracker:  []gax.CallOption{},
 		UpdateTracker:  []gax.CallOption{},
 		DeleteTracker:  []gax.CallOption{},
+		ComputeTracker: []gax.CallOption{},
 		ImportTrackers: []gax.CallOption{},
 		ExportTrackers: []gax.CallOption{},
 		CreateActivity: []gax.CallOption{},
@@ -91,6 +93,7 @@ func defaultRESTCallOptions() *CallOptions {
 		CreateTracker:  []gax.CallOption{},
 		UpdateTracker:  []gax.CallOption{},
 		DeleteTracker:  []gax.CallOption{},
+		ComputeTracker: []gax.CallOption{},
 		ImportTrackers: []gax.CallOption{},
 		ExportTrackers: []gax.CallOption{},
 		CreateActivity: []gax.CallOption{},
@@ -108,6 +111,7 @@ type internalClient interface {
 	CreateTracker(context.Context, *trackerpb.CreateTrackerRequest, ...gax.CallOption) (*trackerpb.Tracker, error)
 	UpdateTracker(context.Context, *trackerpb.UpdateTrackerRequest, ...gax.CallOption) (*trackerpb.Tracker, error)
 	DeleteTracker(context.Context, *trackerpb.DeleteTrackerRequest, ...gax.CallOption) error
+	ComputeTracker(context.Context, *trackerpb.ComputeTrackerRequest, ...gax.CallOption) (*trackerpb.ComputeTrackerResponse, error)
 	ImportTrackers(context.Context, *trackerpb.ImportTrackersRequest, ...gax.CallOption) (*ImportTrackersOperation, error)
 	ImportTrackersOperation(name string) *ImportTrackersOperation
 	ExportTrackers(context.Context, *trackerpb.ExportTrackersRequest, ...gax.CallOption) (*ExportTrackersOperation, error)
@@ -148,7 +152,8 @@ func (c *Client) setGoogleClientInfo(keyval ...string) {
 
 // Connection returns a connection to the API service.
 //
-// Deprecated.
+// Deprecated: Connections are now pooled so this method does not always
+// return the same resource.
 func (c *Client) Connection() *grpc.ClientConn {
 	return c.internalClient.Connection()
 }
@@ -176,6 +181,10 @@ func (c *Client) UpdateTracker(ctx context.Context, req *trackerpb.UpdateTracker
 
 func (c *Client) DeleteTracker(ctx context.Context, req *trackerpb.DeleteTrackerRequest, opts ...gax.CallOption) error {
 	return c.internalClient.DeleteTracker(ctx, req, opts...)
+}
+
+func (c *Client) ComputeTracker(ctx context.Context, req *trackerpb.ComputeTrackerRequest, opts ...gax.CallOption) (*trackerpb.ComputeTrackerResponse, error) {
+	return c.internalClient.ComputeTracker(ctx, req, opts...)
 }
 
 func (c *Client) ImportTrackers(ctx context.Context, req *trackerpb.ImportTrackersRequest, opts ...gax.CallOption) (*ImportTrackersOperation, error) {
@@ -280,7 +289,8 @@ func NewClient(ctx context.Context, opts ...option.ClientOption) (*Client, error
 
 // Connection returns a connection to the API service.
 //
-// Deprecated.
+// Deprecated: Connections are now pooled so this method does not always
+// return the same resource.
 func (c *gRPCClient) Connection() *grpc.ClientConn {
 	return c.connPool.Conn()
 }
@@ -377,7 +387,7 @@ func (c *restClient) Close() error {
 
 // Connection returns a connection to the API service.
 //
-// Deprecated.
+// Deprecated: This method always returns nil.
 func (c *restClient) Connection() *grpc.ClientConn {
 	return nil
 }
@@ -488,6 +498,23 @@ func (c *gRPCClient) DeleteTracker(ctx context.Context, req *trackerpb.DeleteTra
 		return err
 	}, opts...)
 	return err
+}
+
+func (c *gRPCClient) ComputeTracker(ctx context.Context, req *trackerpb.ComputeTrackerRequest, opts ...gax.CallOption) (*trackerpb.ComputeTrackerResponse, error) {
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
+	ctx = insertMetadata(ctx, c.xGoogMetadata, md)
+	opts = append((*c.CallOptions).ComputeTracker[0:len((*c.CallOptions).ComputeTracker):len((*c.CallOptions).ComputeTracker)], opts...)
+	var resp *trackerpb.ComputeTrackerResponse
+	err := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		var err error
+		resp, err = c.client.ComputeTracker(ctx, req, settings.GRPC...)
+		return err
+	}, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return resp, nil
 }
 
 func (c *gRPCClient) ImportTrackers(ctx context.Context, req *trackerpb.ImportTrackersRequest, opts ...gax.CallOption) (*ImportTrackersOperation, error) {
@@ -849,6 +876,63 @@ func (c *restClient) DeleteTracker(ctx context.Context, req *trackerpb.DeleteTra
 		// the response code and body into a non-nil error
 		return googleapi.CheckResponse(httpRsp)
 	}, opts...)
+}
+func (c *restClient) ComputeTracker(ctx context.Context, req *trackerpb.ComputeTrackerRequest, opts ...gax.CallOption) (*trackerpb.ComputeTrackerResponse, error) {
+	m := protojson.MarshalOptions{AllowPartial: true, UseEnumNumbers: true}
+	jsonReq, err := m.Marshal(req)
+	if err != nil {
+		return nil, err
+	}
+
+	baseUrl, err := url.Parse(c.endpoint)
+	if err != nil {
+		return nil, err
+	}
+	baseUrl.Path += fmt.Sprintf("/v1alpha1/%v:compute", req.GetName())
+
+	// Build HTTP headers from client and context metadata.
+	md := metadata.Pairs("x-goog-request-params", fmt.Sprintf("%s=%v", "name", url.QueryEscape(req.GetName())))
+
+	headers := buildHeaders(ctx, c.xGoogMetadata, md, metadata.Pairs("Content-Type", "application/json"))
+	opts = append((*c.CallOptions).ComputeTracker[0:len((*c.CallOptions).ComputeTracker):len((*c.CallOptions).ComputeTracker)], opts...)
+	unm := protojson.UnmarshalOptions{AllowPartial: true, DiscardUnknown: true}
+	resp := &trackerpb.ComputeTrackerResponse{}
+	e := gax.Invoke(ctx, func(ctx context.Context, settings gax.CallSettings) error {
+		if settings.Path != "" {
+			baseUrl.Path = settings.Path
+		}
+		httpReq, err := http.NewRequest("POST", baseUrl.String(), bytes.NewReader(jsonReq))
+		if err != nil {
+			return err
+		}
+		httpReq = httpReq.WithContext(ctx)
+		httpReq.Header = headers
+
+		httpRsp, err := c.httpClient.Do(httpReq)
+		if err != nil {
+			return err
+		}
+		defer httpRsp.Body.Close()
+
+		if err = googleapi.CheckResponse(httpRsp); err != nil {
+			return err
+		}
+
+		buf, err := ioutil.ReadAll(httpRsp.Body)
+		if err != nil {
+			return err
+		}
+
+		if err := unm.Unmarshal(buf, resp); err != nil {
+			return maybeUnknownEnum(err)
+		}
+
+		return nil
+	}, opts...)
+	if e != nil {
+		return nil, e
+	}
+	return resp, nil
 }
 func (c *restClient) ImportTrackers(ctx context.Context, req *trackerpb.ImportTrackersRequest, opts ...gax.CallOption) (*ImportTrackersOperation, error) {
 	m := protojson.MarshalOptions{AllowPartial: true, UseEnumNumbers: true}

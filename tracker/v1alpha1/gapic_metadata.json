@@ -10,6 +10,11 @@
         "grpc": {
           "libraryClient": "Client",
           "rpcs": {
+            "ComputeTracker": {
+              "methods": [
+                "ComputeTracker"
+              ]
+            },
             "CreateActivity": {
               "methods": [
                 "CreateActivity"
@@ -60,6 +65,11 @@
         "rest": {
           "libraryClient": "Client",
           "rpcs": {
+            "ComputeTracker": {
+              "methods": [
+                "ComputeTracker"
+              ]
+            },
             "CreateActivity": {
               "methods": [
                 "CreateActivity"

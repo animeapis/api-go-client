@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC
+// Copyright 2023 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,6 +27,11 @@ import (
 
 func ExampleNewReferrerClient() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := crossrefs.NewReferrerClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -39,6 +44,11 @@ func ExampleNewReferrerClient() {
 
 func ExampleReferrerClient_GetCrossRef() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := crossrefs.NewReferrerClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -59,6 +69,11 @@ func ExampleReferrerClient_GetCrossRef() {
 
 func ExampleReferrerClient_ListCrossRefs() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := crossrefs.NewReferrerClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -85,6 +100,11 @@ func ExampleReferrerClient_ListCrossRefs() {
 
 func ExampleReferrerClient_CreateCrossRef() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := crossrefs.NewReferrerClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -105,6 +125,11 @@ func ExampleReferrerClient_CreateCrossRef() {
 
 func ExampleReferrerClient_BatchCreateCrossRefs() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := crossrefs.NewReferrerClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -125,6 +150,11 @@ func ExampleReferrerClient_BatchCreateCrossRefs() {
 
 func ExampleReferrerClient_UpdateCrossRef() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := crossrefs.NewReferrerClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -145,6 +175,11 @@ func ExampleReferrerClient_UpdateCrossRef() {
 
 func ExampleReferrerClient_CountCrossRefs() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := crossrefs.NewReferrerClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -165,6 +200,11 @@ func ExampleReferrerClient_CountCrossRefs() {
 
 func ExampleReferrerClient_AnalyzeCrossRefs() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := crossrefs.NewReferrerClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -190,6 +230,11 @@ func ExampleReferrerClient_AnalyzeCrossRefs() {
 
 func ExampleReferrerClient_ImportCrossRefs() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := crossrefs.NewReferrerClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -215,6 +260,11 @@ func ExampleReferrerClient_ImportCrossRefs() {
 
 func ExampleReferrerClient_ExportCrossRefs() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := crossrefs.NewReferrerClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -240,6 +290,11 @@ func ExampleReferrerClient_ExportCrossRefs() {
 
 func ExampleReferrerClient_InitializeCrossRefs() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := crossrefs.NewReferrerClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -265,6 +320,11 @@ func ExampleReferrerClient_InitializeCrossRefs() {
 
 func ExampleReferrerClient_AnalyzeParodies() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := crossrefs.NewReferrerClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -290,6 +350,11 @@ func ExampleReferrerClient_AnalyzeParodies() {
 
 func ExampleReferrerClient_ExportParodies() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := crossrefs.NewReferrerClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -315,6 +380,11 @@ func ExampleReferrerClient_ExportParodies() {
 
 func ExampleReferrerClient_GetUniverse() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := crossrefs.NewReferrerClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -335,6 +405,11 @@ func ExampleReferrerClient_GetUniverse() {
 
 func ExampleReferrerClient_UpdateUniverse() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := crossrefs.NewReferrerClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -355,6 +430,11 @@ func ExampleReferrerClient_UpdateUniverse() {
 
 func ExampleReferrerClient_ExpandUniverse() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := crossrefs.NewReferrerClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -375,6 +455,11 @@ func ExampleReferrerClient_ExpandUniverse() {
 
 func ExampleReferrerClient_GetWormhole() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := crossrefs.NewReferrerClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -395,6 +480,11 @@ func ExampleReferrerClient_GetWormhole() {
 
 func ExampleReferrerClient_ListWormholeCrossRefs() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := crossrefs.NewReferrerClient(ctx)
 	if err != nil {
 		// TODO: Handle error.

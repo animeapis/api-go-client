@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC
+// Copyright 2023 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -137,7 +137,8 @@ func (c *ImageAnnotatorClient) setGoogleClientInfo(keyval ...string) {
 
 // Connection returns a connection to the API service.
 //
-// Deprecated.
+// Deprecated: Connections are now pooled so this method does not always
+// return the same resource.
 func (c *ImageAnnotatorClient) Connection() *grpc.ClientConn {
 	return c.internalClient.Connection()
 }
@@ -237,7 +238,8 @@ func NewImageAnnotatorClient(ctx context.Context, opts ...option.ClientOption) (
 
 // Connection returns a connection to the API service.
 //
-// Deprecated.
+// Deprecated: Connections are now pooled so this method does not always
+// return the same resource.
 func (c *imageAnnotatorGRPCClient) Connection() *grpc.ClientConn {
 	return c.connPool.Conn()
 }
@@ -319,7 +321,7 @@ func (c *imageAnnotatorRESTClient) Close() error {
 
 // Connection returns a connection to the API service.
 //
-// Deprecated.
+// Deprecated: This method always returns nil.
 func (c *imageAnnotatorRESTClient) Connection() *grpc.ClientConn {
 	return nil
 }
@@ -591,8 +593,12 @@ func (c *imageAnnotatorRESTClient) GetImageAnalysis(ctx context.Context, req *vi
 	baseUrl.Path += fmt.Sprintf("/v1alpha1/%v", req.GetName())
 
 	params := url.Values{}
-	if req.GetFieldMask().GetPaths() != nil {
-		params.Add("fieldMask.paths", fmt.Sprintf("%v", req.GetFieldMask().GetPaths()))
+	if req.GetFieldMask() != nil {
+		fieldMask, err := protojson.Marshal(req.GetFieldMask())
+		if err != nil {
+			return nil, err
+		}
+		params.Add("fieldMask", string(fieldMask))
 	}
 
 	baseUrl.RawQuery = params.Encode()

@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC
+// Copyright 2023 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -27,6 +27,11 @@ import (
 
 func ExampleNewKeeperClient() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := credentials.NewKeeperClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -39,6 +44,11 @@ func ExampleNewKeeperClient() {
 
 func ExampleNewKeeperRESTClient() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := credentials.NewKeeperRESTClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -51,6 +61,11 @@ func ExampleNewKeeperRESTClient() {
 
 func ExampleKeeperClient_GetCredentials() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := credentials.NewKeeperClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -71,6 +86,11 @@ func ExampleKeeperClient_GetCredentials() {
 
 func ExampleKeeperClient_ListCredentials() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := credentials.NewKeeperClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -97,6 +117,11 @@ func ExampleKeeperClient_ListCredentials() {
 
 func ExampleKeeperClient_CreateCredentials() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := credentials.NewKeeperClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -117,6 +142,11 @@ func ExampleKeeperClient_CreateCredentials() {
 
 func ExampleKeeperClient_DeleteCredentials() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := credentials.NewKeeperClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -135,6 +165,11 @@ func ExampleKeeperClient_DeleteCredentials() {
 
 func ExampleKeeperClient_ActAsCredentials() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := credentials.NewKeeperClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -155,6 +190,11 @@ func ExampleKeeperClient_ActAsCredentials() {
 
 func ExampleKeeperClient_GetIamPolicy() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := credentials.NewKeeperClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -175,6 +215,11 @@ func ExampleKeeperClient_GetIamPolicy() {
 
 func ExampleKeeperClient_SetIamPolicy() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := credentials.NewKeeperClient(ctx)
 	if err != nil {
 		// TODO: Handle error.
@@ -195,6 +240,11 @@ func ExampleKeeperClient_SetIamPolicy() {
 
 func ExampleKeeperClient_TestIamPermissions() {
 	ctx := context.Background()
+	// This snippet has been automatically generated and should be regarded as a code template only.
+	// It will require modifications to work:
+	// - It may require correct/in-range values for request initialization.
+	// - It may require specifying regional endpoints when creating the service client as shown in:
+	//   https://pkg.go.dev/cloud.google.com/go#hdr-Client_Options
 	c, err := credentials.NewKeeperClient(ctx)
 	if err != nil {
 		// TODO: Handle error.

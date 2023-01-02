@@ -1,4 +1,4 @@
-// Copyright 2022 Google LLC
+// Copyright 2023 Google LLC
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -174,7 +174,8 @@ func (c *IamClient) setGoogleClientInfo(keyval ...string) {
 
 // Connection returns a connection to the API service.
 //
-// Deprecated.
+// Deprecated: Connections are now pooled so this method does not always
+// return the same resource.
 func (c *IamClient) Connection() *grpc.ClientConn {
 	return c.internalClient.Connection()
 }
@@ -315,7 +316,8 @@ func NewIamClient(ctx context.Context, opts ...option.ClientOption) (*IamClient,
 
 // Connection returns a connection to the API service.
 //
-// Deprecated.
+// Deprecated: Connections are now pooled so this method does not always
+// return the same resource.
 func (c *iamGRPCClient) Connection() *grpc.ClientConn {
 	return c.connPool.Conn()
 }
@@ -397,7 +399,7 @@ func (c *iamRESTClient) Close() error {
 
 // Connection returns a connection to the API service.
 //
-// Deprecated.
+// Deprecated: This method always returns nil.
 func (c *iamRESTClient) Connection() *grpc.ClientConn {
 	return nil
 }
